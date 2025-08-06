@@ -1,0 +1,252 @@
+get:
+  operationId: getReferralsWithoutTotalCount
+  summary: List referrals
+  description: >-
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    List all referrals of the specified campaign.
+  tags:
+    - Referrals
+  parameters:
+    - name: pageSize
+      in: query
+      required: false
+      description: The number of items in the response.
+      example: 1000
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 1000
+    - name: skip
+      in: query
+      required: false
+      description: The number of items to skip when paging through large result sets.
+      example: 100
+      schema:
+        type: integer
+    - name: sort
+      in: query
+      required: false
+      description: >
+        The field by which results should be sorted. By default, results are
+        sorted in ascending order. To sort them in descending order, prefix the
+        field name with `-`.
+
+
+        **Note:** You may not be able to use all fields for sorting. This is due
+        to performance limitations.
+      example: name
+      schema:
+        type: string
+    - name: applicationId
+      in: path
+      required: true
+      description: >-
+        The ID of the Application. It is displayed in your Talon.One deployment
+        URL.
+      example: 42
+      schema:
+        type: integer
+    - name: campaignId
+      in: path
+      description: >-
+        The ID of the campaign. It is displayed in your Talon.One deployment
+        URL.
+      example: 18
+      required: true
+      schema:
+        type: integer
+    - name: code
+      in: query
+      description: >-
+        Filter results performing case-insensitive matching against the referral
+        code. Both the code and the query are folded to remove all
+        non-alpha-numeric characters.
+      example: JVM8JH8F
+      required: false
+      schema:
+        type: string
+    - name: createdBefore
+      in: query
+      description: >-
+        Filter results comparing the parameter value, expected to be an RFC3339
+        timestamp string, to the referral creation timestamp. You can use any
+        time zone setting. Talon.One will convert to UTC internally.
+      required: false
+      example: '2024-05-29T15:04:05+07:00'
+      schema:
+        type: string
+        format: date-time
+    - name: createdAfter
+      in: query
+      description: >-
+        Filter results comparing the parameter value, expected to be an RFC3339
+        timestamp string, to the referral creation timestamp. You can use any
+        time zone setting. Talon.One will convert to UTC internally.
+      required: false
+      example: '2024-05-29T15:04:05+07:00'
+      schema:
+        type: string
+        format: date-time
+    - name: valid
+      in: query
+      description: >
+        Either "expired", "validNow", or "validFuture". The first option matches
+        referrals in which the expiration date is set and in the past. The
+        second matches referrals in which start date is null or in the past and
+        expiration date is null or in the future, the third matches referrals in
+        which start date is set and in the future.
+      example: validNow
+      required: false
+      schema:
+        type: string
+        enum:
+          - expired
+          - validNow
+          - validFuture
+    - name: usable
+      in: query
+      description: >
+        Either "true" or "false". If "true", only referrals where `usageCounter
+        < usageLimit` will be returned, "false" will return only referrals where
+        `usageCounter >= usageLimit`.
+      example: 'false'
+      schema:
+        type: string
+        enum:
+          - 'true'
+          - 'false'
+    - name: advocate
+      in: query
+      required: false
+      description: >-
+        Filter results by match with a profile ID specified in the referral's
+        AdvocateProfileIntegrationId field.
+      example: customer1
+      schema:
+        type: string
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - hasMore
+              - data
+            properties:
+              hasMore:
+                type: boolean
+                example: true
+              data:
+                type: array
+                items:
+                  allOf:
+                    - type: object
+                      required:
+                        - id
+                        - created
+                      properties:
+                        id:
+                          type: integer
+                          description: The internal ID of this entity.
+                          example: 6
+                        created:
+                          type: string
+                          format: date-time
+                          description: The time this entity was created.
+                          example: '2020-06-10T09:05:27.993483Z'
+                    - allOf:
+                        - type: object
+                          properties:
+                            startDate:
+                              type: string
+                              format: date-time
+                              title: Referral code valid from
+                              description: >-
+                                Timestamp at which point the referral code
+                                becomes valid.
+                              example: '2020-11-10T23:00:00Z'
+                            expiryDate:
+                              type: string
+                              format: date-time
+                              title: Referral code valid until
+                              description: >-
+                                Expiration date of the referral code. Referral
+                                never expires if this is omitted.
+                              example: '2021-11-10T23:00:00Z'
+                            usageLimit:
+                              type: integer
+                              title: Referral code Usage Limit
+                              description: >
+                                The number of times a referral code can be used.
+                                `0` means no limit but any campaign usage limits
+                                will still apply.
+                              minimum: 0
+                              maximum: 999999
+                              example: 1
+                        - type: object
+                          required:
+                            - campaignId
+                            - advocateProfileIntegrationId
+                          properties:
+                            campaignId:
+                              type: integer
+                              title: Referral's Campaign ID
+                              description: >-
+                                ID of the campaign from which the referral
+                                received the referral code.
+                              example: 78
+                            advocateProfileIntegrationId:
+                              type: string
+                              title: Advocate's Profile ID
+                              description: The Integration ID of the Advocate's Profile.
+                              maxLength: 1000
+                              example: URNGV8294NV
+                            friendProfileIntegrationId:
+                              type: string
+                              title: Friend's Profile ID
+                              description: >-
+                                An optional Integration ID of the Friend's
+                                Profile.
+                              example: BZGGC2454PA
+                            attributes:
+                              type: object
+                              description: Arbitrary properties associated with this item.
+                              example:
+                                channel: web
+                    - type: object
+                      properties:
+                        importId:
+                          type: integer
+                          description: The ID of the Import which created this referral.
+                          example: 4
+                    - type: object
+                      required:
+                        - code
+                        - usageCounter
+                        - usageLimit
+                      properties:
+                        code:
+                          type: string
+                          title: Referral code
+                          description: The referral code.
+                          minLength: 4
+                          example: 27G47Y54VH9L
+                        usageCounter:
+                          type: integer
+                          title: Referral code Usages
+                          description: >-
+                            The number of times this referral code has been
+                            successfully used.
+                          example: 1
+                        batchId:
+                          type: string
+                          title: Batch ID
+                          description: The ID of the batch the referrals belong to.
+                          example: tqyrgahe

@@ -1,0 +1,143 @@
+get:
+  operationId: exportLoyaltyBalances
+  summary: Export customer loyalty balances
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Download a CSV file containing the balance of each customer in the loyalty
+    program.
+
+
+    **Tip:** If the exported CSV file is too large to view, you can [split it
+    into multiple
+    files](https://www.makeuseof.com/tag/how-to-split-a-huge-csv-excel-workbook-into-seperate-files/).
+
+
+    The generated file can contain the following columns:
+
+
+    - `loyaltyProgramID`: The ID of the loyalty program.
+
+    - `loyaltySubledger`: The name of the subdleger, when applicatble.
+
+    - `profileIntegrationID`: The integration ID of the customer profile.
+
+    - `currentBalance`: The current point balance.
+
+    - `pendingBalance`: The number of pending points.
+
+    - `expiredBalance`: The number of expired points.
+
+    - `spentBalance`: The number of spent points.
+
+    - `currentTier`: The tier that the customer is in at the time of the export.
+  tags:
+    - Loyalty
+  parameters:
+    - name: loyaltyProgramId
+      in: path
+      description: The identifier for the loyalty program.
+      example: '45'
+      required: true
+      schema:
+        type: string
+    - name: endDate
+      in: query
+      required: false
+      description: >
+        Used to return expired, active, and pending loyalty balances before this
+        timestamp. You can enter any past, present, or future timestamp value.
+
+
+        **Note:**
+
+
+        - It must be an RFC3339 timestamp string.
+
+        - You can include a time component in your string, for example,
+        `T23:59:59` to specify the end of the day. The time zone setting
+        considered is `UTC`. If you do not include a time component, a default
+        time value of `T00:00:00` (midnight) in `UTC` is considered.
+      example: '2024-05-29T15:04:05+07:00'
+      schema:
+        type: string
+        format: date-time
+  responses:
+    '200':
+      description: OK
+      content:
+        application/csv:
+          schema:
+            type: string
+            format: csv
+          examples:
+            response:
+              value: >
+                loyaltyProgramID,loyaltySubledger,profileIntegrationID,currentBalance,pendingBalance,expiredBalance,spentBalance,currentTier
+
+                40,,8786NTHSAO8,10.00,0.00,0.00,0.00,First
+
+                40,,2735HATHOH8,20.00,0.00,0.00,0.00,First
+    '400':
+      description: Bad request
+      content:
+        application/csv:
+          schema:
+            type: object
+            properties: &ref_0
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
+    '401':
+      description: Unauthorized
+      content:
+        application/csv:
+          schema:
+            type: object
+            properties: *ref_0

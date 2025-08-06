@@ -1,0 +1,166 @@
+post:
+  operationId: createAdditionalCost
+  summary: Create additional cost
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Create an [additional
+    cost](https://docs.talon.one/docs/product/account/dev-tools/managing-additional-costs).
+
+
+    These additional costs are shared across all applications in your account,
+    and are never required.
+  tags:
+    - Additional costs
+  requestBody:
+    content:
+      application/json:
+        schema:
+          allOf: &ref_0
+            - type: object
+              required:
+                - name
+                - title
+                - description
+              properties:
+                name:
+                  type: string
+                  pattern: ^[A-Za-z]\w*$
+                  description: The internal name used in API requests.
+                  example: shippingFee
+                title:
+                  type: string
+                  pattern: ^[A-Za-z][A-Za-z0-9_.!~*'() -]*$
+                  description: >-
+                    The human-readable name for the additional cost that will be
+                    shown in the Campaign Manager. Like `name`, the combination
+                    of entity and title must also be unique.
+                  example: Shipping fee
+                description:
+                  type: string
+                  description: A description of this additional cost.
+                  example: A shipping fee
+                subscribedApplicationsIds:
+                  type: array
+                  description: >-
+                    A list of the IDs of the applications that are subscribed to
+                    this additional cost.
+                  items:
+                    type: integer
+                  example:
+                    - 3
+                    - 13
+                type:
+                  type: string
+                  enum:
+                    - session
+                    - item
+                    - both
+                  example: session
+                  description: >
+                    The type of additional cost. Possible value:
+
+                    - `session`: Additional cost will be added per session.
+
+                    - `item`: Additional cost will be added per item.
+
+                    - `both`: Additional cost will be added per item and
+                    session.
+                  default: session
+    description: body
+    required: true
+  responses:
+    '201':
+      description: Created
+      content:
+        application/json:
+          schema:
+            allOf: &ref_1
+              - type: object
+                required:
+                  - id
+                  - created
+                properties:
+                  id:
+                    type: integer
+                    description: The internal ID of this entity.
+                    example: 6
+                  created:
+                    type: string
+                    format: date-time
+                    description: The time this entity was created.
+                    example: '2020-06-10T09:05:27.993483Z'
+              - type: object
+                required:
+                  - accountId
+                properties:
+                  accountId:
+                    type: integer
+                    description: The ID of the account that owns this entity.
+                    example: 3886
+              - allOf: *ref_0
+get:
+  operationId: getAdditionalCosts
+  summary: List additional costs
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Returns all the defined additional costs for the account.
+  tags:
+    - Additional costs
+  parameters:
+    - name: pageSize
+      in: query
+      required: false
+      description: The number of items in the response.
+      example: 1000
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 1000
+    - name: skip
+      in: query
+      required: false
+      description: The number of items to skip when paging through large result sets.
+      example: 100
+      schema:
+        type: integer
+    - name: sort
+      in: query
+      required: false
+      description: >
+        The field by which results should be sorted. By default, results are
+        sorted in ascending order. To sort them in descending order, prefix the
+        field name with `-`.
+
+
+        **Note:** You may not be able to use all fields for sorting. This is due
+        to performance limitations.
+      example: name
+      schema:
+        type: string
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - totalResultSize
+              - data
+            properties:
+              totalResultSize:
+                type: integer
+                example: 1
+              data:
+                type: array
+                items:
+                  allOf: *ref_1

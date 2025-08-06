@@ -1,0 +1,263 @@
+get:
+  operationId: exportCoupons
+  summary: Export coupons
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Download a CSV file containing the coupons that match the given properties.
+
+
+    **Tip:** If the exported CSV file is too large to view, you can [split it
+    into multiple
+    files](https://www.makeuseof.com/tag/how-to-split-a-huge-csv-excel-workbook-into-seperate-files/).
+
+
+    The CSV file can contain the following columns:
+
+
+    - `accountid`: The ID of your deployment.
+
+    - `applicationid`: The ID of the Application this coupon is related to.
+
+    - `attributes`: A json object describing _custom_ referral attribute names
+    and their values.
+
+    - `batchid`: The ID of the batch this coupon is part of.
+
+    - `campaignid`: The ID of the campaign this coupon is related to.
+
+    - `counter`: The number of times this coupon has been redeemed.
+
+    - `created`: The creation date in RFC3339 of the coupon code.
+
+    - `deleted`: Whether the coupon code is deleted.
+
+    - `deleted_changelogid`: The ID of the delete event in the logs.
+
+    - `discount_counter`: The amount of discount given by this coupon.
+
+    - `discount_limitval`: The maximum discount amount that can be given be this
+    coupon.
+
+    - `expirydate`: The end date in RFC3339 of the code redemption period.
+
+    - `id`: The internal ID of the coupon code.
+
+    - `importid`: The ID of the import job that created this coupon.
+
+    - `is_reservation_mandatory`: Whether this coupon requires a reservation to
+    be redeemed.
+
+    - `limits`: The limits set on this coupon.
+
+    - `limitval`: The maximum number of redemptions of this code.
+
+    - `recipientintegrationid`: The integration ID of the recipient of the
+    coupon.
+      Only the customer with this integration ID can redeem this code. Available only for personal codes.
+    - `referralid`: The ID of the referral code that triggered the creation of
+    this coupon (create coupon effect).
+
+    - `reservation`: Whether the coupon can be reserved for multiple customers.
+
+    - `reservation_counter`: How many times this coupon has been reserved.
+
+    - `reservation_limitval`: The maximum of number of reservations this coupon
+    can have.
+
+    - `startdate`: The start date in RFC3339 of the code redemption period.
+
+    - `value`: The coupon code.
+  tags:
+    - Coupons
+  parameters:
+    - name: applicationId
+      in: path
+      required: true
+      description: >-
+        The ID of the Application. It is displayed in your Talon.One deployment
+        URL.
+      example: 42
+      schema:
+        type: integer
+    - name: campaignId
+      in: query
+      description: Filter results by campaign ID.
+      example: 49
+      schema:
+        type: number
+    - name: sort
+      in: query
+      required: false
+      description: >
+        The field by which results should be sorted. By default, results are
+        sorted in ascending order. To sort them in descending order, prefix the
+        field name with `-`.
+
+
+        **Note:** You may not be able to use all fields for sorting. This is due
+        to performance limitations.
+      example: name
+      schema:
+        type: string
+    - name: value
+      in: query
+      description: >-
+        Filter results performing case-insensitive matching against the coupon
+        code. Both the code and the query are folded to remove all
+        non-alpha-numeric characters.
+      example: SUMMER10
+      required: false
+      schema:
+        type: string
+    - name: createdBefore
+      in: query
+      description: >-
+        Filter results comparing the parameter value, expected to be an RFC3339
+        timestamp string, to the coupon creation timestamp. You can use any time
+        zone setting. Talon.One will convert to UTC internally.
+      required: false
+      example: '2024-05-29T15:04:05+07:00'
+      schema:
+        type: string
+        format: date-time
+    - name: createdAfter
+      in: query
+      description: >-
+        Filter results comparing the parameter value, expected to be an RFC3339
+        timestamp string, to the coupon creation timestamp. You can use any time
+        zone setting. Talon.One will convert to UTC internally.
+      required: false
+      example: '2024-05-29T15:04:05+07:00'
+      schema:
+        type: string
+        format: date-time
+    - name: valid
+      in: query
+      description: >
+        Either "expired", "validNow", or "validFuture". The first option matches
+        coupons in which the expiration date is set and in the past. The second
+        matches coupons in which start date is null or in the past and
+        expiration date is null or in the future, the third matches coupons in
+        which start date is set and in the future.
+      example: validNow
+      required: false
+      schema:
+        type: string
+        enum:
+          - expired
+          - validNow
+          - validFuture
+    - name: usable
+      in: query
+      description: >
+        Either "true" or "false". If "true", only coupons where `usageCounter <
+        usageLimit` will be returned, "false" will return only coupons where
+        `usageCounter >= usageLimit`.
+      example: 'false'
+      schema:
+        type: string
+        enum:
+          - 'true'
+          - 'false'
+    - name: referralId
+      in: query
+      description: >-
+        Filter the results by matching them with the ID of a referral. This
+        filter shows the coupons created by redeeming a referral code.
+      example: 47
+      required: false
+      schema:
+        type: integer
+    - name: recipientIntegrationId
+      in: query
+      description: >-
+        Filter results by match with a profile id specified in the coupon's
+        RecipientIntegrationId field.
+      example: customer1
+      required: false
+      schema:
+        type: string
+    - name: batchId
+      in: query
+      description: Filter results by batches of coupons
+      example: nfinccze
+      required: false
+      schema:
+        type: string
+    - name: exactMatch
+      in: query
+      description: >-
+        Filter results to an exact case-insensitive matching against the coupon
+        code.
+      example: false
+      required: false
+      schema:
+        type: boolean
+        default: false
+    - name: dateFormat
+      in: query
+      description: Determines the format of dates in the export document.
+      example: excel
+      required: false
+      schema:
+        type: string
+        enum:
+          - excel
+          - ISO8601
+    - name: campaignState
+      in: query
+      description: >
+        Filter results by the state of the campaign.
+
+
+        - `enabled`: Campaigns that are scheduled, running (activated), or
+        expired.
+
+        - `running`: Campaigns that are running (activated).
+
+        - `disabled`: Campaigns that are disabled.
+
+        - `expired`: Campaigns that are expired.
+
+        - `archived`: Campaigns that are archived.
+      example: enabled
+      required: false
+      schema:
+        type: string
+        enum:
+          - enabled
+          - disabled
+          - archived
+          - scheduled
+          - running
+          - expired
+          - staged
+    - name: valuesOnly
+      in: query
+      description: >-
+        Filter results to only return the coupon codes (`value` column) without
+        the associated coupon data.
+      example: false
+      required: false
+      schema:
+        type: boolean
+        default: false
+  responses:
+    '200':
+      description: OK
+      content:
+        application/csv:
+          schema:
+            type: string
+            format: csv
+          examples:
+            response:
+              value: >
+                id,created,campaignid,value,expirydate,startdate,attributes,applicationid,deleted,deleted_changelogid,accountid,referralid,recipientintegrationid,importid,batchid,reservation,limits,limitval,counter,discount_counter,discount_limitval
+
+                20191301,2022-04-26T11:02:38Z,3882,COUP1,2022-04-27T10:56:47Z,2022-04-26T10:56:47Z,"{""test"":
+                ""premium""}",270,,0,1,,cust123,671,axghjfdy,,"[]",1,0,0,1.5

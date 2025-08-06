@@ -1,0 +1,33 @@
+post:
+  operationId: deleteUserByEmail
+  summary: Delete user by email address
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    [Delete a specific
+    user](https://docs.talon.one/docs/product/account/account-settings/managing-users#deleting-a-user)
+    by their email address.
+  tags:
+    - Accounts and users
+  requestBody:
+    content:
+      application/json:
+        schema:
+          allOf:
+            - type: object
+              required:
+                - email
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: john.doe@example.com
+                  description: The email address associated with the user profile.
+    description: body
+    required: true
+  responses:
+    '204':
+      description: No Content

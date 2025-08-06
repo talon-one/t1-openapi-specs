@@ -1,0 +1,485 @@
+get:
+  operationId: getCampaignTemplates
+  summary: List campaign templates
+  description: >-
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Retrieve a list of campaign templates.
+  tags:
+    - Campaign templates
+  parameters:
+    - name: pageSize
+      in: query
+      required: false
+      description: The number of items in the response.
+      example: 1000
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 1000
+    - name: skip
+      in: query
+      required: false
+      description: The number of items to skip when paging through large result sets.
+      example: 100
+      schema:
+        type: integer
+    - name: sort
+      in: query
+      required: false
+      description: >
+        The field by which results should be sorted. By default, results are
+        sorted in ascending order. To sort them in descending order, prefix the
+        field name with `-`.
+
+
+        **Note:** You may not be able to use all fields for sorting. This is due
+        to performance limitations.
+      example: name
+      schema:
+        type: string
+    - name: state
+      in: query
+      description: Filter results by the state of the campaign template.
+      example: draft
+      required: false
+      schema:
+        type: string
+        enum:
+          - draft
+          - enabled
+          - disabled
+    - name: name
+      in: query
+      description: >-
+        Filter results performing case-insensitive matching against the name of
+        the campaign template.
+      example: template1
+      required: false
+      schema:
+        type: string
+    - name: tags
+      in: query
+      description: >
+        Filter results performing case-insensitive matching against the tags of
+        the campaign template. When used in conjunction with the "name" query
+        parameter, a logical OR will be performed to search both tags and name
+        for the provided values.
+      example: tag1
+      required: false
+      schema:
+        type: string
+    - in: query
+      description: Filter results by user ID.
+      example: 34
+      required: false
+      name: userId
+      schema:
+        type: integer
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - hasMore
+              - data
+            properties:
+              hasMore:
+                type: boolean
+                example: true
+              data:
+                type: array
+                items:
+                  allOf:
+                    - type: object
+                      required:
+                        - id
+                        - created
+                      properties:
+                        id:
+                          type: integer
+                          description: The internal ID of this entity.
+                          example: 6
+                        created:
+                          type: string
+                          format: date-time
+                          description: The time this entity was created.
+                          example: '2020-06-10T09:05:27.993483Z'
+                    - type: object
+                      required:
+                        - accountId
+                      properties:
+                        accountId:
+                          type: integer
+                          description: The ID of the account that owns this entity.
+                          example: 3886
+                    - type: object
+                      required:
+                        - userId
+                      properties:
+                        userId:
+                          type: integer
+                          description: The ID of the user associated with this entity.
+                          example: 388
+                    - type: object
+                      required:
+                        - name
+                        - state
+                        - description
+                        - instructions
+                        - applicationsIds
+                      properties:
+                        name:
+                          type: string
+                          description: The campaign template name.
+                          minLength: 1
+                          example: Discount campaign
+                        description:
+                          type: string
+                          description: >-
+                            Customer-facing text that explains the objective of
+                            the template.
+                          example: This is a template for a discount campaign.
+                        instructions:
+                          type: string
+                          description: >-
+                            Customer-facing text that explains how to use the
+                            template. For example, you can use this property to
+                            explain the available attributes of this template,
+                            and how they can be modified when a user uses this
+                            template to create a new campaign.
+                          example: >-
+                            Use this template for discount campaigns. Set the
+                            campaign properties according to the campaign goals,
+                            and don't forget to set an end date.
+                        campaignAttributes:
+                          type: object
+                          description: >-
+                            The campaign attributes that campaigns created from
+                            this template will have by default.
+                        couponAttributes:
+                          type: object
+                          description: >-
+                            The campaign attributes that coupons created from
+                            this template will have by default.
+                        state:
+                          type: string
+                          enum:
+                            - draft
+                            - enabled
+                            - disabled
+                          description: >-
+                            Only campaign templates in 'available' state may be
+                            used to create campaigns.
+                        activeRulesetId:
+                          type: integer
+                          description: >-
+                            The ID of the ruleset this campaign template will
+                            use.
+                          example: 5
+                        tags:
+                          type: array
+                          description: A list of tags for the campaign template.
+                          maxItems: 50
+                          example:
+                            - discount
+                          items:
+                            type: string
+                            minLength: 1
+                            maxLength: 50
+                        features:
+                          type: array
+                          description: A list of features for the campaign template.
+                          items:
+                            type: string
+                            enum:
+                              - coupons
+                              - referrals
+                              - loyalty
+                              - giveaways
+                              - strikethrough
+                              - achievements
+                        couponSettings:
+                          type: object
+                          properties: &ref_0
+                            validCharacters:
+                              type: array
+                              description: >
+                                List of characters used to generate the random
+                                parts of a code.
+                              example:
+                                - A
+                                - B
+                                - C
+                                - D
+                                - E
+                                - F
+                                - G
+                                - H
+                                - I
+                                - J
+                                - K
+                                - L
+                                - M
+                                - 'N'
+                                - O
+                                - P
+                                - Q
+                                - R
+                                - S
+                                - T
+                                - U
+                                - V
+                                - W
+                                - X
+                                - 'Y'
+                                - Z
+                                - '0'
+                                - '1'
+                                - '2'
+                                - '3'
+                                - '4'
+                                - '5'
+                                - '6'
+                                - '7'
+                                - '8'
+                                - '9'
+                              items:
+                                type: string
+                            couponPattern:
+                              type: string
+                              description: >
+                                The pattern used to generate codes, such as
+                                coupon codes, referral codes, and loyalty cards.
+                                The character `#` is a placeholder and is
+                                replaced by a random character from the
+                                `validCharacters` set.
+                              maxLength: 100
+                              minLength: 3
+                              pattern: ^[A-Za-z0-9_#-]*$
+                              example: SUMMER-####-####
+                          additionalProperties: false
+                          required: &ref_1
+                            - couponPattern
+                            - validCharacters
+                        couponReservationSettings:
+                          type: object
+                          properties:
+                            reservationLimit:
+                              type: integer
+                              minimum: 0
+                              maximum: 999999
+                              example: 45
+                              description: >
+                                The number of reservations that can be made with
+                                this coupon code.
+                            isReservationMandatory:
+                              title: Is reservation mandatory
+                              type: boolean
+                              example: false
+                              description: >-
+                                An indication of whether the code can be
+                                redeemed only if it has been reserved first.
+                              default: false
+                        referralSettings:
+                          type: object
+                          properties: *ref_0
+                          additionalProperties: false
+                          required: *ref_1
+                        limits:
+                          type: array
+                          description: >-
+                            The set of limits that operate for this campaign
+                            template.
+                          items:
+                            allOf:
+                              - type: object
+                                required:
+                                  - action
+                                  - limit
+                                  - entities
+                                properties:
+                                  action:
+                                    type: string
+                                    description: >
+                                      The limitable action to which this limit
+                                      applies. For example:
+
+                                      - `setDiscount`
+
+                                      - `setDiscountEffect`
+
+                                      - `redeemCoupon`
+
+                                      - `createCoupon`
+                                    example: createCoupon
+                                  limit:
+                                    type: number
+                                    minimum: 0
+                                    example: 1000
+                                    description: The value to set for the limit.
+                                  period:
+                                    description: >-
+                                      The period on which the budget limit
+                                      recurs.
+                                    type: string
+                                    enum:
+                                      - daily
+                                      - weekly
+                                      - monthly
+                                      - yearly
+                                    example: yearly
+                                  entities:
+                                    type: array
+                                    description: The entity that this limit applies to.
+                                    example:
+                                      - Coupon
+                                    items:
+                                      type: string
+                                      enum:
+                                        - Coupon
+                                        - Referral
+                                        - Profile
+                                        - Identifier
+                                        - Store
+                                        - Session
+                        templateParams:
+                          type: array
+                          description: >-
+                            Fields which can be used to replace values in a
+                            rule.
+                          items:
+                            type: object
+                            required:
+                              - name
+                              - type
+                              - description
+                            properties:
+                              name:
+                                type: string
+                                description: Name of the campaign template parameter.
+                                minLength: 1
+                                example: discount_value
+                              type:
+                                type: string
+                                enum:
+                                  - string
+                                  - number
+                                  - boolean
+                                  - percent
+                                  - (list string)
+                                  - time
+                                description: Defines the type of parameter value.
+                                example: number
+                              description:
+                                type: string
+                                description: >-
+                                  Explains the meaning of this template
+                                  parameter and the placeholder value that will
+                                  define it. It is used on campaign creation
+                                  from this template.
+                                example: This is a template parameter of type `number`.
+                              attributeId:
+                                type: integer
+                                description: ID of the corresponding attribute.
+                                example: 42
+                        applicationsIds:
+                          type: array
+                          description: >-
+                            A list of IDs of the Applications that are
+                            subscribed to this campaign template.
+                          items:
+                            type: integer
+                          example:
+                            - 1
+                            - 2
+                            - 3
+                        campaignCollections:
+                          type: array
+                          description: >-
+                            The campaign collections from the blueprint campaign
+                            for the template.
+                          items:
+                            type: object
+                            required:
+                              - name
+                            properties:
+                              name:
+                                type: string
+                                minLength: 1
+                                pattern: ^[A-Za-z](\w|\s)*$
+                                description: The name of this collection.
+                                example: My collection
+                              description:
+                                type: string
+                                description: >-
+                                  A short description of the purpose of this
+                                  collection.
+                                example: My collection of SKUs
+                        defaultCampaignGroupId:
+                          type: integer
+                          description: The default campaign group ID.
+                          example: 42
+                        campaignType:
+                          type: string
+                          enum:
+                            - cartItem
+                            - advanced
+                          default: advanced
+                          example: advanced
+                          description: |
+                            The campaign type. Possible type values:
+                              - `cartItem`: Type of campaign that can apply effects only to cart items.
+                              - `advanced`: Type of campaign that can apply effects to customer sessions and cart items.
+                    - type: object
+                      required:
+                        - validApplicationIds
+                        - applicationIds
+                        - campaignType
+                      properties:
+                        applicationsIds:
+                          type: array
+                          items:
+                            type: integer
+                          example:
+                            - 1
+                            - 2
+                            - 3
+                        updated:
+                          type: string
+                          format: date-time
+                          description: >-
+                            Timestamp of the most recent update to the campaign
+                            template or any of its elements.
+                          example: '2022-08-24T14:15:22Z'
+                        updatedBy:
+                          type: string
+                          description: >-
+                            Name of the user who last updated this campaign
+                            template, if available.
+                          example: Jane Doe
+                        validApplicationIds:
+                          type: array
+                          description: >-
+                            The IDs of the Applications that are related to this
+                            entity.
+                          items:
+                            type: integer
+                          example:
+                            - 1
+                            - 2
+                            - 3
+                        isUserFavorite:
+                          type: boolean
+                          description: >-
+                            A flag indicating whether the user marked the
+                            template as a favorite.
+                          default: false
+                          example: false

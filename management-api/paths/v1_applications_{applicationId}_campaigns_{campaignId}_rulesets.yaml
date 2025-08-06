@@ -1,0 +1,308 @@
+get:
+  operationId: getRulesets
+  summary: List campaign rulesets
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    List all rulesets of this campaign. A ruleset is a revision of the rules of
+    a campaign.
+
+    **Important:** The response also includes deleted rules.
+
+    You should only consider the latest revision of the returned rulesets.
+  tags:
+    - Campaigns
+  parameters:
+    - name: pageSize
+      in: query
+      required: false
+      description: The number of items in the response.
+      example: 1000
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 1000
+    - name: skip
+      in: query
+      required: false
+      description: The number of items to skip when paging through large result sets.
+      example: 100
+      schema:
+        type: integer
+    - name: sort
+      in: query
+      required: false
+      description: >
+        The field by which results should be sorted. By default, results are
+        sorted in ascending order. To sort them in descending order, prefix the
+        field name with `-`.
+
+
+        **Note:** You may not be able to use all fields for sorting. This is due
+        to performance limitations.
+      example: name
+      schema:
+        type: string
+    - name: applicationId
+      in: path
+      required: true
+      description: >-
+        The ID of the Application. It is displayed in your Talon.One deployment
+        URL.
+      example: 42
+      schema:
+        type: integer
+    - name: campaignId
+      in: path
+      description: >-
+        The ID of the campaign. It is displayed in your Talon.One deployment
+        URL.
+      example: 18
+      required: true
+      schema:
+        type: integer
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - totalResultSize
+              - data
+            properties:
+              totalResultSize:
+                type: integer
+                example: 1
+              data:
+                type: array
+                items:
+                  allOf:
+                    - type: object
+                      required:
+                        - id
+                        - created
+                      properties:
+                        id:
+                          type: integer
+                          description: The internal ID of this entity.
+                          example: 6
+                        created:
+                          type: string
+                          format: date-time
+                          description: The time this entity was created.
+                          example: '2020-06-10T09:05:27.993483Z'
+                    - type: object
+                      required:
+                        - userId
+                      properties:
+                        userId:
+                          type: integer
+                          description: The ID of the user associated with this entity.
+                          example: 388
+                    - type: object
+                      required:
+                        - rules
+                        - bindings
+                      properties:
+                        rules:
+                          type: array
+                          description: Set of rules to apply.
+                          items:
+                            type: object
+                            required: &ref_0
+                              - title
+                              - condition
+                              - effects
+                            properties: &ref_1
+                              id:
+                                type: string
+                                format: uuid
+                                description: A unique identifier for the rule.
+                                example: 7fa800a8-ac8d-4792-85dc-c4650dcc8f23
+                              parentId:
+                                type: string
+                                format: uuid
+                                description: >-
+                                  The ID of the rule that was copied to create
+                                  this rule.
+                                example: 7fa800a8-ac8d-4792-85dc-c4650dcc8f23
+                              title:
+                                type: string
+                                description: A short description of the rule.
+                                example: Give discount via coupon
+                              description:
+                                type: string
+                                description: >-
+                                  A longer, more detailed description of the
+                                  rule.
+                                example: Creates a discount when a coupon is valid
+                              bindings:
+                                type: array
+                                description: >-
+                                  An array that provides objects with variable
+                                  names (name) and talang expressions to whose
+                                  result they are bound (expression) during rule
+                                  evaluation. The order of the evaluation is
+                                  decided by the position in the array.
+                                items:
+                                  type: object
+                                  required: &ref_2
+                                    - name
+                                    - expression
+                                  properties: &ref_3
+                                    name:
+                                      type: string
+                                      description: >-
+                                        A descriptive name for the value to be
+                                        bound.
+                                      example: my property
+                                    type:
+                                      type: string
+                                      description: >
+                                        The kind of binding. Possible values
+                                        are:
+
+                                        - `bundle`
+
+                                        - `cartItemFilter`
+
+                                        - `subledgerBalance`
+
+                                        - `templateParameter`
+                                      example: templateParameter
+                                    expression:
+                                      type: array
+                                      description: >-
+                                        A Talang expression that will be
+                                        evaluated and its result attached to the
+                                        name of the binding.
+                                      example:
+                                        - string1
+                                        - string2
+                                      items: {}
+                                    valueType:
+                                      type: string
+                                      description: |
+                                        Can be one of the following:
+                                        - `string`
+                                        - `number`
+                                        - `boolean`
+                                      example: string
+                                    minValue:
+                                      type: number
+                                      description: >-
+                                        The minimum value allowed for this
+                                        placeholder.
+                                      example: 0
+                                    maxValue:
+                                      type: number
+                                      description: >-
+                                        The maximum value allowed for this
+                                        placeholder.
+                                      example: 19.9
+                                    attributeId:
+                                      type: integer
+                                      title: Attribute ID
+                                      description: >-
+                                        Id of the attribute attached to the
+                                        placeholder.
+                                      example: 100
+                                    description:
+                                      type: string
+                                      description: >-
+                                        Describes the placeholder field and
+                                        value in the template. This description
+                                        can be used when creating campaigns from
+                                        this template.
+                                      example: >-
+                                        This is a template parameter of type
+                                        `number`.
+                              condition:
+                                type: array
+                                description: >-
+                                  A Talang expression that will be evaluated in
+                                  the context of the given event.
+                                minItems: 1
+                                example:
+                                  - and
+                                  - - couponValid
+                                items: {}
+                              effects:
+                                type: array
+                                description: >-
+                                  An array of effectful Talang expressions in
+                                  arrays that will be evaluated when a rule
+                                  matches.
+                                items:
+                                  type: array
+                                  items: {}
+                                example:
+                                  - catch
+                                  - - noop
+                                  - - setDiscount
+                                    - 10% off
+                                    - - '*'
+                                      - - .
+                                        - Session
+                                        - Total
+                                      - - /
+                                        - 10
+                                        - 100
+                        strikethroughRules:
+                          type: array
+                          description: Set of rules to apply for strikethrough.
+                          items:
+                            type: object
+                            required: *ref_0
+                            properties: *ref_1
+                        bindings:
+                          type: array
+                          description: >-
+                            An array that provides objects with variable names
+                            (name) and talang expressions to whose result they
+                            are bound (expression) during rule evaluation. The
+                            order of the evaluation is decided by the position
+                            in the array.
+                          items:
+                            type: object
+                            required: *ref_2
+                            properties: *ref_3
+                          example: []
+                        rbVersion:
+                          type: string
+                          description: >-
+                            The version of the rulebuilder used to create this
+                            ruleset.
+                          example: v2
+                        activate:
+                          type: boolean
+                          description: >-
+                            Indicates whether this created ruleset should be
+                            activated for the campaign that owns it.
+                          example: true
+                    - type: object
+                      properties:
+                        campaignId:
+                          type: integer
+                          title: Campaign ID
+                          description: The ID of the campaign that owns this entity.
+                          example: 320
+                        templateId:
+                          type: integer
+                          title: Campaign Template ID
+                          description: >-
+                            The ID of the campaign template that owns this
+                            entity.
+                          example: 3
+                        activatedAt:
+                          type: string
+                          format: date-time
+                          description: >-
+                            Timestamp indicating when this Ruleset was
+                            activated.

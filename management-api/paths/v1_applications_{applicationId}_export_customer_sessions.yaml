@@ -1,0 +1,152 @@
+get:
+  operationId: exportCustomerSessions
+  summary: Export customer sessions
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Download a CSV file containing the customer sessions that match the request.
+
+
+    **Important:** Archived sessions cannot be exported. See the [retention
+    policy](https://docs.talon.one/docs/dev/server-infrastructure-and-data-retention).
+
+
+    **Tip:** If the exported CSV file is too large to view, you can [split it
+    into multiple
+    files](https://www.makeuseof.com/tag/how-to-split-a-huge-csv-excel-workbook-into-seperate-files/).
+
+
+    - `id`: The internal ID of the session.
+
+    - `firstsession`: Whether this is a first session.
+
+    - `integrationid`: The integration ID of the session.
+
+    - `applicationid`: The ID of the Application.
+
+    - `profileid`: The internal ID of the customer profile.
+
+    - `profileintegrationid`: The integration ID of the customer profile.
+
+    - `created`: The timestamp when the session was created.
+
+    - `state`: The
+    [state](https://docs.talon.one/docs/dev/concepts/entities/customer-sessions#customer-session-states)
+    of the session.
+
+    - `cartitems`: The cart items in the session.
+
+    - `discounts`: The discounts in the session.
+
+    - `total`: The total value of cart items and additional costs in the
+    session, before any discounts are applied.
+
+    - `attributes`: The attributes set in the session.
+
+    - `closedat`: Timestamp when the session was closed.
+
+    - `cancelledat`: Timestamp when the session was cancelled.
+
+    - `referral`: The referral code in the session.
+
+    - `identifiers`: The identifiers in the session.
+
+    - `additional_costs`: The [additional
+    costs](https://docs.talon.one/docs/product/account/dev-tools/managing-additional-costs)
+    in the session.
+
+    - `updated`: Timestamp of the last session update.
+
+    - `store_integration_id`: The integration ID of the store.
+
+    - `coupons`: Coupon codes in the session.
+  tags:
+    - Analytics
+  parameters:
+    - name: applicationId
+      in: path
+      required: true
+      description: >-
+        The ID of the Application. It is displayed in your Talon.One deployment
+        URL.
+      example: 42
+      schema:
+        type: integer
+    - name: createdBefore
+      in: query
+      description: >-
+        Filter results comparing the parameter value, expected to be an RFC3339
+        timestamp string.
+      required: false
+      example: '2024-05-29T15:04:05+07:00'
+      schema:
+        type: string
+        format: date-time
+    - name: createdAfter
+      in: query
+      description: >-
+        Filter results comparing the parameter value, expected to be an RFC3339
+        timestamp string.
+      required: false
+      example: '2024-05-29T15:04:05+07:00'
+      schema:
+        type: string
+        format: date-time
+    - name: profileIntegrationId
+      in: query
+      description: >-
+        Only return sessions for the customer that matches this customer
+        integration ID.
+      example: customer1
+      required: false
+      schema:
+        type: string
+    - name: dateFormat
+      in: query
+      description: Determines the format of dates in the export document.
+      example: excel
+      required: false
+      schema:
+        type: string
+        enum:
+          - excel
+          - ISO8601
+    - name: customerSessionState
+      in: query
+      description: Filter results by state.
+      example: open
+      required: false
+      schema:
+        type: string
+        enum:
+          - open
+          - closed
+          - partially_returned
+          - cancelled
+  responses:
+    '200':
+      description: OK
+      content:
+        application/csv:
+          schema:
+            type: string
+            format: csv
+          examples:
+            response:
+              value: >
+                id,firstsession,integrationid,applicationid,profileid,profileintegrationid,created,state,cartitems,discounts,total,attributes,closedat,cancelledat,referral,identifiers,additional_costs,updated,store_integration_id,coupons
+
+                12328,true,62791173fbf323ee5cfd96f3,270,6111,dxclwds,2022-05-09T13:05:31Z,open,"[{""sku"":
+                ""B00004TKVY"", ""name"": ""Gravel bike - \""Aisle of Man\"""",
+                ""price"": 1800, ""weight"": 6, ""category"": ""gravelbikes"",
+                ""position"": 0, ""quantity"": 1, ""attributes"": {""color"":
+                [""black,white""], ""material"": ""titanium""},
+                ""returnedQuantity"": 0, ""remainingQuantity"":
+                1}]","{}",1850.00,"{""ShippingCost"": 50, ""PaymentMethod"":
+                ""creditcard"", ""ShippingMethod"":
+                ""Standard""}",0001-01-01T00:00:00Z,0001-01-01T00:00:00Z,,"null","{""ShippingCost"":
+                {""price"":
+                50}}",2022-05-09T13:13:28Z,"STORE-001","[""SORRY5QMUJRWA""]"

@@ -1,0 +1,212 @@
+get:
+  operationId: listAllRolesV2
+  summary: List roles
+  description: >-
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    List all roles.
+  tags:
+    - Roles
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - totalResultSize
+              - data
+            properties:
+              totalResultSize:
+                type: integer
+                example: 1
+              data:
+                type: array
+                items:
+                  allOf:
+                    - type: object
+                      required:
+                        - id
+                        - created
+                      properties:
+                        id:
+                          type: integer
+                          description: The internal ID of this entity.
+                          example: 6
+                        created:
+                          type: string
+                          format: date-time
+                          description: The time this entity was created.
+                          example: '2020-06-10T09:05:27.993483Z'
+                    - type: object
+                      required:
+                        - modified
+                      properties:
+                        modified:
+                          type: string
+                          format: date-time
+                          description: The time this entity was last modified.
+                          example: '2021-09-12T10:12:42Z'
+                    - type: object
+                      required:
+                        - accountId
+                      properties:
+                        accountId:
+                          type: integer
+                          description: The ID of the account that owns this entity.
+                          example: 3886
+                    - type: object
+                      properties:
+                        name:
+                          type: string
+                          description: Name of the role.
+                          example: Campaign and campaign access group manager
+                        description:
+                          type: string
+                          description: Description of the role.
+                          example: >-
+                            Allows you to create and edit campaigns for specific
+                            Applications, delete specific campaign access
+                            groups, and view loyalty programs.
+                        permissions:
+                          type: object
+                          description: The permissions that this role gives.
+                          properties:
+                            permissionSets:
+                              type: array
+                              description: >-
+                                List of grouped logical operations referenced by
+                                roles.
+                              maxItems: 500
+                              items:
+                                type: object
+                                required:
+                                  - name
+                                  - logicalOperations
+                                properties:
+                                  name:
+                                    type: string
+                                    description: Name of the permission set.
+                                    example: Campaign manager permission set
+                                  logicalOperations:
+                                    type: array
+                                    maxItems: 1000
+                                    description: >
+                                      List of logical operations in the
+                                      permission set.
+
+                                      Each logical operation must be shown under
+                                      the `x-permission` tag on an endpoint
+                                      level.
+                                    items:
+                                      type: string
+                                    example:
+                                      - createCampaignOperations
+                                      - getCampaignOperations
+                                      - deleteCampaignOperations
+                              example:
+                                - name: Application permission set
+                                  logicalOperations:
+                                    - getApplicationOperations
+                                    - editApplicationOperations
+                                - name: Campaign manager permission set
+                                  logicalOperations:
+                                    - getCampaignOperations
+                                    - createCampaignOperations
+                                    - updateCampaignOperations
+                                - name: Campaign read-only permission set
+                                  logicalOperations:
+                                    - getCampaignOperations
+                                - name: Loyalty program read-only permission set
+                                  logicalOperations:
+                                    - getLoyaltyProgramOperations
+                                - name: Campaign access group manager permission set
+                                  logicalOperations:
+                                    - getCampaignAccessGroupOperations
+                                    - updateCampaignAccessGroupOperations
+                                    - deleteCampaignAccessGroupOperations
+                            roles:
+                              type: object
+                              properties:
+                                applications:
+                                  type: object
+                                  description: >-
+                                    A map of the link between the Application,
+                                    campaign, or draft campaign-related
+                                    permission set and the Application ID the
+                                    permissions apply to.
+                                  additionalProperties:
+                                    type: object
+                                    properties:
+                                      application:
+                                        type: string
+                                        description: >-
+                                          Name of the Application-related
+                                          permission set for the given
+                                          Application.
+                                      campaign:
+                                        type: string
+                                        description: >-
+                                          Name of the campaign-related permission
+                                          set for the given Application.
+                                      draftCampaign:
+                                        type: string
+                                        description: >-
+                                          Name of the draft campaign-related
+                                          permission set for the given
+                                          Application.
+                                      tools:
+                                        type: string
+                                        description: >-
+                                          Name of the tools-related permission
+                                          set.
+                                        example: Tools permission set
+                                  example:
+                                    '1':
+                                      application: Application permission set
+                                    '3':
+                                      campaign: Campaign manager permission set
+                                    '4':
+                                      draftCampaign: Campaign read-only permission set
+                                    '5':
+                                      tools: Tools permission set
+                                loyaltyPrograms:
+                                  type: object
+                                  description: >-
+                                    A map of the link between the loyalty
+                                    program-related permission set and the
+                                    Application ID the permissions apply to.
+                                  additionalProperties:
+                                    type: string
+                                    description: >-
+                                      Name of the loyalty program-related
+                                      permission set.
+                                  example:
+                                    '10': Loyalty program manager permission set
+                                campaignAccessGroups:
+                                  type: object
+                                  description: >-
+                                    A map of the link between the campaign
+                                    access group-related permission set and the
+                                    Application ID the permissions apply to.
+                                  additionalProperties:
+                                    type: string
+                                    description: >-
+                                      Name of the campaign access group-related
+                                      permission set.
+                                  example:
+                                    '5': >-
+                                      Campaign access group manager permission
+                                      set
+                        members:
+                          type: array
+                          items:
+                            type: integer
+                          description: A list of user IDs the role is assigned to.
+                          example:
+                            - 10
+                            - 12

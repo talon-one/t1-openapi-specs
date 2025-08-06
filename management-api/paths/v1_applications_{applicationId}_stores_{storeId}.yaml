@@ -1,0 +1,282 @@
+get:
+  operationId: getStore
+  summary: Get store
+  description: >-
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Get store details for a specific store ID.
+  tags:
+    - Stores
+  parameters:
+    - name: applicationId
+      in: path
+      required: true
+      description: >-
+        The ID of the Application. It is displayed in your Talon.One deployment
+        URL.
+      example: 42
+      schema:
+        type: integer
+    - name: storeId
+      required: true
+      in: path
+      description: >
+        The ID of the store.
+
+        You can get this ID with the [List
+        stores](#tag/Stores/operation/listStores) endpoint.
+      example: '17'
+      schema:
+        type: string
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            allOf: &ref_1
+              - type: object
+                required:
+                  - id
+                  - created
+                properties:
+                  id:
+                    type: integer
+                    description: The internal ID of this entity.
+                    example: 6
+                  created:
+                    type: string
+                    format: date-time
+                    description: The time this entity was created.
+                    example: '2020-06-10T09:05:27.993483Z'
+              - allOf: &ref_0
+                  - type: object
+                    required:
+                      - name
+                      - description
+                    properties:
+                      name:
+                        type: string
+                        description: The name of the store.
+                        example: South US store
+                        minLength: 1
+                        maxLength: 200
+                      description:
+                        type: string
+                        description: The description of the store.
+                        example: This is the description of the store in south US.
+                      attributes:
+                        type: object
+                        description: The attributes of the store.
+                        example:
+                          country: USA
+                          code: 1234
+                  - type: object
+                    required:
+                      - integrationId
+                    properties:
+                      integrationId:
+                        type: string
+                        format: string
+                        example: STORE-001
+                        maxLength: 1000
+                        minLength: 1
+                        description: >
+                          The integration ID of the store. You choose this ID
+                          when you create a store.
+
+
+                          **Note**: You cannot edit the `integrationId` after
+                          the store has been created.
+              - type: object
+                required:
+                  - updated
+                  - applicationId
+                  - integrationId
+                  - created
+                properties:
+                  created:
+                    type: string
+                    format: date-time
+                    description: The time this entity was created.
+                    example: '2020-02-07T08:15:22Z'
+                  applicationId:
+                    type: integer
+                    description: The ID of the Application that owns this entity.
+                    example: 322
+                  updated:
+                    type: string
+                    format: date-time
+                    description: Timestamp of the most recent update on this entity.
+                    example: '2021-09-23T10:12:42Z'
+                  linkedCampaignIds:
+                    type: array
+                    description: >-
+                      A list of IDs of the campaigns that are linked with
+                      current store.
+                    items:
+                      type: integer
+                    example:
+                      - 4
+                      - 6
+                      - 8
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties: &ref_2
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
+put:
+  operationId: updateStore
+  summary: Update store
+  description: >-
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Update store details for a specific store ID.
+  tags:
+    - Stores
+  parameters:
+    - name: applicationId
+      in: path
+      required: true
+      description: >-
+        The ID of the Application. It is displayed in your Talon.One deployment
+        URL.
+      example: 42
+      schema:
+        type: integer
+    - name: storeId
+      required: true
+      in: path
+      description: >
+        The ID of the store.
+
+        You can get this ID with the [List
+        stores](#tag/Stores/operation/listStores) endpoint.
+      example: '17'
+      schema:
+        type: string
+  requestBody:
+    content:
+      application/json:
+        schema:
+          allOf: *ref_0
+    description: body
+    required: true
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            allOf: *ref_1
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties: *ref_2
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties: *ref_2
+delete:
+  operationId: deleteStore
+  summary: Delete store
+  description: >-
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Delete the specified store.
+  tags:
+    - Stores
+  parameters:
+    - name: applicationId
+      in: path
+      required: true
+      description: >-
+        The ID of the Application. It is displayed in your Talon.One deployment
+        URL.
+      example: 42
+      schema:
+        type: integer
+    - name: storeId
+      required: true
+      in: path
+      description: >
+        The ID of the store.
+
+        You can get this ID with the [List
+        stores](#tag/Stores/operation/listStores) endpoint.
+      example: '17'
+      schema:
+        type: string
+  responses:
+    '204':
+      description: No Content
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties: *ref_2

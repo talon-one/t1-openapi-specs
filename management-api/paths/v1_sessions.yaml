@@ -1,0 +1,98 @@
+post:
+  operationId: createSession
+  summary: Create session
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Create a session to use the Management API endpoints.
+
+    Use the value of the `token` property provided in the response as bearer
+    token in other API calls.
+
+
+    A token is valid for 3 months. In accordance with best pratices, use your
+    generated token
+
+    for all your API requests. Do **not** regenerate a token for each request.
+
+
+    This endpoint has a rate limit of 3 to 6 requests per second per account,
+    depending on your setup.
+
+
+    <div class="redoc-section">
+      <p class="title">Granular API key</p>
+      Instead of using a session, you can also use the <a href="https://docs.talon.one/docs/product/account/dev-tools/managing-mapi-keys">Management API key feature</a>
+      in the Campaign Manager to decide which endpoints can be used with a given key.
+    </div>
+  tags:
+    - Sessions
+  requestBody:
+    content:
+      application/json:
+        schema:
+          allOf:
+            - type: object
+              required:
+                - email
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: john.doe@example.com
+                  description: The email address associated with the user profile.
+            - type: object
+              properties:
+                password:
+                  type: string
+                  description: The password for your account.
+                  example: admin123456
+              required:
+                - password
+    description: body
+    required: true
+  responses:
+    '201':
+      description: Created
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              userId:
+                type: integer
+                description: The ID of the user of this session.
+                example: 109
+              token:
+                type: string
+                description: >-
+                  The token to use as a bearer token to query Management API
+                  endpoints.
+                example: dy_Fa_lQ4iDAnqldJFvVEmnsN8xDTxej19l0LZDBJhQ
+              created:
+                type: string
+                format: date-time
+                description: Unix timestamp indicating when the session was first created.
+                example: '2021-07-20T22:00:00Z'
+            required:
+              - userId
+              - token
+              - created
+delete:
+  operationId: destroySession
+  summary: Destroy session
+  description: >-
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Destroys the session.
+  tags:
+    - Sessions
+  responses:
+    '204':
+      description: No Content

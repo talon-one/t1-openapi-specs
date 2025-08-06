@@ -1,0 +1,131 @@
+get:
+  operationId: getCampaignGroups
+  summary: List campaign access groups
+  description: >-
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    List the campaign access groups in the current account.
+  tags:
+    - Campaign access groups
+  parameters:
+    - name: pageSize
+      in: query
+      required: false
+      description: The number of items in the response.
+      example: 1000
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 1000
+    - name: skip
+      in: query
+      required: false
+      description: The number of items to skip when paging through large result sets.
+      example: 100
+      schema:
+        type: integer
+    - name: sort
+      in: query
+      required: false
+      description: >
+        The field by which results should be sorted. By default, results are
+        sorted in ascending order. To sort them in descending order, prefix the
+        field name with `-`.
+
+
+        **Note:** You may not be able to use all fields for sorting. This is due
+        to performance limitations.
+      example: name
+      schema:
+        type: string
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - totalResultSize
+              - data
+            properties:
+              totalResultSize:
+                type: integer
+                example: 1
+              data:
+                type: array
+                items:
+                  allOf:
+                    - type: object
+                      required:
+                        - id
+                        - created
+                      properties:
+                        id:
+                          type: integer
+                          description: The internal ID of this entity.
+                          example: 6
+                        created:
+                          type: string
+                          format: date-time
+                          description: The time this entity was created.
+                          example: '2020-06-10T09:05:27.993483Z'
+                    - type: object
+                      required:
+                        - modified
+                      properties:
+                        modified:
+                          type: string
+                          format: date-time
+                          description: The time this entity was last modified.
+                          example: '2021-09-12T10:12:42Z'
+                    - type: object
+                      required:
+                        - accountId
+                      properties:
+                        accountId:
+                          type: integer
+                          description: The ID of the account that owns this entity.
+                          example: 3886
+                    - type: object
+                      properties:
+                        name:
+                          type: string
+                          description: The name of the campaign access group.
+                          minLength: 1
+                          example: Europe access group
+                        description:
+                          type: string
+                          description: A longer description of the campaign access group.
+                          example: >-
+                            A group that gives access to all the campaigns for
+                            the Europe market.
+                        subscribedApplicationsIds:
+                          type: array
+                          description: >-
+                            A list of IDs of the Applications that this campaign
+                            access group is enabled for.
+                          items:
+                            type: integer
+                          example:
+                            - 1
+                            - 2
+                            - 3
+                        campaignIds:
+                          type: array
+                          description: >-
+                            A list of IDs of the campaigns that are part of the
+                            campaign access group.
+                          items:
+                            type: integer
+                          example:
+                            - 4
+                            - 6
+                            - 8
+                      required:
+                        - name
+                    - type: object

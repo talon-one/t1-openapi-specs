@@ -1,0 +1,140 @@
+get:
+  operationId: getAccountAnalytics
+  summary: Get account analytics
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Return the analytics of your Talon.One account.
+  tags:
+    - Accounts and users
+  parameters:
+    - name: accountId
+      in: path
+      description: >
+        The identifier of the account. Retrieve it via the
+
+        [List users in
+        account](https://docs.talon.one/management-api#operation/getUsers)
+        endpoint in the `accountId`
+
+        property.
+      example: 28
+      required: true
+      schema:
+        type: integer
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - applications
+              - liveApplications
+              - sandboxApplications
+              - campaigns
+              - activeCampaigns
+              - liveActiveCampaigns
+              - coupons
+              - activeCoupons
+              - expiredCoupons
+              - referralCodes
+              - activeReferralCodes
+              - expiredReferralCodes
+              - activeRules
+              - users
+              - roles
+              - customAttributes
+              - webhooks
+              - loyaltyPrograms
+              - liveLoyaltyPrograms
+              - lastUpdatedAt
+            properties:
+              applications:
+                type: integer
+                description: Total number of applications in the account.
+                example: 11
+              liveApplications:
+                type: integer
+                description: Total number of live applications in the account.
+                example: 6
+              sandboxApplications:
+                type: integer
+                description: Total number of sandbox applications in the account.
+                example: 2
+              campaigns:
+                type: integer
+                description: Total number of campaigns in the account.
+                example: 35
+              activeCampaigns:
+                type: integer
+                description: Total number of active campaigns in the account.
+                example: 15
+              liveActiveCampaigns:
+                type: integer
+                description: >-
+                  Total number of active campaigns in live applications in the
+                  account.
+                example: 10
+              coupons:
+                type: integer
+                description: Total number of coupons in the account.
+                example: 850
+              activeCoupons:
+                type: integer
+                description: Total number of active coupons in the account.
+                example: 650
+              expiredCoupons:
+                type: integer
+                description: Total number of expired coupons in the account.
+                example: 200
+              referralCodes:
+                type: integer
+                description: Total number of referral codes in the account.
+                example: 500
+              activeReferralCodes:
+                type: integer
+                description: Total number of active referral codes in the account.
+                example: 100
+              expiredReferralCodes:
+                type: integer
+                description: Total number of expired referral codes in the account.
+                example: 400
+              activeRules:
+                type: integer
+                description: Total number of active rules in the account.
+                example: 35
+              users:
+                type: integer
+                description: Total number of users in the account.
+              roles:
+                type: integer
+                description: Total number of roles in the account.
+                example: 10
+              customAttributes:
+                type: integer
+                description: Total number of custom attributes in the account.
+                example: 18
+              webhooks:
+                type: integer
+                description: Total number of webhooks in the account.
+                example: 2
+              loyaltyPrograms:
+                type: integer
+                description: Total number of all loyalty programs in the account.
+                example: 5
+              liveLoyaltyPrograms:
+                type: integer
+                description: Total number of live loyalty programs in the account.
+                example: 5
+              lastUpdatedAt:
+                type: string
+                format: date-time
+                description: >-
+                  The point in time when the analytics numbers were updated
+                  last.
+                example: '2022-12-12T12:12:12Z'

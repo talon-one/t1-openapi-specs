@@ -1,0 +1,152 @@
+post:
+  operationId: importReferrals
+  summary: Import referrals
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Upload a CSV file containing the referrals that should be created.
+
+    The file should be sent as multipart data.
+
+
+    The CSV file contains the following columns:
+
+
+    - `code` (required): The referral code.
+
+    - `advocateprofileintegrationid` (required): The profile ID of the advocate.
+
+    - `startdate`: The start date in RFC3339 of the code redemption period.
+
+    - `expirydate`: The end date in RFC3339 of the code redemption period.
+
+    - `limitval`: The maximum number of redemptions of this code. Defaults to
+    `1` when left blank.
+
+    - `attributes`: A JSON object describing _custom_ referral attribute names
+    and their values, enclosed with double quotation marks.
+
+      For example, if you created a [custom attribute](https://docs.talon.one/docs/dev/concepts/attributes#custom-attributes)
+      called `category` associated with the referral entity, the object in the CSV file, when opened in a text editor, must be: `"{"category": "10_off"}"`.
+
+    You can use the time zone of your choice. It is converted to UTC internally
+    by Talon.One.
+
+
+    **Important:** When you import a CSV file with referrals, a [customer
+    profile](https://docs.talon.one/docs/dev/concepts/entities/customer-profiles)
+
+    is **not** automatically created for each `advocateprofileintegrationid`
+    column value. Use the [Update customer
+    profile](https://docs.talon.one/integration-api#tag/Customer-profiles/operation/updateCustomerProfileV2)
+
+    endpoint or the [Update multiple customer
+    profiles](https://docs.talon.one/integration-api#tag/Customer-profiles/operation/updateCustomerProfilesV2)
+
+    endpoint to create the customer profiles.
+
+
+    **Note:** We recommend limiting your file size to 500MB.
+
+
+    **Example:**
+
+
+    ```text
+
+    code,startdate,expirydate,advocateprofileintegrationid,limitval,attributes
+
+    REFERRAL_CODE1,2020-11-10T23:00:00Z,2021-11-11T23:00:00Z,integid_4,1,"{""my_attribute"":
+    ""10_off""}"
+
+    REFERRAL_CODE2,2020-11-10T23:00:00Z,2021-11-11T23:00:00Z,integid1,1,"{""my_attribute"":
+    ""20_off""}"
+
+    ```
+  tags:
+    - Referrals
+  parameters:
+    - name: applicationId
+      in: path
+      required: true
+      description: >-
+        The ID of the Application. It is displayed in your Talon.One deployment
+        URL.
+      example: 42
+      schema:
+        type: integer
+    - name: campaignId
+      in: path
+      description: >-
+        The ID of the campaign. It is displayed in your Talon.One deployment
+        URL.
+      example: 18
+      required: true
+      schema:
+        type: integer
+  requestBody:
+    required: true
+    content:
+      multipart/form-data:
+        schema:
+          type: object
+          properties:
+            upFile:
+              description: The file containing the data that is being imported.
+              type: string
+              format: csv
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            allOf:
+              - type: object
+                required:
+                  - id
+                  - created
+                properties:
+                  id:
+                    type: integer
+                    description: The internal ID of this entity.
+                    example: 6
+                  created:
+                    type: string
+                    format: date-time
+                    description: The time this entity was created.
+                    example: '2020-06-10T09:05:27.993483Z'
+              - type: object
+                required:
+                  - accountId
+                properties:
+                  accountId:
+                    type: integer
+                    description: The ID of the account that owns this entity.
+                    example: 3886
+              - type: object
+                required:
+                  - userId
+                properties:
+                  userId:
+                    type: integer
+                    description: The ID of the user associated with this entity.
+                    example: 388
+              - type: object
+                required:
+                  - amount
+                  - entity
+                properties:
+                  entity:
+                    type: string
+                    example: AttributeAllowedList
+                    description: |
+                      The name of the entity that was imported.
+                  amount:
+                    type: integer
+                    minimum: 0
+                    example: 10
+                    description: The number of values that were imported.

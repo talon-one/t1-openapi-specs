@@ -1,0 +1,49 @@
+get:
+  operationId: scimGetResourceTypes
+  summary: List supported SCIM resource types
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Retrieve a list of resource types supported by the SCIM provisioning
+    protocol.
+
+
+    Resource types define the various kinds of resources that can be managed via
+    the SCIM API, such as users, groups, or custom-defined resources.
+  tags:
+    - Accounts and users
+  responses:
+    '200':
+      description: List of resource types
+      content:
+        application/json:
+          schema:
+            type: object
+            description: >-
+              List of resource types supported by the SCIM provisioning
+              protocol.
+            required:
+              - Resources
+            properties:
+              Resources:
+                type: array
+                items:
+                  type: object
+                  description: Resource definition for the SCIM provisioning protocol.
+                  properties:
+                    id:
+                      type: string
+                      description: ID of the resource.
+                    name:
+                      type: string
+                      description: Name of the resource.
+                    description:
+                      type: string
+                      description: Human-readable description of the resource.
+                  example:
+                    id: User
+                    name: User
+                    description: User Account

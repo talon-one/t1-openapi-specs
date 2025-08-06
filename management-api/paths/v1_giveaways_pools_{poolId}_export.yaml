@@ -1,0 +1,147 @@
+get:
+  operationId: exportPoolGiveaways
+  summary: Export giveaway codes of a giveaway pool
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Download a CSV file containing the giveaway codes of a specific giveaway
+    pool.
+
+
+    **Tip:** If the exported CSV file is too large to view, you can [split it
+    into multiple
+    files](https://www.makeuseof.com/tag/how-to-split-a-huge-csv-excel-workbook-into-seperate-files/).
+
+
+    The CSV file contains the following columns:
+
+
+    - `id`: The internal ID of the giveaway.
+
+    - `poolid`: The internal ID of the giveaway pool.
+
+    - `code`: The giveaway code.
+
+    - `startdate`: The validity start date in RFC3339 of the giveaway (can be
+    empty).
+
+    - `enddate`: The validity end date in RFC3339 of the giveaway (can be
+    empty).
+
+    - `attributes`: Any custom attributes associated with the giveaway code (can
+    be empty).
+
+    - `used`: An indication of whether the giveaway is already awarded.
+
+    - `importid`: The ID of the import which created the giveaway.
+
+    - `created`: The creation time of the giveaway code.
+
+    - `profileintegrationid`: The third-party integration ID of the customer
+    profile that was awarded the giveaway. Can be empty if the giveaway was not
+    awarded.
+
+    - `profileid`: The internal ID of the customer profile that was awarded the
+    giveaway. Can be empty if the giveaway was not awarded or an internal ID
+    does not exist.
+  tags:
+    - Giveaways
+  parameters:
+    - name: poolId
+      description: >-
+        The ID of the pool. You can find it in the Campaign Manager, in the
+        **Giveaways** section.
+      in: path
+      example: 8
+      required: true
+      schema:
+        type: integer
+    - name: createdBefore
+      description: >-
+        Timestamp that filters the results to only contain giveaways created
+        before this date. Must be an RFC3339 timestamp string.
+      in: query
+      example: '2024-05-29T15:04:05+07:00'
+      schema:
+        type: string
+        format: date-time
+    - name: createdAfter
+      description: >-
+        Timestamp that filters the results to only contain giveaways created
+        after this date. Must be an RFC3339 timestamp string.
+      in: query
+      example: '2024-05-29T15:04:05+07:00'
+      schema:
+        type: string
+        format: date-time
+  responses:
+    '200':
+      description: OK
+      content:
+        application/csv:
+          schema:
+            type: string
+            format: csv
+          examples:
+            response:
+              value: >
+                id,poolid,code,startdate,enddate,attributes,used,importid,created,profileintegrationid,profileid
+
+                1,7,af18bc3839799451fb6d6b6467cf4c25e,2023-04-11T12:47:47Z,2024-04-11T12:47:47Z,"{""attribute"":
+                ""value""}",true,2,2023-04-11T12:47:47Z,R195412,35
+    '400':
+      description: Bad request
+      content:
+        application/csv:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code

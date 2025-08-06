@@ -1,0 +1,647 @@
+openapi: 3.1.0
+info:
+  title: Management API
+  version: ''
+  description: >
+    The Management API allows you to programmatically do what the Campaign
+    Manager does.
+
+    For example, use it for management purposes and backoffice systems.
+
+
+    For more background information about this API, see [Management API
+    overview](https://docs.talon.one/docs/dev/management-api/overview)
+
+
+    Ensure you [authenticate](#section/Authentication) to make requests to the
+    API.
+
+
+    **Warnings:**
+
+    - This API is not meant to be used in real-time integrations that directly
+    serve your end users.
+
+    - This API supports a maximum of **3 requests per second** for each of these
+    endpoints.
+
+     <div class="redoc-section">
+      <p class="title">Are you looking for a different API?</p>
+
+      If you need the API to:
+
+      - Integrate with Talon.One directly and send real-time data, see [the Integration API reference docs](https://docs.talon.one/integration-api).
+      - Integrate with Talon.One from a CEP or CDP platform, see [the Third-party API reference docs](https://docs.talon.one/third-party-api).
+      </p>
+    </div>
+
+
+    # Authentication
+
+
+    <SecurityDefinitions />
+servers:
+  - url: https://yourbaseurl.talon.one
+security:
+  - manager_auth: []
+  - management_key: []
+tags:
+  - name: Accounts and users
+    description: >
+      Operations for updating account information such as billing email
+      addresses, inviting users, etc.
+  - name: Achievements
+    description: >
+      Achievements allow you to reward a customer profile for performing a
+      number of specific actions or reaching a transactional milestone within a
+      defined period.
+
+
+      For example, you can use achievements to award your customers when they
+      purchase five cups of coffee in one week or when they purchase items worth
+      $3000 in three months.
+  - name: Additional costs
+    description: >
+      An extra fee applied to the cart. For example, shipping fees or processing
+      fees.
+
+
+      See the
+      [docs](https://docs.talon.one/docs/product/account/dev-tools/managing-additional-costs).
+  - name: Analytics
+    description: >
+      Analytics are used to retrieve statistical data about the performance of
+      campaigns within an Application.
+  - name: Applications
+    description: >
+      Represents an Application in the Campaign Manager.
+
+      An Application is the target of every Integration API request to
+      Talon.One.
+
+
+      One Application can hold various API keys used for Integration API
+      requests.
+
+
+      You may have multiple Applications within one account,
+
+      for example staging and production, or different international markets.
+
+
+      See the [docs](https://docs.talon.one/docs/product/applications/overview).
+  - name: Attributes
+    description: >
+      Represents a piece of information related to one of the entities avaialbe
+      in the Campaign Manager. Use
+
+      them to create highly customized rules.
+
+
+      See the
+      [docs](https://docs.talon.one/docs/product/account/dev-tools/managing-attributes).
+  - name: Audiences
+    description: >
+      Represents lists of customer profiles that allow you to target specific
+      groups of customers in your campaigns.
+
+      Audiences can be synced from customer data platforms or created directly
+      in Talon.One.
+
+
+      See the [docs](https://docs.talon.one/docs/product/audiences/overview).
+  - name: Campaign access groups
+    description: >
+      Represents the campaign access groups you can create in your Applications
+      to organize your campaigns based on the type of campaign or the team in
+      charge.
+
+
+      See the
+      [docs](https://docs.talon.one/docs/product/account/account-settings/managing-campaign-groups).
+  - name: Campaign templates
+    description: |
+      Represents templates used to generate campaigns from.
+  - name: Campaigns
+    description: >
+      Represents the primary resource used to control the behavior of the
+      Talon.One Rule Engine.
+
+      They combine rulesets, coupons, and limits into a single unit.
+
+
+      See the [docs](https://docs.talon.one/docs/product/campaigns/overview).
+  - name: Catalogs
+    description: >
+      Represents a catalog of cart items with unique SKUs. Cart item catalogs
+      allow you to synchronize your entire inventory with Talon.One.
+
+
+      See the
+      [docs](https://docs.talon.one/docs/product/account/dev-tools/managing-cart-item-catalogs).
+  - name: Collections
+    description: >
+      Represents a collection of arbitrary values that you can use inside rules.
+      For example, a list of SKUs.
+
+
+      See the
+      [docs](https://docs.talon.one/docs/product/campaigns/managing-collections).
+  - name: Coupons
+    description: >
+      Coupons are unique codes belonging to a particular campaign. They don't
+      define any behavior on their own.
+
+      Instead the campaign ruleset can include rules that validate coupons and
+      carry out particular effects.
+
+
+      See the
+      [docs](https://docs.talon.one/docs/product/campaigns/coupons/coupon-page-overview).
+  - name: Customer data
+    description: >
+      Represents the data of a customer, including sessions and events used for
+      reporting and debugging in the Campaign Manager.
+  - name: Events
+    description: >
+      Represents a single occurrence of a specific customer action, for example,
+      updating the cart or signing up for a newsletter.
+
+
+      There are 2 types of events:
+
+      - **Built-in events:** They are triggered by various endpoints, such as
+      the [Update customer
+      session](https://docs.talon.one/integration-api#tag/Customer-sessions/operation/updateCustomerSessionV2)
+      endpoint. [Learn
+      more](https://docs.talon.one/docs/dev/concepts/entities/events).
+
+      - **Custom events:** They are triggered by the [Track
+      event](https://docs.talon.one/integration-api#tag/Events/operation/trackEventV2)
+      endpoint.
+  - name: Giveaways
+    description: >
+      Represents a program that rewards customers with giveaways, such as free
+      gift cards.
+
+
+      See the [docs](https://docs.talon.one/docs/product/giveaways/overview).
+  - name: Logs
+    description: >
+      Operations to query the Talon.One logs. They contain all incoming and
+      outgoing requests.
+  - name: Loyalty
+    description: >
+      Represents loyalty programs or concepts related to them.
+
+
+      Loyalty programs can be _profile-based_ or _card-based_, depending on
+      whether loyalty points are linked
+
+      to [customer
+      profiles](https://docs.talon.one/docs/product/applications/displaying-customer-profiles)
+      or [loyalty
+      cards](https://docs.talon.one/docs/product/loyalty-programs/card-based/card-based-overview).
+
+
+      See [the Product
+      docs](https://docs.talon.one/docs/product/loyalty-programs/overview) for
+      more information.
+  - name: Loyalty cards
+    description: >
+      Represents loyalty cards.
+
+
+      [Loyalty
+      cards](https://docs.talon.one/docs/product/loyalty-programs/card-based/card-based-overview)
+      allow your customers to collect and spend loyalty points within a
+      card-based loyalty program.
+  - name: Referrals
+    description: >
+      A referral is a code shared between a customer and a prospect.
+
+
+      A referral is defined by:
+
+      - an advocate: person who invited their friend via referral program.
+
+      - a friend: person who receives the invite from an advocate.
+
+      - a referral code: code to be redeemed by the advocate(s) once they
+      referred their friend.
+
+
+      See the
+      [docs](https://docs.talon.one/docs/product/campaigns/referrals/referral-overview).
+  - name: Roles
+    description: >
+      Represents a set of permissions assigned to a user.
+
+
+      See the
+      [docs](https://docs.talon.one/docs/product/account/account-settings/managing-roles).
+  - name: Sessions
+    description: |
+      Represents a session used for authentication purposes.
+      Create one with the [Create session](#operation/createSession) endpoint.
+  - name: Store budgets
+    description: >-
+      Represents store budgets. You can set a store budget to limit the total
+      amount an individual store can spend in a campaign.
+  - name: Stores
+    description: |
+      Represents physical or digital stores, branches, and franchises.
+  - name: Webhooks
+    description: |
+      A way to send information from Talon.One to the URI of your choice.
+
+      See the [docs](https://docs.talon.one/docs/dev/getting-started/webhooks).
+paths:
+  /v1/applications:
+    $ref: paths/v1_applications.yaml
+  /v1/applications/{applicationId}:
+    $ref: paths/v1_applications_{applicationId}.yaml
+  /v1/applications/{applicationId}/campaigns:
+    $ref: paths/v1_applications_{applicationId}_campaigns.yaml
+  /v1/applications/{applicationId}/campaigns/{campaignId}:
+    $ref: paths/v1_applications_{applicationId}_campaigns_{campaignId}.yaml
+  /v1/applications/{applicationId}/campaigns/{campaignId}/copy:
+    $ref: paths/v1_applications_{applicationId}_campaigns_{campaignId}_copy.yaml
+  /v1/applications/{applicationId}/campaigns_search:
+    $ref: paths/v1_applications_{applicationId}_campaigns_search.yaml
+  /v1/applications/{applicationId}/campaigns/{campaignId}/rulesets:
+    $ref: paths/v1_applications_{applicationId}_campaigns_{campaignId}_rulesets.yaml
+  /v1/applications/{applicationId}/campaigns/{campaignId}/rulesets/{rulesetId}:
+    $ref: >-
+      paths/v1_applications_{applicationId}_campaigns_{campaignId}_rulesets_{rulesetId}.yaml
+  /v1/applications/{applicationId}/campaigns/{campaignId}/coupons:
+    $ref: paths/v1_applications_{applicationId}_campaigns_{campaignId}_coupons.yaml
+  /v1/applications/{applicationId}/campaigns/{campaignId}/coupons_with_recipients:
+    $ref: >-
+      paths/v1_applications_{applicationId}_campaigns_{campaignId}_coupons_with_recipients.yaml
+  /v1/applications/{applicationId}/campaigns/{campaignId}/coupons_async:
+    $ref: >-
+      paths/v1_applications_{applicationId}_campaigns_{campaignId}_coupons_async.yaml
+  /v1/applications/{applicationId}/campaigns/{campaignId}/coupons_deletion_jobs:
+    $ref: >-
+      paths/v1_applications_{applicationId}_campaigns_{campaignId}_coupons_deletion_jobs.yaml
+  /v1/applications/{applicationId}/campaigns/{campaignId}/coupons/no_total:
+    $ref: >-
+      paths/v1_applications_{applicationId}_campaigns_{campaignId}_coupons_no_total.yaml
+  /v1/applications/{applicationId}/campaigns/{campaignId}/coupons/{couponId}:
+    $ref: >-
+      paths/v1_applications_{applicationId}_campaigns_{campaignId}_coupons_{couponId}.yaml
+  /v1/applications/{applicationId}/campaigns/{campaignId}/coupons_search_advanced/no_total:
+    $ref: >-
+      paths/v1_applications_{applicationId}_campaigns_{campaignId}_coupons_search_advanced_no_total.yaml
+  /v1/applications/{applicationId}/coupons_search_advanced/no_total:
+    $ref: >-
+      paths/v1_applications_{applicationId}_coupons_search_advanced_no_total.yaml
+  /v1/applications/{applicationId}/campaigns/{campaignId}/referrals/{referralId}:
+    $ref: >-
+      paths/v1_applications_{applicationId}_campaigns_{campaignId}_referrals_{referralId}.yaml
+  /v1/applications/{applicationId}/campaigns/{campaignId}/referrals/no_total:
+    $ref: >-
+      paths/v1_applications_{applicationId}_campaigns_{campaignId}_referrals_no_total.yaml
+  /v1/campaign_groups:
+    $ref: paths/v1_campaign_groups.yaml
+  /v1/campaign_groups/{campaignGroupId}:
+    $ref: paths/v1_campaign_groups_{campaignGroupId}.yaml
+  /v1/campaign_templates:
+    $ref: paths/v1_campaign_templates.yaml
+  /v1/applications/{applicationId}/create_campaign_from_template:
+    $ref: paths/v1_applications_{applicationId}_create_campaign_from_template.yaml
+  /v1/loyalty_programs:
+    $ref: paths/v1_loyalty_programs.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}:
+    $ref: paths/v1_loyalty_programs_{loyaltyProgramId}.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/dashboard:
+    $ref: paths/v1_loyalty_programs_{loyaltyProgramId}_dashboard.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/import_points:
+    $ref: paths/v1_loyalty_programs_{loyaltyProgramId}_import_points.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/import_customers_tiers:
+    $ref: paths/v1_loyalty_programs_{loyaltyProgramId}_import_customers_tiers.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/profile/{integrationId}:
+    $ref: paths/v1_loyalty_programs_{loyaltyProgramId}_profile_{integrationId}.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/profile/{integrationId}/add_points:
+    $ref: >-
+      paths/v1_loyalty_programs_{loyaltyProgramId}_profile_{integrationId}_add_points.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/profile/{integrationId}/deduct_points:
+    $ref: >-
+      paths/v1_loyalty_programs_{loyaltyProgramId}_profile_{integrationId}_deduct_points.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/profile/{integrationId}/export_log:
+    $ref: >-
+      paths/v1_loyalty_programs_{loyaltyProgramId}_profile_{integrationId}_export_log.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/export_customers_tiers:
+    $ref: paths/v1_loyalty_programs_{loyaltyProgramId}_export_customers_tiers.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/statistics:
+    $ref: paths/v1_loyalty_programs_{loyaltyProgramId}_statistics.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/export_customer_balances:
+    $ref: paths/v1_loyalty_programs_{loyaltyProgramId}_export_customer_balances.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/export_customer_balance:
+    $ref: paths/v1_loyalty_programs_{loyaltyProgramId}_export_customer_balance.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/transactions:
+    $ref: paths/v1_loyalty_programs_{loyaltyProgramId}_transactions.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/import_cards:
+    $ref: paths/v1_loyalty_programs_{loyaltyProgramId}_import_cards.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/cards/batch:
+    $ref: paths/v1_loyalty_programs_{loyaltyProgramId}_cards_batch.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/export_card_balances:
+    $ref: paths/v1_loyalty_programs_{loyaltyProgramId}_export_card_balances.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/cards:
+    $ref: paths/v1_loyalty_programs_{loyaltyProgramId}_cards.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/cards/export:
+    $ref: paths/v1_loyalty_programs_{loyaltyProgramId}_cards_export.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/cards/{loyaltyCardId}:
+    $ref: paths/v1_loyalty_programs_{loyaltyProgramId}_cards_{loyaltyCardId}.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/cards/{loyaltyCardId}/add_points:
+    $ref: >-
+      paths/v1_loyalty_programs_{loyaltyProgramId}_cards_{loyaltyCardId}_add_points.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/cards/{loyaltyCardId}/deduct_points:
+    $ref: >-
+      paths/v1_loyalty_programs_{loyaltyProgramId}_cards_{loyaltyCardId}_deduct_points.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/cards/{loyaltyCardId}/export_log:
+    $ref: >-
+      paths/v1_loyalty_programs_{loyaltyProgramId}_cards_{loyaltyCardId}_export_log.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/cards/{loyaltyCardId}/logs:
+    $ref: >-
+      paths/v1_loyalty_programs_{loyaltyProgramId}_cards_{loyaltyCardId}_logs.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/cards/{loyaltyCardId}/transfer:
+    $ref: >-
+      paths/v1_loyalty_programs_{loyaltyProgramId}_cards_{loyaltyCardId}_transfer.yaml
+  /v1/giveaways/pools/{poolId}/import:
+    $ref: paths/v1_giveaways_pools_{poolId}_import.yaml
+  /v1/giveaways/pools/{poolId}/export:
+    $ref: paths/v1_giveaways_pools_{poolId}_export.yaml
+  /v1/collections:
+    $ref: paths/v1_collections.yaml
+  /v1/collections/{collectionId}:
+    $ref: paths/v1_collections_{collectionId}.yaml
+  /v1/collections/{collectionId}/items:
+    $ref: paths/v1_collections_{collectionId}_items.yaml
+  /v1/applications/{applicationId}/collections:
+    $ref: paths/v1_applications_{applicationId}_collections.yaml
+  /v1/applications/{applicationId}/campaigns/{campaignId}/collections:
+    $ref: >-
+      paths/v1_applications_{applicationId}_campaigns_{campaignId}_collections.yaml
+  /v1/applications/{applicationId}/campaigns/{campaignId}/collections/{collectionId}:
+    $ref: >-
+      paths/v1_applications_{applicationId}_campaigns_{campaignId}_collections_{collectionId}.yaml
+  /v1/collections/{collectionId}/import:
+    $ref: paths/v1_collections_{collectionId}_import.yaml
+  /v1/applications/{applicationId}/campaigns/{campaignId}/collections/{collectionId}/import:
+    $ref: >-
+      paths/v1_applications_{applicationId}_campaigns_{campaignId}_collections_{collectionId}_import.yaml
+  /v1/collections/{collectionId}/export:
+    $ref: paths/v1_collections_{collectionId}_export.yaml
+  /v1/applications/{applicationId}/campaigns/{campaignId}/collections/{collectionId}/export:
+    $ref: >-
+      paths/v1_applications_{applicationId}_campaigns_{campaignId}_collections_{collectionId}_export.yaml
+  /v1/applications/{applicationId}/health_report:
+    $ref: paths/v1_applications_{applicationId}_health_report.yaml
+  /v1/applications/{applicationId}/access_logs/no_total:
+    $ref: paths/v1_applications_{applicationId}_access_logs_no_total.yaml
+  /v1/applications/{applicationId}/campaigns/{campaignId}/analytics:
+    $ref: >-
+      paths/v1_applications_{applicationId}_campaigns_{campaignId}_analytics.yaml
+  /v1/applications/{applicationId}/customers:
+    $ref: paths/v1_applications_{applicationId}_customers.yaml
+  /v1/applications/{applicationId}/customer_search:
+    $ref: paths/v1_applications_{applicationId}_customer_search.yaml
+  /v1/customer_search/no_total:
+    $ref: paths/v1_customer_search_no_total.yaml
+  /v1/customers/{customerId}:
+    $ref: paths/v1_customers_{customerId}.yaml
+  /v1/customers/no_total:
+    $ref: paths/v1_customers_no_total.yaml
+  /v1/applications/{applicationId}/customers/{customerId}:
+    $ref: paths/v1_applications_{applicationId}_customers_{customerId}.yaml
+  /v1/applications/{applicationId}/customer_activity_reports/no_total:
+    $ref: >-
+      paths/v1_applications_{applicationId}_customer_activity_reports_no_total.yaml
+  /v1/applications/{applicationId}/customer_activity_reports/{customerId}:
+    $ref: >-
+      paths/v1_applications_{applicationId}_customer_activity_reports_{customerId}.yaml
+  /v1/applications/{applicationId}/customers/{customerId}/analytics:
+    $ref: >-
+      paths/v1_applications_{applicationId}_customers_{customerId}_analytics.yaml
+  /v1/applications/{applicationId}/sessions:
+    $ref: paths/v1_applications_{applicationId}_sessions.yaml
+  /v1/applications/{applicationId}/sessions/{sessionId}:
+    $ref: paths/v1_applications_{applicationId}_sessions_{sessionId}.yaml
+  /v1/applications/{applicationId}/events/no_total:
+    $ref: paths/v1_applications_{applicationId}_events_no_total.yaml
+  /v1/applications/{applicationId}/event_types:
+    $ref: paths/v1_applications_{applicationId}_event_types.yaml
+  /v1/audiences:
+    $ref: paths/v1_audiences.yaml
+  /v1/audiences/analytics:
+    $ref: paths/v1_audiences_analytics.yaml
+  /v1/audiences/{audienceId}/memberships:
+    $ref: paths/v1_audiences_{audienceId}_memberships.yaml
+  /v1/audiences/{audienceId}/memberships/import:
+    $ref: paths/v1_audiences_{audienceId}_memberships_import.yaml
+  /v1/audiences/{audienceId}/memberships/export:
+    $ref: paths/v1_audiences_{audienceId}_memberships_export.yaml
+  /v1/applications/{applicationId}/profile/{integrationId}/friends:
+    $ref: paths/v1_applications_{applicationId}_profile_{integrationId}_friends.yaml
+  /v1/attributes:
+    $ref: paths/v1_attributes.yaml
+  /v1/attributes/{attributeId}:
+    $ref: paths/v1_attributes_{attributeId}.yaml
+  /v1/attributes/{attributeId}/allowed_list/import:
+    $ref: paths/v1_attributes_{attributeId}_allowed_list_import.yaml
+  /v1/catalogs/{catalogId}/items:
+    $ref: paths/v1_catalogs_{catalogId}_items.yaml
+  /v1/additional_costs:
+    $ref: paths/v1_additional_costs.yaml
+  /v1/additional_costs/{additionalCostId}:
+    $ref: paths/v1_additional_costs_{additionalCostId}.yaml
+  /v1/webhooks:
+    $ref: paths/v1_webhooks.yaml
+  /v1/webhooks/{webhookId}:
+    $ref: paths/v1_webhooks_{webhookId}.yaml
+  /v1/message_logs:
+    $ref: paths/v1_message_logs.yaml
+  /v1/event_types:
+    $ref: paths/v1_event_types.yaml
+  /v1/applications/{applicationId}/campaigns/{campaignId}/import_coupons:
+    $ref: >-
+      paths/v1_applications_{applicationId}_campaigns_{campaignId}_import_coupons.yaml
+  /v1/applications/{applicationId}/export_coupons:
+    $ref: paths/v1_applications_{applicationId}_export_coupons.yaml
+  /v1/applications/{applicationId}/export_referrals:
+    $ref: paths/v1_applications_{applicationId}_export_referrals.yaml
+  /v1/applications/{applicationId}/export_effects:
+    $ref: paths/v1_applications_{applicationId}_export_effects.yaml
+  /v1/applications/{applicationId}/export_customer_sessions:
+    $ref: paths/v1_applications_{applicationId}_export_customer_sessions.yaml
+  /v1/applications/{applicationId}/campaigns/{campaignId}/import_referrals:
+    $ref: >-
+      paths/v1_applications_{applicationId}_campaigns_{campaignId}_import_referrals.yaml
+  /v1/users:
+    $ref: paths/v1_users.yaml
+  /v1/users/{userId}:
+    $ref: paths/v1_users_{userId}.yaml
+  /v1/provisioning/okta:
+    $ref: paths/v1_provisioning_okta.yaml
+  /v1/provisioning/scim/Groups:
+    $ref: paths/v1_provisioning_scim_Groups.yaml
+  /v1/provisioning/scim/Groups/{groupId}:
+    $ref: paths/v1_provisioning_scim_Groups_{groupId}.yaml
+  /v1/provisioning/scim/Users:
+    $ref: paths/v1_provisioning_scim_Users.yaml
+  /v1/provisioning/scim/Users/{userId}:
+    $ref: paths/v1_provisioning_scim_Users_{userId}.yaml
+  /v1/provisioning/scim/ResourceTypes:
+    $ref: paths/v1_provisioning_scim_ResourceTypes.yaml
+  /v1/provisioning/scim/ServiceProviderConfig:
+    $ref: paths/v1_provisioning_scim_ServiceProviderConfig.yaml
+  /v1/provisioning/scim/Schemas:
+    $ref: paths/v1_provisioning_scim_Schemas.yaml
+  /v1/users/delete:
+    $ref: paths/v1_users_delete.yaml
+  /v1/users/activate:
+    $ref: paths/v1_users_activate.yaml
+  /v1/users/deactivate:
+    $ref: paths/v1_users_deactivate.yaml
+  /v1/users/invite:
+    $ref: paths/v1_users_invite.yaml
+  /v1/changes:
+    $ref: paths/v1_changes.yaml
+  /v2/invites:
+    $ref: paths/v2_invites.yaml
+  /v1/invite_emails:
+    $ref: paths/v1_invite_emails.yaml
+  /v1/password_recovery_emails:
+    $ref: paths/v1_password_recovery_emails.yaml
+  /v1/reset_password:
+    $ref: paths/v1_reset_password.yaml
+  /v1/accounts/{accountId}:
+    $ref: paths/v1_accounts_{accountId}.yaml
+  /v1/accounts/{accountId}/analytics:
+    $ref: paths/v1_accounts_{accountId}_analytics.yaml
+  /v1/sessions:
+    $ref: paths/v1_sessions.yaml
+  /v1/exports:
+    $ref: paths/v1_exports.yaml
+  /v2/roles:
+    $ref: paths/v2_roles.yaml
+  /v2/roles/{roleId}:
+    $ref: paths/v2_roles_{roleId}.yaml
+  /v1/applications/{applicationId}/stores:
+    $ref: paths/v1_applications_{applicationId}_stores.yaml
+  /v1/applications/{applicationId}/stores/{storeId}:
+    $ref: paths/v1_applications_{applicationId}_stores_{storeId}.yaml
+  /v1/applications/{applicationId}/campaigns/{campaignId}/stores/export:
+    $ref: >-
+      paths/v1_applications_{applicationId}_campaigns_{campaignId}_stores_export.yaml
+  /v1/applications/{applicationId}/campaigns/{campaignId}/stores:
+    $ref: paths/v1_applications_{applicationId}_campaigns_{campaignId}_stores.yaml
+  /v1/applications/{applicationId}/campaigns/{campaignId}/stores/import:
+    $ref: >-
+      paths/v1_applications_{applicationId}_campaigns_{campaignId}_stores_import.yaml
+  /v1/applications/{applicationId}/campaigns/{campaignId}/stores/budgets:
+    $ref: >-
+      paths/v1_applications_{applicationId}_campaigns_{campaignId}_stores_budgets.yaml
+  /v1/applications/{applicationId}/campaigns/{campaignId}/stores/budgets/summary:
+    $ref: >-
+      paths/v1_applications_{applicationId}_campaigns_{campaignId}_stores_budgets_summary.yaml
+  /v1/applications/{applicationId}/campaigns/{campaignId}/stores/budgets/import:
+    $ref: >-
+      paths/v1_applications_{applicationId}_campaigns_{campaignId}_stores_budgets_import.yaml
+  /v1/applications/{applicationId}/campaigns/{campaignId}/stores/budgets/export:
+    $ref: >-
+      paths/v1_applications_{applicationId}_campaigns_{campaignId}_stores_budgets_export.yaml
+  /v1/applications/{applicationId}/campaigns/{campaignId}/achievements:
+    $ref: >-
+      paths/v1_applications_{applicationId}_campaigns_{campaignId}_achievements.yaml
+  /v1/applications/{applicationId}/campaigns/{campaignId}/achievements/{achievementId}:
+    $ref: >-
+      paths/v1_applications_{applicationId}_campaigns_{campaignId}_achievements_{achievementId}.yaml
+  /v1/applications/{applicationId}/campaigns/{campaignId}/achievements/{achievementId}/export:
+    $ref: >-
+      paths/v1_applications_{applicationId}_campaigns_{campaignId}_achievements_{achievementId}_export.yaml
+  /v1/applications/{applicationId}/achievement_progress/{integrationId}:
+    $ref: >-
+      paths/v1_applications_{applicationId}_achievement_progress_{integrationId}.yaml
+components:
+  securitySchemes:
+    manager_auth:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: >
+        This authentication scheme relies on a bearer token that you can use to
+        access all the endpoints of the Management API.
+
+
+        To create the token:
+
+
+        1. Get a bearer token by calling the
+        [createSession](#operation/createSession) endpoint.
+
+        1. Use the `token` property of the response in the HTTP header of your
+        next queries:
+           `Authorization: Bearer $TOKEN`.
+
+        A token is valid for 3 months. In accordance with best pratices, use
+        your generated token
+
+        for all your API requests. Do **not** regenerate a token for each
+        request.
+
+
+        **Note:** We recommend that you use a [Management API
+        key](https://docs.talon.one/management-api#section/Authentication/management_key)
+
+        instead of a bearer token.
+    management_key:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: >
+        The API key authentication gives you access to the endpoints selected by
+        the admin who created the key.
+
+        Using an API key is the recommended authentication method.
+
+
+        The key must be generated by an admin and given to the developer that
+        requires it:
+
+
+        1. Sign in to the Campaign Manager and click **Account** > **Tools** >
+        **Management API Keys**.
+
+        1. Click **Create Key** and give it a name.
+
+        1. Set an expiration date.
+
+        1. Choose the endpoints the key should give access to.
+
+        1. Click **Create Key**.
+
+        1. Share it with your developer.
+
+
+        The developer can now use the API key in the HTTP header, prefixing it
+        with `ManagementKey-v1`:
+
+
+        ```
+
+        Authorization: ManagementKey-v1 bd9479c59e16f9dbc644d33aa74d58270fe13bf3
+
+        ```
+x-notifications-desc: >
+  Use [Application
+  notifications](/docs/product/applications/application-notifications/overview)
+  and [loyalty
+  notifications](/docs/product/loyalty-programs/loyalty-notifications/overview)
+  to notify the system of your choice of certain changes that happened in
+  Talon.One.
+
+  **Note:** Required fields are not omitted if they are empty (have `null`
+  value).

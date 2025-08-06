@@ -1,0 +1,251 @@
+get:
+  operationId: scimGetUser
+  summary: Get SCIM user
+  description: >-
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Retrieve data for a specific Talon.One user created using the SCIM
+    provisioning protocol with an identity provider, for example, Microsoft
+    Entra ID.
+  tags:
+    - Accounts and users
+  parameters:
+    - name: userId
+      in: path
+      description: The ID of the user.
+      example: 33
+      required: true
+      schema:
+        type: integer
+  responses:
+    '200':
+      description: User details
+      content:
+        application/json:
+          schema:
+            type: object
+            description: >-
+              Schema definition for users that have been provisioned using the
+              SCIM protocol with an identity provider, for example, Microsoft
+              Entra ID.
+            allOf: &ref_2
+              - type: object
+                description: >-
+                  Payload for users that are created using the SCIM provisioning
+                  protocol with an identity provider, for example, Microsoft
+                  Entra ID.
+                required: &ref_0
+                  - userName
+                allOf: &ref_1
+                  - type: object
+                    description: >-
+                      Schema definition for base user fields, provisioned using
+                      the SCIM protocol and used by Talon.One.
+                    properties:
+                      active:
+                        type: boolean
+                        description: Status of the user.
+                        example: true
+                      displayName:
+                        type: string
+                        description: Display name of the user.
+                        example: John Doe
+                      userName:
+                        type: string
+                        description: >-
+                          Unique identifier of the user. This is usually an
+                          email address.
+                        example: john.doe@example.com
+                      name:
+                        type: object
+                        description: The components of the user’s real name.
+                        properties:
+                          formatted:
+                            type: string
+                            description: >-
+                              The full name, including all middle names, titles,
+                              and suffixes as appropriate, formatted for
+                              display.
+                            example: Mr. John J Doe
+                  - type: object
+                    description: >-
+                      Additional user properties, that are not processed by
+                      Talon.One, but only stored and returned in the User
+                      response.
+              - type: object
+                required:
+                  - id
+                properties:
+                  id:
+                    type: string
+                    description: ID of the user.
+                    example: '359'
+delete:
+  operationId: scimDeleteUser
+  summary: Delete SCIM user
+  description: >-
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Delete a specific Talon.One user created using the SCIM provisioning
+    protocol with an identity provider, for example, Microsoft Entra ID.
+  tags:
+    - Accounts and users
+  parameters:
+    - name: userId
+      in: path
+      description: The ID of the user.
+      example: 33
+      required: true
+      schema:
+        type: integer
+  responses:
+    '204':
+      description: No Content
+put:
+  operationId: scimReplaceUserAttributes
+  summary: Update SCIM user
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Update the details of a specific Talon.One user created using the SCIM
+    provisioning protocol with an identity provider, for example, Microsoft
+    Entra ID.
+
+
+    This endpoint replaces all attributes of the specific user with the
+    attributes provided in the request payload.
+  tags:
+    - Accounts and users
+  parameters:
+    - name: userId
+      in: path
+      description: The ID of the user.
+      example: 33
+      required: true
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          description: >-
+            Payload for users that are created using the SCIM provisioning
+            protocol with an identity provider, for example, Microsoft Entra ID.
+          required: *ref_0
+          allOf: *ref_1
+    description: body
+    required: true
+  responses:
+    '200':
+      description: User details
+      content:
+        application/json:
+          schema:
+            type: object
+            description: >-
+              Schema definition for users that have been provisioned using the
+              SCIM protocol with an identity provider, for example, Microsoft
+              Entra ID.
+            allOf: *ref_2
+patch:
+  operationId: scimPatchUser
+  summary: Update SCIM user attributes
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Update certain attributes of a specific Talon.One user created using the
+    SCIM provisioning protocol with an identity provider, for example, Microsoft
+    Entra ID.
+
+
+    This endpoint allows for selective adding, removing, or replacing specific
+    attributes while leaving other attributes unchanged.
+  tags:
+    - Accounts and users
+  parameters:
+    - name: userId
+      in: path
+      description: The ID of the user.
+      example: 33
+      required: true
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          description: SCIM Patch request
+          required:
+            - Operations
+          properties:
+            schemas:
+              type: array
+              description: SCIM schema for the given resource.
+              items:
+                type: string
+                example: urn:ietf:params:scim:api:messages:2.0:PatchOp
+            Operations:
+              type: array
+              items:
+                type: object
+                description: Patch operation that is used to update the information.
+                required:
+                  - op
+                properties:
+                  op:
+                    type: string
+                    enum:
+                      - add
+                      - remove
+                      - replace
+                    description: The method that should be used in the operation.
+                  path:
+                    type: string
+                    description: The path specifying the attribute that should be updated.
+                  value:
+                    type: string
+                    description: >-
+                      The value that should be updated. Required if `op` is
+                      `add` or `replace`.
+                example:
+                  op: add
+                  path: nickName
+                  value: John
+          example:
+            Operations:
+              - op: replace
+                path: active
+                value: test
+              - op: add
+                path: nickName
+                value: johndoe
+            schemas:
+              - urn:ietf:params:scim:api:messages:2.0:PatchOp
+    description: body
+    required: true
+  responses:
+    '200':
+      description: User details
+      content:
+        application/json:
+          schema:
+            type: object
+            description: >-
+              Schema definition for users that have been provisioned using the
+              SCIM protocol with an identity provider, for example, Microsoft
+              Entra ID.
+            allOf: *ref_2

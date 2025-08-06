@@ -1,0 +1,377 @@
+get:
+  operationId: getLoyaltyProgramTransactions
+  summary: List loyalty program transactions
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Retrieve loyalty program transaction logs in a given loyalty program with
+    filtering options applied. Manual and imported transactions are also
+    included.
+
+    **Note:** If no filters are applied, the last 50 loyalty transactions for
+    the given loyalty program are returned.
+
+
+    **Important:** To get loyalty transaction logs for a given Integration ID in
+    a loyalty program,
+
+    we recommend using the Integration API's [Get customer's loyalty
+    logs](https://docs.talon.one/integration-api#tag/Loyalty/operation/getLoyaltyProgramProfileTransactions).
+  tags:
+    - Loyalty
+  parameters:
+    - name: loyaltyProgramId
+      in: path
+      required: true
+      description: >
+        Identifier of the loyalty program. You can get the ID with
+
+        the [List loyalty
+        programs](https://docs.talon.one/management-api#tag/Loyalty/operation/getLoyaltyPrograms)
+        endpoint.
+      example: 8
+      schema:
+        type: integer
+    - name: loyaltyTransactionType
+      in: query
+      required: false
+      description: |
+        Filter results by loyalty transaction type:
+        - `manual`: Loyalty transaction that was done manually.
+        - `session`: Loyalty transaction that resulted from a customer session.
+        - `import`: Loyalty transaction that was imported from a CSV file.
+      example: manual
+      schema:
+        type: string
+        enum:
+          - manual
+          - session
+          - import
+    - name: subledgerId
+      in: query
+      required: false
+      description: The ID of the subledger by which we filter the data.
+      example: subledger1
+      schema:
+        type: string
+    - name: customerSessionIDs
+      in: query
+      required: false
+      description: |
+        Filter the results by a list of customer session IDs.
+
+        To include multiple IDs, repeat the parameter for each one, for example,
+        `?customerSessionIDs=id1&customerSessionIDs=id2`.
+
+        The response contains only data associated with the specified sessions.
+      example:
+        - session_integration_id_1
+        - session_integration_id_1
+      schema:
+        type: array
+        items:
+          type: string
+    - name: transactionUUIDs
+      in: query
+      required: false
+      description: >
+        Filter the results by a list of transaction UUIDs.
+
+
+        To include multiple IDs, repeat the parameter for each one, for example,
+
+        `?transactionUUIDs=uuid1&transactionUUIDs=uuid2`.
+
+
+        The response contains only data associated with the specified
+        transactions.
+      example:
+        - dc608634-0100-40d9-b371-e964476bbe0f
+        - 9e829590-05cf-407b-b4c0-5f28468a81e1
+      schema:
+        type: array
+        items:
+          type: string
+    - name: startDate
+      in: query
+      required: false
+      description: >
+        Date and time from which results are returned. Results are filtered by
+        transaction creation date.
+
+
+        **Note:**
+
+
+        - It must be an RFC3339 timestamp string.
+
+        - You can include a time component in your string, for example,
+        `T23:59:59` to specify the end of the day. The time zone setting
+        considered is `UTC`. If you do not include a time component, a default
+        time value of `T00:00:00` (midnight) in `UTC` is considered.
+      example: '2024-05-29T15:04:05+07:00'
+      schema:
+        type: string
+        format: date-time
+    - name: endDate
+      in: query
+      required: false
+      description: >
+        Date and time by which results are returned. Results are filtered by
+        transaction creation date.
+
+
+        **Note:**
+
+
+        - It must be an RFC3339 timestamp string.
+
+        - You can include a time component in your string, for example,
+        `T23:59:59` to specify the end of the day. The time zone setting
+        considered is `UTC`. If you do not include a time component, a default
+        time value of `T00:00:00` (midnight) in `UTC` is considered.
+      example: '2024-05-29T15:04:05+07:00'
+      schema:
+        type: string
+        format: date-time
+    - name: pageSize
+      in: query
+      required: false
+      description: The number of items in the response.
+      example: 50
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 50
+    - name: skip
+      in: query
+      required: false
+      description: The number of items to skip when paging through large result sets.
+      example: 100
+      schema:
+        type: integer
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - hasMore
+              - data
+            properties:
+              hasMore:
+                type: boolean
+                example: true
+              data:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                    - transactionUUID
+                    - created
+                    - programId
+                    - type
+                    - amount
+                    - name
+                    - subledgerId
+                    - startDate
+                    - expiryDate
+                  properties:
+                    id:
+                      type: integer
+                      description: ID of the loyalty ledger transaction.
+                      example: 123
+                    transactionUUID:
+                      type: string
+                      description: Unique identifier of the transaction in the UUID format.
+                      example: ce59f12a-f53b-4014-a745-636d93f2bd3f
+                    programId:
+                      type: integer
+                      description: ID of the loyalty program.
+                      example: 324
+                    campaignId:
+                      type: integer
+                      description: ID of the campaign.
+                      example: 324
+                    created:
+                      type: string
+                      format: date-time
+                      description: Date and time the loyalty transaction occurred.
+                      example: 2022-01-02T15:04:05Z07:00
+                    type:
+                      type: string
+                      enum:
+                        - addition
+                        - subtraction
+                      description: |
+                        Type of transaction. Possible values:
+                          - `addition`: Signifies added points.
+                          - `subtraction`: Signifies deducted points.
+                      maxLength: 255
+                      example: addition
+                    amount:
+                      type: number
+                      description: >-
+                        Amount of loyalty points added or deducted in the
+                        transaction.
+                      example: 10.25
+                    name:
+                      type: string
+                      description: Name or reason for the loyalty ledger transaction.
+                      maxLength: 255
+                      example: Reward 50 points for each $500 purchase
+                    startDate:
+                      type: string
+                      description: |
+                        When points become active. Possible values:
+                          - `immediate`: Points are immediately active.
+                          - a timestamp value: Points become active at a given date and time.
+                      maxLength: 64
+                      example: 2022-01-02T15:04:05Z07:00
+                    expiryDate:
+                      type: string
+                      description: |
+                        When points expire. Possible values:
+                          - `unlimited`: Points have no expiration date.
+                          - a timestamp value: Points expire at a given date and time.
+                      example: 2022-01-02T15:04:05Z07:00
+                    customerProfileId:
+                      type: string
+                      description: >-
+                        Customer profile integration ID used in the loyalty
+                        program.
+                      maxLength: 255
+                      example: kda0fajs0-fad9f-fd9dfsa9-fd9dasjf9
+                    cardIdentifier:
+                      type: string
+                      description: |
+                        The alphanumeric identifier of the loyalty card.
+                      maxLength: 108
+                      pattern: ^[A-Za-z0-9_-]*$
+                      example: summer-loyalty-card-0543
+                    subledgerId:
+                      type: string
+                      description: ID of the subledger.
+                      maxLength: 64
+                      example: sub-123
+                    customerSessionId:
+                      type: string
+                      description: >-
+                        ID of the customer session where the transaction
+                        occurred.
+                      maxLength: 255
+                      example: 05c2da0d-48fa-4aa1-b629-898f58f1584d
+                    importId:
+                      type: integer
+                      description: ID of the import where the transaction occurred.
+                      example: 4
+                    userId:
+                      type: integer
+                      description: >-
+                        ID of the user who manually added or deducted points.
+                        Applies only to manual transactions.
+                      example: 5
+                    userEmail:
+                      type: string
+                      description: >-
+                        The email of the Campaign Manager account that manually
+                        added or deducted points. Applies only to manual
+                        transactions.
+                      example: john.doe@example.com
+                    rulesetId:
+                      type: integer
+                      description: >-
+                        ID of the ruleset containing the rule that triggered the
+                        effect. Applies only for transactions that resulted from
+                        a customer session.
+                      example: 11
+                    ruleName:
+                      type: string
+                      description: >-
+                        Name of the rule that triggered the effect. Applies only
+                        for transactions that resulted from a customer session.
+                      example: 10 points for every $100 spent
+                    flags:
+                      description: >-
+                        The flags of the transaction, when applicable. The
+                        `createsNegativeBalance`  flag indicates whether the
+                        transaction results in a negative balance.
+                      type: object
+                      properties:
+                        createsNegativeBalance:
+                          type: boolean
+                          description: Set to true if the entry creates negative balance.
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties: &ref_0
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            type: object
+            properties: *ref_0
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties: *ref_0

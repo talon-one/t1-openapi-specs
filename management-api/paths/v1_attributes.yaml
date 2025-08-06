@@ -1,0 +1,281 @@
+post:
+  operationId: createAttribute
+  summary: Create custom attribute
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Create a _custom attribute_ in this account.
+
+    [Custom attributes](https://docs.talon.one/docs/dev/concepts/attributes)
+    allow you
+
+    to add data to Talon.One domain entities like campaigns, coupons,
+
+    customers and so on.
+
+
+    These attributes can then be given values when creating/updating these
+    entities, and these values can be
+
+    used in your campaign rules.
+
+
+    For example, you could define a `zipCode` field for customer sessions,
+
+    and add a rule to your campaign that only allows certain ZIP codes.
+
+
+    These attributes are shared across all Applications in your account and are
+    never required.
+  tags:
+    - Attributes
+  requestBody:
+    content:
+      application/json:
+        schema:
+          allOf: &ref_0
+            - type: object
+              required:
+                - entity
+                - name
+                - title
+                - type
+                - description
+                - suggestions
+                - editable
+              properties:
+                entity:
+                  type: string
+                  description: >-
+                    The name of the entity that can have this attribute. When
+                    creating or updating the entities of a given type, you can
+                    include an `attributes` object with keys corresponding to
+                    the `name` of the custom attributes for that type.
+                  enum:
+                    - Application
+                    - Campaign
+                    - CustomerProfile
+                    - CustomerSession
+                    - CartItem
+                    - Coupon
+                    - Event
+                    - Giveaway
+                    - Referral
+                    - Store
+                  example: Event
+                eventType:
+                  type: string
+                  example: pageViewed
+                name:
+                  type: string
+                  pattern: ^[A-Za-z]\w*$
+                  description: >-
+                    The attribute name that will be used in API requests and
+                    Talang. E.g. if `name == "region"` then you would set the
+                    region attribute by including an `attributes.region`
+                    property in your request payload.
+                  example: pageViewed
+                title:
+                  type: string
+                  pattern: ^[A-Za-z][A-Za-z0-9_.!~*'() -]*$
+                  description: >-
+                    The human-readable name for the attribute that will be shown
+                    in the Campaign Manager. Like `name`, the combination of
+                    entity and title must also be unique.
+                  example: Page view event
+                type:
+                  type: string
+                  enum:
+                    - string
+                    - number
+                    - boolean
+                    - time
+                    - (list string)
+                    - (list number)
+                    - (list time)
+                    - location
+                    - (list location)
+                  description: >-
+                    The data type of the attribute, a `time` attribute must be
+                    sent as a string that conforms to the
+                    [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) timestamp
+                    format.
+                  example: string
+                description:
+                  type: string
+                  description: A description of this attribute.
+                  example: Event triggered when a customer displays a page.
+                suggestions:
+                  type: array
+                  description: A list of suggestions for the attribute.
+                  maxItems: 50
+                  items:
+                    type: string
+                    minLength: 1
+                hasAllowedList:
+                  type: boolean
+                  description: >-
+                    Whether or not this attribute has an allowed list of values
+                    associated with it.
+                  default: false
+                  example: false
+                restrictedBySuggestions:
+                  type: boolean
+                  description: >
+                    Whether or not this attribute's value is restricted by
+                    suggestions (`suggestions` property)
+
+                    or by an allowed list of value (`hasAllowedList` property).
+                  default: false
+                  example: false
+                editable:
+                  type: boolean
+                  description: Whether or not this attribute can be edited.
+                  example: true
+                subscribedApplicationsIds:
+                  type: array
+                  description: >-
+                    A list of the IDs of the applications where this attribute
+                    is available.
+                  items:
+                    type: integer
+                  example:
+                    - 1
+                    - 4
+                    - 9
+                subscribedCatalogsIds:
+                  type: array
+                  description: >-
+                    A list of the IDs of the catalogs where this attribute is
+                    available.
+                  items:
+                    type: integer
+                  example:
+                    - 2
+                    - 5
+                allowedSubscriptions:
+                  type: array
+                  description: >
+                    A list of allowed subscription types for this attribute.
+
+
+                    **Note:** This only applies to attributes associated with
+                    the `CartItem` entity.
+                  example:
+                    - application
+                    - catalog
+                  maxItems: 2
+                  items:
+                    type: string
+                    enum:
+                      - application
+                      - catalog
+    description: body
+    required: true
+  responses:
+    '201':
+      description: Created
+      content:
+        application/json:
+          schema:
+            allOf: &ref_1
+              - type: object
+                required:
+                  - id
+                  - created
+                properties:
+                  id:
+                    type: integer
+                    description: The internal ID of this entity.
+                    example: 6
+                  created:
+                    type: string
+                    format: date-time
+                    description: The time this entity was created.
+                    example: '2020-06-10T09:05:27.993483Z'
+              - type: object
+                required:
+                  - accountId
+                properties:
+                  accountId:
+                    type: integer
+                    description: The ID of the account that owns this entity.
+                    example: 3886
+              - allOf: *ref_0
+              - type: object
+                properties:
+                  eventTypeId:
+                    type: integer
+                    example: 22
+get:
+  operationId: getAttributes
+  summary: List custom attributes
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Return all the custom attributes for the account.
+  tags:
+    - Attributes
+  parameters:
+    - name: pageSize
+      in: query
+      required: false
+      description: The number of items in the response.
+      example: 1000
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 1000
+    - name: skip
+      in: query
+      required: false
+      description: The number of items to skip when paging through large result sets.
+      example: 100
+      schema:
+        type: integer
+    - name: sort
+      in: query
+      required: false
+      description: >
+        The field by which results should be sorted. By default, results are
+        sorted in ascending order. To sort them in descending order, prefix the
+        field name with `-`.
+
+
+        **Note:** You may not be able to use all fields for sorting. This is due
+        to performance limitations.
+      example: name
+      schema:
+        type: string
+    - name: entity
+      in: query
+      required: false
+      description: Returned attributes will be filtered by supplied entity.
+      example: entity1
+      schema:
+        type: string
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - totalResultSize
+              - data
+            properties:
+              totalResultSize:
+                type: integer
+                example: 1
+              data:
+                type: array
+                items:
+                  allOf: *ref_1

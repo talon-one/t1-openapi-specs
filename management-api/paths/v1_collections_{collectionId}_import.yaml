@@ -1,0 +1,180 @@
+post:
+  operationId: importAccountCollection
+  summary: Import data into existing account-level collection
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Upload a CSV file containing the collection of string values that should be
+    attached as payload for collection.
+
+    The file should be sent as multipart data.
+
+
+    The import **replaces** the initial content of the collection.
+
+
+    The CSV file **must** only contain the following column:
+
+
+    - `item`: the values in your collection.
+
+
+    A collection is limited to 500,000 items.
+
+
+    Example:
+
+
+    ```
+
+    item
+
+    Addidas
+
+    Nike
+
+    Asics
+
+    ```
+
+
+    **Note:** Before sending a request to this endpoint, ensure the data in the
+    CSV to import is different from the data currently stored in the collection.
+  tags:
+    - Collections
+  parameters:
+    - name: collectionId
+      in: path
+      required: true
+      description: >-
+        The ID of the collection. You can get it with the [List collections in
+        account](#operation/listAccountCollections) endpoint.
+      example: 22
+      schema:
+        type: integer
+  requestBody:
+    required: true
+    content:
+      multipart/form-data:
+        schema:
+          type: object
+          properties:
+            upFile:
+              description: The file containing the data that is being imported.
+              type: string
+              format: csv
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            allOf:
+              - type: object
+                required:
+                  - id
+                  - created
+                properties:
+                  id:
+                    type: integer
+                    description: The internal ID of this entity.
+                    example: 6
+                  created:
+                    type: string
+                    format: date-time
+                    description: The time this entity was created.
+                    example: '2020-06-10T09:05:27.993483Z'
+              - type: object
+                required:
+                  - accountId
+                properties:
+                  accountId:
+                    type: integer
+                    description: The ID of the account that owns this entity.
+                    example: 3886
+              - type: object
+                required:
+                  - userId
+                properties:
+                  userId:
+                    type: integer
+                    description: The ID of the user associated with this entity.
+                    example: 388
+              - type: object
+                required:
+                  - amount
+                  - entity
+                properties:
+                  entity:
+                    type: string
+                    example: AttributeAllowedList
+                    description: |
+                      The name of the entity that was imported.
+                  amount:
+                    type: integer
+                    minimum: 0
+                    example: 10
+                    description: The number of values that were imported.
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties: &ref_0
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            type: object
+            properties: *ref_0

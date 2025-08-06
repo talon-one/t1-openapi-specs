@@ -1,0 +1,147 @@
+get:
+  operationId: scimGetUsers
+  summary: List SCIM users
+  description: >-
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Retrieve a paginated list of users that have been provisioned using the SCIM
+    protocol with an identity provider, for example, Microsoft Entra ID.
+  tags:
+    - Accounts and users
+  responses:
+    '200':
+      description: List of SCIM users
+      content:
+        application/json:
+          schema:
+            type: object
+            description: >-
+              List of users that have been provisioned using the SCIM protocol
+              with an identity provider, for example, Microsoft Entra ID.
+            required:
+              - Resources
+            properties:
+              Resources:
+                type: array
+                items:
+                  type: object
+                  description: >-
+                    Schema definition for users that have been provisioned using
+                    the SCIM protocol with an identity provider, for example,
+                    Microsoft Entra ID.
+                  allOf: &ref_2
+                    - type: object
+                      description: >-
+                        Payload for users that are created using the SCIM
+                        provisioning protocol with an identity provider, for
+                        example, Microsoft Entra ID.
+                      required: &ref_0
+                        - userName
+                      allOf: &ref_1
+                        - type: object
+                          description: >-
+                            Schema definition for base user fields, provisioned
+                            using the SCIM protocol and used by Talon.One.
+                          properties:
+                            active:
+                              type: boolean
+                              description: Status of the user.
+                              example: true
+                            displayName:
+                              type: string
+                              description: Display name of the user.
+                              example: John Doe
+                            userName:
+                              type: string
+                              description: >-
+                                Unique identifier of the user. This is usually
+                                an email address.
+                              example: john.doe@example.com
+                            name:
+                              type: object
+                              description: The components of the user’s real name.
+                              properties:
+                                formatted:
+                                  type: string
+                                  description: >-
+                                    The full name, including all middle names,
+                                    titles, and suffixes as appropriate,
+                                    formatted for display.
+                                  example: Mr. John J Doe
+                        - type: object
+                          description: >-
+                            Additional user properties, that are not processed
+                            by Talon.One, but only stored and returned in the
+                            User response.
+                    - type: object
+                      required:
+                        - id
+                      properties:
+                        id:
+                          type: string
+                          description: ID of the user.
+                          example: '359'
+              schemas:
+                type: array
+                description: SCIM schema for the given resource.
+                items:
+                  type: string
+                  example: urn:ietf:params:scim:api:messages:2.0:ListResponse
+              totalResults:
+                type: integer
+                description: Number of total results in the response.
+            example:
+              Resources:
+                - active: true
+                  displayName: John Doe
+                  id: '283'
+                  meta:
+                    resourceType: User
+                    created: '2024-06-25T17:43:46+02:00'
+                  userName: john.doe@example.com
+                  schemas:
+                    - urn:ietf:params:scim:schemas:core:2.0:User
+                    - urn:ietf:params:scim:schemas:extension:enterprise:2.0:User
+              schemas:
+                - urn:ietf:params:scim:api:messages:2.0:ListResponse
+              totalResults: 1
+post:
+  operationId: scimCreateUser
+  summary: Create SCIM user
+  description: >-
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Create a new Talon.One user using the SCIM provisioning protocol with an
+    identity provider, for example, Microsoft Entra ID.
+  tags:
+    - Accounts and users
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          description: >-
+            Payload for users that are created using the SCIM provisioning
+            protocol with an identity provider, for example, Microsoft Entra ID.
+          required: *ref_0
+          allOf: *ref_1
+    description: body
+    required: true
+  responses:
+    '201':
+      description: Created
+      content:
+        application/json:
+          schema:
+            type: object
+            description: >-
+              Schema definition for users that have been provisioned using the
+              SCIM protocol with an identity provider, for example, Microsoft
+              Entra ID.
+            allOf: *ref_2

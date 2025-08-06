@@ -1,0 +1,123 @@
+get:
+  operationId: scimGetServiceProviderConfig
+  summary: Get SCIM service provider configuration
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Retrieve the configuration settings of the SCIM service provider. It
+    provides details about the features and capabilities supported by the SCIM
+    API, such as the different operation settings.
+  tags:
+    - Accounts and users
+  responses:
+    '200':
+      description: Service configuration
+      content:
+        application/json:
+          schema:
+            type: object
+            description: Service provider configuration details.
+            properties:
+              bulk:
+                type: object
+                description: >-
+                  Configuration related to bulk operations, which allow multiple
+                  SCIM requests to be processed in a single HTTP request.
+                properties:
+                  maxOperations:
+                    type: integer
+                    description: >-
+                      The maximum number of individual operations that can be
+                      included in a single bulk request.
+                  maxPayloadSize:
+                    type: integer
+                    description: >-
+                      The maximum size, in bytes, of the entire payload for a
+                      bulk operation request.
+                  supported:
+                    type: boolean
+                    description: >-
+                      Indicates whether the SCIM service provider supports bulk
+                      operations.
+              changePassword:
+                type: object
+                description: >-
+                  Configuration settings related to the ability to change user
+                  passwords.
+                properties:
+                  supported:
+                    type: boolean
+                    description: >-
+                      Indicates whether the service provider supports password
+                      changes via the SCIM API.
+              documentationUri:
+                type: string
+                description: >-
+                  The URI that points to the SCIM service provider's
+                  documentation, providing further details about the service's
+                  capabilities and usage.
+              filter:
+                type: object
+                description: >-
+                  Configuration settings related to filtering SCIM resources
+                  based on specific criteria.
+                properties:
+                  maxResults:
+                    type: integer
+                    description: >-
+                      The maximum number of resources that can be returned in a
+                      single filtered query response.
+                  supported:
+                    type: boolean
+                    description: >-
+                      Indicates whether the SCIM service provider supports
+                      filtering operations.
+              patch:
+                type: object
+                description: >-
+                  Configuration settings related to patch operations, which
+                  allow partial updates to SCIM resources.
+                properties:
+                  supported:
+                    type: boolean
+                    description: >-
+                      Indicates whether the service provider supports patch
+                      operations for modifying resources.
+              schemas:
+                type: array
+                description: >-
+                  A list of SCIM schemas that define the structure and data
+                  types supported by the service provider.
+                items:
+                  type: string
+              sort:
+                type: object
+                description: >-
+                  Configuration settings related to sorting SCIM resources in
+                  query responses.
+                properties:
+                  supported:
+                    type: boolean
+                    description: >-
+                      Indicates whether the service provider supports sorting
+                      operations for ordered query results.
+            example:
+              bulk:
+                maxOperations: 1000
+                maxPayloadSize: 1048576
+                supported: true
+              changePassword:
+                supported: false
+              documentationUri: example.com/scim/docs
+              filter:
+                maxResults: 100
+                supported: true
+              patch:
+                supported: true
+              schemas:
+                - urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig
+              x-sort:
+                supported: false

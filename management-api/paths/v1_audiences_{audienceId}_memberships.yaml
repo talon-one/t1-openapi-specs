@@ -1,0 +1,283 @@
+get:
+  operationId: getAudienceMemberships
+  summary: List audience members
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Get a paginated list of the customer profiles in a given audience.
+
+
+    A maximum of 1000 customer profiles per page is allowed.
+  tags:
+    - Audiences
+  parameters:
+    - name: audienceId
+      in: path
+      required: true
+      description: The ID of the audience.
+      example: 10
+      schema:
+        type: integer
+    - name: pageSize
+      in: query
+      required: false
+      description: The number of items in the response.
+      example: 1000
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 1000
+    - name: skip
+      in: query
+      required: false
+      description: The number of items to skip when paging through large result sets.
+      example: 100
+      schema:
+        type: integer
+    - name: sort
+      in: query
+      required: false
+      description: >
+        The field by which results should be sorted. By default, results are
+        sorted in ascending order. To sort them in descending order, prefix the
+        field name with `-`.
+
+
+        **Note:** You may not be able to use all fields for sorting. This is due
+        to performance limitations.
+      example: name
+      schema:
+        type: string
+    - name: profileQuery
+      in: query
+      description: The filter to select a profile.
+      example: profile1
+      schema:
+        type: string
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              hasMore:
+                type: boolean
+              data:
+                type: array
+                items:
+                  allOf:
+                    - type: object
+                      required:
+                        - id
+                        - created
+                      properties:
+                        id:
+                          type: integer
+                          description: The internal ID of the customer profile.
+                          example: 6
+                        created:
+                          type: string
+                          format: date-time
+                          description: The time the customer profile was created.
+                          example: '2020-06-10T09:05:27.993483Z'
+                    - type: object
+                      required:
+                        - integrationId
+                        - created
+                      properties:
+                        integrationId:
+                          type: string
+                          format: string
+                          example: URNGV8294NV
+                          maxLength: 1000
+                          description: The integration ID set by your integration layer.
+                        created:
+                          type: string
+                          format: date-time
+                          description: The time this entity was created.
+                          example: '2020-02-07T08:15:22Z'
+                    - type: object
+                      properties:
+                        attributes:
+                          type: object
+                          description: Arbitrary properties associated with this item.
+                          example:
+                            Language: english
+                            ShippingCountry: DE
+                    - type: object
+                      properties:
+                        accountId:
+                          type: integer
+                          title: Profile belongs to Account
+                          description: >-
+                            The ID of the Talon.One account that owns this
+                            profile.
+                          example: 31
+                        closedSessions:
+                          type: integer
+                          title: Closed sessions
+                          description: >-
+                            The total number of closed sessions. Does not
+                            include closed sessions that have been cancelled or
+                            reopened. See the
+                            [docs](https://docs.talon.one/docs/dev/concepts/entities/customer-sessions#customer-session-states).
+                          example: 3
+                        totalSales:
+                          type: number
+                          description: >
+                            The total amount of money spent by the customer
+                            **before** discounts are applied.
+
+
+                            The total sales amount excludes the following:
+
+                            - Cancelled or reopened sessions.
+
+                            - Returned items.
+                          example: 299.99
+                          title: Total Sales
+                        loyaltyMemberships:
+                          type: array
+                          description: >
+                            **DEPRECATED** A list of loyalty programs joined by
+                            the customer.
+                          items:
+                            type: object
+                            required:
+                              - loyaltyProgramId
+                            properties:
+                              joined:
+                                type: string
+                                format: date-time
+                                title: Loyalty program joined at
+                                description: >-
+                                  The moment in which the loyalty program was
+                                  joined.
+                                example: '2012-03-20T14:15:22Z'
+                              loyaltyProgramId:
+                                type: integer
+                                title: Loyalty program ID
+                                description: >-
+                                  The ID of the loyalty program belonging to
+                                  this entity.
+                                example: 323414846
+                          title: Loyalty programed joined
+                        audienceMemberships:
+                          type: array
+                          description: The audiences the customer belongs to.
+                          items:
+                            type: object
+                            required:
+                              - id
+                              - name
+                            properties:
+                              id:
+                                type: integer
+                                title: Audience ID
+                                description: >-
+                                  The ID of the audience belonging to this
+                                  entity.
+                                example: 2
+                              name:
+                                type: string
+                                title: Audience Name
+                                description: >-
+                                  The Name of the audience belonging to this
+                                  entity.
+                                example: Travel audience
+                          title: Audience memberships
+                        lastActivity:
+                          type: string
+                          format: date-time
+                          title: Last activity
+                          description: >
+                            Timestamp of the most recent event received from
+                            this customer.
+
+                            This field is updated on calls that trigger the Rule
+                            Engine and that are
+
+                            not [dry
+                            requests](https://docs.talon.one/docs/dev/integration-api/dry-requests/#overlay).
+
+
+                            For example, [reserving a
+                            coupon](https://docs.talon.one/integration-api#operation/createCouponReservation)
+
+                            for a customer doesn't impact this field.
+                          example: '2020-02-08T14:15:20Z'
+                        sandbox:
+                          type: boolean
+                          description: >
+                            An indicator of whether the customer is part of a
+                            sandbox or live Application. See the
+                            [docs](https://docs.talon.one/docs/product/applications/overview#application-environments).
+                          title: Sandbox
+                          example: false
+                      required:
+                        - accountId
+                        - closedSessions
+                        - totalSales
+                        - lastActivity
+                        - attributes
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
