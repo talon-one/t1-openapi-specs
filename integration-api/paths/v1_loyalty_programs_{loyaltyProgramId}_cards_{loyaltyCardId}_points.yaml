@@ -1,0 +1,375 @@
+get:
+  operationId: getLoyaltyCardPoints
+  summary: List card's unused loyalty points
+  description: >
+    Get paginated results of loyalty points for a given loyalty card identifier
+    in a card-based loyalty program. This endpoint returns only the balances of
+    unused points on a loyalty card.
+
+
+    You can filter points by status:
+
+    - `active`: Points ready to be redeemed.
+
+    - `pending`: Points with a start date in the future.
+
+    - `expired`: Points with an expiration date in the past.
+  security:
+    - api_key_v1: []
+  tags:
+    - Loyalty cards
+  parameters:
+    - name: loyaltyProgramId
+      in: path
+      description: >
+        Identifier of the card-based loyalty program containing the loyalty
+        card. You can get the ID with
+
+        the [List loyalty
+        programs](https://docs.talon.one/management-api#tag/Loyalty/operation/getLoyaltyPrograms)
+        endpoint.
+      example: 33
+      required: true
+      schema:
+        type: integer
+    - name: loyaltyCardId
+      in: path
+      description: >
+        Identifier of the loyalty card. You can get the identifier with
+
+        the [List loyalty
+        cards](https://docs.talon.one/management-api#tag/Loyalty-cards/operation/getLoyaltyCards)
+        endpoint.
+      example: summer-loyalty-card-0543
+      required: true
+      schema:
+        type: string
+        maxLength: 108
+    - name: status
+      in: query
+      required: false
+      description: Filter points based on their status.
+      example: active
+      schema:
+        type: string
+        enum:
+          - active
+          - pending
+          - expired
+        default: active
+    - name: subledgerId
+      in: query
+      required: false
+      description: Filter results by one or more subledger IDs. Must be exact match.
+      example:
+        - subledger1
+        - subledger2
+      style: form
+      explode: true
+      schema:
+        type: array
+        items:
+          type: string
+    - name: customerSessionIDs
+      in: query
+      required: false
+      description: |
+        Filter the results by a list of customer session IDs.
+
+        To include multiple IDs, repeat the parameter for each one, for example,
+        `?customerSessionIDs=id1&customerSessionIDs=id2`.
+
+        The response contains only data associated with the specified sessions.
+      example:
+        - session_integration_id_1
+        - session_integration_id_1
+      schema:
+        type: array
+        items:
+          type: string
+    - name: transactionUUIDs
+      in: query
+      required: false
+      description: >
+        Filter the results by a list of transaction UUIDs.
+
+
+        To include multiple IDs, repeat the parameter for each one, for example,
+
+        `?transactionUUIDs=uuid1&transactionUUIDs=uuid2`.
+
+
+        The response contains only data associated with the specified
+        transactions.
+      example:
+        - dc608634-0100-40d9-b371-e964476bbe0f
+        - 9e829590-05cf-407b-b4c0-5f28468a81e1
+      schema:
+        type: array
+        items:
+          type: string
+    - name: pageSize
+      in: query
+      required: false
+      description: The number of items in the response.
+      example: 50
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 50
+    - name: skip
+      in: query
+      required: false
+      description: The number of items to skip when paging through large result sets.
+      example: 100
+      schema:
+        type: integer
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - hasMore
+              - data
+            properties:
+              hasMore:
+                type: boolean
+                example: true
+              data:
+                type: array
+                items:
+                  type: object
+                  description: Loyalty card points with start and expiry dates.
+                  required:
+                    - id
+                    - transactionUUID
+                    - created
+                    - programId
+                    - name
+                    - startDate
+                    - expiryDate
+                    - subledgerId
+                    - amount
+                  properties:
+                    id:
+                      type: integer
+                      description: ID of the transaction that adds loyalty points.
+                      example: 123
+                    transactionUUID:
+                      type: string
+                      description: Unique identifier of the transaction in the UUID format.
+                      example: ce59f12a-f53b-4014-a745-636d93f2bd3f
+                    created:
+                      type: string
+                      format: date-time
+                      description: Date and time the loyalty card points were added.
+                      example: 2022-01-02T15:04:05Z07:00
+                    programId:
+                      type: integer
+                      description: ID of the loyalty program.
+                      example: 324
+                    customerProfileID:
+                      type: string
+                      description: >-
+                        Integration ID of the customer profile linked to the
+                        card.
+                      example: URNGV8294NV
+                    customerSessionId:
+                      type: string
+                      description: ID of the customer session where points were added.
+                      maxLength: 255
+                      example: 05c2da0d-48fa-4aa1-b629-898f58f1584d
+                    name:
+                      type: string
+                      description: >-
+                        Name or reason of the transaction that adds loyalty
+                        points.
+                      maxLength: 255
+                      example: Reward 10% points of a purchase's current total
+                    startDate:
+                      type: string
+                      description: |
+                        When points become active. Possible values:
+                          - `immediate`: Points are active immediately.
+                          - `timestamp value`: Points become active at a given date and time.
+                      maxLength: 64
+                      example: 2022-01-02T15:04:05Z07:00
+                    expiryDate:
+                      type: string
+                      description: |
+                        Date when points expire. Possible values are:
+                          - `unlimited`: Points have no expiration date.
+                          - `timestamp value`: Points expire on the given date and time.
+                      example: 2022-08-02T15:04:05Z07:00
+                    subledgerId:
+                      type: string
+                      description: ID of the subledger.
+                      maxLength: 64
+                      example: sub-123
+                    amount:
+                      type: number
+                      description: Amount of loyalty points added in the transaction.
+                      example: 10.25
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code

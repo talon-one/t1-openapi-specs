@@ -1,0 +1,291 @@
+post:
+  operationId: createReferral
+  summary: Create referral code for an advocate
+  description: >
+    Creates a referral code for an advocate. The code will be valid for the
+    referral campaign for which is created, indicated in the `campaignId`
+    parameter, and will be associated with the profile specified in the
+    `advocateProfileIntegrationId` parameter as the advocate's profile.
+
+
+    **Note:** Any [referral
+    limits](https://docs.talon.one/docs/product/campaigns/settings/managing-campaign-budgets#referral-limits)
+    set are ignored when you use this endpoint.
+  security:
+    - api_key_v1: []
+  tags:
+    - Referrals
+  requestBody:
+    content:
+      application/json:
+        schema:
+          allOf:
+            - type: object
+              properties:
+                startDate:
+                  type: string
+                  format: date-time
+                  title: Referral code valid from
+                  description: Timestamp at which point the referral code becomes valid.
+                  example: '2020-11-10T23:00:00Z'
+                expiryDate:
+                  type: string
+                  format: date-time
+                  title: Referral code valid until
+                  description: >-
+                    Expiration date of the referral code. Referral never expires
+                    if this is omitted.
+                  example: '2021-11-10T23:00:00Z'
+                usageLimit:
+                  type: integer
+                  title: Referral code Usage Limit
+                  description: >
+                    The number of times a referral code can be used. `0` means
+                    no limit but any campaign usage limits will still apply.
+                  minimum: 0
+                  maximum: 999999
+                  example: 1
+            - type: object
+              required:
+                - campaignId
+                - advocateProfileIntegrationId
+              properties:
+                campaignId:
+                  type: integer
+                  title: Referral's Campaign ID
+                  description: >-
+                    ID of the campaign from which the referral received the
+                    referral code.
+                  example: 78
+                advocateProfileIntegrationId:
+                  type: string
+                  title: Advocate's Profile ID
+                  description: The Integration ID of the Advocate's Profile.
+                  maxLength: 1000
+                  example: URNGV8294NV
+                friendProfileIntegrationId:
+                  type: string
+                  title: Friend's Profile ID
+                  description: An optional Integration ID of the Friend's Profile.
+                  example: BZGGC2454PA
+                attributes:
+                  type: object
+                  description: Arbitrary properties associated with this item.
+                  example:
+                    channel: web
+    description: body
+    required: true
+  responses:
+    '201':
+      description: Created
+      content:
+        application/json:
+          schema:
+            allOf:
+              - type: object
+                required:
+                  - id
+                  - created
+                properties:
+                  id:
+                    type: integer
+                    description: The internal ID of this entity.
+                    example: 6
+                  created:
+                    type: string
+                    format: date-time
+                    description: The time this entity was created.
+                    example: '2020-06-10T09:05:27.993483Z'
+              - allOf:
+                  - type: object
+                    properties:
+                      startDate:
+                        type: string
+                        format: date-time
+                        title: Referral code valid from
+                        description: >-
+                          Timestamp at which point the referral code becomes
+                          valid.
+                        example: '2020-11-10T23:00:00Z'
+                      expiryDate:
+                        type: string
+                        format: date-time
+                        title: Referral code valid until
+                        description: >-
+                          Expiration date of the referral code. Referral never
+                          expires if this is omitted.
+                        example: '2021-11-10T23:00:00Z'
+                      usageLimit:
+                        type: integer
+                        title: Referral code Usage Limit
+                        description: >
+                          The number of times a referral code can be used. `0`
+                          means no limit but any campaign usage limits will
+                          still apply.
+                        minimum: 0
+                        maximum: 999999
+                        example: 1
+                  - type: object
+                    required:
+                      - campaignId
+                      - advocateProfileIntegrationId
+                    properties:
+                      campaignId:
+                        type: integer
+                        title: Referral's Campaign ID
+                        description: >-
+                          ID of the campaign from which the referral received
+                          the referral code.
+                        example: 78
+                      advocateProfileIntegrationId:
+                        type: string
+                        title: Advocate's Profile ID
+                        description: The Integration ID of the Advocate's Profile.
+                        maxLength: 1000
+                        example: URNGV8294NV
+                      friendProfileIntegrationId:
+                        type: string
+                        title: Friend's Profile ID
+                        description: An optional Integration ID of the Friend's Profile.
+                        example: BZGGC2454PA
+                      attributes:
+                        type: object
+                        description: Arbitrary properties associated with this item.
+                        example:
+                          channel: web
+              - type: object
+                properties:
+                  importId:
+                    type: integer
+                    description: The ID of the Import which created this referral.
+                    example: 4
+              - type: object
+                required:
+                  - code
+                  - usageCounter
+                  - usageLimit
+                properties:
+                  code:
+                    type: string
+                    title: Referral code
+                    description: The referral code.
+                    minLength: 4
+                    example: 27G47Y54VH9L
+                  usageCounter:
+                    type: integer
+                    title: Referral code Usages
+                    description: >-
+                      The number of times this referral code has been
+                      successfully used.
+                    example: 1
+                  batchId:
+                    type: string
+                    title: Batch ID
+                    description: The ID of the batch the referrals belong to.
+                    example: tqyrgahe
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - message
+            properties:
+              message:
+                type: string
+                description: A message describing the error.
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+    '401':
+      description: Unauthorized - Invalid API key
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code

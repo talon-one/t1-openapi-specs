@@ -1,0 +1,351 @@
+post:
+  operationId: createAudienceV2
+  summary: Create audience
+  description: >
+    Create an audience. The audience can be created directly from scratch or can
+    come from third party platforms.
+
+
+    **Note:** Audiences can also be created from scratch via the Campaign
+    Manager. See the
+    [docs](https://docs.talon.one/docs/product/audiences/creating-audiences).
+
+
+    To create an audience from an existing audience from a [technology
+    partner](https://docs.talon.one/docs/dev/technology-partners/overview):
+
+    1. Set the `integration` property to `mparticle`, `segment` etc., depending
+    on a third-party platform.
+
+    1. Set `integrationId` to the ID of this audience in a third-party platform.
+
+
+    To create an audience from an existing audience in another platform:
+
+    1. Do not use the `integration` property.
+
+    1. Set `integrationId` to the ID of this audience in the 3rd-party platform.
+
+
+    To create an audience from scratch:
+
+    1. Only set the `name` property.
+
+
+    Once you create your first audience, audience-specific rule conditions are
+    enabled in the Rule Builder.
+  security:
+    - api_key_v1: []
+  tags:
+    - Audiences
+  requestBody:
+    content:
+      application/json:
+        schema:
+          allOf:
+            - type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  description: The human-friendly display name for this audience.
+                  example: Travel audience
+                sandbox:
+                  type: boolean
+                  description: Indicates if this is a live or sandbox Application.
+                  example: true
+                description:
+                  type: string
+                  description: A description of the audience.
+                  example: Travel audience 18-27
+            - type: object
+              required:
+                - name
+              properties:
+                integration:
+                  type: string
+                  description: >
+                    The Talon.One-supported [3rd-party
+                    platform](https://docs.talon.one/docs/dev/technology-partners/overview)
+                    that this audience was created in.
+
+
+                    For example, `mParticle`, `Segment`, `Shopify`, `Braze`, or
+                    `Iterable`.
+
+
+                    **Note:** If you do not integrate with any of these
+                    platforms, do not use this property.
+                  example: mparticle
+                integrationId:
+                  type: string
+                  minLength: 1
+                  maxLength: 1000
+                  description: >
+                    The ID of this audience in the third-party integration.
+
+
+                    **Note:** To create an audience that doesn't come from a 3rd
+                    party platform, do not use this property.
+                  example: 382370BKDB946
+                createdIn3rdParty:
+                  type: boolean
+                  description: Determines if this audience is a 3rd party audience or not.
+                  example: false
+                lastUpdate:
+                  type: string
+                  format: date-time
+                  description: The last time that the audience memberships changed.
+                  example: '2022-04-26T11:02:38Z'
+    description: body
+    required: true
+  responses:
+    '201':
+      description: Created
+      content:
+        application/json:
+          schema:
+            allOf:
+              - type: object
+                required:
+                  - accountId
+                properties:
+                  accountId:
+                    type: integer
+                    description: The ID of the account that owns this entity.
+                    example: 3886
+              - type: object
+                required:
+                  - id
+                  - created
+                properties:
+                  id:
+                    type: integer
+                    description: The internal ID of this entity.
+                    example: 6
+                  created:
+                    type: string
+                    format: date-time
+                    description: The time this entity was created.
+                    example: '2020-06-10T09:05:27.993483Z'
+              - allOf:
+                  - type: object
+                    required:
+                      - name
+                    properties:
+                      name:
+                        type: string
+                        minLength: 1
+                        description: The human-friendly display name for this audience.
+                        example: Travel audience
+                      sandbox:
+                        type: boolean
+                        description: Indicates if this is a live or sandbox Application.
+                        example: true
+                      description:
+                        type: string
+                        description: A description of the audience.
+                        example: Travel audience 18-27
+                  - type: object
+                    required:
+                      - name
+                    properties:
+                      integration:
+                        type: string
+                        description: >
+                          The Talon.One-supported [3rd-party
+                          platform](https://docs.talon.one/docs/dev/technology-partners/overview)
+                          that this audience was created in.
+
+
+                          For example, `mParticle`, `Segment`, `Shopify`,
+                          `Braze`, or `Iterable`.
+
+
+                          **Note:** If you do not integrate with any of these
+                          platforms, do not use this property.
+                        example: mparticle
+                      integrationId:
+                        type: string
+                        minLength: 1
+                        maxLength: 1000
+                        description: >
+                          The ID of this audience in the third-party
+                          integration.
+
+
+                          **Note:** To create an audience that doesn't come from
+                          a 3rd party platform, do not use this property.
+                        example: 382370BKDB946
+                      createdIn3rdParty:
+                        type: boolean
+                        description: >-
+                          Determines if this audience is a 3rd party audience or
+                          not.
+                        example: false
+                      lastUpdate:
+                        type: string
+                        format: date-time
+                        description: The last time that the audience memberships changed.
+                        example: '2022-04-26T11:02:38Z'
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
+    '409':
+      description: Conflict. An Audience with this ID already exists for this integration.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code

@@ -1,0 +1,284 @@
+openapi: 3.1.0
+info:
+  title: Integration API
+  version: ''
+  description: >
+    Use the Integration API to push data to and retrieve data from Talon.One in
+    real time.
+
+    For more background information about this API, see [Integration API
+    overview](https://docs.talon.one/docs/dev/integration-api/overview)
+
+
+    For example, use this API to share shopping cart information as a session
+    with Talon.One and evaluate promotion
+
+    rules. You can also create custom events to track specific actions that do
+    not fit into the session data model.
+
+
+    Ensure you [authenticate](#section/Authentication) to make requests to the
+    API.
+
+
+    <div class="redoc-section">
+      <p class="title">Are you looking for a different API?</p>
+
+      If you need the API to:
+
+      - Interact with the Campaign Manager for backoffice operations, see [the Management API reference docs](https://docs.talon.one/management-api).
+      - Integrate with Talon.One from a CEP or CDP platform, see [the Third-party API reference docs](https://docs.talon.one/third-party-api).
+
+    </div>
+
+
+    # Authentication
+
+
+    <SecurityDefinitions />
+servers:
+  - url: https://yourbaseurl.talon.one
+security: []
+tags:
+  - name: Achievements
+    description: >
+      Achievements allow you to reward a customer profile for performing a
+      number of specific actions or reaching a transactional milestone within a
+      defined period.
+
+
+      For example, you can use achievements to award your customers when they
+      purchase five cups of coffee in one week or when they purchase items worth
+      $3000 in three months.
+  - name: Audiences
+    description: >
+      Represents lists of customer profiles that allow you to target specific
+      groups of customers in your campaigns.
+
+      Audiences can be synced from customer data platforms or created directly
+      in Talon.One.
+
+
+      See the [docs](https://docs.talon.one/docs/product/audiences/overview).
+  - name: Catalogs
+    description: >
+      Represents a catalog of cart items with unique SKUs. Cart item catalogs
+      allow you to synchronize your entire inventory with Talon.One.
+
+
+      See the
+      [docs](https://docs.talon.one/docs/product/account/dev-tools/managing-cart-item-catalogs).
+  - name: Coupons
+    description: >
+      Coupons are unique codes belonging to a particular campaign. They don't
+      define any behavior on their own.
+
+      Instead the campaign ruleset can include rules that validate coupons and
+      carry out particular effects.
+
+
+      See the
+      [docs](https://docs.talon.one/docs/product/campaigns/coupons/coupon-page-overview).
+  - name: Customer profiles
+    description: >
+      Represents the customer's information. For instance, their contact
+      information.
+  - name: Customer sessions
+    description: >
+      Represents the data related to a customer session. Typically, a customer
+      session is the value and content of the customer's cart.
+
+
+      Sessions can be anonymous or linked to a customer profile and they have a
+      life cycle from `open` to `closed`.
+
+      In general, a session is closed when the customer completes the checkout
+      step.
+
+
+      Sessions are a key concept of Talon.One. We strongly recommend you read
+      the [documentation about customer
+      sessions](https://docs.talon.one/docs/dev/concepts/entities/customer-sessions).
+  - name: Events
+    description: >
+      Represents a single occurrence of a specific customer action, for example,
+      updating the cart or signing up for a newsletter.
+
+
+      There are 2 types of events:
+
+      - **Built-in events:** They are triggered by various endpoints, such as
+      the [Update customer
+      session](https://docs.talon.one/integration-api#tag/Customer-sessions/operation/updateCustomerSessionV2)
+      endpoint. [Learn
+      more](https://docs.talon.one/docs/dev/concepts/entities/events).
+
+      - **Custom events:** They are triggered by the [Track
+      event](https://docs.talon.one/integration-api#tag/Events/operation/trackEventV2)
+      endpoint.
+  - name: Loyalty
+    description: >
+      Represents loyalty programs or concepts related to them.
+
+
+      Loyalty programs can be _profile-based_ or _card-based_, depending on
+      whether loyalty points are linked
+
+      to [customer
+      profiles](https://docs.talon.one/docs/product/applications/displaying-customer-profiles)
+      or [loyalty
+      cards](https://docs.talon.one/docs/product/loyalty-programs/card-based/card-based-overview).
+
+
+      See [the Product
+      docs](https://docs.talon.one/docs/product/loyalty-programs/overview) for
+      more information.
+  - name: Loyalty cards
+    description: >
+      Represents loyalty cards.
+
+
+      [Loyalty
+      cards](https://docs.talon.one/docs/product/loyalty-programs/card-based/card-based-overview)
+      allow your customers to collect and spend loyalty points within a
+      card-based loyalty program.
+  - name: Referrals
+    description: >
+      A referral is a code shared between a customer and a prospect.
+
+
+      A referral is defined by:
+
+      - an advocate: person who invited their friend via referral program.
+
+      - a friend: person who receives the invite from an advocate.
+
+      - a referral code: code to be redeemed by the advocate(s) once they
+      referred their friend.
+
+
+      See the
+      [docs](https://docs.talon.one/docs/product/campaigns/referrals/referral-overview).
+paths:
+  /v2/customer_sessions/{customerSessionId}:
+    $ref: paths/v2_customer_sessions_{customerSessionId}.yaml
+  /v2/customer_sessions/{customerSessionId}/returns:
+    $ref: paths/v2_customer_sessions_{customerSessionId}_returns.yaml
+  /v2/customer_sessions/{customerSessionId}/reopen:
+    $ref: paths/v2_customer_sessions_{customerSessionId}_reopen.yaml
+  /v2/customer_profiles/{integrationId}:
+    $ref: paths/v2_customer_profiles_{integrationId}.yaml
+  /v2/customer_profiles:
+    $ref: paths/v2_customer_profiles.yaml
+  /v2/audiences:
+    $ref: paths/v2_audiences.yaml
+  /v2/audiences/{audienceId}:
+    $ref: paths/v2_audiences_{audienceId}.yaml
+  /v2/audiences/{audienceId}/memberships:
+    $ref: paths/v2_audiences_{audienceId}_memberships.yaml
+  /v2/customer_audiences:
+    $ref: paths/v2_customer_audiences.yaml
+  /v2/audience_customers/{audienceId}/attributes:
+    $ref: paths/v2_audience_customers_{audienceId}_attributes.yaml
+  /v2/loyalty_programs/{loyaltyProgramId}/cards/{loyaltyCardId}/link_profile:
+    $ref: >-
+      paths/v2_loyalty_programs_{loyaltyProgramId}_cards_{loyaltyCardId}_link_profile.yaml
+  /v2/events:
+    $ref: paths/v2_events.yaml
+  /v1/referrals:
+    $ref: paths/v1_referrals.yaml
+  /v1/referrals_for_multiple_advocates:
+    $ref: paths/v1_referrals_for_multiple_advocates.yaml
+  /v1/customer_data/{integrationId}:
+    $ref: paths/v1_customer_data_{integrationId}.yaml
+  /v1/coupon_reservations/{couponValue}:
+    $ref: paths/v1_coupon_reservations_{couponValue}.yaml
+  /v1/coupon_reservations/customerprofiles/{couponValue}:
+    $ref: paths/v1_coupon_reservations_customerprofiles_{couponValue}.yaml
+  /v1/customer_profiles/{integrationId}/inventory:
+    $ref: paths/v1_customer_profiles_{integrationId}_inventory.yaml
+  /v1/customer_profiles/{integrationId}/achievements:
+    $ref: paths/v1_customer_profiles_{integrationId}_achievements.yaml
+  /v1/customer_profiles/{integrationId}/achievements/{achievementId}:
+    $ref: >-
+      paths/v1_customer_profiles_{integrationId}_achievements_{achievementId}.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/cards/{loyaltyCardId}/balances:
+    $ref: >-
+      paths/v1_loyalty_programs_{loyaltyProgramId}_cards_{loyaltyCardId}_balances.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/profile/{integrationId}/balances:
+    $ref: >-
+      paths/v1_loyalty_programs_{loyaltyProgramId}_profile_{integrationId}_balances.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/cards/{loyaltyCardId}/transactions:
+    $ref: >-
+      paths/v1_loyalty_programs_{loyaltyProgramId}_cards_{loyaltyCardId}_transactions.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/profile/{integrationId}/transactions:
+    $ref: >-
+      paths/v1_loyalty_programs_{loyaltyProgramId}_profile_{integrationId}_transactions.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/cards/{loyaltyCardId}/points:
+    $ref: >-
+      paths/v1_loyalty_programs_{loyaltyProgramId}_cards_{loyaltyCardId}_points.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/profile/{integrationId}/points:
+    $ref: >-
+      paths/v1_loyalty_programs_{loyaltyProgramId}_profile_{integrationId}_points.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/cards:
+    $ref: paths/v1_loyalty_programs_{loyaltyProgramId}_cards.yaml
+  /v1/catalogs/{catalogId}/sync:
+    $ref: paths/v1_catalogs_{catalogId}_sync.yaml
+components:
+  securitySchemes:
+    api_key_v1:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: >
+        To authenticate with the Integration API, generate an API key in the
+        Campaign Manager
+
+        and prefix it with `ApiKey-v1`.
+
+
+        To generate an API key:
+
+
+        1. Sign in to the Campaign Manager and open the Application of your
+        choice, or create one.
+
+        1. Click **Settings** > **Integration API Keys**.
+
+        1. Click **Create API Key** and give it a name and an expiration date,
+        then click **Create API Key**.
+
+
+        You can now use the API key in the HTTP header, prefixing it with
+        `ApiKey-v1`:
+
+
+        ```
+
+        Authorization: ApiKey-v1 dbc644d33aa74d582bd9479c59e16f970fe13bf3
+
+        ```
+
+
+        Or use it inside [an
+        SDK](https://docs.talon.one/docs/dev/sdks/overview), for example, with
+        the JAVA SDK:
+
+
+        ```
+
+        iApi.getApiClient().setApiKeyPrefix("ApiKey-v1");
+
+        iApi.getApiClient().setApiKey("dbc644d33aa74d582bd9479c59e16f970fe13bf3");
+
+        ```
+x-notifications-desc: >
+  Use [Application
+  notifications](/docs/product/applications/application-notifications/overview)
+  and [loyalty
+  notifications](/docs/product/loyalty-programs/loyalty-notifications/overview)
+  to notify the system of your choice of certain changes that happened in
+  Talon.One.
+
+  **Note:** Required fields are not omitted if they are empty (have `null`
+  value).

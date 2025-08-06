@@ -1,0 +1,419 @@
+delete:
+  operationId: deleteAudienceV2
+  summary: Delete audience
+  description: >
+    Delete an audience created by a third-party integration.
+
+
+    **Warning:** This endpoint also removes any associations recorded between a
+    customer profile and this audience.
+
+
+    **Note:** Audiences can also be deleted via the Campaign Manager. See the
+    [docs](https://docs.talon.one/docs/product/audiences/managing-audiences#deleting-an-audience).
+  tags:
+    - Audiences
+  security:
+    - api_key_v1: []
+  parameters:
+    - name: audienceId
+      in: path
+      required: true
+      description: The ID of the audience.
+      example: 10
+      schema:
+        type: integer
+  responses:
+    '204':
+      description: No Content
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
+put:
+  operationId: updateAudienceV2
+  summary: Update audience name
+  description: >
+    Update the name of the given audience created by a third-party integration.
+    Sending a request to this endpoint does **not** trigger the Rule Engine.
+
+
+    To update the audience's members, use the [Update customer
+    profile](#tag/Customer-profiles/operation/updateCustomerProfileV2) endpoint.
+  security:
+    - api_key_v1: []
+  tags:
+    - Audiences
+  parameters:
+    - name: audienceId
+      in: path
+      required: true
+      description: The ID of the audience.
+      example: 10
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - name
+          properties:
+            name:
+              type: string
+              minLength: 1
+              description: The human-friendly display name for this audience.
+              example: Travel audience
+    description: body
+    required: true
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            allOf:
+              - type: object
+                required:
+                  - accountId
+                properties:
+                  accountId:
+                    type: integer
+                    description: The ID of the account that owns this entity.
+                    example: 3886
+              - type: object
+                required:
+                  - id
+                  - created
+                properties:
+                  id:
+                    type: integer
+                    description: The internal ID of this entity.
+                    example: 6
+                  created:
+                    type: string
+                    format: date-time
+                    description: The time this entity was created.
+                    example: '2020-06-10T09:05:27.993483Z'
+              - allOf:
+                  - type: object
+                    required:
+                      - name
+                    properties:
+                      name:
+                        type: string
+                        minLength: 1
+                        description: The human-friendly display name for this audience.
+                        example: Travel audience
+                      sandbox:
+                        type: boolean
+                        description: Indicates if this is a live or sandbox Application.
+                        example: true
+                      description:
+                        type: string
+                        description: A description of the audience.
+                        example: Travel audience 18-27
+                  - type: object
+                    required:
+                      - name
+                    properties:
+                      integration:
+                        type: string
+                        description: >
+                          The Talon.One-supported [3rd-party
+                          platform](https://docs.talon.one/docs/dev/technology-partners/overview)
+                          that this audience was created in.
+
+
+                          For example, `mParticle`, `Segment`, `Shopify`,
+                          `Braze`, or `Iterable`.
+
+
+                          **Note:** If you do not integrate with any of these
+                          platforms, do not use this property.
+                        example: mparticle
+                      integrationId:
+                        type: string
+                        minLength: 1
+                        maxLength: 1000
+                        description: >
+                          The ID of this audience in the third-party
+                          integration.
+
+
+                          **Note:** To create an audience that doesn't come from
+                          a 3rd party platform, do not use this property.
+                        example: 382370BKDB946
+                      createdIn3rdParty:
+                        type: boolean
+                        description: >-
+                          Determines if this audience is a 3rd party audience or
+                          not.
+                        example: false
+                      lastUpdate:
+                        type: string
+                        format: date-time
+                        description: The last time that the audience memberships changed.
+                        example: '2022-04-26T11:02:38Z'
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code

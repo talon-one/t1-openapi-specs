@@ -1,0 +1,836 @@
+put:
+  operationId: syncCatalog
+  summary: Sync cart item catalog
+  description: >
+    Perform the following actions for a given cart item catalog:
+
+
+    - Add an item to the catalog.
+
+    - Add multiple items to the catalog.
+
+    - Update the attributes of an item in the catalog.
+
+    - Update the attributes of multiple items in the catalog.
+
+    - Remove an item from the catalog.
+
+    - Remove multiple items from the catalog.
+
+
+    You can either add, update, or delete up to 1000 cart items in a single
+    request. Each item synced to a catalog must have a unique `SKU`.
+
+
+    **Important**: You can perform only one type of action in a single sync
+    request. Syncing items with duplicate `SKU` values in a single request
+    returns an error message with a `400` status code.
+
+
+    For more information, read [managing cart item
+    catalogs](https://docs.talon.one/docs/product/account/dev-tools/managing-cart-item-catalogs).
+
+
+    ### Filtering cart items
+
+
+    Use [cart item
+    attributes](https://docs.talon.one/docs/product/account/dev-tools/managing-attributes)
+
+    to filter items and select the ones you want to edit or delete when editing
+    or deleting more than one item
+
+    at a time.
+
+
+    The `filters` array contains an object with the following properties:
+
+
+    - `attr`: A [cart item
+    attribute](https://docs.talon.one/docs/product/account/dev-tools/managing-attributes)
+      connected to the catalog. It is applied to all items in the catalog.
+    - `op`: The filtering operator indicating the relationship between the value
+    of each
+      cart item in the catalog and the value of the `value` property for the attribute selected
+      in `attr`.
+
+      The value of `op` can be one of the following:
+
+      - `EQ`: Equal to `value`
+      - `LT`: Less than `value`
+      - `LE`: Less than or equal to `value`
+      - `GT`: Greater than `value`
+      - `GE`: Greater than or equal to `value`
+      - `IN`: One of the comma-separated values that `value` is set to.
+
+      **Note:** `GE`, `LE`, `GT`, `LT` are for numeric values only.
+
+    - `value`: The value of the attribute selected in `attr`.
+
+
+    ### Payload examples
+
+
+    Synchronization actions are sent as `PUT` requests. See the structure for
+    each action:
+
+
+    <details>
+      <summary><strong>Adding an item to the catalog</strong></summary>
+      <div>
+
+      ```json
+      {
+        "actions": [
+          {
+            "payload": {
+              "attributes": {
+                "color": "Navy blue",
+                "type": "shoes"
+              },
+              "replaceIfExists": true,
+              "sku": "SKU1241028",
+              "price": 100,
+              "product": {
+                "name": "sneakers"
+              }
+            },
+            "type": "ADD"
+          }
+        ]
+      }
+      ```
+      </div>
+    </details>
+
+
+    <details>
+      <summary><strong>Adding multiple items to the catalog</strong></summary>
+      <div>
+
+      ```json
+      {
+        "actions": [
+          {
+            "payload": {
+              "attributes": {
+                "color": "Navy blue",
+                "type": "shoes"
+              },
+              "replaceIfExists": true,
+              "sku": "SKU1241027",
+              "price": 100,
+              "product": {
+                "name": "sneakers"
+              }
+            },
+            "type": "ADD"
+          },
+          {
+            "payload": {
+              "attributes": {
+                "color": "Navy blue",
+                "type": "shoes"
+              },
+              "replaceIfExists": true,
+              "sku": "SKU1241028",
+              "price": 100,
+              "product": {
+                "name": "sneakers"
+              }
+            },
+            "type": "ADD"
+          }
+        ]
+      }
+      ```
+      </div>
+    </details>
+
+
+    <details>
+      <summary><strong>Updating the attributes of an item in the catalog</strong></summary>
+      <div>
+
+      ```json
+      {
+        "actions": [
+          {
+            "payload": {
+              "attributes": {
+                "age": 11,
+                "origin": "germany"
+              },
+              "createIfNotExists": false,
+              "sku": "SKU1241028",
+              "product": {
+                "name": "sneakers"
+              }
+            },
+            "type": "PATCH"
+          }
+        ]
+      }
+      ```
+      </div>
+    </details>
+
+
+    <details>
+      <summary><strong>Updating the attributes of multiple items in the catalog</strong></summary>
+      <div>
+
+      ```json
+      {
+        "actions": [
+          {
+            "payload": {
+              "attributes": {
+                "color": "red"
+              },
+              "filters": [
+                {
+                  "attr": "color",
+                  "op": "EQ",
+                  "value": "blue"
+                }
+              ]
+            },
+            "type": "PATCH_MANY"
+          }
+        ]
+      }
+      ```
+
+      </div>
+    </details>
+
+
+    <details>
+      <summary><strong>Removing an item from the catalog</strong></summary>
+      <div>
+
+      ```json
+      {
+        "actions": [
+          {
+            "payload": {
+              "sku": "SKU1241028"
+            },
+            "type": "REMOVE"
+          }
+        ]
+      }
+      ```
+
+      </div>
+    </details>
+
+
+    <details>
+      <summary><strong>Removing multiple items from the catalog</strong></summary>
+      <div>
+
+      ```json
+      {
+        "actions": [
+          {
+            "payload": {
+              "filters": [
+                {
+                  "attr": "color",
+                  "op": "EQ",
+                  "value": "blue"
+                }
+              ]
+            },
+            "type": "REMOVE_MANY"
+          }
+        ]
+      }
+      ```
+      </div>
+    </details>
+
+
+    <details>
+      <summary><strong>Removing shoes of sizes above 45 from the catalog</strong></summary>
+      <div>
+      <p>
+      Let's imagine that we have a shoe store and we have decided to stop selling
+      shoes larger than size 45. We can remove from the catalog all the shoes of sizes above 45
+      with a single action:</p>
+
+      ```json
+      {
+        "actions": [
+          {
+            "payload": {
+              "filters": [
+                {
+                  "attr": "size",
+                  "op": "GT",
+                  "value": "45"
+                }
+              ]
+            },
+            "type": "REMOVE_MANY"
+          }
+        ]
+      }
+      ```
+      </div>
+    </details>
+  tags:
+    - Catalogs
+  security:
+    - api_key_v1: []
+  parameters:
+    - name: catalogId
+      description: >-
+        The ID of the catalog. You can find the ID in the Campaign Manager in
+        **Account** > **Tools** > **Cart item catalogs**.
+      example: 30
+      in: path
+      required: true
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - actions
+          properties:
+            actions:
+              type: array
+              maxItems: 1000
+              minItems: 1
+              items:
+                type: object
+                description: >-
+                  Definition of all the properties that are needed for a single
+                  catalog sync action.
+                required:
+                  - type
+                  - payload
+                properties:
+                  type:
+                    type: string
+                    enum:
+                      - ADD
+                      - PATCH
+                      - PATCH_MANY
+                      - REMOVE
+                      - REMOVE_MANY
+                      - ADD_PRICE_ADJUSTMENT
+                    description: The type of sync action.
+                    example: ADD
+                  payload:
+                    description: The payload of sync action.
+                    example:
+                      sku: T123
+                      attributes:
+                        type: shoes
+                        color: blue
+                      replaceIfExists: true
+                    type: object
+                    oneOf:
+                      - type: object
+                        description: >
+                          The specific properties of the "ADD" catalog sync
+                          action.
+                        required:
+                          - sku
+                        properties:
+                          sku:
+                            type: string
+                            description: The unique SKU of the item to add.
+                            example: SKU1241028
+                          price:
+                            type: number
+                            description: Price of the item.
+                            example: 99.99
+                          attributes:
+                            type: object
+                            description: The attributes of the item to add.
+                            example:
+                              origin: germany
+                              color: blue
+                          product:
+                            type: object
+                            description: >-
+                              The specific properties of the product this item
+                              belongs to, if available.
+                            required:
+                              - name
+                            properties:
+                              name:
+                                type: string
+                                description: The product the item belongs to.
+                                example: sample_product
+                          replaceIfExists:
+                            type: boolean
+                            default: false
+                            description: >
+                              Indicates whether to replace the attributes of the
+                              item if the same SKU exists.
+
+
+                              **Note**: When set to `true`:
+                                - If you do not provide a new `price` value, the existing `price` value is retained.
+                                - If you do not provide a new `product` value, the `product` value is set to `null`.
+                            example: false
+                      - type: object
+                        description: >
+                          The specific properties of the "PATCH" catalog sync
+                          action.
+
+
+                          **Note:**
+                            - If you do not provide a new `price` value, the existing `price` value is retained.
+                            - If you do not provide a new `product` value, the `product` value is set to `null`.
+                        required:
+                          - sku
+                        properties:
+                          sku:
+                            type: string
+                            description: The unique SKU of the item to patch.
+                          price:
+                            type: number
+                            description: Price of the item.
+                            example: 99.99
+                          attributes:
+                            type: object
+                            description: The attributes of the item to patch.
+                          product:
+                            type: object
+                            description: >-
+                              The specific properties of the product this item
+                              belongs to, if available.
+                            required:
+                              - name
+                            properties:
+                              name:
+                                type: string
+                                description: The product the item belongs to.
+                                example: sample_product
+                          createIfNotExists:
+                            type: boolean
+                            default: false
+                            description: >-
+                              Indicates whether to create an item if the SKU
+                              does not exist.
+                      - type: object
+                        description: >-
+                          The specific properties of the "PATCH_MANY" catalog
+                          sync action.
+                        properties:
+                          price:
+                            type: number
+                            description: Price of the item.
+                            example: 99.99
+                          filters:
+                            type: array
+                            items:
+                              type: object
+                              description: >-
+                                The properties for a single filtering condition
+                                in a catalog sync action.
+                              required:
+                                - attr
+                                - op
+                                - value
+                              properties:
+                                attr:
+                                  description: The name of the attribute to filter on.
+                                  type: string
+                                op:
+                                  description: The filtering operator.
+                                  type: string
+                                  enum:
+                                    - EQ
+                                    - LT
+                                    - LE
+                                    - GT
+                                    - GE
+                                    - IN
+                                value:
+                                  description: The value to filter for.
+                            description: >
+                              The list of filters used to select the items to
+                              patch, joined by `AND`.
+
+
+                              **Note:** Every item in the catalog will be
+                              modified if there are no filters.
+                          attributes:
+                            type: object
+                            description: The attributes of the items to patch.
+                      - type: object
+                        description: >-
+                          The specific properties of the "REMOVE" catalog sync
+                          action.
+                        required:
+                          - sku
+                        properties:
+                          sku:
+                            type: string
+                            description: The unique SKU of the item to remove.
+                      - type: object
+                        description: >-
+                          The specific properties of the "REMOVE_MANY" catalog
+                          sync action.
+                        properties:
+                          filters:
+                            type: array
+                            items:
+                              type: object
+                              description: >-
+                                The properties for a single filtering condition
+                                in a catalog sync action.
+                              required:
+                                - attr
+                                - op
+                                - value
+                              properties:
+                                attr:
+                                  description: The name of the attribute to filter on.
+                                  type: string
+                                op:
+                                  description: The filtering operator.
+                                  type: string
+                                  enum:
+                                    - EQ
+                                    - LT
+                                    - LE
+                                    - GT
+                                    - GE
+                                    - IN
+                                value:
+                                  description: The value to filter for.
+                            description: >
+                              The list of filters used to select the items to
+                              patch, joined by `AND`.
+
+
+                              **Note:** Every item in the catalog will be
+                              removed if there are no filters.
+                      - type: object
+                        description: >
+                          The specific properties of the "ADD_PRICE_ADJUSTMENT"
+                          catalog sync action.
+                        required:
+                          - sku
+                          - adjustments
+                        properties:
+                          sku:
+                            type: string
+                            description: >-
+                              The SKU of the item for which the price is being
+                              adjusted.
+                            example: SKU1241028
+                          adjustments:
+                            type: array
+                            description: A list of adjustments to apply to a given item.
+                            items:
+                              minItems: 1
+                              maxItems: 100
+                              type: object
+                              required:
+                                - priceType
+                                - referenceId
+                              properties:
+                                priceType:
+                                  type: string
+                                  description: >-
+                                    The price type (e.g. the price for members
+                                    only) to apply to a given SKU.
+                                  example: member
+                                price:
+                                  type:
+                                    - number
+                                    - 'null'
+                                  description: >-
+                                    The value of the price type applied to the
+                                    SKU. When set to `null`, the defined price
+                                    type no longer applies to the SKU.
+                                  example: 100
+                                referenceId:
+                                  type: string
+                                  description: A unique reference identifier, e.g. a UUID.
+                                  example: 68851723-e6fa-488f-ace9-112581e6c19b
+                                  minLength: 1
+                                calculatedAt:
+                                  type: string
+                                  format: date-time
+                                  description: >-
+                                    The time at which this price was calculated.
+                                    If provided, this is used to determine the
+                                    most recent price adjustment to choose if
+                                    price adjustments overlap. Defaults to
+                                    internal creation time if not provided.
+                                  example: '2021-09-12T10:12:42Z'
+                                effectiveFrom:
+                                  type: string
+                                  format: date-time
+                                  description: >-
+                                    The date and time from which the price
+                                    adjustment is effective.
+                                  example: '2021-09-12T10:12:42Z'
+                                effectiveUntil:
+                                  type: string
+                                  format: date-time
+                                  description: >-
+                                    The date and time until which the price
+                                    adjustment is effective.
+                                  example: '2021-09-12T10:12:42Z'
+                                contextId:
+                                  type: string
+                                  description: >-
+                                    Identifier of the context of this price
+                                    adjustment (e.g. summer sale).
+                                  example: Summer2025
+            version:
+              type: integer
+              minimum: 1
+              description: The version number of the catalog to apply the actions on.
+              example: 244
+    description: body
+    required: true
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            allOf:
+              - type: object
+                required:
+                  - id
+                  - created
+                properties:
+                  id:
+                    type: integer
+                    description: The internal ID of this entity.
+                    example: 6
+                  created:
+                    type: string
+                    format: date-time
+                    description: The time this entity was created.
+                    example: '2020-06-10T09:05:27.993483Z'
+              - type: object
+                required:
+                  - accountId
+                properties:
+                  accountId:
+                    type: integer
+                    description: The ID of the account that owns this entity.
+                    example: 3886
+              - type: object
+                required:
+                  - modified
+                properties:
+                  modified:
+                    type: string
+                    format: date-time
+                    description: The time this entity was last modified.
+                    example: '2021-09-12T10:12:42Z'
+              - allOf:
+                  - type: object
+                    required:
+                      - name
+                      - description
+                    properties:
+                      name:
+                        type: string
+                        description: The cart item catalog name.
+                        example: seafood
+                      description:
+                        type: string
+                        description: A description of this cart item catalog.
+                        example: seafood catalog
+                      subscribedApplicationsIds:
+                        type: array
+                        description: >-
+                          A list of the IDs of the applications that are
+                          subscribed to this catalog.
+                        example:
+                          - 1
+                          - 2
+                          - 3
+                        items:
+                          type: integer
+              - type: object
+                required:
+                  - version
+                  - createdBy
+                properties:
+                  version:
+                    type: integer
+                    description: The current version of this catalog.
+                    example: 6
+                  createdBy:
+                    type: integer
+                    description: The ID of user who created this catalog.
+                    example: 6
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - message
+            properties:
+              message:
+                type: string
+                description: A message describing the error.
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+    '401':
+      description: Unauthorized - Invalid API key
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
