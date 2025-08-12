@@ -1,0 +1,64 @@
+post:
+  operationId: asyncCouponsData
+  summary: Coupons created asynchronously
+  tags:
+    - Coupon notifications
+  requestBody:
+    description: >-
+      The
+      [notification](/docs/product/applications/application-notifications/overview)
+      indicating that up to 5 million coupons were created asynchronously via
+      the [Create coupons
+      asynchronously](/management-api#tag/Coupons/operation/createCouponsAsync)
+      endpoint.
+
+
+      In this case, instead of individual notifications for specific coupon
+      changes (such as creation, update, or deletion), a single notification
+      about the completion of the batch processing of coupons with details about
+      the batch is sent.
+
+
+      **Tip:**
+
+      To retrieve information about the generated coupons, after receiving the
+      notification, use the [Export
+      coupons](/management-api#tag/Coupons/operation/exportCoupons) endpoint
+      along with the `batchid`, which indicates the batch to which the coupons
+      belong.
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - BatchID
+            - TypeOfChange
+            - Operation
+            - EmployeeName
+          properties:
+            BatchID:
+              type: string
+              description: |
+                The ID of the batch to which the coupon belongs.
+
+                **Note:** The Batch ID is generated when coupons are created.
+              example: haanlypn
+            TypeOfChange:
+              type: string
+              description: ''
+              example: campaign_manager
+            Operation:
+              type: string
+              description: ''
+              example: AsyncCouponsCreated
+            EmployeeName:
+              type: string
+              description: ''
+              example: Franziska Schneider
+        example:
+          TypeOfChange: campaign_manager
+          Operation: AsyncCouponsCreated
+          EmployeeName: Franziska Schneider
+          NotificationType: AsyncCouponsCreated
+          BatchID: nqylhnni
+    required: true

@@ -52,7 +52,7 @@ post:
         schema:
           allOf:
             - type: object
-              properties: &ref_0
+              properties:
                 usageLimit:
                   type: integer
                   minimum: 0
@@ -91,7 +91,7 @@ post:
                     Expiration date of the coupon. Coupon never expires if this
                     is omitted.
             - type: object
-              properties: &ref_1
+              properties:
                 limits:
                   type: array
                   description: >
@@ -278,9 +278,109 @@ post:
                           minLength: 4
                           example: XMAS-20-2021
                     - type: object
-                      properties: *ref_0
+                      properties:
+                        usageLimit:
+                          type: integer
+                          minimum: 0
+                          maximum: 999999
+                          example: 100
+                          description: >
+                            The number of times the coupon code can be redeemed.
+                            `0` means unlimited redemptions but any campaign
+                            usage limits will still apply.
+                        discountLimit:
+                          type: number
+                          minimum: 0
+                          maximum: 1000000000000000
+                          example: 30
+                          description: >
+                            The total discount value that the code can give.
+                            Typically used to represent a gift card value.
+                        reservationLimit:
+                          type: integer
+                          minimum: 0
+                          maximum: 999999
+                          example: 45
+                          description: >
+                            The number of reservations that can be made with
+                            this coupon code.
+                        startDate:
+                          type: string
+                          format: date-time
+                          example: '2020-01-24T14:15:22Z'
+                          description: Timestamp at which point the coupon becomes valid.
+                        expiryDate:
+                          type: string
+                          format: date-time
+                          example: '2023-08-24T14:15:22Z'
+                          description: >-
+                            Expiration date of the coupon. Coupon never expires
+                            if this is omitted.
                     - type: object
-                      properties: *ref_1
+                      properties:
+                        limits:
+                          type: array
+                          description: >
+                            Limits configuration for a coupon. These limits will
+                            override the limits
+
+                            set from the campaign.
+
+
+                            **Note:** Only usable when creating a single coupon
+                            which is not tied to a specific recipient.
+
+                            Only per-profile limits are allowed to be
+                            configured.
+                          items:
+                            type: object
+                            required:
+                              - action
+                              - limit
+                              - entities
+                            properties:
+                              action:
+                                type: string
+                                description: >
+                                  The limitable action to which this limit
+                                  applies. For example:
+
+                                  - `setDiscount`
+
+                                  - `setDiscountEffect`
+
+                                  - `redeemCoupon`
+
+                                  - `createCoupon`
+                                example: createCoupon
+                              limit:
+                                type: number
+                                minimum: 0
+                                example: 1000
+                                description: The value to set for the limit.
+                              period:
+                                description: The period on which the budget limit recurs.
+                                type: string
+                                enum:
+                                  - daily
+                                  - weekly
+                                  - monthly
+                                  - yearly
+                                example: yearly
+                              entities:
+                                type: array
+                                description: The entity that this limit applies to.
+                                example:
+                                  - Coupon
+                                items:
+                                  type: string
+                                  enum:
+                                    - Coupon
+                                    - Referral
+                                    - Profile
+                                    - Identifier
+                                    - Store
+                                    - Session
                     - type: object
                       required:
                         - value
@@ -428,7 +528,44 @@ put:
         schema:
           allOf:
             - type: object
-              properties: *ref_0
+              properties:
+                usageLimit:
+                  type: integer
+                  minimum: 0
+                  maximum: 999999
+                  example: 100
+                  description: >
+                    The number of times the coupon code can be redeemed. `0`
+                    means unlimited redemptions but any campaign usage limits
+                    will still apply.
+                discountLimit:
+                  type: number
+                  minimum: 0
+                  maximum: 1000000000000000
+                  example: 30
+                  description: >
+                    The total discount value that the code can give. Typically
+                    used to represent a gift card value.
+                reservationLimit:
+                  type: integer
+                  minimum: 0
+                  maximum: 999999
+                  example: 45
+                  description: >
+                    The number of reservations that can be made with this coupon
+                    code.
+                startDate:
+                  type: string
+                  format: date-time
+                  example: '2020-01-24T14:15:22Z'
+                  description: Timestamp at which point the coupon becomes valid.
+                expiryDate:
+                  type: string
+                  format: date-time
+                  example: '2023-08-24T14:15:22Z'
+                  description: >-
+                    Expiration date of the coupon. Coupon never expires if this
+                    is omitted.
             - type: object
               additionalProperties: false
               properties:

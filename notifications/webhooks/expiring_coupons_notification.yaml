@@ -1,0 +1,95 @@
+post:
+  operationId: expiringCouponsNotification
+  summary: Expiring coupons
+  tags:
+    - Coupon notifications
+  requestBody:
+    description: >-
+      The
+      [notification](/docs/product/applications/application-notifications/overview)
+      reminding users of expiring coupons.
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - TotalResultSize
+            - Data
+          properties:
+            TotalResultSize:
+              type: integer
+              example: 1
+            Data:
+              type: array
+              description: The array of expiring coupon notifications.
+              maxLength: 1000
+              items:
+                type: object
+                required:
+                  - CouponValue
+                  - CampaignId
+                  - UsageLimit
+                  - UsageCounter
+                  - Attributes
+                properties:
+                  CouponValue:
+                    type: string
+                    description: The coupon code.
+                    example: XMAS-20-2021
+                  CreatedDate:
+                    type: string
+                    format: date-time
+                    description: Timestamp at which point the coupon was created.
+                    example: '2024-07-24T14:15:22Z'
+                  ValidFrom:
+                    type: string
+                    format: date-time
+                    description: Timestamp at which point the coupon becomes valid.
+                    example: '2024-10-24T14:15:22Z'
+                    minimum: 0
+                  ValidUntil:
+                    type: string
+                    format: date-time
+                    description: >-
+                      Timestamp at which point the coupon expires. Coupon never
+                      expires if this is omitted, zero, or negative.
+                    example: '2024-12-24T14:15:22Z'
+                    minimum: 0
+                  CampaignId:
+                    type: integer
+                    description: The ID of the campaign to which the coupon belongs.
+                    minimum: 1
+                    example: 3
+                  CustomerProfileId:
+                    type: string
+                    description: >-
+                      The Integration ID of the customer that is allowed to
+                      redeem this coupon.
+                    example: URNGV8294NV
+                  UsageLimit:
+                    type: integer
+                    minimum: 0
+                    maximum: 999999
+                    example: 100
+                    description: >
+                      The number of times the coupon code can be redeemed. `0`
+                      means unlimited redemptions but any campaign usage limits
+                      will still apply.
+                  UsageCounter:
+                    type: integer
+                    title: Total coupon redemptions
+                    example: 10
+                    description: >-
+                      The number of times the coupon has been successfully
+                      redeemed.
+                  BatchId:
+                    title: Batch ID
+                    type: string
+                    description: The ID of the batch the coupon belongs to.
+                    example: 32535-43255
+                  Attributes:
+                    type: object
+                    title: Attributes of coupon
+                    description: Custom attributes associated with this coupon.
+                    additionalProperties: true
+    required: true

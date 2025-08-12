@@ -63,14 +63,14 @@ get:
                 title: Customer's current loyalty program balance.
                 description: The balance of the main ledger in the loyalty program.
                 type: object
-                required: &ref_2
+                required:
                   - total
                   - totalActivePoints
                   - totalPendingPoints
                   - totalSpentPoints
                   - totalExpiredPoints
                   - totalNegativePoints
-                properties: &ref_3
+                properties:
                   total:
                     type: number
                     title: Current Balance (Deprecated)
@@ -116,14 +116,14 @@ get:
                       description: >-
                         A single row of the ledger, describing one addition or
                         deduction.
-                      required: &ref_0
+                      required:
                         - programID
                         - type
                         - amount
                         - created
                         - name
                         - subLedgerID
-                      properties: &ref_1
+                      properties:
                         created:
                           type: string
                           format: date-time
@@ -212,8 +212,94 @@ get:
                       description: >-
                         A single row of the ledger, describing one addition or
                         deduction.
-                      required: *ref_0
-                      properties: *ref_1
+                      required:
+                        - programID
+                        - type
+                        - amount
+                        - created
+                        - name
+                        - subLedgerID
+                      properties:
+                        created:
+                          type: string
+                          format: date-time
+                          example: '2021-07-20T22:00:00Z'
+                        programID:
+                          type: integer
+                          example: 5
+                        customerProfileID:
+                          type: string
+                          example: URNGV8294NV
+                        cardID:
+                          type: integer
+                          example: 241
+                        customerSessionID:
+                          type: string
+                          example: t2gy5s-47274
+                        eventID:
+                          type: integer
+                          example: 5
+                        type:
+                          type: string
+                          description: >
+                            The type of the ledger transaction. Possible values
+                            are:
+
+                            - `addition`
+
+                            - `subtraction`
+
+                            - `expire`
+
+                            - `expiring` (for expiring points ledgers)
+                          example: addition
+                        amount:
+                          type: number
+                          example: 100
+                        startDate:
+                          type: string
+                          format: date-time
+                          example: '2021-07-20T22:00:00Z'
+                        expiryDate:
+                          type: string
+                          format: date-time
+                          example: '2022-07-20T22:00:00Z'
+                        name:
+                          type: string
+                          description: >-
+                            A name referencing the condition or effect that
+                            added this entry, or the specific name provided in
+                            an API call.
+                          example: Add points on purchase
+                        subLedgerID:
+                          type: string
+                          description: >-
+                            This specifies if we are adding loyalty points to
+                            the main ledger or a subledger.
+                          example: mysubledger
+                        userID:
+                          type: integer
+                          description: >-
+                            This is the ID of the user who created this entry,
+                            if the addition or subtraction was done manually.
+                          example: 499
+                        archived:
+                          type: boolean
+                          description: >-
+                            Indicates if the entry belongs to the archived
+                            session.
+                          example: false
+                        flags:
+                          description: >-
+                            A map of flags providing additional details about
+                            the entry.
+                          type: object
+                          properties:
+                            createsNegativeBalance:
+                              type: boolean
+                              description: >-
+                                Set to true if the entry creates negative
+                                balance.
                   activePoints:
                     description: List of all currently active points.
                     type: array
@@ -222,8 +308,94 @@ get:
                       description: >-
                         A single row of the ledger, describing one addition or
                         deduction.
-                      required: *ref_0
-                      properties: *ref_1
+                      required:
+                        - programID
+                        - type
+                        - amount
+                        - created
+                        - name
+                        - subLedgerID
+                      properties:
+                        created:
+                          type: string
+                          format: date-time
+                          example: '2021-07-20T22:00:00Z'
+                        programID:
+                          type: integer
+                          example: 5
+                        customerProfileID:
+                          type: string
+                          example: URNGV8294NV
+                        cardID:
+                          type: integer
+                          example: 241
+                        customerSessionID:
+                          type: string
+                          example: t2gy5s-47274
+                        eventID:
+                          type: integer
+                          example: 5
+                        type:
+                          type: string
+                          description: >
+                            The type of the ledger transaction. Possible values
+                            are:
+
+                            - `addition`
+
+                            - `subtraction`
+
+                            - `expire`
+
+                            - `expiring` (for expiring points ledgers)
+                          example: addition
+                        amount:
+                          type: number
+                          example: 100
+                        startDate:
+                          type: string
+                          format: date-time
+                          example: '2021-07-20T22:00:00Z'
+                        expiryDate:
+                          type: string
+                          format: date-time
+                          example: '2022-07-20T22:00:00Z'
+                        name:
+                          type: string
+                          description: >-
+                            A name referencing the condition or effect that
+                            added this entry, or the specific name provided in
+                            an API call.
+                          example: Add points on purchase
+                        subLedgerID:
+                          type: string
+                          description: >-
+                            This specifies if we are adding loyalty points to
+                            the main ledger or a subledger.
+                          example: mysubledger
+                        userID:
+                          type: integer
+                          description: >-
+                            This is the ID of the user who created this entry,
+                            if the addition or subtraction was done manually.
+                          example: 499
+                        archived:
+                          type: boolean
+                          description: >-
+                            Indicates if the entry belongs to the archived
+                            session.
+                          example: false
+                        flags:
+                          description: >-
+                            A map of flags providing additional details about
+                            the entry.
+                          type: object
+                          properties:
+                            createsNegativeBalance:
+                              type: boolean
+                              description: >-
+                                Set to true if the entry creates negative
+                                balance.
                   pendingPoints:
                     description: List of all points pending activation.
                     type: array
@@ -232,8 +404,94 @@ get:
                       description: >-
                         A single row of the ledger, describing one addition or
                         deduction.
-                      required: *ref_0
-                      properties: *ref_1
+                      required:
+                        - programID
+                        - type
+                        - amount
+                        - created
+                        - name
+                        - subLedgerID
+                      properties:
+                        created:
+                          type: string
+                          format: date-time
+                          example: '2021-07-20T22:00:00Z'
+                        programID:
+                          type: integer
+                          example: 5
+                        customerProfileID:
+                          type: string
+                          example: URNGV8294NV
+                        cardID:
+                          type: integer
+                          example: 241
+                        customerSessionID:
+                          type: string
+                          example: t2gy5s-47274
+                        eventID:
+                          type: integer
+                          example: 5
+                        type:
+                          type: string
+                          description: >
+                            The type of the ledger transaction. Possible values
+                            are:
+
+                            - `addition`
+
+                            - `subtraction`
+
+                            - `expire`
+
+                            - `expiring` (for expiring points ledgers)
+                          example: addition
+                        amount:
+                          type: number
+                          example: 100
+                        startDate:
+                          type: string
+                          format: date-time
+                          example: '2021-07-20T22:00:00Z'
+                        expiryDate:
+                          type: string
+                          format: date-time
+                          example: '2022-07-20T22:00:00Z'
+                        name:
+                          type: string
+                          description: >-
+                            A name referencing the condition or effect that
+                            added this entry, or the specific name provided in
+                            an API call.
+                          example: Add points on purchase
+                        subLedgerID:
+                          type: string
+                          description: >-
+                            This specifies if we are adding loyalty points to
+                            the main ledger or a subledger.
+                          example: mysubledger
+                        userID:
+                          type: integer
+                          description: >-
+                            This is the ID of the user who created this entry,
+                            if the addition or subtraction was done manually.
+                          example: 499
+                        archived:
+                          type: boolean
+                          description: >-
+                            Indicates if the entry belongs to the archived
+                            session.
+                          example: false
+                        flags:
+                          description: >-
+                            A map of flags providing additional details about
+                            the entry.
+                          type: object
+                          properties:
+                            createsNegativeBalance:
+                              type: boolean
+                              description: >-
+                                Set to true if the entry creates negative
+                                balance.
                   expiredPoints:
                     description: List of expired points.
                     type: array
@@ -242,8 +500,94 @@ get:
                       description: >-
                         A single row of the ledger, describing one addition or
                         deduction.
-                      required: *ref_0
-                      properties: *ref_1
+                      required:
+                        - programID
+                        - type
+                        - amount
+                        - created
+                        - name
+                        - subLedgerID
+                      properties:
+                        created:
+                          type: string
+                          format: date-time
+                          example: '2021-07-20T22:00:00Z'
+                        programID:
+                          type: integer
+                          example: 5
+                        customerProfileID:
+                          type: string
+                          example: URNGV8294NV
+                        cardID:
+                          type: integer
+                          example: 241
+                        customerSessionID:
+                          type: string
+                          example: t2gy5s-47274
+                        eventID:
+                          type: integer
+                          example: 5
+                        type:
+                          type: string
+                          description: >
+                            The type of the ledger transaction. Possible values
+                            are:
+
+                            - `addition`
+
+                            - `subtraction`
+
+                            - `expire`
+
+                            - `expiring` (for expiring points ledgers)
+                          example: addition
+                        amount:
+                          type: number
+                          example: 100
+                        startDate:
+                          type: string
+                          format: date-time
+                          example: '2021-07-20T22:00:00Z'
+                        expiryDate:
+                          type: string
+                          format: date-time
+                          example: '2022-07-20T22:00:00Z'
+                        name:
+                          type: string
+                          description: >-
+                            A name referencing the condition or effect that
+                            added this entry, or the specific name provided in
+                            an API call.
+                          example: Add points on purchase
+                        subLedgerID:
+                          type: string
+                          description: >-
+                            This specifies if we are adding loyalty points to
+                            the main ledger or a subledger.
+                          example: mysubledger
+                        userID:
+                          type: integer
+                          description: >-
+                            This is the ID of the user who created this entry,
+                            if the addition or subtraction was done manually.
+                          example: 499
+                        archived:
+                          type: boolean
+                          description: >-
+                            Indicates if the entry belongs to the archived
+                            session.
+                          example: false
+                        flags:
+                          description: >-
+                            A map of flags providing additional details about
+                            the entry.
+                          type: object
+                          properties:
+                            createsNegativeBalance:
+                              type: boolean
+                              description: >-
+                                Set to true if the entry creates negative
+                                balance.
                   currentTier:
                     description: Tier for which the ledger is eligible.
                     type: object
@@ -291,8 +635,572 @@ get:
                 additionalProperties:
                   type: object
                   description: Ledger of Balance in Loyalty Program for a Customer.
-                  required: *ref_2
-                  properties: *ref_3
+                  required:
+                    - total
+                    - totalActivePoints
+                    - totalPendingPoints
+                    - totalSpentPoints
+                    - totalExpiredPoints
+                    - totalNegativePoints
+                  properties:
+                    total:
+                      type: number
+                      title: Current Balance (Deprecated)
+                      description: >
+                        **DEPRECATED** Use `totalActivePoints` property instead.
+                        Total amount of currently active and available points in
+                        the customer's balance.
+                    totalActivePoints:
+                      type: number
+                      title: Current Balance
+                      description: >-
+                        Total amount of currently active and available points in
+                        the customer's balance.
+                    totalPendingPoints:
+                      type: number
+                      title: Total pending points
+                      description: >-
+                        Total amount of pending points, which are not active yet
+                        but will become active in the future.
+                    totalSpentPoints:
+                      type: number
+                      title: Total spent points
+                      description: Total amount of points already spent by this customer.
+                    totalExpiredPoints:
+                      type: number
+                      title: Total expired points
+                      description: >-
+                        Total amount of points, that expired without ever being
+                        spent.
+                    totalNegativePoints:
+                      type: number
+                      title: Total negative points
+                      description: >-
+                        Total amount of negative points. This implies that
+                        `totalActivePoints` is `0`.
+                    transactions:
+                      description: >-
+                        List of all events that have happened such as additions,
+                        subtractions and expiries.
+                      type: array
+                      items:
+                        type: object
+                        description: >-
+                          A single row of the ledger, describing one addition or
+                          deduction.
+                        required:
+                          - programID
+                          - type
+                          - amount
+                          - created
+                          - name
+                          - subLedgerID
+                        properties:
+                          created:
+                            type: string
+                            format: date-time
+                            example: '2021-07-20T22:00:00Z'
+                          programID:
+                            type: integer
+                            example: 5
+                          customerProfileID:
+                            type: string
+                            example: URNGV8294NV
+                          cardID:
+                            type: integer
+                            example: 241
+                          customerSessionID:
+                            type: string
+                            example: t2gy5s-47274
+                          eventID:
+                            type: integer
+                            example: 5
+                          type:
+                            type: string
+                            description: >
+                              The type of the ledger transaction. Possible
+                              values are:
+
+                              - `addition`
+
+                              - `subtraction`
+
+                              - `expire`
+
+                              - `expiring` (for expiring points ledgers)
+                            example: addition
+                          amount:
+                            type: number
+                            example: 100
+                          startDate:
+                            type: string
+                            format: date-time
+                            example: '2021-07-20T22:00:00Z'
+                          expiryDate:
+                            type: string
+                            format: date-time
+                            example: '2022-07-20T22:00:00Z'
+                          name:
+                            type: string
+                            description: >-
+                              A name referencing the condition or effect that
+                              added this entry, or the specific name provided in
+                              an API call.
+                            example: Add points on purchase
+                          subLedgerID:
+                            type: string
+                            description: >-
+                              This specifies if we are adding loyalty points to
+                              the main ledger or a subledger.
+                            example: mysubledger
+                          userID:
+                            type: integer
+                            description: >-
+                              This is the ID of the user who created this entry,
+                              if the addition or subtraction was done manually.
+                            example: 499
+                          archived:
+                            type: boolean
+                            description: >-
+                              Indicates if the entry belongs to the archived
+                              session.
+                            example: false
+                          flags:
+                            description: >-
+                              A map of flags providing additional details about
+                              the entry.
+                            type: object
+                            properties:
+                              createsNegativeBalance:
+                                type: boolean
+                                description: >-
+                                  Set to true if the entry creates negative
+                                  balance.
+                    expiringPoints:
+                      description: List of all points that will expire.
+                      type: array
+                      items:
+                        type: object
+                        description: >-
+                          A single row of the ledger, describing one addition or
+                          deduction.
+                        required:
+                          - programID
+                          - type
+                          - amount
+                          - created
+                          - name
+                          - subLedgerID
+                        properties:
+                          created:
+                            type: string
+                            format: date-time
+                            example: '2021-07-20T22:00:00Z'
+                          programID:
+                            type: integer
+                            example: 5
+                          customerProfileID:
+                            type: string
+                            example: URNGV8294NV
+                          cardID:
+                            type: integer
+                            example: 241
+                          customerSessionID:
+                            type: string
+                            example: t2gy5s-47274
+                          eventID:
+                            type: integer
+                            example: 5
+                          type:
+                            type: string
+                            description: >
+                              The type of the ledger transaction. Possible
+                              values are:
+
+                              - `addition`
+
+                              - `subtraction`
+
+                              - `expire`
+
+                              - `expiring` (for expiring points ledgers)
+                            example: addition
+                          amount:
+                            type: number
+                            example: 100
+                          startDate:
+                            type: string
+                            format: date-time
+                            example: '2021-07-20T22:00:00Z'
+                          expiryDate:
+                            type: string
+                            format: date-time
+                            example: '2022-07-20T22:00:00Z'
+                          name:
+                            type: string
+                            description: >-
+                              A name referencing the condition or effect that
+                              added this entry, or the specific name provided in
+                              an API call.
+                            example: Add points on purchase
+                          subLedgerID:
+                            type: string
+                            description: >-
+                              This specifies if we are adding loyalty points to
+                              the main ledger or a subledger.
+                            example: mysubledger
+                          userID:
+                            type: integer
+                            description: >-
+                              This is the ID of the user who created this entry,
+                              if the addition or subtraction was done manually.
+                            example: 499
+                          archived:
+                            type: boolean
+                            description: >-
+                              Indicates if the entry belongs to the archived
+                              session.
+                            example: false
+                          flags:
+                            description: >-
+                              A map of flags providing additional details about
+                              the entry.
+                            type: object
+                            properties:
+                              createsNegativeBalance:
+                                type: boolean
+                                description: >-
+                                  Set to true if the entry creates negative
+                                  balance.
+                    activePoints:
+                      description: List of all currently active points.
+                      type: array
+                      items:
+                        type: object
+                        description: >-
+                          A single row of the ledger, describing one addition or
+                          deduction.
+                        required:
+                          - programID
+                          - type
+                          - amount
+                          - created
+                          - name
+                          - subLedgerID
+                        properties:
+                          created:
+                            type: string
+                            format: date-time
+                            example: '2021-07-20T22:00:00Z'
+                          programID:
+                            type: integer
+                            example: 5
+                          customerProfileID:
+                            type: string
+                            example: URNGV8294NV
+                          cardID:
+                            type: integer
+                            example: 241
+                          customerSessionID:
+                            type: string
+                            example: t2gy5s-47274
+                          eventID:
+                            type: integer
+                            example: 5
+                          type:
+                            type: string
+                            description: >
+                              The type of the ledger transaction. Possible
+                              values are:
+
+                              - `addition`
+
+                              - `subtraction`
+
+                              - `expire`
+
+                              - `expiring` (for expiring points ledgers)
+                            example: addition
+                          amount:
+                            type: number
+                            example: 100
+                          startDate:
+                            type: string
+                            format: date-time
+                            example: '2021-07-20T22:00:00Z'
+                          expiryDate:
+                            type: string
+                            format: date-time
+                            example: '2022-07-20T22:00:00Z'
+                          name:
+                            type: string
+                            description: >-
+                              A name referencing the condition or effect that
+                              added this entry, or the specific name provided in
+                              an API call.
+                            example: Add points on purchase
+                          subLedgerID:
+                            type: string
+                            description: >-
+                              This specifies if we are adding loyalty points to
+                              the main ledger or a subledger.
+                            example: mysubledger
+                          userID:
+                            type: integer
+                            description: >-
+                              This is the ID of the user who created this entry,
+                              if the addition or subtraction was done manually.
+                            example: 499
+                          archived:
+                            type: boolean
+                            description: >-
+                              Indicates if the entry belongs to the archived
+                              session.
+                            example: false
+                          flags:
+                            description: >-
+                              A map of flags providing additional details about
+                              the entry.
+                            type: object
+                            properties:
+                              createsNegativeBalance:
+                                type: boolean
+                                description: >-
+                                  Set to true if the entry creates negative
+                                  balance.
+                    pendingPoints:
+                      description: List of all points pending activation.
+                      type: array
+                      items:
+                        type: object
+                        description: >-
+                          A single row of the ledger, describing one addition or
+                          deduction.
+                        required:
+                          - programID
+                          - type
+                          - amount
+                          - created
+                          - name
+                          - subLedgerID
+                        properties:
+                          created:
+                            type: string
+                            format: date-time
+                            example: '2021-07-20T22:00:00Z'
+                          programID:
+                            type: integer
+                            example: 5
+                          customerProfileID:
+                            type: string
+                            example: URNGV8294NV
+                          cardID:
+                            type: integer
+                            example: 241
+                          customerSessionID:
+                            type: string
+                            example: t2gy5s-47274
+                          eventID:
+                            type: integer
+                            example: 5
+                          type:
+                            type: string
+                            description: >
+                              The type of the ledger transaction. Possible
+                              values are:
+
+                              - `addition`
+
+                              - `subtraction`
+
+                              - `expire`
+
+                              - `expiring` (for expiring points ledgers)
+                            example: addition
+                          amount:
+                            type: number
+                            example: 100
+                          startDate:
+                            type: string
+                            format: date-time
+                            example: '2021-07-20T22:00:00Z'
+                          expiryDate:
+                            type: string
+                            format: date-time
+                            example: '2022-07-20T22:00:00Z'
+                          name:
+                            type: string
+                            description: >-
+                              A name referencing the condition or effect that
+                              added this entry, or the specific name provided in
+                              an API call.
+                            example: Add points on purchase
+                          subLedgerID:
+                            type: string
+                            description: >-
+                              This specifies if we are adding loyalty points to
+                              the main ledger or a subledger.
+                            example: mysubledger
+                          userID:
+                            type: integer
+                            description: >-
+                              This is the ID of the user who created this entry,
+                              if the addition or subtraction was done manually.
+                            example: 499
+                          archived:
+                            type: boolean
+                            description: >-
+                              Indicates if the entry belongs to the archived
+                              session.
+                            example: false
+                          flags:
+                            description: >-
+                              A map of flags providing additional details about
+                              the entry.
+                            type: object
+                            properties:
+                              createsNegativeBalance:
+                                type: boolean
+                                description: >-
+                                  Set to true if the entry creates negative
+                                  balance.
+                    expiredPoints:
+                      description: List of expired points.
+                      type: array
+                      items:
+                        type: object
+                        description: >-
+                          A single row of the ledger, describing one addition or
+                          deduction.
+                        required:
+                          - programID
+                          - type
+                          - amount
+                          - created
+                          - name
+                          - subLedgerID
+                        properties:
+                          created:
+                            type: string
+                            format: date-time
+                            example: '2021-07-20T22:00:00Z'
+                          programID:
+                            type: integer
+                            example: 5
+                          customerProfileID:
+                            type: string
+                            example: URNGV8294NV
+                          cardID:
+                            type: integer
+                            example: 241
+                          customerSessionID:
+                            type: string
+                            example: t2gy5s-47274
+                          eventID:
+                            type: integer
+                            example: 5
+                          type:
+                            type: string
+                            description: >
+                              The type of the ledger transaction. Possible
+                              values are:
+
+                              - `addition`
+
+                              - `subtraction`
+
+                              - `expire`
+
+                              - `expiring` (for expiring points ledgers)
+                            example: addition
+                          amount:
+                            type: number
+                            example: 100
+                          startDate:
+                            type: string
+                            format: date-time
+                            example: '2021-07-20T22:00:00Z'
+                          expiryDate:
+                            type: string
+                            format: date-time
+                            example: '2022-07-20T22:00:00Z'
+                          name:
+                            type: string
+                            description: >-
+                              A name referencing the condition or effect that
+                              added this entry, or the specific name provided in
+                              an API call.
+                            example: Add points on purchase
+                          subLedgerID:
+                            type: string
+                            description: >-
+                              This specifies if we are adding loyalty points to
+                              the main ledger or a subledger.
+                            example: mysubledger
+                          userID:
+                            type: integer
+                            description: >-
+                              This is the ID of the user who created this entry,
+                              if the addition or subtraction was done manually.
+                            example: 499
+                          archived:
+                            type: boolean
+                            description: >-
+                              Indicates if the entry belongs to the archived
+                              session.
+                            example: false
+                          flags:
+                            description: >-
+                              A map of flags providing additional details about
+                              the entry.
+                            type: object
+                            properties:
+                              createsNegativeBalance:
+                                type: boolean
+                                description: >-
+                                  Set to true if the entry creates negative
+                                  balance.
+                    currentTier:
+                      description: Tier for which the ledger is eligible.
+                      type: object
+                      required:
+                        - id
+                        - name
+                      properties:
+                        id:
+                          type: integer
+                          description: The internal ID of the tier.
+                          example: 11
+                        name:
+                          type: string
+                          description: The name of the tier.
+                          example: bronze
+                        startDate:
+                          type: string
+                          format: date-time
+                          description: >-
+                            Date and time when the customer moved to this tier.
+                            This value uses the loyalty program's time zone
+                            setting.
+                          example: 2021-05-03T12:32:00Z07:00
+                        expiryDate:
+                          type: string
+                          format: date-time
+                          description: >-
+                            Date when tier level expires in the RFC3339 format
+                            (in the Loyalty Program's timezone).
+                          example: 2022-08-02T15:04:05Z07:00
+                        downgradePolicy:
+                          type: string
+                          enum:
+                            - one_down
+                            - balance_based
+                          description: >
+                            The policy that defines how customer tiers are
+                            downgraded in the loyalty program after tier
+                            reevaluation.
+                             - `one_down`: If the customer doesn't have enough points to stay in the current tier, they are downgraded by one tier.
+                             - `balance_based`: The customer's tier is reevaluated based on the amount of active points they have at the moment.
                 example:
                   mysubledger:
                     total: 0

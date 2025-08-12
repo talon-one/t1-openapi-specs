@@ -19,10 +19,10 @@ post:
       application/json:
         schema:
           type: object
-          required: &ref_0
+          required:
             - email
             - token
-          properties: &ref_1
+          properties:
             email:
               type: string
               description: Email address of the user.
@@ -41,5 +41,16 @@ post:
         application/json:
           schema:
             type: object
-            required: *ref_0
-            properties: *ref_1
+            required:
+              - email
+              - token
+            properties:
+              email:
+                type: string
+                description: Email address of the user.
+                format: email
+                example: john.doe@example.com
+              token:
+                type: string
+                description: Invitation token of the user.
+                example: Gy9b8w1irmQtEPo5RmbMmSPheL5h4

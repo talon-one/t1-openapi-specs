@@ -1,0 +1,108 @@
+openapi: 3.1.0
+info:
+  title: Notification schemas
+  version: ''
+  description: >
+    Use [Application
+    notifications](/docs/product/applications/application-notifications/overview)
+    and [loyalty
+    notifications](/docs/product/loyalty-programs/loyalty-notifications/overview)
+    to notify the system of your choice of certain changes that happened in
+    Talon.One.
+
+    **Note:** Required fields are not omitted if they are empty (have `null`
+    value).
+servers:
+  - url: https://yourbaseurl.talon.one
+security: []
+tags:
+  - name: Campaign notifications
+    description: >
+      Represents the
+      [notifications](/docs/product/applications/application-notifications/overview)
+
+      about campaign-related changes.
+
+
+      **Note:** The value of the `NotificationType` property indicates the
+      campaign change:
+
+      - `CampaignNotification` signifies one of the following events:
+        - [Campaign created](#tag/Campaign-notifications/paths/campaign_created/post)
+        - [Campaign state changed](#tag/Campaign-notifications/paths/campaign_state_changed/post)
+        - [Campaign rules changed](#tag/Campaign-notifications/paths/campaign_rusleset_changed/post)
+        - [Campaign edited](#tag/Campaign-notifications/paths/campaign_edited/post)
+        - [Campaign deleted](#tag/Campaign-notifications/paths/campaign_deleted/post)
+      - `CampaignEvaluationTreeChanged` signifies [Campaign evaluation tree
+      changed](#tag/Campaign-notifications/paths/campaign_evaluation_tree_changed/post).
+  - name: Coupon notifications
+    description: >
+      Represents the
+      [notifications](/docs/product/applications/application-notifications/overview)
+
+      about coupons.
+  - name: Loyalty card notifications
+    description: >-
+      Represents the
+      [notifications](/docs/product/loyalty-programs/loyalty-notifications/overview)
+      about changes to loyalty points in card-based loyalty programs.
+  - name: Loyalty notifications
+    description: >
+      Represents the
+      [notifications](/docs/product/loyalty-programs/loyalty-notifications/overview)
+
+      about changes to loyalty points in profile-based loyalty programs.
+  - name: Strikethrough pricing notifications
+    description: >
+      Represents the
+      [notifications](/docs/product/applications/application-notifications/overview)
+
+      about strikethrough pricing updates.
+paths: {}
+webhooks:
+  campaign_created:
+    $ref: webhooks/campaign_created.yaml
+  campaign_state_changed:
+    $ref: webhooks/campaign_state_changed.yaml
+  campaign_rusleset_changed:
+    $ref: webhooks/campaign_rusleset_changed.yaml
+  campaign_edited:
+    $ref: webhooks/campaign_edited.yaml
+  campaign_collection_edited:
+    $ref: webhooks/campaign_collection_edited.yaml
+  campaign_deleted:
+    $ref: webhooks/campaign_deleted.yaml
+  campaign_evaluation_tree_changed:
+    $ref: webhooks/campaign_evaluation_tree_changed.yaml
+  strikethrough_notification:
+    $ref: webhooks/strikethrough_notification.yaml
+  coupon_creation:
+    $ref: webhooks/coupon_creation.yaml
+  coupon_update_delete:
+    $ref: webhooks/coupon_update_delete.yaml
+  creation_coupons_asynchronous:
+    $ref: webhooks/creation_coupons_asynchronous.yaml
+  update_coupons:
+    $ref: webhooks/update_coupons.yaml
+  delete_coupons:
+    $ref: webhooks/delete_coupons.yaml
+  expiring_loyalty_points_notification:
+    $ref: webhooks/expiring_loyalty_points_notification.yaml
+  expiring_loyalty_card_points_notification:
+    $ref: webhooks/expiring_loyalty_card_points_notification.yaml
+  added_deducted_loyalty_points_notification:
+    $ref: webhooks/added_deducted_loyalty_points_notification.yaml
+  pending_active_points_notification:
+    $ref: webhooks/pending_active_points_notification.yaml
+  tier_upgrade_notification:
+    $ref: webhooks/tier_upgrade_notification.yaml
+  tier_downgrade_notification:
+    $ref: webhooks/tier_downgrade_notification.yaml
+  tier_will_downgrade_notification:
+    $ref: webhooks/tier_will_downgrade_notification.yaml
+  expiring_coupons_notification:
+    $ref: webhooks/expiring_coupons_notification.yaml
+  card_added_deducted_loyalty_points_notification:
+    $ref: webhooks/card_added_deducted_loyalty_points_notification.yaml
+components:
+  securitySchemes: {}

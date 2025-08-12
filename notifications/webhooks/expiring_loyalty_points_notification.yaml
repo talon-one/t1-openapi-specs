@@ -1,0 +1,60 @@
+post:
+  operationId: expiringPointsNotification
+  summary: Expiring points
+  tags:
+    - Loyalty notifications
+  requestBody:
+    description: >-
+      The
+      [notification](/docs/product/loyalty-programs/loyalty-notifications/overview)
+      reminding users that their active loyalty points will expire soon.
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - TotalResultSize
+            - Data
+          properties:
+            TotalResultSize:
+              type: integer
+              example: 1
+            Data:
+              type: array
+              description: The array of expiring points.
+              maxLength: 1000
+              items:
+                type: object
+                required:
+                  - ExpiryDate
+                  - LoyaltyProgramID
+                  - CustomerProfileID
+                  - AmountOfExpiringPoints
+                  - SubledgerID
+                properties:
+                  ExpiryDate:
+                    type: string
+                    format: date
+                    description: The expiration date of loyalty points.
+                  LoyaltyProgramID:
+                    type: integer
+                    description: The ID of the loyalty program.
+                    minimum: 1
+                    example: 5
+                  CustomerProfileID:
+                    type: string
+                    description: >-
+                      The integration ID of the customer profile that has
+                      expiring points.
+                    example: URNGV8294NV
+                  AmountOfExpiringPoints:
+                    type: number
+                    description: The amount of loyalty points that will be expired soon.
+                    example: 10.99
+                  SubledgerID:
+                    type: string
+                    description: >-
+                      The ID of the subledger within the loyalty program where
+                      these points were added.
+                    example: sub-123
+    required: true

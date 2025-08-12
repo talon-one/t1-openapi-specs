@@ -1,0 +1,78 @@
+post:
+  operationId: tierDowngradeNotification
+  summary: Tier downgrade
+  tags:
+    - Loyalty notifications
+  requestBody:
+    description: >-
+      The
+      [notification](/docs/product/loyalty-programs/loyalty-notifications/overview)
+      informing users when a loyalty tier downgrade occurs.
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - TotalResultSize
+            - Data
+          properties:
+            TotalResultSize:
+              type: integer
+              example: 1
+            Data:
+              type: array
+              description: The array of tier downgrade notifications.
+              maxLength: 1000
+              items:
+                type: object
+                required:
+                  - CustomerProfileID
+                  - LoyaltyProgramID
+                  - SubledgerID
+                  - CurrentPoints
+                  - OldTier
+                  - TimestampOfTierChange
+                properties:
+                  CustomerProfileID:
+                    type: string
+                    description: >-
+                      The integration ID of the customer profile whose tier was
+                      downgraded.
+                    example: URNGV8294NV
+                  LoyaltyProgramID:
+                    type: integer
+                    description: The ID of the loyalty program.
+                    minimum: 1
+                    example: 5
+                  SubledgerID:
+                    type: string
+                    description: >-
+                      The ID of the subledger, when applicable. If this field is
+                      empty, the main ledger is used.
+                    default: ''
+                    example: SL001
+                  CurrentTier:
+                    type: string
+                    description: The name of the customer's current tier.
+                    example: Silver
+                  CurrentPoints:
+                    type: number
+                    description: >-
+                      The number of points the customer had at the time of tier
+                      downgrade.
+                    example: 120.55
+                  OldTier:
+                    type: string
+                    description: The name of the customer's previous tier.
+                    example: Gold
+                  TierExpirationDate:
+                    type: string
+                    format: date-time
+                    description: The exact date and time the tier expires.
+                    example: '2023-12-01T12:23:00+02:00'
+                  TimestampOfTierChange:
+                    type: string
+                    format: date-time
+                    description: The exact date and time the tier was changed.
+                    example: '2023-10-26T12:23:00+02:00'
+    required: true

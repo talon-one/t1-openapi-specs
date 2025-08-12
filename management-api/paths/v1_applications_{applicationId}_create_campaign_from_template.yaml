@@ -68,10 +68,10 @@ post:
                 provided.
               items:
                 type: object
-                required: &ref_6
+                required:
                   - name
                   - expression
-                properties: &ref_7
+                properties:
                   name:
                     type: string
                     description: A descriptive name for the value to be bound.
@@ -130,11 +130,11 @@ post:
                 be overridden.
               items:
                 type: object
-                required: &ref_2
+                required:
                   - action
                   - limit
                   - entities
-                properties: &ref_3
+                properties:
                   action:
                     type: string
                     description: >
@@ -261,9 +261,9 @@ post:
                         description: The ID of the Application that owns this entity.
                         example: 322
                   - type: object
-                    required: &ref_4
+                    required:
                       - userId
-                    properties: &ref_5
+                    properties:
                       userId:
                         type: integer
                         description: The ID of the user associated with this entity.
@@ -341,7 +341,7 @@ post:
                             - achievements
                       couponSettings:
                         type: object
-                        properties: &ref_0
+                        properties:
                           validCharacters:
                             type: array
                             description: >
@@ -398,14 +398,71 @@ post:
                             pattern: ^[A-Za-z0-9_#-]*$
                             example: SUMMER-####-####
                         additionalProperties: false
-                        required: &ref_1
+                        required:
                           - couponPattern
                           - validCharacters
                       referralSettings:
                         type: object
-                        properties: *ref_0
+                        properties:
+                          validCharacters:
+                            type: array
+                            description: >
+                              List of characters used to generate the random
+                              parts of a code.
+                            example:
+                              - A
+                              - B
+                              - C
+                              - D
+                              - E
+                              - F
+                              - G
+                              - H
+                              - I
+                              - J
+                              - K
+                              - L
+                              - M
+                              - 'N'
+                              - O
+                              - P
+                              - Q
+                              - R
+                              - S
+                              - T
+                              - U
+                              - V
+                              - W
+                              - X
+                              - 'Y'
+                              - Z
+                              - '0'
+                              - '1'
+                              - '2'
+                              - '3'
+                              - '4'
+                              - '5'
+                              - '6'
+                              - '7'
+                              - '8'
+                              - '9'
+                            items:
+                              type: string
+                          couponPattern:
+                            type: string
+                            description: >
+                              The pattern used to generate codes, such as coupon
+                              codes, referral codes, and loyalty cards. The
+                              character `#` is a placeholder and is replaced by
+                              a random character from the `validCharacters` set.
+                            maxLength: 100
+                            minLength: 3
+                            pattern: ^[A-Za-z0-9_#-]*$
+                            example: SUMMER-####-####
                         additionalProperties: false
-                        required: *ref_1
+                        required:
+                          - couponPattern
+                          - validCharacters
                       limits:
                         type: array
                         description: >
@@ -414,8 +471,53 @@ post:
                           for this campaign.
                         items:
                           type: object
-                          required: *ref_2
-                          properties: *ref_3
+                          required:
+                            - action
+                            - limit
+                            - entities
+                          properties:
+                            action:
+                              type: string
+                              description: >
+                                The limitable action to which this limit
+                                applies. For example:
+
+                                - `setDiscount`
+
+                                - `setDiscountEffect`
+
+                                - `redeemCoupon`
+
+                                - `createCoupon`
+                              example: createCoupon
+                            limit:
+                              type: number
+                              minimum: 0
+                              example: 1000
+                              description: The value to set for the limit.
+                            period:
+                              description: The period on which the budget limit recurs.
+                              type: string
+                              enum:
+                                - daily
+                                - weekly
+                                - monthly
+                                - yearly
+                              example: yearly
+                            entities:
+                              type: array
+                              description: The entity that this limit applies to.
+                              example:
+                                - Coupon
+                              items:
+                                type: string
+                                enum:
+                                  - Coupon
+                                  - Referral
+                                  - Profile
+                                  - Identifier
+                                  - Store
+                                  - Session
                       campaignGroups:
                         type: array
                         description: >
@@ -763,10 +865,10 @@ post:
               ruleset:
                 allOf:
                   - type: object
-                    required: &ref_10
+                    required:
                       - id
                       - created
-                    properties: &ref_11
+                    properties:
                       id:
                         type: integer
                         description: The internal ID of this entity.
@@ -777,8 +879,13 @@ post:
                         description: The time this entity was created.
                         example: '2020-06-10T09:05:27.993483Z'
                   - type: object
-                    required: *ref_4
-                    properties: *ref_5
+                    required:
+                      - userId
+                    properties:
+                      userId:
+                        type: integer
+                        description: The ID of the user associated with this entity.
+                        example: 388
                   - type: object
                     required:
                       - rules
@@ -789,11 +896,11 @@ post:
                         description: Set of rules to apply.
                         items:
                           type: object
-                          required: &ref_8
+                          required:
                             - title
                             - condition
                             - effects
-                          properties: &ref_9
+                          properties:
                             id:
                               type: string
                               format: uuid
@@ -824,8 +931,72 @@ post:
                                 decided by the position in the array.
                               items:
                                 type: object
-                                required: *ref_6
-                                properties: *ref_7
+                                required:
+                                  - name
+                                  - expression
+                                properties:
+                                  name:
+                                    type: string
+                                    description: >-
+                                      A descriptive name for the value to be
+                                      bound.
+                                    example: my property
+                                  type:
+                                    type: string
+                                    description: |
+                                      The kind of binding. Possible values are:
+                                      - `bundle`
+                                      - `cartItemFilter`
+                                      - `subledgerBalance`
+                                      - `templateParameter`
+                                    example: templateParameter
+                                  expression:
+                                    type: array
+                                    description: >-
+                                      A Talang expression that will be evaluated
+                                      and its result attached to the name of the
+                                      binding.
+                                    example:
+                                      - string1
+                                      - string2
+                                    items: {}
+                                  valueType:
+                                    type: string
+                                    description: |
+                                      Can be one of the following:
+                                      - `string`
+                                      - `number`
+                                      - `boolean`
+                                    example: string
+                                  minValue:
+                                    type: number
+                                    description: >-
+                                      The minimum value allowed for this
+                                      placeholder.
+                                    example: 0
+                                  maxValue:
+                                    type: number
+                                    description: >-
+                                      The maximum value allowed for this
+                                      placeholder.
+                                    example: 19.9
+                                  attributeId:
+                                    type: integer
+                                    title: Attribute ID
+                                    description: >-
+                                      Id of the attribute attached to the
+                                      placeholder.
+                                    example: 100
+                                  description:
+                                    type: string
+                                    description: >-
+                                      Describes the placeholder field and value
+                                      in the template. This description can be
+                                      used when creating campaigns from this
+                                      template.
+                                    example: >-
+                                      This is a template parameter of type
+                                      `number`.
                             condition:
                               type: array
                               description: >-
@@ -862,8 +1033,138 @@ post:
                         description: Set of rules to apply for strikethrough.
                         items:
                           type: object
-                          required: *ref_8
-                          properties: *ref_9
+                          required:
+                            - title
+                            - condition
+                            - effects
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: A unique identifier for the rule.
+                              example: 7fa800a8-ac8d-4792-85dc-c4650dcc8f23
+                            parentId:
+                              type: string
+                              format: uuid
+                              description: >-
+                                The ID of the rule that was copied to create
+                                this rule.
+                              example: 7fa800a8-ac8d-4792-85dc-c4650dcc8f23
+                            title:
+                              type: string
+                              description: A short description of the rule.
+                              example: Give discount via coupon
+                            description:
+                              type: string
+                              description: A longer, more detailed description of the rule.
+                              example: Creates a discount when a coupon is valid
+                            bindings:
+                              type: array
+                              description: >-
+                                An array that provides objects with variable
+                                names (name) and talang expressions to whose
+                                result they are bound (expression) during rule
+                                evaluation. The order of the evaluation is
+                                decided by the position in the array.
+                              items:
+                                type: object
+                                required:
+                                  - name
+                                  - expression
+                                properties:
+                                  name:
+                                    type: string
+                                    description: >-
+                                      A descriptive name for the value to be
+                                      bound.
+                                    example: my property
+                                  type:
+                                    type: string
+                                    description: |
+                                      The kind of binding. Possible values are:
+                                      - `bundle`
+                                      - `cartItemFilter`
+                                      - `subledgerBalance`
+                                      - `templateParameter`
+                                    example: templateParameter
+                                  expression:
+                                    type: array
+                                    description: >-
+                                      A Talang expression that will be evaluated
+                                      and its result attached to the name of the
+                                      binding.
+                                    example:
+                                      - string1
+                                      - string2
+                                    items: {}
+                                  valueType:
+                                    type: string
+                                    description: |
+                                      Can be one of the following:
+                                      - `string`
+                                      - `number`
+                                      - `boolean`
+                                    example: string
+                                  minValue:
+                                    type: number
+                                    description: >-
+                                      The minimum value allowed for this
+                                      placeholder.
+                                    example: 0
+                                  maxValue:
+                                    type: number
+                                    description: >-
+                                      The maximum value allowed for this
+                                      placeholder.
+                                    example: 19.9
+                                  attributeId:
+                                    type: integer
+                                    title: Attribute ID
+                                    description: >-
+                                      Id of the attribute attached to the
+                                      placeholder.
+                                    example: 100
+                                  description:
+                                    type: string
+                                    description: >-
+                                      Describes the placeholder field and value
+                                      in the template. This description can be
+                                      used when creating campaigns from this
+                                      template.
+                                    example: >-
+                                      This is a template parameter of type
+                                      `number`.
+                            condition:
+                              type: array
+                              description: >-
+                                A Talang expression that will be evaluated in
+                                the context of the given event.
+                              minItems: 1
+                              example:
+                                - and
+                                - - couponValid
+                              items: {}
+                            effects:
+                              type: array
+                              description: >-
+                                An array of effectful Talang expressions in
+                                arrays that will be evaluated when a rule
+                                matches.
+                              items:
+                                type: array
+                                items: {}
+                              example:
+                                - catch
+                                - - noop
+                                - - setDiscount
+                                  - 10% off
+                                  - - '*'
+                                    - - .
+                                      - Session
+                                      - Total
+                                    - - /
+                                      - 10
+                                      - 100
                       bindings:
                         type: array
                         description: >-
@@ -874,8 +1175,60 @@ post:
                           array.
                         items:
                           type: object
-                          required: *ref_6
-                          properties: *ref_7
+                          required:
+                            - name
+                            - expression
+                          properties:
+                            name:
+                              type: string
+                              description: A descriptive name for the value to be bound.
+                              example: my property
+                            type:
+                              type: string
+                              description: |
+                                The kind of binding. Possible values are:
+                                - `bundle`
+                                - `cartItemFilter`
+                                - `subledgerBalance`
+                                - `templateParameter`
+                              example: templateParameter
+                            expression:
+                              type: array
+                              description: >-
+                                A Talang expression that will be evaluated and
+                                its result attached to the name of the binding.
+                              example:
+                                - string1
+                                - string2
+                              items: {}
+                            valueType:
+                              type: string
+                              description: |
+                                Can be one of the following:
+                                - `string`
+                                - `number`
+                                - `boolean`
+                              example: string
+                            minValue:
+                              type: number
+                              description: The minimum value allowed for this placeholder.
+                              example: 0
+                            maxValue:
+                              type: number
+                              description: The maximum value allowed for this placeholder.
+                              example: 19.9
+                            attributeId:
+                              type: integer
+                              title: Attribute ID
+                              description: Id of the attribute attached to the placeholder.
+                              example: 100
+                            description:
+                              type: string
+                              description: >-
+                                Describes the placeholder field and value in the
+                                template. This description can be used when
+                                creating campaigns from this template.
+                              example: This is a template parameter of type `number`.
                         example: []
                       rbVersion:
                         type: string
@@ -911,8 +1264,19 @@ post:
                   allOf:
                     - allOf:
                         - type: object
-                          required: *ref_10
-                          properties: *ref_11
+                          required:
+                            - id
+                            - created
+                          properties:
+                            id:
+                              type: integer
+                              description: The internal ID of this entity.
+                              example: 6
+                            created:
+                              type: string
+                              format: date-time
+                              description: The time this entity was created.
+                              example: '2020-06-10T09:05:27.993483Z'
                         - type: object
                           required:
                             - accountId

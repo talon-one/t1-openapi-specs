@@ -111,10 +111,10 @@ post:
                           description: The time this entity was created.
                           example: '2020-06-10T09:05:27.993483Z'
                     - type: object
-                      required: &ref_0
+                      required:
                         - integrationId
                         - created
-                      properties: &ref_1
+                      properties:
                         integrationId:
                           type: string
                           format: string
@@ -142,8 +142,23 @@ post:
                               description: The time the customer profile was created.
                               example: '2020-06-10T09:05:27.993483Z'
                         - type: object
-                          required: *ref_0
-                          properties: *ref_1
+                          required:
+                            - integrationId
+                            - created
+                          properties:
+                            integrationId:
+                              type: string
+                              format: string
+                              example: URNGV8294NV
+                              maxLength: 1000
+                              description: >-
+                                The integration ID set by your integration
+                                layer.
+                            created:
+                              type: string
+                              format: date-time
+                              description: The time this entity was created.
+                              example: '2020-02-07T08:15:22Z'
                         - type: object
                           properties:
                             attributes:

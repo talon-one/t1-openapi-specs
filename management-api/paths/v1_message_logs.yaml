@@ -61,10 +61,10 @@ get:
       in: query
       description: >-
         Filter results where request and response times to return entries before
-        parameter value, expected to be an RFC3339 timestamp string. You can use
-        any time zone setting. Talon.One will convert to UTC internally.
+        parameter value, expected to be an RFC3339 timestamp string. Use UTC
+        time.
       required: false
-      example: '2024-05-29T15:04:05+07:00'
+      example: '2024-05-29T15:04:05Z'
       schema:
         type: string
         format: date-time
@@ -72,10 +72,10 @@ get:
       in: query
       description: >-
         Filter results where request and response times to return entries after
-        parameter value, expected to be an RFC3339 timestamp string. You can use
-        any time zone setting. Talon.One will convert to UTC internally.
+        parameter value, expected to be an RFC3339 timestamp string. Use UTC
+        time.
       required: false
-      example: '2024-05-29T15:04:05+07:00'
+      example: '2024-05-29T15:04:05Z'
       schema:
         type: string
         format: date-time

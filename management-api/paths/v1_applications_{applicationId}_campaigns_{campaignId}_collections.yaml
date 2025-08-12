@@ -100,7 +100,7 @@ get:
               data:
                 type: array
                 items:
-                  allOf: &ref_0
+                  allOf:
                     - type: object
                       required:
                         - id
@@ -298,7 +298,90 @@ post:
         application/json:
           schema:
             allOf:
-              - allOf: *ref_0
+              - allOf:
+                  - type: object
+                    required:
+                      - id
+                      - created
+                    properties:
+                      id:
+                        type: integer
+                        description: The internal ID of this entity.
+                        example: 6
+                      created:
+                        type: string
+                        format: date-time
+                        description: The time this entity was created.
+                        example: '2020-06-10T09:05:27.993483Z'
+                  - type: object
+                    required:
+                      - accountId
+                    properties:
+                      accountId:
+                        type: integer
+                        description: The ID of the account that owns this entity.
+                        example: 3886
+                  - type: object
+                    required:
+                      - modified
+                    properties:
+                      modified:
+                        type: string
+                        format: date-time
+                        description: The time this entity was last modified.
+                        example: '2021-09-12T10:12:42Z'
+                  - allOf:
+                      - type: object
+                        properties:
+                          description:
+                            type: string
+                            description: >-
+                              A short description of the purpose of this
+                              collection.
+                            example: My collection of SKUs
+                          subscribedApplicationsIds:
+                            type: array
+                            description: >-
+                              A list of the IDs of the Applications where this
+                              collection is enabled.
+                            example:
+                              - 1
+                              - 2
+                              - 3
+                            items:
+                              type: integer
+                      - type: object
+                        required:
+                          - name
+                        properties:
+                          name:
+                            type: string
+                            minLength: 1
+                            pattern: ^[^[:cntrl:]\s][^[:cntrl:]]*$
+                            description: The name of this collection.
+                            example: My collection
+                  - type: object
+                    required:
+                      - createdBy
+                    properties:
+                      modifiedBy:
+                        type: integer
+                        description: >-
+                          ID of the user who last updated this effect if
+                          available.
+                        example: 48
+                      createdBy:
+                        type: integer
+                        description: ID of the user who created this effect.
+                        example: 134
+                      applicationId:
+                        type: integer
+                        description: The ID of the Application that owns this entity.
+                        example: 1
+                      campaignId:
+                        type: integer
+                        description: The ID of the campaign that owns this entity.
+                        example: 7
               - type: object
                 properties:
                   payload:

@@ -1,0 +1,56 @@
+post:
+  operationId: updateCouponsData
+  summary: Coupons updated
+  tags:
+    - Coupon notifications
+  requestBody:
+    description: >-
+      The
+      [notification](/docs/product/applications/application-notifications/overview)
+      indicating that coupons were updated via the [Update
+      coupons](/management-api#tag/Coupons/operation/updateCouponBatch)
+      endpoint.
+
+
+      **Tip:**
+
+      To retrieve information about the generated coupons, after receiving the
+      notification, use the [Export
+      coupons](/management-api#tag/Coupons/operation/exportCoupons) endpoint
+      along with the `batchid`, which indicates the batch to which the coupons
+      belong.
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - BatchID
+            - ApplicationID
+            - CampaignID
+            - TypeOfChange
+            - Operation
+            - EmployeeName
+          properties:
+            BatchID:
+              type: string
+            ApplicationID:
+              type: integer
+              format: int64
+            CampaignID:
+              type: integer
+              format: int64
+            TypeOfChange:
+              type: string
+            Operation:
+              type: string
+            EmployeeName:
+              type: string
+        example:
+          TypeOfChange: campaign_manager
+          Operation: CouponsUpdated
+          EmployeeName: Franziska Schneider
+          NotificationType: CouponsUpdated
+          BatchID: nqylhnni
+          ApplicationID: 5
+          CampaignID: 3
+    required: true

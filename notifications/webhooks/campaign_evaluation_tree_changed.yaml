@@ -1,0 +1,536 @@
+post:
+  operationId: campaignEvaluationTreeChangedNotification
+  summary: Campaign evaluation tree changed
+  tags:
+    - Campaign notifications
+  requestBody:
+    description: >
+      The
+      [notification](/docs/product/applications/application-notifications/overview)
+      indicating the campaign evaluation tree of an Application changed.
+
+
+      The campaign evaluation tree changes, for example, when a campaign is
+      created (including copying other campaigns) or deleted, or when a campaign
+      evaluation group is modified.
+
+      To learn more, see [Managing campaign
+      evaluation](/docs/product/applications/managing-campaign-evaluation).
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - data
+            - totalResultSize
+          properties:
+            Data:
+              type: array
+              description: The array of changes.
+              items:
+                type: object
+                required:
+                  - event
+                properties:
+                  event:
+                    description: >
+                      Event type. It can be one of the following:
+                      ['campaign_evaluation_tree_changed']
+                    type: string
+                oneOf:
+                  - type: object
+                    description: >-
+                      Notification about an Application whose campaign
+                      evaluation tree changed.
+                    required:
+                      - applicationId
+                      - evaluationTree
+                    properties:
+                      applicationId:
+                        type: integer
+                        description: >-
+                          The ID of the Application whose campaign evaluation
+                          tree changed.
+                        example: 78
+                      oldEvaluationTree:
+                        type: object
+                        description: The previous campaign evaluation tree.
+                        allOf:
+                          - type: object
+                            required:
+                              - applicationId
+                            properties:
+                              applicationId:
+                                type: integer
+                                description: >-
+                                  The ID of the Application that owns this
+                                  entity.
+                                example: 322
+                          - type: object
+                            required:
+                              - set
+                              - version
+                              - id
+                            properties:
+                              id:
+                                type: integer
+                                description: The internal ID of this entity.
+                                example: 6
+                              version:
+                                type: integer
+                                minimum: 1
+                                description: Version of the campaign set.
+                                example: 3
+                              set:
+                                type: object
+                                additionalProperties: false
+                                required:
+                                  - type
+                                  - name
+                                  - operator
+                                  - elements
+                                  - groupId
+                                  - evaluationMode
+                                  - locked
+                                  - evaluationScope
+                                properties:
+                                  type:
+                                    type: string
+                                    description: Indicates the node type.
+                                    enum:
+                                      - SET
+                                    example: SET
+                                  name:
+                                    type: string
+                                    description: Name of the set.
+                                    example: name
+                                  operator:
+                                    type: string
+                                    description: >-
+                                      An indicator of how the set operates on
+                                      its elements.
+                                    enum:
+                                      - ALL
+                                      - FIRST
+                                    example: ALL
+                                  elements:
+                                    type: array
+                                    description: Child elements of this set.
+                                    items:
+                                      type: object
+                                      required:
+                                        - type
+                                      properties:
+                                        type:
+                                          type: string
+                                          example: type
+                                      oneOf:
+                                        - type: object
+                                          additionalProperties: false
+                                          required:
+                                            - type
+                                            - name
+                                            - operator
+                                            - elements
+                                            - groupId
+                                            - evaluationMode
+                                            - locked
+                                            - evaluationScope
+                                          properties:
+                                            type:
+                                              type: string
+                                              description: Indicates the node type.
+                                              enum:
+                                                - SET
+                                              example: SET
+                                            name:
+                                              type: string
+                                              description: Name of the set.
+                                              example: name
+                                            operator:
+                                              type: string
+                                              description: >-
+                                                An indicator of how the set operates on
+                                                its elements.
+                                              enum:
+                                                - ALL
+                                                - FIRST
+                                              example: ALL
+                                            elements:
+                                              type: array
+                                              description: Child elements of this set.
+                                              items:
+                                                type: object
+                                                required:
+                                                  - type
+                                                properties:
+                                                  type:
+                                                    type: string
+                                                    example: type
+                                                oneOf:
+                                                  - type: object
+                                                    additionalProperties: false
+                                                    required:
+                                                      - type
+                                                      - name
+                                                      - operator
+                                                      - elements
+                                                      - groupId
+                                                      - evaluationMode
+                                                      - locked
+                                                      - evaluationScope
+                                                    properties:
+                                                      type:
+                                                        type: string
+                                                        description: Indicates the node type.
+                                                        enum:
+                                                          - SET
+                                                        example: SET
+                                                      name:
+                                                        type: string
+                                                        description: Name of the set.
+                                                        example: name
+                                                      operator:
+                                                        type: string
+                                                        description: >-
+                                                          An indicator of how the set operates on
+                                                          its elements.
+                                                        enum:
+                                                          - ALL
+                                                          - FIRST
+                                                        example: ALL
+                                                  - type: object
+                                                    additionalProperties: false
+                                                    required:
+                                                      - type
+                                                      - campaignId
+                                                    properties:
+                                                      type:
+                                                        type: string
+                                                        description: Indicates the node type.
+                                                        enum:
+                                                          - CAMPAIGN
+                                                      campaignId:
+                                                        type: integer
+                                                        description: ID of the campaign
+                                            groupId:
+                                              type: integer
+                                              description: The ID of the campaign set.
+                                            locked:
+                                              type: boolean
+                                              description: >-
+                                                An indicator of whether the campaign set
+                                                is locked for modification.
+                                            description:
+                                              type: string
+                                              description: A description of the campaign set.
+                                            evaluationMode:
+                                              type: string
+                                              enum:
+                                                - stackable
+                                                - listOrder
+                                                - lowestDiscount
+                                                - highestDiscount
+                                              description: >-
+                                                The mode by which campaigns in the
+                                                campaign evaluation group are evaluated.
+                                            evaluationScope:
+                                              type: string
+                                              enum:
+                                                - cartItem
+                                                - session
+                                              description: >-
+                                                The evaluation scope of the campaign
+                                                evaluation group.
+                                        - type: object
+                                          additionalProperties: false
+                                          required:
+                                            - type
+                                            - campaignId
+                                          properties:
+                                            type:
+                                              type: string
+                                              description: Indicates the node type.
+                                              enum:
+                                                - CAMPAIGN
+                                            campaignId:
+                                              type: integer
+                                              description: ID of the campaign
+                                  groupId:
+                                    type: integer
+                                    description: The ID of the campaign set.
+                                  locked:
+                                    type: boolean
+                                    description: >-
+                                      An indicator of whether the campaign set
+                                      is locked for modification.
+                                  description:
+                                    type: string
+                                    description: A description of the campaign set.
+                                  evaluationMode:
+                                    type: string
+                                    enum:
+                                      - stackable
+                                      - listOrder
+                                      - lowestDiscount
+                                      - highestDiscount
+                                    description: >-
+                                      The mode by which campaigns in the
+                                      campaign evaluation group are evaluated.
+                                  evaluationScope:
+                                    type: string
+                                    enum:
+                                      - cartItem
+                                      - session
+                                    description: >-
+                                      The evaluation scope of the campaign
+                                      evaluation group.
+                              updatedBy:
+                                type: string
+                                description: >-
+                                  Name of the user who last updated this
+                                  campaign set, if available.
+                                example: Jane Doe
+                      evaluationTree:
+                        type: object
+                        description: The new campaign evaluation tree.
+                        allOf:
+                          - type: object
+                            required:
+                              - applicationId
+                            properties:
+                              applicationId:
+                                type: integer
+                                description: >-
+                                  The ID of the Application that owns this
+                                  entity.
+                                example: 322
+                          - type: object
+                            required:
+                              - set
+                              - version
+                              - id
+                            properties:
+                              id:
+                                type: integer
+                                description: The internal ID of this entity.
+                                example: 6
+                              version:
+                                type: integer
+                                minimum: 1
+                                description: Version of the campaign set.
+                                example: 3
+                              set:
+                                type: object
+                                additionalProperties: false
+                                required:
+                                  - type
+                                  - name
+                                  - operator
+                                  - elements
+                                  - groupId
+                                  - evaluationMode
+                                  - locked
+                                  - evaluationScope
+                                properties:
+                                  type:
+                                    type: string
+                                    description: Indicates the node type.
+                                    enum:
+                                      - SET
+                                    example: SET
+                                  name:
+                                    type: string
+                                    description: Name of the set.
+                                    example: name
+                                  operator:
+                                    type: string
+                                    description: >-
+                                      An indicator of how the set operates on
+                                      its elements.
+                                    enum:
+                                      - ALL
+                                      - FIRST
+                                    example: ALL
+                                  elements:
+                                    type: array
+                                    description: Child elements of this set.
+                                    items:
+                                      type: object
+                                      required:
+                                        - type
+                                      properties:
+                                        type:
+                                          type: string
+                                          example: type
+                                      oneOf:
+                                        - type: object
+                                          additionalProperties: false
+                                          required:
+                                            - type
+                                            - name
+                                            - operator
+                                            - elements
+                                            - groupId
+                                            - evaluationMode
+                                            - locked
+                                            - evaluationScope
+                                          properties:
+                                            type:
+                                              type: string
+                                              description: Indicates the node type.
+                                              enum:
+                                                - SET
+                                              example: SET
+                                            name:
+                                              type: string
+                                              description: Name of the set.
+                                              example: name
+                                            operator:
+                                              type: string
+                                              description: >-
+                                                An indicator of how the set operates on
+                                                its elements.
+                                              enum:
+                                                - ALL
+                                                - FIRST
+                                              example: ALL
+                                            elements:
+                                              type: array
+                                              description: Child elements of this set.
+                                              items:
+                                                type: object
+                                                required:
+                                                  - type
+                                                properties:
+                                                  type:
+                                                    type: string
+                                                    example: type
+                                                oneOf:
+                                                  - type: object
+                                                    additionalProperties: false
+                                                    required:
+                                                      - type
+                                                      - name
+                                                      - operator
+                                                      - elements
+                                                      - groupId
+                                                      - evaluationMode
+                                                      - locked
+                                                      - evaluationScope
+                                                    properties:
+                                                      type:
+                                                        type: string
+                                                        description: Indicates the node type.
+                                                        enum:
+                                                          - SET
+                                                        example: SET
+                                                      name:
+                                                        type: string
+                                                        description: Name of the set.
+                                                        example: name
+                                                      operator:
+                                                        type: string
+                                                        description: >-
+                                                          An indicator of how the set operates on
+                                                          its elements.
+                                                        enum:
+                                                          - ALL
+                                                          - FIRST
+                                                        example: ALL
+                                                  - type: object
+                                                    additionalProperties: false
+                                                    required:
+                                                      - type
+                                                      - campaignId
+                                                    properties:
+                                                      type:
+                                                        type: string
+                                                        description: Indicates the node type.
+                                                        enum:
+                                                          - CAMPAIGN
+                                                      campaignId:
+                                                        type: integer
+                                                        description: ID of the campaign
+                                            groupId:
+                                              type: integer
+                                              description: The ID of the campaign set.
+                                            locked:
+                                              type: boolean
+                                              description: >-
+                                                An indicator of whether the campaign set
+                                                is locked for modification.
+                                            description:
+                                              type: string
+                                              description: A description of the campaign set.
+                                            evaluationMode:
+                                              type: string
+                                              enum:
+                                                - stackable
+                                                - listOrder
+                                                - lowestDiscount
+                                                - highestDiscount
+                                              description: >-
+                                                The mode by which campaigns in the
+                                                campaign evaluation group are evaluated.
+                                            evaluationScope:
+                                              type: string
+                                              enum:
+                                                - cartItem
+                                                - session
+                                              description: >-
+                                                The evaluation scope of the campaign
+                                                evaluation group.
+                                        - type: object
+                                          additionalProperties: false
+                                          required:
+                                            - type
+                                            - campaignId
+                                          properties:
+                                            type:
+                                              type: string
+                                              description: Indicates the node type.
+                                              enum:
+                                                - CAMPAIGN
+                                            campaignId:
+                                              type: integer
+                                              description: ID of the campaign
+                                  groupId:
+                                    type: integer
+                                    description: The ID of the campaign set.
+                                  locked:
+                                    type: boolean
+                                    description: >-
+                                      An indicator of whether the campaign set
+                                      is locked for modification.
+                                  description:
+                                    type: string
+                                    description: A description of the campaign set.
+                                  evaluationMode:
+                                    type: string
+                                    enum:
+                                      - stackable
+                                      - listOrder
+                                      - lowestDiscount
+                                      - highestDiscount
+                                    description: >-
+                                      The mode by which campaigns in the
+                                      campaign evaluation group are evaluated.
+                                  evaluationScope:
+                                    type: string
+                                    enum:
+                                      - cartItem
+                                      - session
+                                    description: >-
+                                      The evaluation scope of the campaign
+                                      evaluation group.
+                              updatedBy:
+                                type: string
+                                description: >-
+                                  Name of the user who last updated this
+                                  campaign set, if available.
+                                example: Jane Doe
+            TotalResultSize:
+              type: integer
+              example: 1
+    required: true

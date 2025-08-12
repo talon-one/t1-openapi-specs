@@ -208,7 +208,7 @@ get:
                               - achievements
                         couponSettings:
                           type: object
-                          properties: &ref_0
+                          properties:
                             validCharacters:
                               type: array
                               description: >
@@ -266,7 +266,7 @@ get:
                               pattern: ^[A-Za-z0-9_#-]*$
                               example: SUMMER-####-####
                           additionalProperties: false
-                          required: &ref_1
+                          required:
                             - couponPattern
                             - validCharacters
                         couponReservationSettings:
@@ -290,9 +290,67 @@ get:
                               default: false
                         referralSettings:
                           type: object
-                          properties: *ref_0
+                          properties:
+                            validCharacters:
+                              type: array
+                              description: >
+                                List of characters used to generate the random
+                                parts of a code.
+                              example:
+                                - A
+                                - B
+                                - C
+                                - D
+                                - E
+                                - F
+                                - G
+                                - H
+                                - I
+                                - J
+                                - K
+                                - L
+                                - M
+                                - 'N'
+                                - O
+                                - P
+                                - Q
+                                - R
+                                - S
+                                - T
+                                - U
+                                - V
+                                - W
+                                - X
+                                - 'Y'
+                                - Z
+                                - '0'
+                                - '1'
+                                - '2'
+                                - '3'
+                                - '4'
+                                - '5'
+                                - '6'
+                                - '7'
+                                - '8'
+                                - '9'
+                              items:
+                                type: string
+                            couponPattern:
+                              type: string
+                              description: >
+                                The pattern used to generate codes, such as
+                                coupon codes, referral codes, and loyalty cards.
+                                The character `#` is a placeholder and is
+                                replaced by a random character from the
+                                `validCharacters` set.
+                              maxLength: 100
+                              minLength: 3
+                              pattern: ^[A-Za-z0-9_#-]*$
+                              example: SUMMER-####-####
                           additionalProperties: false
-                          required: *ref_1
+                          required:
+                            - couponPattern
+                            - validCharacters
                         limits:
                           type: array
                           description: >-

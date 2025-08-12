@@ -1,0 +1,410 @@
+post:
+  operationId: strikethroughLabelingNotification
+  summary: Strikethrough pricing updated
+  tags:
+    - Strikethrough pricing notifications
+  requestBody:
+    description: >-
+      The
+      [notification](/docs/product/applications/application-notifications/overview)
+      listing the changes in the pricing of your [cart item
+      catalog](/docs/product/account/dev-tools/managing-cart-item-catalogs).
+    content:
+      application/json:
+        schema:
+          type: object
+          description: The strikethrough labels notification for an application.
+          required:
+            - applicationId
+            - currentBatch
+            - totalBatches
+            - trigger
+            - changedItems
+          properties:
+            version:
+              type: string
+              description: The version of the strikethrough pricing notification.
+              enum:
+                - v2
+            validFrom:
+              type: string
+              format: date-time
+              description: >
+                Timestamp at which the strikethrough pricing update becomes
+                valid. Set for **scheduled** strikethrough pricing updates
+                (version: v2) only.
+              example: '2021-07-20T22:00:00Z'
+            applicationId:
+              type: integer
+              description: >-
+                The ID of the Application to which the catalog items labels
+                belongs.
+              example: 322
+            currentBatch:
+              type: integer
+              description: >-
+                The batch number of the notification. Notifications might be
+                sent in different batches.
+              example: 1
+            totalBatches:
+              type: integer
+              description: The total number of batches for the notification.
+              example: 10
+            trigger:
+              type: object
+              description: >-
+                Information about the event that triggered the strikethrough
+                labeling.
+              required:
+                - id
+                - type
+                - triggeredAt
+                - totalAffectedItems
+                - payload
+              properties:
+                id:
+                  type: integer
+                  description: >-
+                    The ID of the event that triggered the strikethrough
+                    labeling.
+                  example: 1
+                type:
+                  type: string
+                  description: The type of event that triggered the strikethrough labeling.
+                  example: CATALOG_SYNC
+                triggeredAt:
+                  type: string
+                  description: >-
+                    The creation time of the event that triggered the
+                    strikethrough labeling.
+                  format: date-time
+                  example: '2020-06-10T09:05:27.993483Z'
+                totalAffectedItems:
+                  type: integer
+                  description: >-
+                    The total number of items affected by the event that
+                    triggered the strikethrough labeling.
+                  format: date-time
+                  example: 1500
+                payload:
+                  type: object
+                  description: The arbitrary properties associated with this trigger type.
+                  example:
+                    catalogId: 2
+                    catalogVersion: 100
+            changedItems:
+              type: array
+              items:
+                type: object
+                description: The information of affected items.
+                required:
+                  - id
+                  - catalogId
+                  - sku
+                  - version
+                  - price
+                  - evaluatedAt
+                properties:
+                  id:
+                    type: integer
+                    description: >-
+                      The ID of the event that triggered the strikethrough
+                      labeling.
+                    example: 1
+                  catalogId:
+                    type: integer
+                    description: The ID of the catalog that the changed item belongs to.
+                    example: 10
+                  sku:
+                    type: string
+                    description: The unique SKU of the changed item.
+                    example: SKU1241028
+                  version:
+                    type: integer
+                    minimum: 1
+                    description: The version of the changed item.
+                    example: 6
+                  price:
+                    type: number
+                    description: The price of the changed item.
+                    example: 99.99
+                  prices:
+                    type: object
+                    description: >
+                      A map of keys and values representing the price types and
+                      related price adjustment details for this cart item.
+                            The keys correspond to the `priceType` names.
+                    additionalProperties:
+                      type: object
+                      properties:
+                        price:
+                          type: number
+                          format: float
+                          description: The value of this price type.
+                          example: 90
+                        adjustmentReferenceId:
+                          type: string
+                          format: uuid
+                          description: >-
+                            The reference identifier of the selected price
+                            adjustment for this SKU.
+                          example: 68851723-e6fa-488f-ace9-112581e6c19b
+                        adjustmentEffectiveFrom:
+                          type: string
+                          format: date-time
+                          description: >-
+                            The date and time from which the price adjustment is
+                            effective.
+                          example: '2025-05-25T00:00:00Z'
+                        adjustmentEffectiveUntil:
+                          type: string
+                          format: date-time
+                          description: >-
+                            The date and time until which the price adjustment
+                            is effective.
+                          example: '2025-05-30T00:00:00Z'
+                    example:
+                      member:
+                        price: 90
+                        adjustmentReferenceId: 68851723-e6fa-488f-ace9-112581e6c19b
+                        adjustmentEffectiveFrom: '2025-05-25T00:00:00Z'
+                        adjustmentEffectiveUntil: '2025-05-30T00:00:00Z'
+                      base:
+                        price: 100
+                  evaluatedAt:
+                    type: string
+                    description: The evaluation time of the changed item.
+                    format: date-time
+                    example: '2020-06-10T09:05:27.993483Z'
+                  effects:
+                    type: array
+                    items:
+                      type: object
+                      description: The effect produced for the catalog item.
+                      required:
+                        - campaignId
+                        - rulesetId
+                        - ruleIndex
+                        - ruleName
+                        - type
+                        - props
+                      properties:
+                        campaignId:
+                          type: integer
+                          description: The ID of the campaign that effect belongs to.
+                          example: 3
+                        rulesetId:
+                          type: integer
+                          description: >-
+                            The ID of the ruleset containing the rule that
+                            triggered this effect.
+                          example: 11
+                        ruleIndex:
+                          type: integer
+                          description: >-
+                            The position of the rule that triggered this effect
+                            within the ruleset.
+                          example: 2
+                        ruleName:
+                          type: string
+                          description: The name of the rule that triggered this effect.
+                          example: Add 2 points
+                        type:
+                          type: string
+                          description: The type of this effect.
+                          example: setDiscountPerItem
+                        props:
+                          description: >-
+                            Arbitrary properties associated with this effect
+                            type.
+                          type: object
+                          oneOf:
+                            - type: object
+                              description: >-
+                                setDiscountPerItem effect in strikethrough
+                                pricing payload.
+                              required:
+                                - name
+                                - value
+                              properties:
+                                name:
+                                  description: effect name.
+                                  type: string
+                                  example: 1EuroOff
+                                value:
+                                  description: discount value.
+                                  example: 1
+                            - type: object
+                              description: >-
+                                customEffectPerItem effect in strikethrough
+                                pricing payload.
+                              required:
+                                - effectId
+                                - name
+                                - payload
+                              properties:
+                                effectId:
+                                  description: ID of the effect.
+                                  type: integer
+                                  example: 1
+                                name:
+                                  type: string
+                                  description: The type of the custom effect.
+                                  example: my_custom_effect
+                                payload:
+                                  description: The JSON payload of the custom effect.
+                                  type: object
+                                  x-arbitraryJSON: true
+                        startTime:
+                          type: string
+                          format: date-time
+                          description: >-
+                            The start of the time frame where the effect is
+                            active in UTC.
+                          example: '2021-07-20T22:00:00Z'
+                        endTime:
+                          type: string
+                          format: date-time
+                          description: >-
+                            The end of the time frame where the effect is active
+                            in UTC.
+                          example: '2021-10-01T02:00:00Z'
+                        selectedPriceType:
+                          type: string
+                          example: member
+                          description: >-
+                            The selected price type for this cart item (e.g. the
+                            price for members only).
+                        selectedPrice:
+                          type: number
+                          example: 100
+                          description: >-
+                            The value of the selected price type to apply to the
+                            SKU targeted by this effect, before any discounts
+                            are applied.
+                        adjustmentReferenceId:
+                          type: string
+                          description: >-
+                            The reference identifier of the selected price
+                            adjustment for this cart item.
+                          example: 68851723-e6fa-488f-ace9-112581e6c19b
+                        targets:
+                          type: array
+                          description: >-
+                            A list of entities (e.g. audiences) targeted by this
+                            effect.
+                          items:
+                            type: object
+                            oneOf:
+                              - type: object
+                                description: >-
+                                  Represents the target type when no entity is
+                                  selected.
+                                properties:
+                                  type:
+                                    type: string
+                                    enum:
+                                      - NONE
+                                required:
+                                  - type
+                              - type: object
+                                description: |
+                                  Represents the targeted audience.
+                                properties:
+                                  type:
+                                    type: string
+                                    enum:
+                                      - AUDIENCE
+                                  audience:
+                                    allOf:
+                                      - type: object
+                                        required:
+                                          - id
+                                        properties:
+                                          id:
+                                            type: integer
+                                            description: The ID of the audience.
+                                          integration:
+                                            type: string
+                                            description: >-
+                                              The third-party integration of the
+                                              audience.
+                                      - type: object
+                                        properties:
+                                          integrationId:
+                                            type: string
+                                            minLength: 1
+                                            maxLength: 1000
+                                            description: >-
+                                              The ID of this audience in the
+                                              third-party integration.
+                                            example: 382370BKDB946
+                                required:
+                                  - type
+                                  - audience
+        examples:
+          StrikethroughNotification:
+            value:
+              applicationId: 322
+              currentBatch: 1
+              totalBatches: 10
+              trigger:
+                id: 1
+                type: CATALOG_SYNC
+                triggeredAt: '2020-06-10T09:05:27.993483Z'
+                totalAffectedItems: 1500
+                payload:
+                  catalogId: 2
+                  catalogVersion: 10
+              changedItems:
+                - id: 1
+                  catalogId": 10
+                  sku: SKU1241028
+                  version: 6
+                  price: 99.99
+                  evaluatedAt: '2020-06-10T09:05:27.993483Z'
+                  effects:
+                    - campaignId: 3
+                      rulesetId: 11
+                      ruleIndex: 2
+                      ruleName: Add 2 points
+                      type: setDiscountPerItem
+                      props:
+                        name: 1EuroOff
+                        value: 1
+              NotificationType: StrikethroughPrice
+          ScheduledStrikethroughNotification:
+            value:
+              version: v2
+              validFrom: '2021-07-20T22:00:00Z'
+              applicationId: 322
+              currentBatch: 1
+              totalBatches: 10
+              trigger:
+                id: 1
+                type: CATALOG_SYNC
+                triggeredAt: '2020-06-10T09:05:27.993483Z'
+                totalAffectedItems: 1500
+                payload:
+                  catalogId: 2
+                  catalogVersion: 10
+              changedItems:
+                - id: 1
+                  catalogId": 10
+                  sku: SKU1241028
+                  version: 6
+                  price: 99.99
+                  evaluatedAt: '2020-06-10T09:05:27.993483Z'
+                  effects:
+                    - campaignId: 3
+                      startTime: '2021-07-20T22:00:00Z'
+                      endTime: '2021-10-01T02:00:00Z'
+                      rulesetId: 11
+                      ruleIndex: 2
+                      ruleName: Add 2 points
+                      type: setDiscountPerItem
+                      props:
+                        name: 1EuroOff
+                        value: 1
+              NotificationType: StrikethroughPrice
+    required: true

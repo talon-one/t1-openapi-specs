@@ -31,15 +31,15 @@ get:
               Schema definition for users that have been provisioned using the
               SCIM protocol with an identity provider, for example, Microsoft
               Entra ID.
-            allOf: &ref_2
+            allOf:
               - type: object
                 description: >-
                   Payload for users that are created using the SCIM provisioning
                   protocol with an identity provider, for example, Microsoft
                   Entra ID.
-                required: &ref_0
+                required:
                   - userName
-                allOf: &ref_1
+                allOf:
                   - type: object
                     description: >-
                       Schema definition for base user fields, provisioned using
@@ -141,8 +141,42 @@ put:
           description: >-
             Payload for users that are created using the SCIM provisioning
             protocol with an identity provider, for example, Microsoft Entra ID.
-          required: *ref_0
-          allOf: *ref_1
+          required:
+            - userName
+          allOf:
+            - type: object
+              description: >-
+                Schema definition for base user fields, provisioned using the
+                SCIM protocol and used by Talon.One.
+              properties:
+                active:
+                  type: boolean
+                  description: Status of the user.
+                  example: true
+                displayName:
+                  type: string
+                  description: Display name of the user.
+                  example: John Doe
+                userName:
+                  type: string
+                  description: >-
+                    Unique identifier of the user. This is usually an email
+                    address.
+                  example: john.doe@example.com
+                name:
+                  type: object
+                  description: The components of the user’s real name.
+                  properties:
+                    formatted:
+                      type: string
+                      description: >-
+                        The full name, including all middle names, titles, and
+                        suffixes as appropriate, formatted for display.
+                      example: Mr. John J Doe
+            - type: object
+              description: >-
+                Additional user properties, that are not processed by Talon.One,
+                but only stored and returned in the User response.
     description: body
     required: true
   responses:
@@ -156,7 +190,58 @@ put:
               Schema definition for users that have been provisioned using the
               SCIM protocol with an identity provider, for example, Microsoft
               Entra ID.
-            allOf: *ref_2
+            allOf:
+              - type: object
+                description: >-
+                  Payload for users that are created using the SCIM provisioning
+                  protocol with an identity provider, for example, Microsoft
+                  Entra ID.
+                required:
+                  - userName
+                allOf:
+                  - type: object
+                    description: >-
+                      Schema definition for base user fields, provisioned using
+                      the SCIM protocol and used by Talon.One.
+                    properties:
+                      active:
+                        type: boolean
+                        description: Status of the user.
+                        example: true
+                      displayName:
+                        type: string
+                        description: Display name of the user.
+                        example: John Doe
+                      userName:
+                        type: string
+                        description: >-
+                          Unique identifier of the user. This is usually an
+                          email address.
+                        example: john.doe@example.com
+                      name:
+                        type: object
+                        description: The components of the user’s real name.
+                        properties:
+                          formatted:
+                            type: string
+                            description: >-
+                              The full name, including all middle names, titles,
+                              and suffixes as appropriate, formatted for
+                              display.
+                            example: Mr. John J Doe
+                  - type: object
+                    description: >-
+                      Additional user properties, that are not processed by
+                      Talon.One, but only stored and returned in the User
+                      response.
+              - type: object
+                required:
+                  - id
+                properties:
+                  id:
+                    type: string
+                    description: ID of the user.
+                    example: '359'
 patch:
   operationId: scimPatchUser
   summary: Update SCIM user attributes
@@ -248,4 +333,55 @@ patch:
               Schema definition for users that have been provisioned using the
               SCIM protocol with an identity provider, for example, Microsoft
               Entra ID.
-            allOf: *ref_2
+            allOf:
+              - type: object
+                description: >-
+                  Payload for users that are created using the SCIM provisioning
+                  protocol with an identity provider, for example, Microsoft
+                  Entra ID.
+                required:
+                  - userName
+                allOf:
+                  - type: object
+                    description: >-
+                      Schema definition for base user fields, provisioned using
+                      the SCIM protocol and used by Talon.One.
+                    properties:
+                      active:
+                        type: boolean
+                        description: Status of the user.
+                        example: true
+                      displayName:
+                        type: string
+                        description: Display name of the user.
+                        example: John Doe
+                      userName:
+                        type: string
+                        description: >-
+                          Unique identifier of the user. This is usually an
+                          email address.
+                        example: john.doe@example.com
+                      name:
+                        type: object
+                        description: The components of the user’s real name.
+                        properties:
+                          formatted:
+                            type: string
+                            description: >-
+                              The full name, including all middle names, titles,
+                              and suffixes as appropriate, formatted for
+                              display.
+                            example: Mr. John J Doe
+                  - type: object
+                    description: >-
+                      Additional user properties, that are not processed by
+                      Talon.One, but only stored and returned in the User
+                      response.
+              - type: object
+                required:
+                  - id
+                properties:
+                  id:
+                    type: string
+                    description: ID of the user.
+                    example: '359'

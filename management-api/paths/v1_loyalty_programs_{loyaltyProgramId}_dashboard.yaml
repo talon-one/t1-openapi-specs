@@ -141,10 +141,10 @@ get:
                     spentPoints:
                       description: Points spent on this day.
                       type: object
-                      required: &ref_0
+                      required:
                         - createdManually
                         - createdViaRuleEngine
-                      properties: &ref_1
+                      properties:
                         createdManually:
                           type: number
                           example: 125
@@ -154,5 +154,13 @@ get:
                     earnedPoints:
                       description: Points that were earned on this day.
                       type: object
-                      required: *ref_0
-                      properties: *ref_1
+                      required:
+                        - createdManually
+                        - createdViaRuleEngine
+                      properties:
+                        createdManually:
+                          type: number
+                          example: 125
+                        createdViaRuleEngine:
+                          type: number
+                          example: 9631

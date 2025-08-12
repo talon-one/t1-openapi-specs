@@ -195,7 +195,7 @@ get:
                           description: >-
                             Displays point balances of the card in the main
                             ledger of the loyalty program.
-                          allOf: &ref_0
+                          allOf:
                             - type: object
                               required:
                                 - currentBalance
@@ -344,7 +344,150 @@ get:
                             Displays point balances of the card in the
                             subledgers of the loyalty program.
                           additionalProperties:
-                            allOf: *ref_0
+                            allOf:
+                              - type: object
+                                required:
+                                  - currentBalance
+                                  - pendingBalance
+                                  - expiredBalance
+                                  - spentBalance
+                                  - tentativeCurrentBalance
+                                description: >-
+                                  The balance in a Loyalty Program for some
+                                  Customer.
+                                properties:
+                                  currentBalance:
+                                    type: number
+                                    title: Current balance
+                                    description: Sum of currently active points.
+                                    example: 100
+                                  pendingBalance:
+                                    type: number
+                                    title: Pending balance
+                                    description: Sum of pending points.
+                                    example: 10
+                                  negativeBalance:
+                                    type: number
+                                    title: Negative balance
+                                    description: >-
+                                      Sum of negative points. This implies that
+                                      `currentBalance` is `0`.
+                                    example: 10
+                                  expiredBalance:
+                                    type: number
+                                    title: Expired balance
+                                    description: |
+                                      **DEPRECATED** Value is shown as 0.
+                                    example: 0
+                                  spentBalance:
+                                    type: number
+                                    title: Spent balance
+                                    description: |
+                                      **DEPRECATED** Value is shown as 0.
+                                    example: 0
+                                  tentativeCurrentBalance:
+                                    type: number
+                                    title: Tentative current balance
+                                    description: >
+                                      The tentative points balance, reflecting
+                                      the `currentBalance` and all point
+                                      additions and deductions within the
+                                      current open customer session. When the
+                                      session is closed, the effects are applied
+                                      and the `currentBalance` is updated to
+                                      this value.
+
+
+                                      **Note:** Tentative balances are specific
+                                      to the current session and do not take
+                                      into account other open sessions for the
+                                      given customer.
+                                    example: 100
+                                  tentativePendingBalance:
+                                    type: number
+                                    title: Tentative pending balance
+                                    description: >
+                                      The tentative points balance, reflecting
+                                      the `pendingBalance` and all point
+                                      additions with a future activation date
+                                      within the current open customer session.
+                                      When the session is closed, the effects
+                                      are applied and the `pendingBalance` is
+                                      updated to this value.
+
+
+                                      **Note:** Tentative balances are specific
+                                      to the current session and do not take
+                                      into account other open sessions for the
+                                      given customer.
+                                    example: 20
+                                  tentativeNegativeBalance:
+                                    type: number
+                                    title: Tentative negative balance
+                                    description: >
+                                      The tentative negative balance after all
+                                      additions and deductions from the current
+                                      customer session are applied to
+                                      `negativeBalance`. When the session is
+                                      closed, the tentative effects are applied
+                                      and `negativeBalance` is updated to this
+                                      value.
+
+
+                                      **Note:** Tentative balances are specific
+                                      to the current session and do not take
+                                      into account other open sessions for the
+                                      given customer.
+                                    example: 100
+                              - type: object
+                                properties:
+                                  currentTier:
+                                    description: Tier for which the ledger is eligible.
+                                    example: bronze
+                                    type: object
+                                    required:
+                                      - id
+                                      - name
+                                    properties:
+                                      id:
+                                        type: integer
+                                        description: The internal ID of the tier.
+                                        example: 11
+                                      name:
+                                        type: string
+                                        description: The name of the tier.
+                                        example: bronze
+                                      startDate:
+                                        type: string
+                                        format: date-time
+                                        description: >-
+                                          Date and time when the customer moved to
+                                          this tier. This value uses the loyalty
+                                          program's time zone setting.
+                                        example: 2021-05-03T12:32:00Z07:00
+                                      expiryDate:
+                                        type: string
+                                        format: date-time
+                                        description: >-
+                                          Date when tier level expires in the
+                                          RFC3339 format (in the Loyalty Program's
+                                          timezone).
+                                        example: 2022-08-02T15:04:05Z07:00
+                                      downgradePolicy:
+                                        type: string
+                                        enum:
+                                          - one_down
+                                          - balance_based
+                                        description: >
+                                          The policy that defines how customer
+                                          tiers are downgraded in the loyalty
+                                          program after tier reevaluation.
+                                           - `one_down`: If the customer doesn't have enough points to stay in the current tier, they are downgraded by one tier.
+                                           - `balance_based`: The customer's tier is reevaluated based on the amount of active points they have at the moment.
+                                  pointsToNextTier:
+                                    type: number
+                                    description: Points required to move up a tier.
+                                    example: 20
                         modified:
                           type: string
                           format: date-time
@@ -380,7 +523,7 @@ get:
         application/json:
           schema:
             type: object
-            properties: &ref_1
+            properties:
               message:
                 type: string
               errors:
@@ -433,4 +576,50 @@ get:
         application/json:
           schema:
             type: object
-            properties: *ref_1
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code

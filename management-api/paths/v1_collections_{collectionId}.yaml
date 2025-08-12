@@ -26,7 +26,7 @@ get:
       content:
         application/json:
           schema:
-            allOf: &ref_1
+            allOf:
               - allOf:
                   - type: object
                     required:
@@ -61,7 +61,7 @@ get:
                         example: '2021-09-12T10:12:42Z'
                   - allOf:
                       - type: object
-                        properties: &ref_0
+                        properties:
                           description:
                             type: string
                             description: >-
@@ -128,7 +128,7 @@ get:
         application/json:
           schema:
             type: object
-            properties: &ref_2
+            properties:
               message:
                 type: string
               errors:
@@ -203,7 +203,22 @@ put:
       application/json:
         schema:
           type: object
-          properties: *ref_0
+          properties:
+            description:
+              type: string
+              description: A short description of the purpose of this collection.
+              example: My collection of SKUs
+            subscribedApplicationsIds:
+              type: array
+              description: >-
+                A list of the IDs of the Applications where this collection is
+                enabled.
+              example:
+                - 1
+                - 2
+                - 3
+              items:
+                type: integer
     description: body
     required: true
   responses:
@@ -212,28 +227,261 @@ put:
       content:
         application/json:
           schema:
-            allOf: *ref_1
+            allOf:
+              - allOf:
+                  - type: object
+                    required:
+                      - id
+                      - created
+                    properties:
+                      id:
+                        type: integer
+                        description: The internal ID of this entity.
+                        example: 6
+                      created:
+                        type: string
+                        format: date-time
+                        description: The time this entity was created.
+                        example: '2020-06-10T09:05:27.993483Z'
+                  - type: object
+                    required:
+                      - accountId
+                    properties:
+                      accountId:
+                        type: integer
+                        description: The ID of the account that owns this entity.
+                        example: 3886
+                  - type: object
+                    required:
+                      - modified
+                    properties:
+                      modified:
+                        type: string
+                        format: date-time
+                        description: The time this entity was last modified.
+                        example: '2021-09-12T10:12:42Z'
+                  - allOf:
+                      - type: object
+                        properties:
+                          description:
+                            type: string
+                            description: >-
+                              A short description of the purpose of this
+                              collection.
+                            example: My collection of SKUs
+                          subscribedApplicationsIds:
+                            type: array
+                            description: >-
+                              A list of the IDs of the Applications where this
+                              collection is enabled.
+                            example:
+                              - 1
+                              - 2
+                              - 3
+                            items:
+                              type: integer
+                      - type: object
+                        required:
+                          - name
+                        properties:
+                          name:
+                            type: string
+                            minLength: 1
+                            pattern: ^[^[:cntrl:]\s][^[:cntrl:]]*$
+                            description: The name of this collection.
+                            example: My collection
+                  - type: object
+                    required:
+                      - createdBy
+                    properties:
+                      modifiedBy:
+                        type: integer
+                        description: >-
+                          ID of the user who last updated this effect if
+                          available.
+                        example: 48
+                      createdBy:
+                        type: integer
+                        description: ID of the user who created this effect.
+                        example: 134
+                      applicationId:
+                        type: integer
+                        description: The ID of the Application that owns this entity.
+                        example: 1
+                      campaignId:
+                        type: integer
+                        description: The ID of the campaign that owns this entity.
+                        example: 7
+              - type: object
+                properties:
+                  payload:
+                    type: array
+                    description: The content of the collection.
+                    maxItems: 50
+                    example:
+                      - KTL-WH-ET-1
+                      - KTL-BL-ET-1
+                    items:
+                      type: string
     '400':
       description: Bad request
       content:
         application/json:
           schema:
             type: object
-            properties: *ref_2
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
     '401':
       description: Unauthorized
       content:
         application/json:
           schema:
             type: object
-            properties: *ref_2
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
     '409':
       description: Conflict. A collection with this name already exists.
       content:
         application/json:
           schema:
             type: object
-            properties: *ref_2
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
 delete:
   operationId: deleteAccountCollection
   summary: Delete account-level collection
@@ -265,4 +513,50 @@ delete:
         application/json:
           schema:
             type: object
-            properties: *ref_2
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code

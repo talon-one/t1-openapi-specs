@@ -1,0 +1,75 @@
+post:
+  operationId: expiringCardPointsNotification
+  summary: Expiring points
+  tags:
+    - Loyalty card notifications
+  requestBody:
+    description: >-
+      The
+      [notification](/docs/product/loyalty-programs/loyalty-notifications/overview)
+      reminding users that their active loyalty points will expire soon.
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - TotalResultSize
+            - Data
+          properties:
+            TotalResultSize:
+              type: integer
+              example: 1
+            Data:
+              type: array
+              description: The array of expiring points.
+              maxLength: 1000
+              items:
+                type: object
+                required:
+                  - LoyaltyProgramID
+                  - ExpiryDate
+                  - CardIdentifier
+                  - UsersPerCardLimit
+                  - Profiles
+                  - AmountOfExpiringPoints
+                  - SubledgerID
+                properties:
+                  ExpiryDate:
+                    type: string
+                    format: date
+                    description: The expiration date of loyalty points.
+                  LoyaltyProgramID:
+                    type: integer
+                    description: The ID of the loyalty program.
+                    minimum: 1
+                    example: 5
+                  AmountOfExpiringPoints:
+                    type: number
+                    description: The amount of loyalty points that will be expired soon.
+                    example: 10.99
+                  SubledgerID:
+                    type: string
+                    description: >-
+                      The ID of the subledger within the loyalty program where
+                      these points were added.
+                    example: sub-123
+                  CardIdentifier:
+                    type: string
+                    description: The alphanumeric identifier of the loyalty card.
+                    example: summer-loyalty-card-0543
+                  UsersPerCardLimit:
+                    type: integer
+                    description: >
+                      The maximum number of customer profiles with which a card
+                      can be shared. This can be set to `0` for no limit.
+                    minimum: 0
+                    example: 5
+                  Profiles:
+                    type: array
+                    description: >-
+                      The integration IDs of the customer profiles linked to the
+                      card.
+                    items:
+                      type: string
+                      example: URNGV8294NV
+    required: true

@@ -1,0 +1,60 @@
+post:
+  operationId: deleteCouponsData
+  summary: Coupons deleted
+  tags:
+    - Coupon notifications
+  requestBody:
+    description: >-
+      The
+      [notification](/docs/product/applications/application-notifications/overview)
+      indicating that coupons were deleted via the [Delete
+      coupons](/management-api#tag/Coupons/operation/deleteCoupons) endpoint.
+
+
+      **Tip:**
+
+      To retrieve information about the generated coupons, after receiving the
+      notification, use the [Export
+      coupons](/management-api#tag/Coupons/operation/exportCoupons) endpoint
+      along with the `batchid`, which indicates the batch to which the coupons
+      belong.
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - TypeOfChange
+            - Operation
+            - EmployeeName
+            - BatchID
+            - ApplicationID
+            - CampaignID
+            - TotalResultSize
+          properties:
+            TypeOfChange:
+              type: string
+            Operation:
+              type: string
+            EmployeeName:
+              type: string
+            BatchID:
+              type: string
+            ApplicationID:
+              type: integer
+              format: int64
+            CampaignID:
+              type: integer
+              format: int64
+            TotalResultSize:
+              type: integer
+              format: int64
+        example:
+          TypeOfChange: campaign_manager
+          Operation: CouponsDeleted
+          EmployeeName: Franziska Schneider
+          NotificationType: CouponsDeleted
+          BatchID: nqylhnni
+          ApplicationID: 5
+          CampaignID: 3
+          TotalResultSize: 200
+    required: true

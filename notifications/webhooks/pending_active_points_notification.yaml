@@ -1,0 +1,72 @@
+post:
+  operationId: pendingActivePointsNotification
+  summary: Pending points
+  tags:
+    - Loyalty notifications
+  requestBody:
+    description: >-
+      The
+      [notification](/docs/product/loyalty-programs/loyalty-notifications/overview)
+      informing users that their pending points will become active soon.
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - TotalResultSize
+            - Data
+          properties:
+            TotalResultSize:
+              type: integer
+              example: 1
+            Data:
+              type: array
+              description: The array of pending points.
+              maxLength: 1000
+              items:
+                type: object
+                required:
+                  - CustomerProfileID
+                  - LoyaltyProgramID
+                  - SubledgerID
+                  - Points
+                properties:
+                  LoyaltyProgramID:
+                    type: integer
+                    description: The ID of the loyalty program.
+                    minimum: 1
+                    example: 5
+                  SubledgerID:
+                    type: string
+                    description: >-
+                      The ID of the subledger, when applicable. If this field is
+                      empty, the main ledger is used.
+                    default: ''
+                    example: SL001
+                  CustomerProfileID:
+                    type: string
+                    description: >-
+                      The integration ID of the customer profile whose loyalty
+                      points are becoming active.
+                    example: URNGV8294NV
+                  Points:
+                    type: number
+                    description: The amount of pending loyalty points becoming active.
+                    example: 10.99
+                  ActiveOn:
+                    type: string
+                    format: date-time
+                    description: The date and time the loyalty points become active.
+                    example: '2023-08-20T12:22:00+02:00'
+                  ExpireOn:
+                    type: string
+                    format: date-time
+                    description: The date and time the loyalty points expire.
+                    example: '2023-09-01T12:23:00+02:00'
+                  SessionIntegrationID:
+                    type: string
+                    description: >-
+                      The integration ID of the session through which the points
+                      were earned.
+                    example: cc53e4fa-547f-4f5e-8333-76e05c381f67
+    required: true
