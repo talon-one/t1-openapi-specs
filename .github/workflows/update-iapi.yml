@@ -1,0 +1,33 @@
+name: Update Integration API
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  run-commands-and-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install Redocly CLI
+        run: npm install -g @redocly/cli
+
+      - name: Install yq
+        run: snap install yq
+
+      - name: Fetch and transform Integration API specification
+        run: |
+          redocly bundle https://gist.githubusercontent.com/talononebot/b58ed79dd2c70b4c165338e8b5133100/raw -d -o temp.yaml
+          yq 'explode(.)' temp.yaml -i
+          yq -i 'del(.components.schemas)' temp.yaml -i
+          yq -i 'del(.components.requestBodies)' temp.yaml -i
+          yq -i 'del(.x-notifications-desc)' temp.yaml -i
+          redocly split temp.yaml --outDir=integration-api
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "update: Integration API specification"
+          branch: master
