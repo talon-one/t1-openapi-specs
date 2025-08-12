@@ -1,0 +1,51 @@
+name: Update OpenAPI specifications
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  update-specs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install Redocly CLI
+        run: npm install -g @redocly/cli
+
+      - name: Install yq
+        run: sudo snap install yq
+
+      - name: Update Integration API specification
+        run: |
+          redocly bundle https://gist.githubusercontent.com/talononebot/b58ed79dd2c70b4c165338e8b5133100/raw -d -o temp.yaml
+          yq 'explode(.)' temp.yaml -i
+          yq -i 'del(.components.schemas)' temp.yaml -i
+          yq -i 'del(.components.requestBodies)' temp.yaml -i
+          yq -i 'del(.x-notifications-desc)' temp.yaml -i
+          redocly split temp.yaml --outDir=integration-api
+      - name: Update Management API specification
+        run: |
+          redocly bundle https://gist.githubusercontent.com/talononebot/32c52c69c88f5f8f90b7a29963f7cbee/raw -d -o temp.yaml
+          yq 'explode(.)' temp.yaml -i
+          yq -i 'del(.components.schemas)' temp.yaml -i
+          yq -i 'del(.components.requestBodies)' temp.yaml -i
+          yq -i 'del(.x-notifications-desc)' temp.yaml -i
+          redocly split temp.yaml --outDir=management-api
+      - name: Update Notification schemas
+        run: |
+          redocly bundle https://gist.githubusercontent.com/talononebot/0f8f9a1e9c1dba3f90cd8da0397c0b30/raw -d -o temp.yaml
+          yq 'explode(.)' temp.yaml -i
+          yq -i 'del(.components.schemas)' temp.yaml -i
+          yq -i 'del(.components.requestBodies)' temp.yaml -i
+          yq -i 'del(.x-notifications-desc)' temp.yaml -i
+          redocly split temp.yaml --outDir=notifications
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "update: OpenAPI specifications"
+          branch: master
