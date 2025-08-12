@@ -272,13 +272,3 @@ components:
         iApi.getApiClient().setApiKey("dbc644d33aa74d582bd9479c59e16f970fe13bf3");
 
         ```
-x-notifications-desc: >
-  Use [Application
-  notifications](/docs/product/applications/application-notifications/overview)
-  and [loyalty
-  notifications](/docs/product/loyalty-programs/loyalty-notifications/overview)
-  to notify the system of your choice of certain changes that happened in
-  Talon.One.
-
-  **Note:** Required fields are not omitted if they are empty (have `null`
-  value).

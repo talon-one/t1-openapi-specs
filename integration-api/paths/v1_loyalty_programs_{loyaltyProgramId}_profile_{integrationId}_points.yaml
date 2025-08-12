@@ -69,11 +69,15 @@ get:
     - name: customerSessionIDs
       in: query
       required: false
-      description: |
-        Filter the results by a list of customer session IDs.
+      description: >
+        Filter the results by a list of customer session IDs. 
 
-        To include multiple IDs, repeat the parameter for each one, for example,
+
+        To include multiple IDs, repeat the parameter for each one, for
+        example, 
+
         `?customerSessionIDs=id1&customerSessionIDs=id2`.
+
 
         The response contains only data associated with the specified sessions.
       example:
@@ -90,7 +94,8 @@ get:
         Filter the results by a list of transaction UUIDs.
 
 
-        To include multiple IDs, repeat the parameter for each one, for example,
+        To include multiple IDs, repeat the parameter for each one, for
+        example, 
 
         `?transactionUUIDs=uuid1&transactionUUIDs=uuid2`.
 
