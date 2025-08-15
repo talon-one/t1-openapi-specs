@@ -22,28 +22,34 @@ jobs:
 
       - name: Update Integration API specification
         run: |
+          rm -rf integration-api
           redocly bundle https://gist.githubusercontent.com/talononebot/b58ed79dd2c70b4c165338e8b5133100/raw -d -o temp.yaml
           yq 'explode(.)' temp.yaml -i
           yq -i 'del(.components.schemas)' temp.yaml -i
           yq -i 'del(.components.requestBodies)' temp.yaml -i
           yq -i 'del(.x-notifications-desc)' temp.yaml -i
-          redocly split temp.yaml --outDir=integration-api
+          redocly split temp.yaml --outDir=integration-api --separator=/
+          ./scripts/add-path.sh integration-api/paths
       - name: Update Management API specification
         run: |
+          rm -rf management-api
           redocly bundle https://gist.githubusercontent.com/talononebot/32c52c69c88f5f8f90b7a29963f7cbee/raw -d -o temp.yaml
           yq 'explode(.)' temp.yaml -i
           yq -i 'del(.components.schemas)' temp.yaml -i
           yq -i 'del(.components.requestBodies)' temp.yaml -i
           yq -i 'del(.x-notifications-desc)' temp.yaml -i
-          redocly split temp.yaml --outDir=management-api
+          redocly split temp.yaml --outDir=management-api --separator=/
+          ./scripts/add-path.sh management-api/paths
       - name: Update Notification schemas
         run: |
+          rm -rf notifications
           redocly bundle https://gist.githubusercontent.com/talononebot/0f8f9a1e9c1dba3f90cd8da0397c0b30/raw -d -o temp.yaml
           yq 'explode(.)' temp.yaml -i
           yq -i 'del(.components.schemas)' temp.yaml -i
           yq -i 'del(.components.requestBodies)' temp.yaml -i
           yq -i 'del(.x-notifications-desc)' temp.yaml -i
-          redocly split temp.yaml --outDir=notifications
+          redocly split temp.yaml --outDir=notifications --separator=/
+          ./scripts/add-path.sh notifications/paths
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
