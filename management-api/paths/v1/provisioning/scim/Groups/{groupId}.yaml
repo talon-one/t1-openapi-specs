@@ -1,0 +1,368 @@
+# path: /v1/provisioning/scim/Groups/{groupId}
+get:
+  operationId: scimGetGroup
+  summary: Get SCIM group
+  description: >-
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Retrieve data for a specific group created using the SCIM provisioning
+    protocol with an identity provider, for example, Microsoft Entra ID.
+
+    In Talon.One, a `Group` corresponds to a
+    [role](https://docs.talon.one/docs/product/account/account-settings/managing-roles),
+    and `members` are the
+    [users](https://docs.talon.one/docs/product/account/account-settings/managing-users)
+    assigned to that role.
+  tags:
+    - Accounts and users
+  parameters:
+    - name: groupId
+      in: path
+      description: The ID of the group.
+      example: 44
+      required: true
+      schema:
+        type: integer
+  responses:
+    '200':
+      description: Group details
+      content:
+        application/json:
+          schema:
+            type: object
+            description: >-
+              Define the schema for groups created using the SCIM provisioning
+              protocol.
+
+              In Talon.One, a `Group` corresponds to a
+              [role](https://docs.talon.one/docs/product/account/account-settings/managing-roles),
+              and `members` are the
+              [users](https://docs.talon.one/docs/product/account/account-settings/managing-users)
+              assigned to that role.
+            allOf:
+              - type: object
+                description: >-
+                  Define the schema for base fields in a group using the SCIM
+                  provisioning protocol. Talon.One uses this schema to create
+                  roles.
+                properties:
+                  displayName:
+                    type: string
+                    description: Display name of the group (Talon.One role).
+                    example: Manager
+                  members:
+                    type: array
+                    description: List of members to assign to the new Talon.One role.
+                    items:
+                      type: object
+                      description: >-
+                        Member of the SCIM group. In Talon.One, the member is a
+                        [user](https://docs.talon.one/docs/product/account/account-settings/managing-users)
+                        assigned to a specific role.
+                      properties:
+                        value:
+                          type: string
+                          description: Unique identifier of the member.
+                          example: '258'
+                        display:
+                          type: string
+                          description: >-
+                            Identifier of the user. This is usually an email
+                            address.
+                          example: john.doe@example.com
+              - type: object
+                required:
+                  - id
+                properties:
+                  id:
+                    type: string
+                    description: ID of the group.
+                    example: '359'
+delete:
+  operationId: scimDeleteGroup
+  summary: Delete SCIM group
+  description: >-
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Delete a specific group created using the SCIM provisioning protocol with an
+    identity provider, for example, Microsoft Entra ID.
+
+    In Talon.One, a `Group` corresponds to a
+    [role](https://docs.talon.one/docs/product/account/account-settings/managing-roles),
+    and `members` are the
+    [users](https://docs.talon.one/docs/product/account/account-settings/managing-users)
+    assigned to that role.
+  tags:
+    - Accounts and users
+  parameters:
+    - name: groupId
+      in: path
+      description: The ID of the group.
+      example: 44
+      required: true
+      schema:
+        type: integer
+  responses:
+    '204':
+      description: No Content
+put:
+  operationId: scimReplaceGroupAttributes
+  summary: Update SCIM group
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Update the details of a specific group created using the SCIM provisioning
+    protocol with an identity provider, for example, Microsoft Entra ID. This
+    endpoint replaces all attributes of the given group with the attributes
+    provided in the request payload.
+
+    In Talon.One, a `Group` corresponds to a
+    [role](https://docs.talon.one/docs/product/account/account-settings/managing-roles),
+    and `members` are the
+    [users](https://docs.talon.one/docs/product/account/account-settings/managing-users)
+    assigned to that role.
+  tags:
+    - Accounts and users
+  parameters:
+    - name: groupId
+      in: path
+      description: The ID of the group.
+      example: 44
+      required: true
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          description: >-
+            Define the schema for base fields in a group using the SCIM
+            provisioning protocol. Talon.One uses this schema to create roles.
+          properties:
+            displayName:
+              type: string
+              description: Display name of the group (Talon.One role).
+              example: Manager
+            members:
+              type: array
+              description: List of members to assign to the new Talon.One role.
+              items:
+                type: object
+                description: >-
+                  Member of the SCIM group. In Talon.One, the member is a
+                  [user](https://docs.talon.one/docs/product/account/account-settings/managing-users)
+                  assigned to a specific role.
+                properties:
+                  value:
+                    type: string
+                    description: Unique identifier of the member.
+                    example: '258'
+                  display:
+                    type: string
+                    description: Identifier of the user. This is usually an email address.
+                    example: john.doe@example.com
+    description: body
+    required: true
+  responses:
+    '200':
+      description: Group details
+      content:
+        application/json:
+          schema:
+            type: object
+            description: >-
+              Define the schema for groups created using the SCIM provisioning
+              protocol.
+
+              In Talon.One, a `Group` corresponds to a
+              [role](https://docs.talon.one/docs/product/account/account-settings/managing-roles),
+              and `members` are the
+              [users](https://docs.talon.one/docs/product/account/account-settings/managing-users)
+              assigned to that role.
+            allOf:
+              - type: object
+                description: >-
+                  Define the schema for base fields in a group using the SCIM
+                  provisioning protocol. Talon.One uses this schema to create
+                  roles.
+                properties:
+                  displayName:
+                    type: string
+                    description: Display name of the group (Talon.One role).
+                    example: Manager
+                  members:
+                    type: array
+                    description: List of members to assign to the new Talon.One role.
+                    items:
+                      type: object
+                      description: >-
+                        Member of the SCIM group. In Talon.One, the member is a
+                        [user](https://docs.talon.one/docs/product/account/account-settings/managing-users)
+                        assigned to a specific role.
+                      properties:
+                        value:
+                          type: string
+                          description: Unique identifier of the member.
+                          example: '258'
+                        display:
+                          type: string
+                          description: >-
+                            Identifier of the user. This is usually an email
+                            address.
+                          example: john.doe@example.com
+              - type: object
+                required:
+                  - id
+                properties:
+                  id:
+                    type: string
+                    description: ID of the group.
+                    example: '359'
+patch:
+  operationId: scimPatchGroup
+  summary: Update SCIM group attributes
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Update certain attributes of a group created using the SCIM provisioning
+    protocol with an identity provider, for example, Microsoft Entra ID. This
+    endpoint allows for selective adding, removing, or replacing of specific
+    group attributes while other attributes remain unchanged.
+
+    In Talon.One, a `Group` corresponds to a
+    [role](https://docs.talon.one/docs/product/account/account-settings/managing-roles),
+    and `members` are the
+    [users](https://docs.talon.one/docs/product/account/account-settings/managing-users)
+    assigned to that role.
+  tags:
+    - Accounts and users
+  parameters:
+    - name: groupId
+      in: path
+      description: The ID of the group.
+      example: 44
+      required: true
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          description: SCIM Patch request
+          required:
+            - Operations
+          properties:
+            schemas:
+              type: array
+              description: SCIM schema for the given resource.
+              items:
+                type: string
+                example: urn:ietf:params:scim:api:messages:2.0:PatchOp
+            Operations:
+              type: array
+              items:
+                type: object
+                description: Patch operation that is used to update the information.
+                required:
+                  - op
+                properties:
+                  op:
+                    type: string
+                    enum:
+                      - add
+                      - remove
+                      - replace
+                    description: The method that should be used in the operation.
+                  path:
+                    type: string
+                    description: The path specifying the attribute that should be updated.
+                  value:
+                    type: string
+                    description: >-
+                      The value that should be updated. Required if `op` is
+                      `add` or `replace`.
+                example:
+                  op: add
+                  path: nickName
+                  value: John
+          example:
+            Operations:
+              - op: replace
+                path: active
+                value: test
+              - op: add
+                path: nickName
+                value: johndoe
+            schemas:
+              - urn:ietf:params:scim:api:messages:2.0:PatchOp
+    description: body
+    required: true
+  responses:
+    '200':
+      description: Group details
+      content:
+        application/json:
+          schema:
+            type: object
+            description: >-
+              Define the schema for groups created using the SCIM provisioning
+              protocol.
+
+              In Talon.One, a `Group` corresponds to a
+              [role](https://docs.talon.one/docs/product/account/account-settings/managing-roles),
+              and `members` are the
+              [users](https://docs.talon.one/docs/product/account/account-settings/managing-users)
+              assigned to that role.
+            allOf:
+              - type: object
+                description: >-
+                  Define the schema for base fields in a group using the SCIM
+                  provisioning protocol. Talon.One uses this schema to create
+                  roles.
+                properties:
+                  displayName:
+                    type: string
+                    description: Display name of the group (Talon.One role).
+                    example: Manager
+                  members:
+                    type: array
+                    description: List of members to assign to the new Talon.One role.
+                    items:
+                      type: object
+                      description: >-
+                        Member of the SCIM group. In Talon.One, the member is a
+                        [user](https://docs.talon.one/docs/product/account/account-settings/managing-users)
+                        assigned to a specific role.
+                      properties:
+                        value:
+                          type: string
+                          description: Unique identifier of the member.
+                          example: '258'
+                        display:
+                          type: string
+                          description: >-
+                            Identifier of the user. This is usually an email
+                            address.
+                          example: john.doe@example.com
+              - type: object
+                required:
+                  - id
+                properties:
+                  id:
+                    type: string
+                    description: ID of the group.
+                    example: '359'

@@ -1,0 +1,130 @@
+# path: /v1/accounts/{accountId}
+get:
+  operationId: getAccount
+  summary: Get account details
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Return the details of your companies Talon.One account.
+  tags:
+    - Accounts and users
+  parameters:
+    - name: accountId
+      in: path
+      description: >
+        The identifier of the account. Retrieve it via the
+
+        [List users in
+        account](https://docs.talon.one/management-api#operation/getUsers)
+        endpoint in the `accountId`
+
+        property.
+      example: 28
+      required: true
+      schema:
+        type: integer
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            allOf:
+              - type: object
+                required:
+                  - id
+                  - created
+                properties:
+                  id:
+                    type: integer
+                    description: The internal ID of this entity.
+                    example: 6
+                  created:
+                    type: string
+                    format: date-time
+                    description: The time this entity was created.
+                    example: '2020-06-10T09:05:27.993483Z'
+              - type: object
+                required:
+                  - modified
+                properties:
+                  modified:
+                    type: string
+                    format: date-time
+                    description: The time this entity was last modified.
+                    example: '2021-09-12T10:12:42Z'
+              - type: object
+                required:
+                  - companyName
+                properties:
+                  companyName:
+                    type: string
+                    minLength: 1
+              - type: object
+                required:
+                  - domainName
+                  - state
+                  - billingEmail
+                  - applicationCount
+                  - userCount
+                  - campaignsActiveCount
+                  - campaignsInactiveCount
+                properties:
+                  domainName:
+                    type: string
+                    description: Subdomain Name for yourcompany.talon.one.
+                  state:
+                    type: string
+                    enum:
+                      - active
+                      - deactivated
+                    description: State of the account (active, deactivated).
+                  billingEmail:
+                    type: string
+                    format: email
+                    description: >-
+                      The billing email address associated with your company
+                      account.
+                  planName:
+                    type: string
+                    description: The name of your booked plan.
+                  planExpires:
+                    type: string
+                    format: date-time
+                    description: The point in time at which your current plan expires.
+                  applicationLimit:
+                    type: integer
+                    description: The maximum number of Applications covered by your plan.
+                  userLimit:
+                    type: integer
+                    description: >-
+                      The maximum number of Campaign Manager Users covered by
+                      your plan.
+                  campaignLimit:
+                    type: integer
+                    description: The maximum number of Campaigns covered by your plan.
+                  apiLimit:
+                    type: integer
+                    description: >-
+                      The maximum number of Integration API calls covered by
+                      your plan per billing period.
+                  applicationCount:
+                    type: integer
+                    description: The current number of Applications in your account.
+                  userCount:
+                    type: integer
+                    description: >-
+                      The current number of Campaign Manager Users in your
+                      account.
+                  campaignsActiveCount:
+                    type: integer
+                    description: The current number of active Campaigns in your account.
+                  campaignsInactiveCount:
+                    type: integer
+                    description: The current number of inactive Campaigns in your account.
+                  attributes:
+                    type: object
+                    description: Arbitrary properties associated with this campaign.

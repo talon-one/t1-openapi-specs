@@ -1,0 +1,179 @@
+# path: /v1/applications/{applicationId}/campaigns/{campaignId}/coupons_async
+post:
+  operationId: createCouponsAsync
+  summary: Create coupons asynchronously
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Create up to 5,000,000 coupons asynchronously. You should typically use this
+    enpdoint when you create at least 20,001 coupons. You receive an email when
+    the creation is complete.
+
+
+    If you want to create less than 20,001 coupons, you can use the [Create
+    coupons](https://docs.talon.one/management-api#tag/Coupons/operation/createCoupons)
+    endpoint.
+  tags:
+    - Coupons
+  parameters:
+    - name: applicationId
+      in: path
+      required: true
+      description: >-
+        The ID of the Application. It is displayed in your Talon.One deployment
+        URL.
+      example: 42
+      schema:
+        type: integer
+    - name: campaignId
+      in: path
+      description: >-
+        The ID of the campaign. It is displayed in your Talon.One deployment
+        URL.
+      example: 18
+      required: true
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/json:
+        schema:
+          allOf:
+            - type: object
+              properties:
+                usageLimit:
+                  type: integer
+                  minimum: 0
+                  maximum: 999999
+                  example: 100
+                  description: >
+                    The number of times the coupon code can be redeemed. `0`
+                    means unlimited redemptions but any campaign usage limits
+                    will still apply.
+                discountLimit:
+                  type: number
+                  minimum: 0
+                  maximum: 1000000000000000
+                  example: 30
+                  description: >
+                    The total discount value that the code can give. Typically
+                    used to represent a gift card value.
+                reservationLimit:
+                  type: integer
+                  minimum: 0
+                  maximum: 999999
+                  example: 45
+                  description: >
+                    The number of reservations that can be made with this coupon
+                    code.
+                startDate:
+                  type: string
+                  format: date-time
+                  example: '2020-01-24T14:15:22Z'
+                  description: Timestamp at which point the coupon becomes valid.
+                expiryDate:
+                  type: string
+                  format: date-time
+                  example: '2023-08-24T14:15:22Z'
+                  description: >-
+                    Expiration date of the coupon. Coupon never expires if this
+                    is omitted.
+            - type: object
+              required:
+                - numberOfCoupons
+                - usageLimit
+                - attributes
+              additionalProperties: false
+              properties:
+                numberOfCoupons:
+                  type: integer
+                  description: The number of new coupon codes to generate for the campaign.
+                  minimum: 1
+                  maximum: 5000000
+                  example: 200000
+                couponSettings:
+                  type: object
+                  properties:
+                    validCharacters:
+                      type: array
+                      description: >
+                        List of characters used to generate the random parts of
+                        a code.
+                      example:
+                        - A
+                        - B
+                        - C
+                        - D
+                        - E
+                        - F
+                        - G
+                        - H
+                        - I
+                        - J
+                        - K
+                        - L
+                        - M
+                        - 'N'
+                        - O
+                        - P
+                        - Q
+                        - R
+                        - S
+                        - T
+                        - U
+                        - V
+                        - W
+                        - X
+                        - 'Y'
+                        - Z
+                        - '0'
+                        - '1'
+                        - '2'
+                        - '3'
+                        - '4'
+                        - '5'
+                        - '6'
+                        - '7'
+                        - '8'
+                        - '9'
+                      items:
+                        type: string
+                    couponPattern:
+                      type: string
+                      description: >
+                        The pattern used to generate codes, such as coupon
+                        codes, referral codes, and loyalty cards. The character
+                        `#` is a placeholder and is replaced by a random
+                        character from the `validCharacters` set.
+                      maxLength: 100
+                      minLength: 3
+                      pattern: ^[A-Za-z0-9_#-]*$
+                      example: SUMMER-####-####
+                  additionalProperties: false
+                  required:
+                    - couponPattern
+                    - validCharacters
+                attributes:
+                  type: object
+                  description: Arbitrary properties associated with coupons.
+    description: body
+    required: true
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - batchId
+            properties:
+              batchId:
+                type: string
+                description: >-
+                  The batch ID that all coupons created by the request will
+                  have.
+                example: tqyrgahe

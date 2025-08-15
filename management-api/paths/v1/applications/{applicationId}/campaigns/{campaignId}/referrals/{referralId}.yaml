@@ -1,0 +1,230 @@
+# path: /v1/applications/{applicationId}/campaigns/{campaignId}/referrals/{referralId}
+delete:
+  operationId: deleteReferral
+  summary: Delete referral
+  description: >-
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Delete the specified referral.
+  tags:
+    - Referrals
+  parameters:
+    - name: applicationId
+      in: path
+      required: true
+      description: >-
+        The ID of the Application. It is displayed in your Talon.One deployment
+        URL.
+      example: 42
+      schema:
+        type: integer
+    - name: campaignId
+      in: path
+      description: >-
+        The ID of the campaign. It is displayed in your Talon.One deployment
+        URL.
+      example: 18
+      required: true
+      schema:
+        type: integer
+    - name: referralId
+      in: path
+      description: The ID of the referral code.
+      example: '2154'
+      required: true
+      schema:
+        type: string
+  responses:
+    '204':
+      description: No Content
+put:
+  operationId: updateReferral
+  summary: Update referral
+  description: >-
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Update the specified referral.
+  tags:
+    - Referrals
+  parameters:
+    - name: applicationId
+      in: path
+      required: true
+      description: >-
+        The ID of the Application. It is displayed in your Talon.One deployment
+        URL.
+      example: 42
+      schema:
+        type: integer
+    - name: campaignId
+      in: path
+      description: >-
+        The ID of the campaign. It is displayed in your Talon.One deployment
+        URL.
+      example: 18
+      required: true
+      schema:
+        type: integer
+    - name: referralId
+      in: path
+      description: The ID of the referral code.
+      example: '2154'
+      required: true
+      schema:
+        type: string
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          additionalProperties: false
+          properties:
+            friendProfileIntegrationId:
+              type: string
+              title: Friend's Profile ID
+              description: An optional Integration ID of the Friend's Profile.
+              example: BZGGC2454PA
+              maxLength: 1000
+            startDate:
+              type: string
+              format: date-time
+              title: Referral code valid from
+              description: Timestamp at which point the referral code becomes valid.
+              example: '2020-11-10T23:00:00Z'
+            expiryDate:
+              type: string
+              format: date-time
+              title: Referral code valid until
+              description: >-
+                Expiration date of the referral code. Referral never expires if
+                this is omitted.
+              example: '2021-11-10T23:00:00Z'
+            usageLimit:
+              type: integer
+              title: Referral code Usage Limit
+              description: >
+                The number of times a referral code can be used. This can be set
+                to 0 for no limit, but any campaign usage limits will still
+                apply.
+              minimum: 0
+              maximum: 999999
+              example: 1
+            attributes:
+              type: object
+              description: Arbitrary properties associated with this item.
+    description: body
+    required: true
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            allOf:
+              - type: object
+                required:
+                  - id
+                  - created
+                properties:
+                  id:
+                    type: integer
+                    description: The internal ID of this entity.
+                    example: 6
+                  created:
+                    type: string
+                    format: date-time
+                    description: The time this entity was created.
+                    example: '2020-06-10T09:05:27.993483Z'
+              - allOf:
+                  - type: object
+                    properties:
+                      startDate:
+                        type: string
+                        format: date-time
+                        title: Referral code valid from
+                        description: >-
+                          Timestamp at which point the referral code becomes
+                          valid.
+                        example: '2020-11-10T23:00:00Z'
+                      expiryDate:
+                        type: string
+                        format: date-time
+                        title: Referral code valid until
+                        description: >-
+                          Expiration date of the referral code. Referral never
+                          expires if this is omitted.
+                        example: '2021-11-10T23:00:00Z'
+                      usageLimit:
+                        type: integer
+                        title: Referral code Usage Limit
+                        description: >
+                          The number of times a referral code can be used. `0`
+                          means no limit but any campaign usage limits will
+                          still apply.
+                        minimum: 0
+                        maximum: 999999
+                        example: 1
+                  - type: object
+                    required:
+                      - campaignId
+                      - advocateProfileIntegrationId
+                    properties:
+                      campaignId:
+                        type: integer
+                        title: Referral's Campaign ID
+                        description: >-
+                          ID of the campaign from which the referral received
+                          the referral code.
+                        example: 78
+                      advocateProfileIntegrationId:
+                        type: string
+                        title: Advocate's Profile ID
+                        description: The Integration ID of the Advocate's Profile.
+                        maxLength: 1000
+                        example: URNGV8294NV
+                      friendProfileIntegrationId:
+                        type: string
+                        title: Friend's Profile ID
+                        description: An optional Integration ID of the Friend's Profile.
+                        example: BZGGC2454PA
+                      attributes:
+                        type: object
+                        description: Arbitrary properties associated with this item.
+                        example:
+                          channel: web
+              - type: object
+                properties:
+                  importId:
+                    type: integer
+                    description: The ID of the Import which created this referral.
+                    example: 4
+              - type: object
+                required:
+                  - code
+                  - usageCounter
+                  - usageLimit
+                properties:
+                  code:
+                    type: string
+                    title: Referral code
+                    description: The referral code.
+                    minLength: 4
+                    example: 27G47Y54VH9L
+                  usageCounter:
+                    type: integer
+                    title: Referral code Usages
+                    description: >-
+                      The number of times this referral code has been
+                      successfully used.
+                    example: 1
+                  batchId:
+                    type: string
+                    title: Batch ID
+                    description: The ID of the batch the referrals belong to.
+                    example: tqyrgahe

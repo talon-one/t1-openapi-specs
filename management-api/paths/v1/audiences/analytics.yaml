@@ -1,0 +1,63 @@
+# path: /v1/audiences/analytics
+get:
+  operationId: getAudiencesAnalytics
+  summary: List audience analytics
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Get a list of audience IDs and their member count.
+  tags:
+    - Audiences
+  parameters:
+    - name: sort
+      in: query
+      required: false
+      description: >
+        The field by which results should be sorted. By default, results are
+        sorted in ascending order. To sort them in descending order, prefix the
+        field name with `-`.
+
+
+        **Note:** You may not be able to use all fields for sorting. This is due
+        to performance limitations.
+      example: name
+      schema:
+        type: string
+    - name: audienceIds
+      in: query
+      required: true
+      description: >-
+        The IDs of one or more audiences, separated by commas, by which to
+        filter results.
+      example: audience1
+      schema:
+        type: string
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              hasMore:
+                type: boolean
+              data:
+                type: array
+                items:
+                  type: object
+                  description: The audiences and their member count.
+                  properties:
+                    audienceId:
+                      type: integer
+                      description: The ID of the audience.
+                      example: 1
+                    membersCount:
+                      type: integer
+                      description: The member count of the audience.
+                      example: 1234

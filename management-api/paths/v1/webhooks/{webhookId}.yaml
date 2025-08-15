@@ -1,0 +1,184 @@
+# path: /v1/webhooks/{webhookId}
+get:
+  operationId: getWebhook
+  summary: Get webhook
+  description: >-
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Returns a webhook by its id.
+  tags:
+    - Webhooks
+  parameters:
+    - name: webhookId
+      description: >
+        The ID of the webhook. You can find the ID in the Campaign Manager's URL
+        when you display the details of the webhook in **Account** >
+        **Webhooks**.
+      example: 11
+      in: path
+      required: true
+      schema:
+        type: integer
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            allOf:
+              - type: object
+                required:
+                  - id
+                  - created
+                properties:
+                  id:
+                    type: integer
+                    description: The internal ID of this entity.
+                    example: 6
+                  created:
+                    type: string
+                    format: date-time
+                    description: The time this entity was created.
+                    example: '2020-06-10T09:05:27.993483Z'
+              - type: object
+                required:
+                  - modified
+                properties:
+                  modified:
+                    type: string
+                    format: date-time
+                    description: The time this entity was last modified.
+                    example: '2021-09-12T10:12:42Z'
+              - type: object
+                required:
+                  - title
+                  - verb
+                  - url
+                  - headers
+                  - params
+                  - draft
+                  - enabled
+                  - applicationIds
+                properties:
+                  applicationIds:
+                    type: array
+                    description: >
+                      The IDs of the Applications in which this webhook is
+                      available.
+
+                      An empty array means the webhook is available in `All
+                      Applications`.
+                    items:
+                      type: integer
+                  title:
+                    type: string
+                    pattern: ^[A-Za-z][A-Za-z0-9_.!~*'() -]*$
+                    description: Name or title for this webhook.
+                    example: Send message
+                  description:
+                    type: string
+                    description: A description of the webhook.
+                    example: A webhook to send a coupon to the user.
+                  draft:
+                    type: boolean
+                    description: Indicates if the webhook is a draft.
+                    example: false
+                  verb:
+                    type: string
+                    enum:
+                      - POST
+                      - PUT
+                      - GET
+                      - DELETE
+                      - PATCH
+                    description: API method for this webhook.
+                    example: POST
+                  url:
+                    type: string
+                    description: >-
+                      API URL (supports templating using parameters) for this
+                      webhook.
+                    example: www.my-company.com/my-endpoint-name
+                  headers:
+                    type: array
+                    description: List of API HTTP headers for this webhook.
+                    items:
+                      type: string
+                      pattern: ^([^:,]*):([^]*|[^,]*)$
+                    example:
+                      - '{"Authorization": "Basic bmF2ZWVua3VtYXIU="}'
+                      - '{"Content-Type": "application/json"}'
+                  payload:
+                    type: string
+                    description: >-
+                      API payload (supports templating using parameters) for
+                      this webhook.
+                    example: "{\n\t\"message\": \"${message}\"\n}"
+                  params:
+                    type: array
+                    description: Array of template argument definitions.
+                    items:
+                      allOf:
+                        - type: object
+                          required:
+                            - type
+                          properties:
+                            type:
+                              type: string
+                              enum:
+                                - string
+                                - boolean
+                                - number
+                                - time
+                                - (list string)
+                              description: The type of value this argument expects.
+                              minLength: 1
+                            description:
+                              type: string
+                              description: >-
+                                A campaigner-friendly description of the
+                                argument, this will also be shown in the rule
+                                editor.
+                        - type: object
+                          required:
+                            - ui
+                            - title
+                          properties:
+                            title:
+                              type: string
+                              description: >-
+                                A campaigner friendly name for the argument,
+                                this will be shown in the rule editor.
+                              minLength: 1
+                            ui:
+                              type: object
+                              description: >-
+                                Arbitrary metadata that may be used to render an
+                                input for this argument.
+                            key:
+                              type: string
+                              description: >-
+                                The identifier for the associated value within
+                                the JSON object.
+                            picklistID:
+                              type: integer
+                              description: ID of the picklist linked to a template.
+                            restrictedByPicklist:
+                              type: boolean
+                              description: >-
+                                Whether or not this attribute's value is
+                                restricted by picklist (`picklist` property)
+                    example: []
+                  enabled:
+                    type: boolean
+                    description: >-
+                      Enables or disables webhook from showing in the Rule
+                      Builder.
+                    example: true
+                  authenticationId:
+                    type: integer
+                    description: The ID of the credential that this webhook is using.
+                    example: 1

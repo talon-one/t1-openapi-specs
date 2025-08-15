@@ -1,0 +1,167 @@
+# path: /v1/loyalty_programs/{loyaltyProgramId}/dashboard
+get:
+  operationId: getDashboardStatistics
+  summary: Get statistics for loyalty dashboard
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Retrieve the statistics displayed on the specified loyalty program's
+    dashboard,
+
+    such as the total active points, pending points, spent points, and expired
+    points.
+
+
+    **Important:** The returned data does not include the current day. All
+    statistics
+
+    are updated daily at 11:59 PM in the loyalty program time zone.
+  tags:
+    - Loyalty
+  parameters:
+    - name: loyaltyProgramId
+      in: path
+      required: true
+      description: >
+        Identifier of the loyalty program. You can get the ID with
+
+        the [List loyalty
+        programs](https://docs.talon.one/management-api#tag/Loyalty/operation/getLoyaltyPrograms)
+        endpoint.
+      example: 8
+      schema:
+        type: integer
+    - name: subledgerId
+      in: query
+      required: false
+      description: The ID of the subledger by which we filter the data.
+      example: subledger1
+      schema:
+        type: string
+    - name: rangeStart
+      in: query
+      required: true
+      description: >
+        Only return results from after this timestamp.
+
+
+        **Note:**
+
+        - This must be an RFC3339 timestamp string.
+
+        - You can include a time component in your string, for example,
+        `T23:59:59` to specify the end of the day. The time zone setting
+        considered is `UTC`. If you do not include a time component, a default
+        time value of `T00:00:00` (midnight) in `UTC` is considered.
+      example: '2024-05-29T15:04:05+07:00'
+      schema:
+        type: string
+        format: date-time
+    - name: rangeEnd
+      in: query
+      required: true
+      description: >
+        Only return results from before this timestamp.
+
+
+        **Note:**
+
+        - This must be an RFC3339 timestamp string.
+
+        - You can include a time component in your string, for example,
+        `T23:59:59` to specify the end of the day. The time zone setting
+        considered is `UTC`. If you do not include a time component, a default
+        time value of `T00:00:00` (midnight) in `UTC` is considered.
+      example: '2024-05-29T15:04:05+07:00'
+      schema:
+        type: string
+        format: date-time
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - totalResultSize
+              - data
+            properties:
+              totalResultSize:
+                type: integer
+                example: 1
+              data:
+                type: array
+                items:
+                  type: object
+                  description: >-
+                    Datapoint for the graphs and cards on a loyalty program
+                    dashboard.
+                  required:
+                    - date
+                    - totalActivePoints
+                    - totalPendingPoints
+                    - totalSpentPoints
+                    - totalExpiredPoints
+                    - totalMembers
+                    - newMembers
+                    - spentPoints
+                    - earnedPoints
+                  properties:
+                    date:
+                      type: string
+                      format: date-time
+                      description: Date at which data point was collected.
+                    totalActivePoints:
+                      type: number
+                      description: Total of active points for this loyalty program.
+                      example: 9756
+                    totalPendingPoints:
+                      type: number
+                      description: Total of pending points for this loyalty program.
+                      example: 548
+                    totalSpentPoints:
+                      type: number
+                      description: Total of spent points for this loyalty program.
+                      example: 25668
+                    totalExpiredPoints:
+                      type: number
+                      description: Total of expired points for this loyalty program.
+                      example: 1156
+                    totalMembers:
+                      type: number
+                      description: Number of loyalty program members.
+                      example: 2582
+                    newMembers:
+                      type: number
+                      description: Number of members who joined on this day.
+                      example: 3
+                    spentPoints:
+                      description: Points spent on this day.
+                      type: object
+                      required:
+                        - createdManually
+                        - createdViaRuleEngine
+                      properties:
+                        createdManually:
+                          type: number
+                          example: 125
+                        createdViaRuleEngine:
+                          type: number
+                          example: 9631
+                    earnedPoints:
+                      description: Points that were earned on this day.
+                      type: object
+                      required:
+                        - createdManually
+                        - createdViaRuleEngine
+                      properties:
+                        createdManually:
+                          type: number
+                          example: 125
+                        createdViaRuleEngine:
+                          type: number
+                          example: 9631

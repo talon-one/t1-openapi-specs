@@ -1,0 +1,23 @@
+# path: /v1/provisioning/okta
+get:
+  operationId: oktaEventHandlerChallenge
+  summary: Validate Okta API ownership
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Validate the ownership of the API through a challenge-response mechanism.
+
+
+    This challenger endpoint is used by Okta to confirm that communication
+    between Talon.One and Okta is correctly configured and accessible
+
+    for provisioning and deprovisioning of Talon.One users, and that only
+    Talon.One can receive and respond to events from Okta.
+  tags:
+    - Accounts and users
+  responses:
+    '200':
+      description: OK

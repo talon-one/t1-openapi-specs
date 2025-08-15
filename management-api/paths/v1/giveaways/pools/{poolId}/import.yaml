@@ -1,0 +1,137 @@
+# path: /v1/giveaways/pools/{poolId}/import
+post:
+  operationId: importPoolGiveaways
+  summary: Import giveaway codes into a giveaway pool
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Upload a CSV file containing the giveaway codes that should be created. Send
+    the file as multipart data.
+
+
+    The CSV file contains the following columns:
+
+    - `code` (required): The code of your giveaway, for instance, a gift card
+    redemption code.
+
+    - `startdate`:  The start date in RFC3339 of the code redemption period.
+
+    - `enddate`: The last date in RFC3339 of the code redemption period.
+
+    - `attributes`: A JSON object describing _custom_ giveaway attribute names
+    and their values, enclosed with double quotation marks.
+
+      For example, if you created a [custom attribute](https://docs.talon.one/docs/dev/concepts/attributes#custom-attributes)
+      called `provider` associated with the giveaway entity, the object in the CSV file, when opened in a text editor, must be: `"{"provider": "myPartnerCompany"}"`.
+
+    The `startdate` and `enddate` have nothing to do with the _validity_ of the
+    codes. They are only used by the Rule Engine to award the codes or not.
+
+    You can use the time zone setting of your choice. The values are converted
+    to UTC internally by Talon.One.
+
+
+    **Note:**
+
+
+    - We recommend limiting your file size to 500MB.
+
+    - You can import the same code multiple times. Duplicate codes are treated
+    and distributed to customers as unique codes.
+
+
+    **Example:**
+
+
+    ```text
+
+    code,startdate,enddate,attributes
+
+    GIVEAWAY1,2020-11-10T23:00:00Z,2022-11-11T23:00:00Z,"{""provider"":
+    ""Amazon""}"
+
+    GIVEAWAY2,2020-11-10T23:00:00Z,2022-11-11T23:00:00Z,"{""provider"":
+    ""Amazon""}"
+
+    GIVEAWAY3,2021-01-10T23:00:00Z,2022-11-11T23:00:00Z,"{""provider"":
+    ""Aliexpress""}"
+
+    ```
+  tags:
+    - Giveaways
+  parameters:
+    - name: poolId
+      description: >-
+        The ID of the pool. You can find it in the Campaign Manager, in the
+        **Giveaways** section.
+      in: path
+      example: 8
+      required: true
+      schema:
+        type: integer
+  requestBody:
+    required: true
+    content:
+      multipart/form-data:
+        schema:
+          type: object
+          properties:
+            upFile:
+              description: The file containing the data that is being imported.
+              type: string
+              format: csv
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            allOf:
+              - type: object
+                required:
+                  - id
+                  - created
+                properties:
+                  id:
+                    type: integer
+                    description: The internal ID of this entity.
+                    example: 6
+                  created:
+                    type: string
+                    format: date-time
+                    description: The time this entity was created.
+                    example: '2020-06-10T09:05:27.993483Z'
+              - type: object
+                required:
+                  - accountId
+                properties:
+                  accountId:
+                    type: integer
+                    description: The ID of the account that owns this entity.
+                    example: 3886
+              - type: object
+                required:
+                  - userId
+                properties:
+                  userId:
+                    type: integer
+                    description: The ID of the user associated with this entity.
+                    example: 388
+              - type: object
+                required:
+                  - amount
+                  - entity
+                properties:
+                  entity:
+                    type: string
+                    example: AttributeAllowedList
+                    description: |
+                      The name of the entity that was imported.
+                  amount:
+                    type: integer
+                    minimum: 0
+                    example: 10
+                    description: The number of values that were imported.

@@ -1,0 +1,107 @@
+# path: /v1/applications/{applicationId}/customers/{customerId}/analytics
+get:
+  operationId: getCustomerAnalytics
+  summary: Get customer's analytics report
+  description: >-
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Fetch analytics for a given customer in the given application.
+  tags:
+    - Customer data
+  parameters:
+    - name: pageSize
+      in: query
+      required: false
+      description: The number of items in the response.
+      example: 1000
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 1000
+    - name: skip
+      in: query
+      required: false
+      description: The number of items to skip when paging through large result sets.
+      example: 100
+      schema:
+        type: integer
+    - name: sort
+      in: query
+      required: false
+      description: >
+        The field by which results should be sorted. By default, results are
+        sorted in ascending order. To sort them in descending order, prefix the
+        field name with `-`.
+
+
+        **Note:** You may not be able to use all fields for sorting. This is due
+        to performance limitations.
+      example: name
+      schema:
+        type: string
+    - name: applicationId
+      in: path
+      required: true
+      description: >-
+        The ID of the Application. It is displayed in your Talon.One deployment
+        URL.
+      example: 42
+      schema:
+        type: integer
+    - name: customerId
+      in: path
+      description: >
+        The value of the `id` property of a customer profile. Get it with the
+
+        [List Application's
+        customers](https://docs.talon.one/management-api#operation/getApplicationCustomers)
+        endpoint.
+      example: 3778
+      required: true
+      schema:
+        type: integer
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            description: A summary report of customer activity for a given time range.
+            allOf:
+              - type: object
+                properties:
+                  acceptedCoupons:
+                    type: integer
+                    description: Total accepted coupons for this customer.
+                  createdCoupons:
+                    type: integer
+                    description: Total created coupons for this customer.
+                  freeItems:
+                    type: integer
+                    description: Total free items given to this customer.
+                  totalOrders:
+                    type: integer
+                    description: Total orders made by this customer.
+                  totalDiscountedOrders:
+                    type: integer
+                    description: Total orders made by this customer that had a discount.
+                  totalRevenue:
+                    type: number
+                    description: Total Revenue across all closed sessions.
+                  totalDiscounts:
+                    type: number
+                    description: >-
+                      The sum of discounts that were given across all closed
+                      sessions.
+                required:
+                  - acceptedCoupons
+                  - createdCoupons
+                  - freeItems
+                  - totalOrders
+                  - totalDiscountedOrders
+                  - totalRevenue
+                  - totalDiscounts

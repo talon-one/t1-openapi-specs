@@ -1,0 +1,603 @@
+# path: /v1/customer_profiles/{integrationId}/achievements
+get:
+  operationId: getCustomerAchievements
+  summary: List customer's available achievements
+  description: >
+    Retrieve all the achievements available to a given customer and their
+    progress in them.
+  security:
+    - api_key_v1: []
+  tags:
+    - Achievements
+  parameters:
+    - in: path
+      required: true
+      name: integrationId
+      description: >
+        The integration identifier for this customer profile. Must be:
+
+        - Unique within the deployment.
+
+        - Stable for the customer. Do not use an ID that the customer can update
+        themselves. For example, you can use a database ID.
+
+
+        Once set, you cannot update this identifier.
+      example: customer1
+      schema:
+        type: string
+    - name: campaignIds
+      in: query
+      required: false
+      description: >
+        Filter by one or more Campaign IDs, separated by a comma.
+
+
+        **Note:** If no campaigns are specified, data for all the campaigns in
+        the Application is returned.
+      example:
+        - '11'
+        - '20'
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+    - name: achievementIds
+      in: query
+      required: false
+      description: >
+        Filter by one or more Achievement IDs, separated by a comma.
+
+
+        **Note:** If no achievements are specified, data for all the
+        achievements in the Application is returned.
+      example:
+        - '11'
+        - '20'
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+    - name: achievementStatus
+      in: query
+      required: false
+      description: >
+        Filter by status of the achievement.
+
+
+        **Note:** If the achievement status is not specified, only data for all
+        active achievements in the Application is returned.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+          enum:
+            - active
+            - scheduled
+      example:
+        - active
+        - scheduled
+    - name: currentProgressStatus
+      in: query
+      required: false
+      description: |
+        Filter by customer progress status in the achievement.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+          enum:
+            - inprogress
+            - completed
+            - not_started
+      example:
+        - inprogress
+        - completed
+    - name: pageSize
+      in: query
+      required: false
+      description: The number of items in the response.
+      example: 1000
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 1000
+    - name: skip
+      in: query
+      required: false
+      description: The number of items to skip when paging through large result sets.
+      example: 100
+      schema:
+        type: integer
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - totalResultSize
+              - data
+            properties:
+              totalResultSize:
+                type: integer
+                example: 1
+              data:
+                type: array
+                items:
+                  allOf:
+                    - type: object
+                      required:
+                        - id
+                        - created
+                      properties:
+                        id:
+                          type: integer
+                          description: The internal ID of this entity.
+                          example: 6
+                        created:
+                          type: string
+                          format: date-time
+                          description: The time this entity was created.
+                          example: '2020-06-10T09:05:27.993483Z'
+                    - allOf:
+                        - type: object
+                          properties:
+                            name:
+                              type: string
+                              pattern: ^[a-zA-Z]\w+$
+                              example: Order50Discount
+                              maxLength: 1000
+                              minLength: 1
+                              description: >
+                                The internal name of the achievement used in API
+                                requests.
+
+
+                                **Note**: The name should start with a letter.
+                                This cannot be changed after the achievement has
+                                been created.
+                            title:
+                              type: string
+                              description: >-
+                                The display name for the achievement in the
+                                Campaign Manager.
+                              example: 50% off on 50th purchase.
+                            description:
+                              type: string
+                              format: string
+                              description: A description of the achievement.
+                              example: 50% off for every 50th purchase in a year.
+                            target:
+                              type: number
+                              description: >-
+                                The required number of actions or the
+                                transactional milestone to complete the
+                                achievement.
+                              example: 50
+                            period:
+                              type: string
+                              description: >
+                                The relative duration after which the
+                                achievement ends and resets for a particular
+                                customer profile.
+
+
+                                **Note**: The `period` does not start when the
+                                achievement is created.
+
+
+                                The period is a **positive real number**
+                                followed by one letter indicating the time unit.
+
+
+                                Examples: `30s`, `40m`, `1h`, `5D`, `7W`, `10M`,
+                                `15Y`.
+
+
+                                Available units:
+
+
+                                - `s`: seconds
+
+                                - `m`: minutes
+
+                                - `h`: hours
+
+                                - `D`: days
+
+                                - `W`: weeks
+
+                                - `M`: months
+
+                                - `Y`: years
+
+
+                                You can also round certain units down to the
+                                beginning of period and up to the end of
+                                period.:
+
+                                - `_D` for rounding down days only. Signifies
+                                the start of the day.
+
+                                Example: `30D_D`
+
+                                - `_U` for rounding up days, weeks, months and
+                                years. Signifies the end of the day, week, month
+                                or year.
+
+                                Example: `23W_U`
+
+
+                                **Note**: You can either use the round down and
+                                round up option or set an absolute period.
+                              example: 1Y
+                            periodEndOverride:
+                              deprecated: true
+                              type: object
+                              required:
+                                - hour
+                                - minute
+                                - second
+                              description: >
+                                The absolute duration after which the
+                                achievement ends and resets for a particular
+                                customer profile.
+
+
+                                **Note**: The duration follows the time zone of
+                                the Application this achievement belongs to.
+                              properties:
+                                month:
+                                  type: integer
+                                  minimum: 1
+                                  maximum: 12
+                                  description: >
+                                    The achievement ends and resets in this
+                                    month.
+
+
+                                    **Note**: Only applicable if the period is
+                                    set to `Y`.
+                                  example: 11
+                                dayOfMonth:
+                                  type: integer
+                                  minimum: 1
+                                  maximum: 31
+                                  description: >
+                                    The achievement ends and resets on this day
+                                    of the month.
+
+
+                                    **Note**: Only applicable if the period is
+                                    set to `Y` or `M`.
+                                  example: 23
+                                dayOfWeek:
+                                  type: integer
+                                  minimum: 1
+                                  maximum: 7
+                                  description: >
+                                    The achievement ends and resets on this day
+                                    of the week. `1` represents `Monday` and `7`
+                                    represents `Sunday`.
+
+
+                                    **Note**: Only applicable if the period is
+                                    set to `W`.
+                                hour:
+                                  type: integer
+                                  description: >-
+                                    The achievement ends and resets at this
+                                    hour.
+                                  example: 23
+                                minute:
+                                  type: integer
+                                  description: >-
+                                    The achievement ends and resets at this
+                                    minute.
+                                  example: 59
+                                second:
+                                  type: integer
+                                  description: >-
+                                    The achievement ends and resets at this
+                                    second.
+                                  example: 59
+                              example:
+                                month: 11
+                                dayOfMonth: 23
+                                hour: 23
+                                minute: 59
+                                second: 59
+                            recurrencePolicy:
+                              type: string
+                              enum:
+                                - no_recurrence
+                                - on_expiration
+                                - on_completion
+                              example: no_recurrence
+                              description: >
+                                The policy that determines if and how the
+                                achievement recurs.
+
+                                - `no_recurrence`: The achievement can be
+                                completed only once.
+
+                                - `on_expiration`: The achievement resets after
+                                it expires and becomes available again.
+
+                                - `on_completion`: When the customer progress
+                                status reaches `completed`, the achievement
+                                resets and becomes available again.
+                            activationPolicy:
+                              type: string
+                              enum:
+                                - user_action
+                                - fixed_schedule
+                              example: fixed_schedule
+                              description: >
+                                The policy that determines how the achievement
+                                starts, ends, or resets.
+
+                                - `user_action`: The achievement ends or resets
+                                relative to when the customer started the
+                                achievement.
+
+                                - `fixed_schedule`: The achievement starts,
+                                ends, or resets for all customers following a
+                                fixed schedule.
+                            fixedStartDate:
+                              type: string
+                              format: date-time
+                              example: 2024-01-15T15:04:05Z07:00
+                              description: >
+                                The achievement's start date when
+                                `activationPolicy` is set to `fixed_schedule`.
+
+
+                                **Note:** It must be an RFC3339 timestamp
+                                string.
+                            endDate:
+                              type: string
+                              format: date-time
+                              example: 2024-02-15T15:04:05Z07:00
+                              description: >
+                                The achievement's end date. If defined,
+                                customers cannot participate in the achievement
+                                after this date.
+
+
+                                **Note:** It must be an RFC3339 timestamp
+                                string.
+                        - type: object
+                          required:
+                            - name
+                            - title
+                            - description
+                            - target
+                    - type: object
+                      properties:
+                        campaignId:
+                          type: integer
+                          description: The ID of the campaign the achievement belongs to.
+                          example: 1
+                        status:
+                          type: string
+                          enum:
+                            - active
+                            - scheduled
+                          example: active
+                          description: The status of the achievement.
+                        currentProgress:
+                          type: object
+                          description: >-
+                            The current progress of the customer in the
+                            achievement.
+                          required:
+                            - status
+                            - progress
+                          properties:
+                            status:
+                              type: string
+                              enum:
+                                - inprogress
+                                - completed
+                                - expired
+                                - not_started
+                              example: completed
+                              description: The status of the achievement.
+                            progress:
+                              type: number
+                              example: 10
+                              description: >-
+                                The current progress of the customer in the
+                                achievement.
+                            startDate:
+                              format: date-time
+                              description: >-
+                                Timestamp at which the customer started the
+                                achievement.
+                              type: string
+                              example: 2024-01-01T15:04:05Z07:00
+                            completionDate:
+                              format: date-time
+                              description: >-
+                                Timestamp at which point the customer completed
+                                the achievement.
+                              type: string
+                              example: 2024-01-15T15:04:05Z07:00
+                            endDate:
+                              format: date-time
+                              description: >-
+                                Timestamp at which point the achievement ends
+                                and resets for the customer.
+                              type: string
+                              example: 2024-02-01T15:04:05Z07:00
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code

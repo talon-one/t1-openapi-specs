@@ -1,0 +1,1742 @@
+# path: /v1/customer_profiles/{integrationId}/inventory
+get:
+  operationId: getCustomerInventory
+  summary: List customer data
+  description: >
+    Return the customer inventory regarding entities referencing this customer
+    profile's `integrationId`.
+
+
+    Typical entities returned are: customer profile information, referral codes,
+    loyalty points, loyalty cards and reserved coupons.
+
+    Reserved coupons also include redeemed coupons.
+  security:
+    - api_key_v1: []
+  tags:
+    - Customer profiles
+  parameters:
+    - name: integrationId
+      in: path
+      required: true
+      description: >
+        The integration ID of the customer profile. You can get the
+        `integrationId` of a profile using:
+
+        - A customer session integration ID with the [Update customer
+        session](https://docs.talon.one/integration-api#operation/updateCustomerSessionV2)
+        endpoint.
+
+        - The Management API with the [List application's
+        customers](https://docs.talon.one/management-api#operation/getApplicationCustomers)
+        endpoint.
+      example: customer1
+      schema:
+        type: string
+    - name: profile
+      in: query
+      required: false
+      description: Set to `true` to include customer profile information in the response.
+      example: false
+      schema:
+        type: boolean
+    - name: referrals
+      in: query
+      required: false
+      description: Set to `true` to include referral information in the response.
+      example: false
+      schema:
+        type: boolean
+    - name: coupons
+      in: query
+      required: false
+      description: Set to `true` to include coupon information in the response.
+      example: false
+      schema:
+        type: boolean
+    - name: loyalty
+      in: query
+      required: false
+      description: Set to `true` to include loyalty information in the response.
+      example: false
+      schema:
+        type: boolean
+    - name: giveaways
+      in: query
+      required: false
+      description: Set to `true` to include giveaways information in the response.
+      example: false
+      schema:
+        type: boolean
+    - name: achievements
+      in: query
+      required: false
+      description: Set to `true` to include achievement information in the response.
+      example: false
+      schema:
+        type: boolean
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              profile:
+                allOf:
+                  - type: object
+                    required:
+                      - id
+                      - created
+                    properties:
+                      id:
+                        type: integer
+                        description: The internal ID of the customer profile.
+                        example: 6
+                      created:
+                        type: string
+                        format: date-time
+                        description: The time the customer profile was created.
+                        example: '2020-06-10T09:05:27.993483Z'
+                  - type: object
+                    required:
+                      - integrationId
+                      - created
+                    properties:
+                      integrationId:
+                        type: string
+                        format: string
+                        example: URNGV8294NV
+                        maxLength: 1000
+                        description: The integration ID set by your integration layer.
+                      created:
+                        type: string
+                        format: date-time
+                        description: The time this entity was created.
+                        example: '2020-02-07T08:15:22Z'
+                  - type: object
+                    properties:
+                      attributes:
+                        type: object
+                        description: Arbitrary properties associated with this item.
+                        example:
+                          Language: english
+                          ShippingCountry: DE
+                  - type: object
+                    properties:
+                      accountId:
+                        type: integer
+                        title: Profile belongs to Account
+                        description: >-
+                          The ID of the Talon.One account that owns this
+                          profile.
+                        example: 31
+                      closedSessions:
+                        type: integer
+                        title: Closed sessions
+                        description: >-
+                          The total number of closed sessions. Does not include
+                          closed sessions that have been cancelled or reopened.
+                          See the
+                          [docs](https://docs.talon.one/docs/dev/concepts/entities/customer-sessions#customer-session-states).
+                        example: 3
+                      totalSales:
+                        type: number
+                        description: >
+                          The total amount of money spent by the customer
+                          **before** discounts are applied.
+
+
+                          The total sales amount excludes the following:
+
+                          - Cancelled or reopened sessions.
+
+                          - Returned items.
+                        example: 299.99
+                        title: Total Sales
+                      loyaltyMemberships:
+                        type: array
+                        description: >
+                          **DEPRECATED** A list of loyalty programs joined by
+                          the customer.
+                        items:
+                          type: object
+                          required:
+                            - loyaltyProgramId
+                          properties:
+                            joined:
+                              type: string
+                              format: date-time
+                              title: Loyalty program joined at
+                              description: >-
+                                The moment in which the loyalty program was
+                                joined.
+                              example: '2012-03-20T14:15:22Z'
+                            loyaltyProgramId:
+                              type: integer
+                              title: Loyalty program ID
+                              description: >-
+                                The ID of the loyalty program belonging to this
+                                entity.
+                              example: 323414846
+                        title: Loyalty programed joined
+                      audienceMemberships:
+                        type: array
+                        description: The audiences the customer belongs to.
+                        items:
+                          type: object
+                          required:
+                            - id
+                            - name
+                          properties:
+                            id:
+                              type: integer
+                              title: Audience ID
+                              description: The ID of the audience belonging to this entity.
+                              example: 2
+                            name:
+                              type: string
+                              title: Audience Name
+                              description: >-
+                                The Name of the audience belonging to this
+                                entity.
+                              example: Travel audience
+                        title: Audience memberships
+                      lastActivity:
+                        type: string
+                        format: date-time
+                        title: Last activity
+                        description: >
+                          Timestamp of the most recent event received from this
+                          customer.
+
+                          This field is updated on calls that trigger the Rule
+                          Engine and that are
+
+                          not [dry
+                          requests](https://docs.talon.one/docs/dev/integration-api/dry-requests/#overlay).
+
+
+                          For example, [reserving a
+                          coupon](https://docs.talon.one/integration-api#operation/createCouponReservation)
+
+                          for a customer doesn't impact this field.
+                        example: '2020-02-08T14:15:20Z'
+                      sandbox:
+                        type: boolean
+                        description: >
+                          An indicator of whether the customer is part of a
+                          sandbox or live Application. See the
+                          [docs](https://docs.talon.one/docs/product/applications/overview#application-environments).
+                        title: Sandbox
+                        example: false
+                    required:
+                      - accountId
+                      - closedSessions
+                      - totalSales
+                      - lastActivity
+                      - attributes
+              loyalty:
+                type: object
+                description: Customer-specific information about loyalty points.
+                required:
+                  - programs
+                properties:
+                  cards:
+                    title: Point balances of the loyalty cards used.
+                    description: >-
+                      Displays information about the balances of the loyalty
+                      cards.
+                    type: array
+                    items:
+                      allOf:
+                        - type: object
+                          required:
+                            - id
+                            - created
+                          properties:
+                            id:
+                              type: integer
+                              description: The internal ID of this entity.
+                              example: 6
+                            created:
+                              type: string
+                              format: date-time
+                              description: The time this entity was created.
+                              example: '2020-06-10T09:05:27.993483Z'
+                        - type: object
+                          required:
+                            - programID
+                          properties:
+                            programID:
+                              type: integer
+                              description: >-
+                                The ID of the loyalty program that owns this
+                                entity.
+                              example: 125
+                            programName:
+                              type: string
+                              description: >-
+                                The integration name of the loyalty program that
+                                owns this entity.
+                              example: Loyalty_program
+                            programTitle:
+                              type: string
+                              description: >-
+                                The Campaign Manager-displayed name of the
+                                loyalty program that owns this entity.
+                              example: Loyalty program
+                        - type: object
+                          required:
+                            - status
+                          properties:
+                            status:
+                              type: string
+                              description: >
+                                Status of the loyalty card. Can be `active` or
+                                `inactive`.
+                              example: active
+                            blockReason:
+                              type: string
+                              description: >
+                                Reason for transferring and blocking the loyalty
+                                card.
+                              example: Current card lost. Customer needs a new card.
+                        - type: object
+                          required:
+                            - identifier
+                            - usersPerCardLimit
+                          properties:
+                            identifier:
+                              type: string
+                              description: |
+                                The alphanumeric identifier of the loyalty card.
+                              maxLength: 108
+                              pattern: ^[A-Za-z0-9_-]*$
+                              example: summer-loyalty-card-0543
+                            usersPerCardLimit:
+                              type: integer
+                              minimum: 0
+                              example: 111
+                              description: >
+                                The max amount of customer profiles that can be
+                                linked to the card. 0 means unlimited.
+                            profiles:
+                              type: array
+                              description: >-
+                                Integration IDs of the customers profiles linked
+                                to the card.
+                              items:
+                                type: object
+                                required:
+                                  - integrationId
+                                  - timestamp
+                                properties:
+                                  integrationId:
+                                    type: string
+                                    maxLength: 1000
+                                    description: >-
+                                      Integration ID of the customer profile
+                                      linked to the card.
+                                    example: R195412
+                                  timestamp:
+                                    type: string
+                                    format: date-time
+                                    description: >-
+                                      Timestamp the customer profile was linked
+                                      to the card.
+                                    example: '2021-09-12T10:12:42Z'
+                            ledger:
+                              description: >-
+                                Displays point balances of the card in the main
+                                ledger of the loyalty program.
+                              allOf:
+                                - type: object
+                                  required:
+                                    - currentBalance
+                                    - pendingBalance
+                                    - expiredBalance
+                                    - spentBalance
+                                    - tentativeCurrentBalance
+                                  description: >-
+                                    The balance in a Loyalty Program for some
+                                    Customer.
+                                  properties:
+                                    currentBalance:
+                                      type: number
+                                      title: Current balance
+                                      description: Sum of currently active points.
+                                      example: 100
+                                    pendingBalance:
+                                      type: number
+                                      title: Pending balance
+                                      description: Sum of pending points.
+                                      example: 10
+                                    negativeBalance:
+                                      type: number
+                                      title: Negative balance
+                                      description: >-
+                                        Sum of negative points. This implies
+                                        that `currentBalance` is `0`.
+                                      example: 10
+                                    expiredBalance:
+                                      type: number
+                                      title: Expired balance
+                                      description: |
+                                        **DEPRECATED** Value is shown as 0.
+                                      example: 0
+                                    spentBalance:
+                                      type: number
+                                      title: Spent balance
+                                      description: |
+                                        **DEPRECATED** Value is shown as 0.
+                                      example: 0
+                                    tentativeCurrentBalance:
+                                      type: number
+                                      title: Tentative current balance
+                                      description: >
+                                        The tentative points balance, reflecting
+                                        the `currentBalance` and all point
+                                        additions and deductions within the
+                                        current open customer session. When the
+                                        session is closed, the effects are
+                                        applied and the `currentBalance` is
+                                        updated to this value.
+
+
+                                        **Note:** Tentative balances are
+                                        specific to the current session and do
+                                        not take into account other open
+                                        sessions for the given customer.
+                                      example: 100
+                                    tentativePendingBalance:
+                                      type: number
+                                      title: Tentative pending balance
+                                      description: >
+                                        The tentative points balance, reflecting
+                                        the `pendingBalance` and all point
+                                        additions with a future activation date
+                                        within the current open customer
+                                        session. When the session is closed, the
+                                        effects are applied and the
+                                        `pendingBalance` is updated to this
+                                        value.
+
+
+                                        **Note:** Tentative balances are
+                                        specific to the current session and do
+                                        not take into account other open
+                                        sessions for the given customer.
+                                      example: 20
+                                    tentativeNegativeBalance:
+                                      type: number
+                                      title: Tentative negative balance
+                                      description: >
+                                        The tentative negative balance after all
+                                        additions and deductions from the
+                                        current customer session are applied to
+                                        `negativeBalance`. When the session is
+                                        closed, the tentative effects are
+                                        applied and `negativeBalance` is updated
+                                        to this value.
+
+
+                                        **Note:** Tentative balances are
+                                        specific to the current session and do
+                                        not take into account other open
+                                        sessions for the given customer.
+                                      example: 100
+                                - type: object
+                                  properties:
+                                    currentTier:
+                                      description: Tier for which the ledger is eligible.
+                                      example: bronze
+                                      type: object
+                                      required:
+                                        - id
+                                        - name
+                                      properties:
+                                        id:
+                                          type: integer
+                                          description: The internal ID of the tier.
+                                          example: 11
+                                        name:
+                                          type: string
+                                          description: The name of the tier.
+                                          example: bronze
+                                        startDate:
+                                          type: string
+                                          format: date-time
+                                          description: >-
+                                            Date and time when the customer moved to
+                                            this tier. This value uses the loyalty
+                                            program's time zone setting.
+                                          example: 2021-05-03T12:32:00Z07:00
+                                        expiryDate:
+                                          type: string
+                                          format: date-time
+                                          description: >-
+                                            Date when tier level expires in the
+                                            RFC3339 format (in the Loyalty Program's
+                                            timezone).
+                                          example: 2022-08-02T15:04:05Z07:00
+                                        downgradePolicy:
+                                          type: string
+                                          enum:
+                                            - one_down
+                                            - balance_based
+                                          description: >
+                                            The policy that defines how customer
+                                            tiers are downgraded in the loyalty
+                                            program after tier reevaluation.
+                                             - `one_down`: If the customer doesn't have enough points to stay in the current tier, they are downgraded by one tier.
+                                             - `balance_based`: The customer's tier is reevaluated based on the amount of active points they have at the moment.
+                                    pointsToNextTier:
+                                      type: number
+                                      description: Points required to move up a tier.
+                                      example: 20
+                            subledgers:
+                              type: object
+                              description: >-
+                                Displays point balances of the card in the
+                                subledgers of the loyalty program.
+                              additionalProperties:
+                                allOf:
+                                  - type: object
+                                    required:
+                                      - currentBalance
+                                      - pendingBalance
+                                      - expiredBalance
+                                      - spentBalance
+                                      - tentativeCurrentBalance
+                                    description: >-
+                                      The balance in a Loyalty Program for some
+                                      Customer.
+                                    properties:
+                                      currentBalance:
+                                        type: number
+                                        title: Current balance
+                                        description: Sum of currently active points.
+                                        example: 100
+                                      pendingBalance:
+                                        type: number
+                                        title: Pending balance
+                                        description: Sum of pending points.
+                                        example: 10
+                                      negativeBalance:
+                                        type: number
+                                        title: Negative balance
+                                        description: >-
+                                          Sum of negative points. This implies
+                                          that `currentBalance` is `0`.
+                                        example: 10
+                                      expiredBalance:
+                                        type: number
+                                        title: Expired balance
+                                        description: |
+                                          **DEPRECATED** Value is shown as 0.
+                                        example: 0
+                                      spentBalance:
+                                        type: number
+                                        title: Spent balance
+                                        description: |
+                                          **DEPRECATED** Value is shown as 0.
+                                        example: 0
+                                      tentativeCurrentBalance:
+                                        type: number
+                                        title: Tentative current balance
+                                        description: >
+                                          The tentative points balance, reflecting
+                                          the `currentBalance` and all point
+                                          additions and deductions within the
+                                          current open customer session. When the
+                                          session is closed, the effects are
+                                          applied and the `currentBalance` is
+                                          updated to this value.
+
+
+                                          **Note:** Tentative balances are
+                                          specific to the current session and do
+                                          not take into account other open
+                                          sessions for the given customer.
+                                        example: 100
+                                      tentativePendingBalance:
+                                        type: number
+                                        title: Tentative pending balance
+                                        description: >
+                                          The tentative points balance, reflecting
+                                          the `pendingBalance` and all point
+                                          additions with a future activation date
+                                          within the current open customer
+                                          session. When the session is closed, the
+                                          effects are applied and the
+                                          `pendingBalance` is updated to this
+                                          value.
+
+
+                                          **Note:** Tentative balances are
+                                          specific to the current session and do
+                                          not take into account other open
+                                          sessions for the given customer.
+                                        example: 20
+                                      tentativeNegativeBalance:
+                                        type: number
+                                        title: Tentative negative balance
+                                        description: >
+                                          The tentative negative balance after all
+                                          additions and deductions from the
+                                          current customer session are applied to
+                                          `negativeBalance`. When the session is
+                                          closed, the tentative effects are
+                                          applied and `negativeBalance` is updated
+                                          to this value.
+
+
+                                          **Note:** Tentative balances are
+                                          specific to the current session and do
+                                          not take into account other open
+                                          sessions for the given customer.
+                                        example: 100
+                                  - type: object
+                                    properties:
+                                      currentTier:
+                                        description: Tier for which the ledger is eligible.
+                                        example: bronze
+                                        type: object
+                                        required:
+                                          - id
+                                          - name
+                                        properties:
+                                          id:
+                                            type: integer
+                                            description: The internal ID of the tier.
+                                            example: 11
+                                          name:
+                                            type: string
+                                            description: The name of the tier.
+                                            example: bronze
+                                          startDate:
+                                            type: string
+                                            format: date-time
+                                            description: >-
+                                              Date and time when the customer moved to
+                                              this tier. This value uses the loyalty
+                                              program's time zone setting.
+                                            example: 2021-05-03T12:32:00Z07:00
+                                          expiryDate:
+                                            type: string
+                                            format: date-time
+                                            description: >-
+                                              Date when tier level expires in the
+                                              RFC3339 format (in the Loyalty Program's
+                                              timezone).
+                                            example: 2022-08-02T15:04:05Z07:00
+                                          downgradePolicy:
+                                            type: string
+                                            enum:
+                                              - one_down
+                                              - balance_based
+                                            description: >
+                                              The policy that defines how customer
+                                              tiers are downgraded in the loyalty
+                                              program after tier reevaluation.
+                                               - `one_down`: If the customer doesn't have enough points to stay in the current tier, they are downgraded by one tier.
+                                               - `balance_based`: The customer's tier is reevaluated based on the amount of active points they have at the moment.
+                                      pointsToNextTier:
+                                        type: number
+                                        description: Points required to move up a tier.
+                                        example: 20
+                            modified:
+                              type: string
+                              format: date-time
+                              description: >-
+                                Timestamp of the most recent update of the
+                                loyalty card.
+                              example: '2021-09-12T10:12:42Z'
+                            oldCardIdentifier:
+                              description: >-
+                                The identifier of the card from which the points
+                                were transferred.
+                              example: summer-loyalty-card-0543
+                              type: string
+                              maxLength: 108
+                              pattern: ^[A-Za-z0-9_-]*$
+                            newCardIdentifier:
+                              description: >-
+                                The identifier of the card to which the points
+                                were transferred.
+                              example: autumn-loyalty-card-5822
+                              type: string
+                              maxLength: 108
+                              pattern: ^[A-Za-z0-9_-]*$
+                            batchId:
+                              description: >-
+                                The ID of the batch in which the loyalty card
+                                was created.
+                              type: string
+                              example: wdefpov
+                  programs:
+                    type: object
+                    title: Customer's current loyalty program balance.
+                    description: >-
+                      Displays information about point balances in profile-based
+                      programs.
+                    additionalProperties:
+                      type: object
+                      description: Customer-specific information about loyalty points.
+                      required:
+                        - ledger
+                        - title
+                        - name
+                        - id
+                      properties:
+                        id:
+                          type: integer
+                          description: The internal ID of loyalty program.
+                          example: 5
+                        title:
+                          description: Visible name of loyalty program.
+                          type: string
+                          example: My loyalty program
+                        name:
+                          description: Internal name of loyalty program.
+                          type: string
+                          example: program1
+                        joinDate:
+                          description: >
+                            The date on which the customer joined the loyalty
+                            program in RFC3339.
+
+
+                            **Note**: This is in the loyalty program's time
+                            zone.
+                          type: string
+                          format: date-time
+                          example: 2024-04-30T15:04:05Z07:00
+                        ledger:
+                          title: Customer's current loyalty program status
+                          description: >-
+                            Information about the main ledger in the loyalty
+                            program.
+                          allOf:
+                            - type: object
+                              required:
+                                - currentBalance
+                                - pendingBalance
+                                - expiredBalance
+                                - spentBalance
+                                - tentativeCurrentBalance
+                              description: >-
+                                The balance in a Loyalty Program for some
+                                Customer.
+                              properties:
+                                currentBalance:
+                                  type: number
+                                  title: Current balance
+                                  description: Sum of currently active points.
+                                  example: 100
+                                pendingBalance:
+                                  type: number
+                                  title: Pending balance
+                                  description: Sum of pending points.
+                                  example: 10
+                                negativeBalance:
+                                  type: number
+                                  title: Negative balance
+                                  description: >-
+                                    Sum of negative points. This implies that
+                                    `currentBalance` is `0`.
+                                  example: 10
+                                expiredBalance:
+                                  type: number
+                                  title: Expired balance
+                                  description: |
+                                    **DEPRECATED** Value is shown as 0.
+                                  example: 0
+                                spentBalance:
+                                  type: number
+                                  title: Spent balance
+                                  description: |
+                                    **DEPRECATED** Value is shown as 0.
+                                  example: 0
+                                tentativeCurrentBalance:
+                                  type: number
+                                  title: Tentative current balance
+                                  description: >
+                                    The tentative points balance, reflecting the
+                                    `currentBalance` and all point additions and
+                                    deductions within the current open customer
+                                    session. When the session is closed, the
+                                    effects are applied and the `currentBalance`
+                                    is updated to this value.
+
+
+                                    **Note:** Tentative balances are specific to
+                                    the current session and do not take into
+                                    account other open sessions for the given
+                                    customer.
+                                  example: 100
+                                tentativePendingBalance:
+                                  type: number
+                                  title: Tentative pending balance
+                                  description: >
+                                    The tentative points balance, reflecting the
+                                    `pendingBalance` and all point additions
+                                    with a future activation date within the
+                                    current open customer session. When the
+                                    session is closed, the effects are applied
+                                    and the `pendingBalance` is updated to this
+                                    value.
+
+
+                                    **Note:** Tentative balances are specific to
+                                    the current session and do not take into
+                                    account other open sessions for the given
+                                    customer.
+                                  example: 20
+                                tentativeNegativeBalance:
+                                  type: number
+                                  title: Tentative negative balance
+                                  description: >
+                                    The tentative negative balance after all
+                                    additions and deductions from the current
+                                    customer session are applied to
+                                    `negativeBalance`. When the session is
+                                    closed, the tentative effects are applied
+                                    and `negativeBalance` is updated to this
+                                    value.
+
+
+                                    **Note:** Tentative balances are specific to
+                                    the current session and do not take into
+                                    account other open sessions for the given
+                                    customer.
+                                  example: 100
+                            - type: object
+                              properties:
+                                currentTier:
+                                  description: Tier for which the ledger is eligible.
+                                  example: bronze
+                                  type: object
+                                  required:
+                                    - id
+                                    - name
+                                  properties:
+                                    id:
+                                      type: integer
+                                      description: The internal ID of the tier.
+                                      example: 11
+                                    name:
+                                      type: string
+                                      description: The name of the tier.
+                                      example: bronze
+                                    startDate:
+                                      type: string
+                                      format: date-time
+                                      description: >-
+                                        Date and time when the customer moved to
+                                        this tier. This value uses the loyalty
+                                        program's time zone setting.
+                                      example: 2021-05-03T12:32:00Z07:00
+                                    expiryDate:
+                                      type: string
+                                      format: date-time
+                                      description: >-
+                                        Date when tier level expires in the
+                                        RFC3339 format (in the Loyalty Program's
+                                        timezone).
+                                      example: 2022-08-02T15:04:05Z07:00
+                                    downgradePolicy:
+                                      type: string
+                                      enum:
+                                        - one_down
+                                        - balance_based
+                                      description: >
+                                        The policy that defines how customer
+                                        tiers are downgraded in the loyalty
+                                        program after tier reevaluation.
+                                         - `one_down`: If the customer doesn't have enough points to stay in the current tier, they are downgraded by one tier.
+                                         - `balance_based`: The customer's tier is reevaluated based on the amount of active points they have at the moment.
+                                pointsToNextTier:
+                                  type: number
+                                  description: Points required to move up a tier.
+                                  example: 20
+                        subLedgers:
+                          type: object
+                          description: >-
+                            A map containing information about each loyalty
+                            subledger.
+                          additionalProperties:
+                            allOf:
+                              - type: object
+                                required:
+                                  - currentBalance
+                                  - pendingBalance
+                                  - expiredBalance
+                                  - spentBalance
+                                  - tentativeCurrentBalance
+                                description: >-
+                                  The balance in a Loyalty Program for some
+                                  Customer.
+                                properties:
+                                  currentBalance:
+                                    type: number
+                                    title: Current balance
+                                    description: Sum of currently active points.
+                                    example: 100
+                                  pendingBalance:
+                                    type: number
+                                    title: Pending balance
+                                    description: Sum of pending points.
+                                    example: 10
+                                  negativeBalance:
+                                    type: number
+                                    title: Negative balance
+                                    description: >-
+                                      Sum of negative points. This implies that
+                                      `currentBalance` is `0`.
+                                    example: 10
+                                  expiredBalance:
+                                    type: number
+                                    title: Expired balance
+                                    description: |
+                                      **DEPRECATED** Value is shown as 0.
+                                    example: 0
+                                  spentBalance:
+                                    type: number
+                                    title: Spent balance
+                                    description: |
+                                      **DEPRECATED** Value is shown as 0.
+                                    example: 0
+                                  tentativeCurrentBalance:
+                                    type: number
+                                    title: Tentative current balance
+                                    description: >
+                                      The tentative points balance, reflecting
+                                      the `currentBalance` and all point
+                                      additions and deductions within the
+                                      current open customer session. When the
+                                      session is closed, the effects are applied
+                                      and the `currentBalance` is updated to
+                                      this value.
+
+
+                                      **Note:** Tentative balances are specific
+                                      to the current session and do not take
+                                      into account other open sessions for the
+                                      given customer.
+                                    example: 100
+                                  tentativePendingBalance:
+                                    type: number
+                                    title: Tentative pending balance
+                                    description: >
+                                      The tentative points balance, reflecting
+                                      the `pendingBalance` and all point
+                                      additions with a future activation date
+                                      within the current open customer session.
+                                      When the session is closed, the effects
+                                      are applied and the `pendingBalance` is
+                                      updated to this value.
+
+
+                                      **Note:** Tentative balances are specific
+                                      to the current session and do not take
+                                      into account other open sessions for the
+                                      given customer.
+                                    example: 20
+                                  tentativeNegativeBalance:
+                                    type: number
+                                    title: Tentative negative balance
+                                    description: >
+                                      The tentative negative balance after all
+                                      additions and deductions from the current
+                                      customer session are applied to
+                                      `negativeBalance`. When the session is
+                                      closed, the tentative effects are applied
+                                      and `negativeBalance` is updated to this
+                                      value.
+
+
+                                      **Note:** Tentative balances are specific
+                                      to the current session and do not take
+                                      into account other open sessions for the
+                                      given customer.
+                                    example: 100
+                              - type: object
+                                properties:
+                                  currentTier:
+                                    description: Tier for which the ledger is eligible.
+                                    example: bronze
+                                    type: object
+                                    required:
+                                      - id
+                                      - name
+                                    properties:
+                                      id:
+                                        type: integer
+                                        description: The internal ID of the tier.
+                                        example: 11
+                                      name:
+                                        type: string
+                                        description: The name of the tier.
+                                        example: bronze
+                                      startDate:
+                                        type: string
+                                        format: date-time
+                                        description: >-
+                                          Date and time when the customer moved to
+                                          this tier. This value uses the loyalty
+                                          program's time zone setting.
+                                        example: 2021-05-03T12:32:00Z07:00
+                                      expiryDate:
+                                        type: string
+                                        format: date-time
+                                        description: >-
+                                          Date when tier level expires in the
+                                          RFC3339 format (in the Loyalty Program's
+                                          timezone).
+                                        example: 2022-08-02T15:04:05Z07:00
+                                      downgradePolicy:
+                                        type: string
+                                        enum:
+                                          - one_down
+                                          - balance_based
+                                        description: >
+                                          The policy that defines how customer
+                                          tiers are downgraded in the loyalty
+                                          program after tier reevaluation.
+                                           - `one_down`: If the customer doesn't have enough points to stay in the current tier, they are downgraded by one tier.
+                                           - `balance_based`: The customer's tier is reevaluated based on the amount of active points they have at the moment.
+                                  pointsToNextTier:
+                                    type: number
+                                    description: Points required to move up a tier.
+                                    example: 20
+              referrals:
+                type: array
+                items:
+                  allOf:
+                    - allOf:
+                        - type: object
+                          required:
+                            - id
+                            - created
+                          properties:
+                            id:
+                              type: integer
+                              description: The internal ID of this entity.
+                              example: 6
+                            created:
+                              type: string
+                              format: date-time
+                              description: The time this entity was created.
+                              example: '2020-06-10T09:05:27.993483Z'
+                        - allOf:
+                            - type: object
+                              properties:
+                                startDate:
+                                  type: string
+                                  format: date-time
+                                  title: Referral code valid from
+                                  description: >-
+                                    Timestamp at which point the referral code
+                                    becomes valid.
+                                  example: '2020-11-10T23:00:00Z'
+                                expiryDate:
+                                  type: string
+                                  format: date-time
+                                  title: Referral code valid until
+                                  description: >-
+                                    Expiration date of the referral code.
+                                    Referral never expires if this is omitted.
+                                  example: '2021-11-10T23:00:00Z'
+                                usageLimit:
+                                  type: integer
+                                  title: Referral code Usage Limit
+                                  description: >
+                                    The number of times a referral code can be
+                                    used. `0` means no limit but any campaign
+                                    usage limits will still apply.
+                                  minimum: 0
+                                  maximum: 999999
+                                  example: 1
+                            - type: object
+                              required:
+                                - campaignId
+                                - advocateProfileIntegrationId
+                              properties:
+                                campaignId:
+                                  type: integer
+                                  title: Referral's Campaign ID
+                                  description: >-
+                                    ID of the campaign from which the referral
+                                    received the referral code.
+                                  example: 78
+                                advocateProfileIntegrationId:
+                                  type: string
+                                  title: Advocate's Profile ID
+                                  description: >-
+                                    The Integration ID of the Advocate's
+                                    Profile.
+                                  maxLength: 1000
+                                  example: URNGV8294NV
+                                friendProfileIntegrationId:
+                                  type: string
+                                  title: Friend's Profile ID
+                                  description: >-
+                                    An optional Integration ID of the Friend's
+                                    Profile.
+                                  example: BZGGC2454PA
+                                attributes:
+                                  type: object
+                                  description: >-
+                                    Arbitrary properties associated with this
+                                    item.
+                                  example:
+                                    channel: web
+                        - type: object
+                          properties:
+                            importId:
+                              type: integer
+                              description: >-
+                                The ID of the Import which created this
+                                referral.
+                              example: 4
+                        - type: object
+                          required:
+                            - code
+                            - usageCounter
+                            - usageLimit
+                          properties:
+                            code:
+                              type: string
+                              title: Referral code
+                              description: The referral code.
+                              minLength: 4
+                              example: 27G47Y54VH9L
+                            usageCounter:
+                              type: integer
+                              title: Referral code Usages
+                              description: >-
+                                The number of times this referral code has been
+                                successfully used.
+                              example: 1
+                            batchId:
+                              type: string
+                              title: Batch ID
+                              description: The ID of the batch the referrals belong to.
+                              example: tqyrgahe
+                    - type: object
+                      required:
+                        - referredCustomers
+                      properties:
+                        referredCustomers:
+                          type: array
+                          description: An array of referred customers.
+                          items:
+                            type: string
+              coupons:
+                type: array
+                description: >
+                  The coupons reserved by this profile. This array includes hard
+                  and soft reservations.
+                items:
+                  allOf:
+                    - allOf:
+                        - type: object
+                          required:
+                            - id
+                            - created
+                          properties:
+                            id:
+                              type: integer
+                              description: The internal ID of the coupon.
+                              example: 6
+                            created:
+                              type: string
+                              format: date-time
+                              description: The time the coupon was created.
+                              example: '2020-06-10T09:05:27.993483Z'
+                        - type: object
+                          required:
+                            - campaignId
+                          properties:
+                            campaignId:
+                              type: integer
+                              title: Campaign ID
+                              description: The ID of the campaign that owns this entity.
+                              example: 211
+                        - type: object
+                          properties:
+                            value:
+                              type: string
+                              title: Coupon Code
+                              description: The coupon code.
+                              minLength: 4
+                              example: XMAS-20-2021
+                        - type: object
+                          properties:
+                            usageLimit:
+                              type: integer
+                              minimum: 0
+                              maximum: 999999
+                              example: 100
+                              description: >
+                                The number of times the coupon code can be
+                                redeemed. `0` means unlimited redemptions but
+                                any campaign usage limits will still apply.
+                            discountLimit:
+                              type: number
+                              minimum: 0
+                              maximum: 1000000000000000
+                              example: 30
+                              description: >
+                                The total discount value that the code can give.
+                                Typically used to represent a gift card value.
+                            reservationLimit:
+                              type: integer
+                              minimum: 0
+                              maximum: 999999
+                              example: 45
+                              description: >
+                                The number of reservations that can be made with
+                                this coupon code.
+                            startDate:
+                              type: string
+                              format: date-time
+                              example: '2020-01-24T14:15:22Z'
+                              description: >-
+                                Timestamp at which point the coupon becomes
+                                valid.
+                            expiryDate:
+                              type: string
+                              format: date-time
+                              example: '2023-08-24T14:15:22Z'
+                              description: >-
+                                Expiration date of the coupon. Coupon never
+                                expires if this is omitted.
+                        - type: object
+                          properties:
+                            limits:
+                              type: array
+                              description: >
+                                Limits configuration for a coupon. These limits
+                                will override the limits
+
+                                set from the campaign.
+
+
+                                **Note:** Only usable when creating a single
+                                coupon which is not tied to a specific
+                                recipient.
+
+                                Only per-profile limits are allowed to be
+                                configured.
+                              items:
+                                type: object
+                                required:
+                                  - action
+                                  - limit
+                                  - entities
+                                properties:
+                                  action:
+                                    type: string
+                                    description: >
+                                      The limitable action to which this limit
+                                      applies. For example:
+
+                                      - `setDiscount`
+
+                                      - `setDiscountEffect`
+
+                                      - `redeemCoupon`
+
+                                      - `createCoupon`
+                                    example: createCoupon
+                                  limit:
+                                    type: number
+                                    minimum: 0
+                                    example: 1000
+                                    description: The value to set for the limit.
+                                  period:
+                                    description: >-
+                                      The period on which the budget limit
+                                      recurs.
+                                    type: string
+                                    enum:
+                                      - daily
+                                      - weekly
+                                      - monthly
+                                      - yearly
+                                    example: yearly
+                                  entities:
+                                    type: array
+                                    description: The entity that this limit applies to.
+                                    example:
+                                      - Coupon
+                                    items:
+                                      type: string
+                                      enum:
+                                        - Coupon
+                                        - Referral
+                                        - Profile
+                                        - Identifier
+                                        - Store
+                                        - Session
+                        - type: object
+                          required:
+                            - value
+                            - usageCounter
+                            - usageLimit
+                          properties:
+                            usageCounter:
+                              type: integer
+                              title: Total coupon redemptions
+                              example: 10
+                              description: >-
+                                The number of times the coupon has been
+                                successfully redeemed.
+                            discountCounter:
+                              type: number
+                              title: Discounts Given
+                              description: >-
+                                The amount of discounts given on rules redeeming
+                                this coupon. Only usable if a coupon discount
+                                budget was set for this coupon.
+                              example: 10
+                            discountRemainder:
+                              type: number
+                              title: Coupon Discount Remainder
+                              description: The remaining discount this coupon can give.
+                              example: 5
+                            reservationCounter:
+                              type: number
+                              title: Number of reservations
+                              description: >-
+                                The number of times this coupon has been
+                                reserved.
+                              example: 1
+                            attributes:
+                              type: object
+                              title: Attributes of coupon
+                              description: Custom attributes associated with this coupon.
+                            referralId:
+                              type: integer
+                              title: Advocate ID
+                              description: >-
+                                The integration ID of the referring customer (if
+                                any) for whom this coupon was created as an
+                                effect.
+                              example: 326632952
+                            recipientIntegrationId:
+                              title: Recipient ID
+                              example: URNGV8294NV
+                              type: string
+                              maxLength: 1000
+                              description: >-
+                                The Integration ID of the customer that is
+                                allowed to redeem this coupon.
+                            importId:
+                              title: Import ID
+                              type: integer
+                              description: The ID of the Import which created this coupon.
+                              example: 4
+                            reservation:
+                              title: Reservation Type
+                              type: boolean
+                              example: false
+                              description: >
+                                Defines the reservation type:
+
+                                - `true`: The coupon can be reserved for
+                                multiple customers.
+
+                                - `false`: The coupon can be reserved only for
+                                one customer. It is a personal code.
+                              default: true
+                            batchId:
+                              title: Batch ID
+                              type: string
+                              description: The id of the batch the coupon belongs to.
+                              example: 32535-43255
+                            isReservationMandatory:
+                              title: Is reservation mandatory
+                              type: boolean
+                              example: false
+                              description: >-
+                                An indication of whether the code can be
+                                redeemed only if it has been reserved first.
+                              default: false
+                            implicitlyReserved:
+                              title: Is coupon implicitly reserved for all customers
+                              description: >-
+                                An indication of whether the coupon is
+                                implicitly reserved for all customers.
+                              type: boolean
+                              example: false
+                    - type: object
+                      required:
+                        - state
+                        - profileRedemptionCount
+                      properties:
+                        profileRedemptionCount:
+                          type: integer
+                          title: Number of coupon usages per profile
+                          description: >-
+                            The number of times the coupon was redeemed by the
+                            profile.
+                          example: 5
+                        state:
+                          type: string
+                          example: active
+                          description: >
+                            Can be:
+
+
+                            - `active`: The coupon can be used. It is a reserved
+                            coupon that is not pending, used, or expired, and it
+                            has a non-exhausted limit counter.
+
+                              **Note:** This coupon state is returned for [scheduled campaigns](https://docs.talon.one/docs/product/campaigns/settings/managing-campaign-schedule), but the coupon cannot be used until the campaign is **running**.
+                            - `used`: The coupon has been redeemed and cannot be
+                            used again. It is not pending and has reached its
+                            redemption limit or was redeemed by the profile
+                            before expiration.
+
+                            - `expired`: The coupon was never redeemed, and it
+                            is now expired. It is non-pending, non-active, and
+                            non-used by the profile.
+
+                            - `pending`: The coupon will be usable in the
+                            future.
+
+                            - `disabled`: The coupon is part of a non-active
+                            campaign.
+              giveaways:
+                type: array
+                items:
+                  allOf:
+                    - type: object
+                      required:
+                        - id
+                        - created
+                      properties:
+                        id:
+                          type: integer
+                          description: The internal ID of this entity.
+                          example: 6
+                        created:
+                          type: string
+                          format: date-time
+                          description: The time this entity was created.
+                          example: '2020-06-10T09:05:27.993483Z'
+                    - type: object
+                      required:
+                        - id
+                        - created
+                        - code
+                        - poolId
+                      properties:
+                        code:
+                          type: string
+                          description: The code value of this giveaway.
+                          example: GIVEAWAY1
+                        poolId:
+                          type: integer
+                          description: The ID of the pool to return giveaway codes from.
+                          example: 1
+                        startDate:
+                          format: date-time
+                          description: Timestamp at which point the giveaway becomes valid.
+                          type: string
+                          example: 2022-01-02T15:04:05Z07:00
+                        endDate:
+                          format: date-time
+                          description: >-
+                            Timestamp at which point the giveaway becomes
+                            invalid.
+                          type: string
+                          example: 2023-01-02T15:04:05Z07:00
+                        attributes:
+                          type: object
+                          description: Arbitrary properties associated with this giveaway.
+                        used:
+                          type: boolean
+                          description: >-
+                            Indicates whether this giveaway code was given
+                            before.
+                          example: true
+                        importId:
+                          type: integer
+                          description: The ID of the Import which created this giveaway.
+                          example: 4
+                        profileIntegrationId:
+                          type: string
+                          description: >-
+                            The third-party integration ID of the customer
+                            profile that was awarded the giveaway, if the
+                            giveaway was awarded.
+                          example: R195412
+                        profileId:
+                          type: integer
+                          description: >-
+                            The internal ID of the customer profile that was
+                            awarded the giveaway, if the giveaway was awarded
+                            and an internal ID exists.
+                          example: 1
+              achievements:
+                type: array
+                items:
+                  allOf:
+                    - type: object
+                      description: The current progress of the customer in the achievement.
+                      required:
+                        - status
+                        - progress
+                      properties:
+                        status:
+                          type: string
+                          enum:
+                            - inprogress
+                            - completed
+                            - expired
+                            - not_started
+                          example: completed
+                          description: The status of the achievement.
+                        progress:
+                          type: number
+                          example: 10
+                          description: >-
+                            The current progress of the customer in the
+                            achievement.
+                        startDate:
+                          format: date-time
+                          description: >-
+                            Timestamp at which the customer started the
+                            achievement.
+                          type: string
+                          example: 2024-01-01T15:04:05Z07:00
+                        completionDate:
+                          format: date-time
+                          description: >-
+                            Timestamp at which point the customer completed the
+                            achievement.
+                          type: string
+                          example: 2024-01-15T15:04:05Z07:00
+                        endDate:
+                          format: date-time
+                          description: >-
+                            Timestamp at which point the achievement ends and
+                            resets for the customer.
+                          type: string
+                          example: 2024-02-01T15:04:05Z07:00
+                    - type: object
+                      required:
+                        - achievementId
+                        - name
+                        - title
+                        - description
+                        - achievementRecurrencePolicy
+                        - achievementActivationPolicy
+                        - campaignId
+                      properties:
+                        achievementId:
+                          type: integer
+                          example: 3
+                          description: The internal ID of the achievement.
+                        name:
+                          type: string
+                          pattern: ^[a-zA-Z]\w+$
+                          example: FreeCoffee10Orders
+                          maxLength: 1000
+                          minLength: 1
+                          description: >
+                            The internal name of the achievement used in API
+                            requests.
+                        title:
+                          type: string
+                          description: >-
+                            The display name of the achievement in the Campaign
+                            Manager.
+                          example: 50% off on 50th purchase.
+                        description:
+                          type: string
+                          format: string
+                          description: >-
+                            The description of the achievement in the Campaign
+                            Manager.
+                          example: 50% off for every 50th purchase in a year.
+                        campaignId:
+                          type: integer
+                          description: The ID of the campaign the achievement belongs to.
+                          example: 3
+                        target:
+                          type: number
+                          example: 10
+                          description: >-
+                            The required number of actions or the transactional
+                            milestone to complete the achievement.
+                        achievementRecurrencePolicy:
+                          type: string
+                          enum:
+                            - no_recurrence
+                            - on_expiration
+                            - on_completion
+                          example: no_recurrence
+                          description: >
+                            The policy that determines if and how the
+                            achievement recurs.
+
+                            - `no_recurrence`: The achievement can be completed
+                            only once.
+
+                            - `on_expiration`: The achievement resets after it
+                            expires and becomes available again.
+
+                            - `on_completion`: When the customer progress status
+                            reaches `completed`, the achievement resets and
+                            becomes available again.
+                        achievementActivationPolicy:
+                          type: string
+                          enum:
+                            - user_action
+                            - fixed_schedule
+                          example: fixed_schedule
+                          description: >
+                            The policy that determines how the achievement
+                            starts, ends, or resets.
+
+                            - `user_action`: The achievement ends or resets
+                            relative to when the customer started the
+                            achievement.
+
+                            - `fixed_schedule`: The achievement starts, ends, or
+                            resets for all customers following a fixed schedule.
+                        achievementFixedStartDate:
+                          type: string
+                          format: date-time
+                          example: 2024-01-15T15:04:05Z07:00
+                          description: >
+                            The achievement's start date when
+                            `achievementActivationPolicy` is equal to
+                            `fixed_schedule`.
+
+
+                            **Note:** It is an RFC3339 timestamp string.
+                        achievementEndDate:
+                          type: string
+                          format: date-time
+                          example: 2024-02-15T15:04:05Z07:00
+                          description: >
+                            The achievement's end date. If defined, customers
+                            cannot participate in the achievement after this
+                            date.
+
+
+                            **Note:** It is an RFC3339 timestamp string.
+    '401':
+      description: Unauthorized - Invalid API key
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code

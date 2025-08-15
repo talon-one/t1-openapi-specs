@@ -1,0 +1,77 @@
+# path: /v1/applications/{applicationId}/event_types
+get:
+  operationId: getApplicationEventTypes
+  summary: List Applications event types
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Get all of the distinct values of the Event `type` property for events
+    recorded in the application.
+
+
+    See also: [Track an
+    event](https://docs.talon.one/integration-api#tag/Events/operation/trackEventV2)
+  tags:
+    - Customer data
+  parameters:
+    - name: pageSize
+      in: query
+      required: false
+      description: The number of items in the response.
+      example: 1000
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 1000
+    - name: skip
+      in: query
+      required: false
+      description: The number of items to skip when paging through large result sets.
+      example: 100
+      schema:
+        type: integer
+    - name: sort
+      in: query
+      required: false
+      description: >
+        The field by which results should be sorted. By default, results are
+        sorted in ascending order. To sort them in descending order, prefix the
+        field name with `-`.
+
+
+        **Note:** You may not be able to use all fields for sorting. This is due
+        to performance limitations.
+      example: name
+      schema:
+        type: string
+    - name: applicationId
+      in: path
+      required: true
+      description: >-
+        The ID of the Application. It is displayed in your Talon.One deployment
+        URL.
+      example: 42
+      schema:
+        type: integer
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - totalResultSize
+              - data
+            properties:
+              totalResultSize:
+                type: integer
+                example: 1
+              data:
+                type: array
+                items:
+                  type: string

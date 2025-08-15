@@ -1,0 +1,309 @@
+# path: /v1/loyalty_programs/{loyaltyProgramId}/import_customers_tiers
+post:
+  operationId: importLoyaltyCustomersTiers
+  summary: Import customers into loyalty tiers
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Upload a CSV file containing existing customers to be assigned to existing
+    tiers.
+
+    Send the file as multipart data.
+
+
+    **Important:** This endpoint only works with loyalty programs with advanced
+    tiers (with expiration and downgrade policy) feature enabled.
+
+
+    The CSV file should contain the following columns:
+
+    - `subledgerid` (optional): The ID of the subledger. If this field is empty,
+    the main ledger will be used.
+
+    - `customerprofileid`: The integration ID of the customer profile to whom
+    the tier should be assigned.
+
+    - `tiername`: The name of an existing tier to assign to the customer.
+
+    - `expirydate`: The expiration date of the tier when the tier is
+    reevaluated. It should be a future date.
+
+
+    About customer assignment to a tier:
+
+    - If the customer isn't already in a tier, the customer is assigned to the
+    specified tier during the tier import.
+
+    - If the customer is already in the tier that's specified in the CSV file,
+    only the expiration date is updated.
+
+
+    **Note:** We recommend not using this endpoint to update the tier of a
+    customer.
+
+    To update a customer's tier, you can
+    [add](/management-api#tag/Loyalty/operation/addLoyaltyPoints) or
+    [deduct](/management-api#tag/Loyalty/operation/removeLoyaltyPoints) their
+    loyalty points.
+
+
+    You can use the time zone of your choice. It is converted to UTC internally
+    by Talon.One.
+
+
+    **Note:** We recommend limiting your file size to 500MB.
+
+
+    **Example:**
+
+    ```csv
+
+    subledgerid,customerprofileid,tiername,expirydate
+
+    SUB1,alexa,Gold,2024-03-21T07:32:14Z
+
+    ,george,Silver,2025-04-16T21:12:37Z
+
+    SUB2,avocado,Bronze,2026-05-03T11:47:01Z
+
+    ```
+  tags:
+    - Loyalty
+  parameters:
+    - name: loyaltyProgramId
+      in: path
+      required: true
+      description: >
+        Identifier of the loyalty program. You can get the ID with
+
+        the [List loyalty
+        programs](https://docs.talon.one/management-api#tag/Loyalty/operation/getLoyaltyPrograms)
+        endpoint.
+      example: 8
+      schema:
+        type: integer
+  requestBody:
+    required: true
+    content:
+      multipart/form-data:
+        schema:
+          type: object
+          properties:
+            upFile:
+              description: The file containing the data that is being imported.
+              type: string
+              format: csv
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            allOf:
+              - type: object
+                required:
+                  - id
+                  - created
+                properties:
+                  id:
+                    type: integer
+                    description: The internal ID of this entity.
+                    example: 6
+                  created:
+                    type: string
+                    format: date-time
+                    description: The time this entity was created.
+                    example: '2020-06-10T09:05:27.993483Z'
+              - type: object
+                required:
+                  - accountId
+                properties:
+                  accountId:
+                    type: integer
+                    description: The ID of the account that owns this entity.
+                    example: 3886
+              - type: object
+                required:
+                  - userId
+                properties:
+                  userId:
+                    type: integer
+                    description: The ID of the user associated with this entity.
+                    example: 388
+              - type: object
+                required:
+                  - amount
+                  - entity
+                properties:
+                  entity:
+                    type: string
+                    example: AttributeAllowedList
+                    description: |
+                      The name of the entity that was imported.
+                  amount:
+                    type: integer
+                    minimum: 0
+                    example: 10
+                    description: The number of values that were imported.
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code

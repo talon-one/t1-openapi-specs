@@ -1,0 +1,194 @@
+# path: /v1/loyalty_programs/{loyaltyProgramId}/export_card_balances
+get:
+  operationId: exportLoyaltyCardBalances
+  summary: Export all card transaction logs
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Download a CSV file containing the balances of all cards in the loyalty
+    program.
+
+
+    **Tip:** If the exported CSV file is too large to view, you can [split it
+    into multiple
+    files](https://www.makeuseof.com/tag/how-to-split-a-huge-csv-excel-workbook-into-seperate-files/).
+
+
+    The CSV file contains the following columns:
+
+    - `loyaltyProgramID`: The ID of the loyalty program.
+
+    - `loyaltySubledger`: The name of the subdleger, when applicatble.
+
+    - `cardIdentifier`: The alphanumeric identifier of the loyalty card.
+
+    - `cardState`:The state of the loyalty card. It can be `active` or
+    `inactive`.
+
+    - `currentBalance`: The current point balance.
+
+    - `pendingBalance`: The number of pending points.
+
+    - `expiredBalance`: The number of expired points.
+
+    - `spentBalance`: The number of spent points.
+  tags:
+    - Loyalty cards
+  parameters:
+    - name: loyaltyProgramId
+      in: path
+      description: >
+        Identifier of the card-based loyalty program containing the loyalty
+        card. You can get the ID with
+
+        the [List loyalty
+        programs](https://docs.talon.one/management-api#tag/Loyalty/operation/getLoyaltyPrograms)
+        endpoint.
+      example: 33
+      required: true
+      schema:
+        type: integer
+    - name: endDate
+      in: query
+      required: false
+      description: >
+        Used to return expired, active, and pending loyalty balances before this
+        timestamp. You can enter any past, present, or future timestamp value.
+
+
+        **Note:**
+
+
+        - It must be an RFC3339 timestamp string.
+
+        - You can include a time component in your string, for example,
+        `T23:59:59` to specify the end of the day. The time zone setting
+        considered is `UTC`. If you do not include a time component, a default
+        time value of `T00:00:00` (midnight) in `UTC` is considered.
+      example: '2024-05-29T15:04:05+07:00'
+      schema:
+        type: string
+        format: date-time
+  responses:
+    '200':
+      description: OK
+      content:
+        application/csv:
+          schema:
+            type: string
+            format: csv
+          examples:
+            response:
+              value: >
+                loyaltyProgramID,loyaltySubledger,cardIdentifier,cardState,currentBalance,pendingBalance,expiredBalance,spentBalance
+
+                40,,111,active,10,0,0,0,5
+    '400':
+      description: Bad request
+      content:
+        application/csv:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
+    '401':
+      description: Unauthorized
+      content:
+        application/csv:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code

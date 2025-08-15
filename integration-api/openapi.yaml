@@ -161,69 +161,69 @@ tags:
       [docs](https://docs.talon.one/docs/product/campaigns/referrals/referral-overview).
 paths:
   /v2/customer_sessions/{customerSessionId}:
-    $ref: paths/v2_customer_sessions_{customerSessionId}.yaml
+    $ref: paths/v2/customer_sessions/{customerSessionId}.yaml
   /v2/customer_sessions/{customerSessionId}/returns:
-    $ref: paths/v2_customer_sessions_{customerSessionId}_returns.yaml
+    $ref: paths/v2/customer_sessions/{customerSessionId}/returns.yaml
   /v2/customer_sessions/{customerSessionId}/reopen:
-    $ref: paths/v2_customer_sessions_{customerSessionId}_reopen.yaml
+    $ref: paths/v2/customer_sessions/{customerSessionId}/reopen.yaml
   /v2/customer_profiles/{integrationId}:
-    $ref: paths/v2_customer_profiles_{integrationId}.yaml
+    $ref: paths/v2/customer_profiles/{integrationId}.yaml
   /v2/customer_profiles:
-    $ref: paths/v2_customer_profiles.yaml
+    $ref: paths/v2/customer_profiles.yaml
   /v2/audiences:
-    $ref: paths/v2_audiences.yaml
+    $ref: paths/v2/audiences.yaml
   /v2/audiences/{audienceId}:
-    $ref: paths/v2_audiences_{audienceId}.yaml
+    $ref: paths/v2/audiences/{audienceId}.yaml
   /v2/audiences/{audienceId}/memberships:
-    $ref: paths/v2_audiences_{audienceId}_memberships.yaml
+    $ref: paths/v2/audiences/{audienceId}/memberships.yaml
   /v2/customer_audiences:
-    $ref: paths/v2_customer_audiences.yaml
+    $ref: paths/v2/customer_audiences.yaml
   /v2/audience_customers/{audienceId}/attributes:
-    $ref: paths/v2_audience_customers_{audienceId}_attributes.yaml
+    $ref: paths/v2/audience_customers/{audienceId}/attributes.yaml
   /v2/loyalty_programs/{loyaltyProgramId}/cards/{loyaltyCardId}/link_profile:
     $ref: >-
-      paths/v2_loyalty_programs_{loyaltyProgramId}_cards_{loyaltyCardId}_link_profile.yaml
+      paths/v2/loyalty_programs/{loyaltyProgramId}/cards/{loyaltyCardId}/link_profile.yaml
   /v2/events:
-    $ref: paths/v2_events.yaml
+    $ref: paths/v2/events.yaml
   /v1/referrals:
-    $ref: paths/v1_referrals.yaml
+    $ref: paths/v1/referrals.yaml
   /v1/referrals_for_multiple_advocates:
-    $ref: paths/v1_referrals_for_multiple_advocates.yaml
+    $ref: paths/v1/referrals_for_multiple_advocates.yaml
   /v1/customer_data/{integrationId}:
-    $ref: paths/v1_customer_data_{integrationId}.yaml
+    $ref: paths/v1/customer_data/{integrationId}.yaml
   /v1/coupon_reservations/{couponValue}:
-    $ref: paths/v1_coupon_reservations_{couponValue}.yaml
+    $ref: paths/v1/coupon_reservations/{couponValue}.yaml
   /v1/coupon_reservations/customerprofiles/{couponValue}:
-    $ref: paths/v1_coupon_reservations_customerprofiles_{couponValue}.yaml
+    $ref: paths/v1/coupon_reservations/customerprofiles/{couponValue}.yaml
   /v1/customer_profiles/{integrationId}/inventory:
-    $ref: paths/v1_customer_profiles_{integrationId}_inventory.yaml
+    $ref: paths/v1/customer_profiles/{integrationId}/inventory.yaml
   /v1/customer_profiles/{integrationId}/achievements:
-    $ref: paths/v1_customer_profiles_{integrationId}_achievements.yaml
+    $ref: paths/v1/customer_profiles/{integrationId}/achievements.yaml
   /v1/customer_profiles/{integrationId}/achievements/{achievementId}:
     $ref: >-
-      paths/v1_customer_profiles_{integrationId}_achievements_{achievementId}.yaml
+      paths/v1/customer_profiles/{integrationId}/achievements/{achievementId}.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/cards/{loyaltyCardId}/balances:
     $ref: >-
-      paths/v1_loyalty_programs_{loyaltyProgramId}_cards_{loyaltyCardId}_balances.yaml
+      paths/v1/loyalty_programs/{loyaltyProgramId}/cards/{loyaltyCardId}/balances.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/profile/{integrationId}/balances:
     $ref: >-
-      paths/v1_loyalty_programs_{loyaltyProgramId}_profile_{integrationId}_balances.yaml
+      paths/v1/loyalty_programs/{loyaltyProgramId}/profile/{integrationId}/balances.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/cards/{loyaltyCardId}/transactions:
     $ref: >-
-      paths/v1_loyalty_programs_{loyaltyProgramId}_cards_{loyaltyCardId}_transactions.yaml
+      paths/v1/loyalty_programs/{loyaltyProgramId}/cards/{loyaltyCardId}/transactions.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/profile/{integrationId}/transactions:
     $ref: >-
-      paths/v1_loyalty_programs_{loyaltyProgramId}_profile_{integrationId}_transactions.yaml
+      paths/v1/loyalty_programs/{loyaltyProgramId}/profile/{integrationId}/transactions.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/cards/{loyaltyCardId}/points:
     $ref: >-
-      paths/v1_loyalty_programs_{loyaltyProgramId}_cards_{loyaltyCardId}_points.yaml
+      paths/v1/loyalty_programs/{loyaltyProgramId}/cards/{loyaltyCardId}/points.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/profile/{integrationId}/points:
     $ref: >-
-      paths/v1_loyalty_programs_{loyaltyProgramId}_profile_{integrationId}_points.yaml
+      paths/v1/loyalty_programs/{loyaltyProgramId}/profile/{integrationId}/points.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/cards:
-    $ref: paths/v1_loyalty_programs_{loyaltyProgramId}_cards.yaml
+    $ref: paths/v1/loyalty_programs/{loyaltyProgramId}/cards.yaml
   /v1/catalogs/{catalogId}/sync:
-    $ref: paths/v1_catalogs_{catalogId}_sync.yaml
+    $ref: paths/v1/catalogs/{catalogId}/sync.yaml
 components:
   securitySchemes:
     api_key_v1:

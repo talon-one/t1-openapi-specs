@@ -1,0 +1,301 @@
+# path: /v1/applications/{applicationId}/customer_search
+post:
+  operationId: getApplicationCustomersByAttributes
+  summary: List application customers matching the given attributes
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Get a list of the application customers matching the provided criteria.
+
+
+    The match is successful if all the attributes of the request are found in a
+    profile, even if the profile has more attributes that are not present on the
+    request.
+  tags:
+    - Customer data
+  parameters:
+    - name: applicationId
+      in: path
+      required: true
+      description: >-
+        The ID of the Application. It is displayed in your Talon.One deployment
+        URL.
+      example: 42
+      schema:
+        type: integer
+    - name: pageSize
+      in: query
+      required: false
+      description: The number of items in the response.
+      example: 1000
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 1000
+    - name: skip
+      in: query
+      required: false
+      description: The number of items to skip when paging through large result sets.
+      example: 100
+      schema:
+        type: integer
+    - name: withTotalResultSize
+      in: query
+      description: >
+        When this flag is set, the result includes the total size of the result,
+        across all pages. This might decrease performance on large data sets.
+
+
+        - When `true`: `hasMore` is true when there is a next page.
+        `totalResultSize` is always zero.
+
+        - When `false`: `hasMore` is always false. `totalResultSize` contains
+        the total number of results for this query.
+      example: false
+      schema:
+        type: boolean
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            attributes:
+              type: object
+              description: >-
+                Properties to match against a customer profile. All provided
+                attributes will be exactly matched against profile attributes.
+            integrationIDs:
+              type: array
+              items:
+                type: string
+            profileIDs:
+              type: array
+              items:
+                type: integer
+    description: body
+    required: true
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              hasMore:
+                type: boolean
+              totalResultSize:
+                type: integer
+              data:
+                type: array
+                items:
+                  allOf:
+                    - type: object
+                      required:
+                        - id
+                        - created
+                      properties:
+                        id:
+                          type: integer
+                          description: The internal ID of this entity.
+                          example: 6
+                        created:
+                          type: string
+                          format: date-time
+                          description: The time this entity was created.
+                          example: '2020-06-10T09:05:27.993483Z'
+                    - type: object
+                      required:
+                        - integrationId
+                        - created
+                      properties:
+                        integrationId:
+                          type: string
+                          format: string
+                          example: URNGV8294NV
+                          maxLength: 1000
+                          description: The integration ID set by your integration layer.
+                        created:
+                          type: string
+                          format: date-time
+                          description: The time this entity was created.
+                          example: '2020-02-07T08:15:22Z'
+                    - allOf:
+                        - type: object
+                          required:
+                            - id
+                            - created
+                          properties:
+                            id:
+                              type: integer
+                              description: The internal ID of the customer profile.
+                              example: 6
+                            created:
+                              type: string
+                              format: date-time
+                              description: The time the customer profile was created.
+                              example: '2020-06-10T09:05:27.993483Z'
+                        - type: object
+                          required:
+                            - integrationId
+                            - created
+                          properties:
+                            integrationId:
+                              type: string
+                              format: string
+                              example: URNGV8294NV
+                              maxLength: 1000
+                              description: >-
+                                The integration ID set by your integration
+                                layer.
+                            created:
+                              type: string
+                              format: date-time
+                              description: The time this entity was created.
+                              example: '2020-02-07T08:15:22Z'
+                        - type: object
+                          properties:
+                            attributes:
+                              type: object
+                              description: Arbitrary properties associated with this item.
+                              example:
+                                Language: english
+                                ShippingCountry: DE
+                        - type: object
+                          properties:
+                            accountId:
+                              type: integer
+                              title: Profile belongs to Account
+                              description: >-
+                                The ID of the Talon.One account that owns this
+                                profile.
+                              example: 31
+                            closedSessions:
+                              type: integer
+                              title: Closed sessions
+                              description: >-
+                                The total number of closed sessions. Does not
+                                include closed sessions that have been cancelled
+                                or reopened. See the
+                                [docs](https://docs.talon.one/docs/dev/concepts/entities/customer-sessions#customer-session-states).
+                              example: 3
+                            totalSales:
+                              type: number
+                              description: >
+                                The total amount of money spent by the customer
+                                **before** discounts are applied.
+
+
+                                The total sales amount excludes the following:
+
+                                - Cancelled or reopened sessions.
+
+                                - Returned items.
+                              example: 299.99
+                              title: Total Sales
+                            loyaltyMemberships:
+                              type: array
+                              description: >
+                                **DEPRECATED** A list of loyalty programs joined
+                                by the customer.
+                              items:
+                                type: object
+                                required:
+                                  - loyaltyProgramId
+                                properties:
+                                  joined:
+                                    type: string
+                                    format: date-time
+                                    title: Loyalty program joined at
+                                    description: >-
+                                      The moment in which the loyalty program
+                                      was joined.
+                                    example: '2012-03-20T14:15:22Z'
+                                  loyaltyProgramId:
+                                    type: integer
+                                    title: Loyalty program ID
+                                    description: >-
+                                      The ID of the loyalty program belonging to
+                                      this entity.
+                                    example: 323414846
+                              title: Loyalty programed joined
+                            audienceMemberships:
+                              type: array
+                              description: The audiences the customer belongs to.
+                              items:
+                                type: object
+                                required:
+                                  - id
+                                  - name
+                                properties:
+                                  id:
+                                    type: integer
+                                    title: Audience ID
+                                    description: >-
+                                      The ID of the audience belonging to this
+                                      entity.
+                                    example: 2
+                                  name:
+                                    type: string
+                                    title: Audience Name
+                                    description: >-
+                                      The Name of the audience belonging to this
+                                      entity.
+                                    example: Travel audience
+                              title: Audience memberships
+                            lastActivity:
+                              type: string
+                              format: date-time
+                              title: Last activity
+                              description: >
+                                Timestamp of the most recent event received from
+                                this customer.
+
+                                This field is updated on calls that trigger the
+                                Rule Engine and that are
+
+                                not [dry
+                                requests](https://docs.talon.one/docs/dev/integration-api/dry-requests/#overlay).
+
+
+                                For example, [reserving a
+                                coupon](https://docs.talon.one/integration-api#operation/createCouponReservation)
+
+                                for a customer doesn't impact this field.
+                              example: '2020-02-08T14:15:20Z'
+                            sandbox:
+                              type: boolean
+                              description: >
+                                An indicator of whether the customer is part of
+                                a sandbox or live Application. See the
+                                [docs](https://docs.talon.one/docs/product/applications/overview#application-environments).
+                              title: Sandbox
+                              example: false
+                          required:
+                            - accountId
+                            - closedSessions
+                            - totalSales
+                            - lastActivity
+                            - attributes
+                    - type: object
+                      required:
+                        - accountId
+                      properties:
+                        accountId:
+                          type: integer
+                          description: >-
+                            The ID of the Talon.One account that owns this
+                            profile.
+                        advocateIntegrationId:
+                          type: string
+                          maxLength: 1000
+                          description: >-
+                            The Integration ID of the Customer Profile that
+                            referred this Customer in the Application.

@@ -258,313 +258,313 @@ tags:
       See the [docs](https://docs.talon.one/docs/dev/getting-started/webhooks).
 paths:
   /v1/applications:
-    $ref: paths/v1_applications.yaml
+    $ref: paths/v1/applications.yaml
   /v1/applications/{applicationId}:
-    $ref: paths/v1_applications_{applicationId}.yaml
+    $ref: paths/v1/applications/{applicationId}.yaml
   /v1/applications/{applicationId}/campaigns:
-    $ref: paths/v1_applications_{applicationId}_campaigns.yaml
+    $ref: paths/v1/applications/{applicationId}/campaigns.yaml
   /v1/applications/{applicationId}/campaigns/{campaignId}:
-    $ref: paths/v1_applications_{applicationId}_campaigns_{campaignId}.yaml
+    $ref: paths/v1/applications/{applicationId}/campaigns/{campaignId}.yaml
   /v1/applications/{applicationId}/campaigns/{campaignId}/copy:
-    $ref: paths/v1_applications_{applicationId}_campaigns_{campaignId}_copy.yaml
+    $ref: paths/v1/applications/{applicationId}/campaigns/{campaignId}/copy.yaml
   /v1/applications/{applicationId}/campaigns_search:
-    $ref: paths/v1_applications_{applicationId}_campaigns_search.yaml
+    $ref: paths/v1/applications/{applicationId}/campaigns_search.yaml
   /v1/applications/{applicationId}/campaigns/{campaignId}/rulesets:
-    $ref: paths/v1_applications_{applicationId}_campaigns_{campaignId}_rulesets.yaml
+    $ref: paths/v1/applications/{applicationId}/campaigns/{campaignId}/rulesets.yaml
   /v1/applications/{applicationId}/campaigns/{campaignId}/rulesets/{rulesetId}:
     $ref: >-
-      paths/v1_applications_{applicationId}_campaigns_{campaignId}_rulesets_{rulesetId}.yaml
+      paths/v1/applications/{applicationId}/campaigns/{campaignId}/rulesets/{rulesetId}.yaml
   /v1/applications/{applicationId}/campaigns/{campaignId}/coupons:
-    $ref: paths/v1_applications_{applicationId}_campaigns_{campaignId}_coupons.yaml
+    $ref: paths/v1/applications/{applicationId}/campaigns/{campaignId}/coupons.yaml
   /v1/applications/{applicationId}/campaigns/{campaignId}/coupons_with_recipients:
     $ref: >-
-      paths/v1_applications_{applicationId}_campaigns_{campaignId}_coupons_with_recipients.yaml
+      paths/v1/applications/{applicationId}/campaigns/{campaignId}/coupons_with_recipients.yaml
   /v1/applications/{applicationId}/campaigns/{campaignId}/coupons_async:
     $ref: >-
-      paths/v1_applications_{applicationId}_campaigns_{campaignId}_coupons_async.yaml
+      paths/v1/applications/{applicationId}/campaigns/{campaignId}/coupons_async.yaml
   /v1/applications/{applicationId}/campaigns/{campaignId}/coupons_deletion_jobs:
     $ref: >-
-      paths/v1_applications_{applicationId}_campaigns_{campaignId}_coupons_deletion_jobs.yaml
+      paths/v1/applications/{applicationId}/campaigns/{campaignId}/coupons_deletion_jobs.yaml
   /v1/applications/{applicationId}/campaigns/{campaignId}/coupons/no_total:
     $ref: >-
-      paths/v1_applications_{applicationId}_campaigns_{campaignId}_coupons_no_total.yaml
+      paths/v1/applications/{applicationId}/campaigns/{campaignId}/coupons/no_total.yaml
   /v1/applications/{applicationId}/campaigns/{campaignId}/coupons/{couponId}:
     $ref: >-
-      paths/v1_applications_{applicationId}_campaigns_{campaignId}_coupons_{couponId}.yaml
+      paths/v1/applications/{applicationId}/campaigns/{campaignId}/coupons/{couponId}.yaml
   /v1/applications/{applicationId}/campaigns/{campaignId}/coupons_search_advanced/no_total:
     $ref: >-
-      paths/v1_applications_{applicationId}_campaigns_{campaignId}_coupons_search_advanced_no_total.yaml
+      paths/v1/applications/{applicationId}/campaigns/{campaignId}/coupons_search_advanced/no_total.yaml
   /v1/applications/{applicationId}/coupons_search_advanced/no_total:
     $ref: >-
-      paths/v1_applications_{applicationId}_coupons_search_advanced_no_total.yaml
+      paths/v1/applications/{applicationId}/coupons_search_advanced/no_total.yaml
   /v1/applications/{applicationId}/campaigns/{campaignId}/referrals/{referralId}:
     $ref: >-
-      paths/v1_applications_{applicationId}_campaigns_{campaignId}_referrals_{referralId}.yaml
+      paths/v1/applications/{applicationId}/campaigns/{campaignId}/referrals/{referralId}.yaml
   /v1/applications/{applicationId}/campaigns/{campaignId}/referrals/no_total:
     $ref: >-
-      paths/v1_applications_{applicationId}_campaigns_{campaignId}_referrals_no_total.yaml
+      paths/v1/applications/{applicationId}/campaigns/{campaignId}/referrals/no_total.yaml
   /v1/campaign_groups:
-    $ref: paths/v1_campaign_groups.yaml
+    $ref: paths/v1/campaign_groups.yaml
   /v1/campaign_groups/{campaignGroupId}:
-    $ref: paths/v1_campaign_groups_{campaignGroupId}.yaml
+    $ref: paths/v1/campaign_groups/{campaignGroupId}.yaml
   /v1/campaign_templates:
-    $ref: paths/v1_campaign_templates.yaml
+    $ref: paths/v1/campaign_templates.yaml
   /v1/applications/{applicationId}/create_campaign_from_template:
-    $ref: paths/v1_applications_{applicationId}_create_campaign_from_template.yaml
+    $ref: paths/v1/applications/{applicationId}/create_campaign_from_template.yaml
   /v1/loyalty_programs:
-    $ref: paths/v1_loyalty_programs.yaml
+    $ref: paths/v1/loyalty_programs.yaml
   /v1/loyalty_programs/{loyaltyProgramId}:
-    $ref: paths/v1_loyalty_programs_{loyaltyProgramId}.yaml
+    $ref: paths/v1/loyalty_programs/{loyaltyProgramId}.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/dashboard:
-    $ref: paths/v1_loyalty_programs_{loyaltyProgramId}_dashboard.yaml
+    $ref: paths/v1/loyalty_programs/{loyaltyProgramId}/dashboard.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/import_points:
-    $ref: paths/v1_loyalty_programs_{loyaltyProgramId}_import_points.yaml
+    $ref: paths/v1/loyalty_programs/{loyaltyProgramId}/import_points.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/import_customers_tiers:
-    $ref: paths/v1_loyalty_programs_{loyaltyProgramId}_import_customers_tiers.yaml
+    $ref: paths/v1/loyalty_programs/{loyaltyProgramId}/import_customers_tiers.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/profile/{integrationId}:
-    $ref: paths/v1_loyalty_programs_{loyaltyProgramId}_profile_{integrationId}.yaml
+    $ref: paths/v1/loyalty_programs/{loyaltyProgramId}/profile/{integrationId}.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/profile/{integrationId}/add_points:
     $ref: >-
-      paths/v1_loyalty_programs_{loyaltyProgramId}_profile_{integrationId}_add_points.yaml
+      paths/v1/loyalty_programs/{loyaltyProgramId}/profile/{integrationId}/add_points.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/profile/{integrationId}/deduct_points:
     $ref: >-
-      paths/v1_loyalty_programs_{loyaltyProgramId}_profile_{integrationId}_deduct_points.yaml
+      paths/v1/loyalty_programs/{loyaltyProgramId}/profile/{integrationId}/deduct_points.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/profile/{integrationId}/export_log:
     $ref: >-
-      paths/v1_loyalty_programs_{loyaltyProgramId}_profile_{integrationId}_export_log.yaml
+      paths/v1/loyalty_programs/{loyaltyProgramId}/profile/{integrationId}/export_log.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/export_customers_tiers:
-    $ref: paths/v1_loyalty_programs_{loyaltyProgramId}_export_customers_tiers.yaml
+    $ref: paths/v1/loyalty_programs/{loyaltyProgramId}/export_customers_tiers.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/statistics:
-    $ref: paths/v1_loyalty_programs_{loyaltyProgramId}_statistics.yaml
+    $ref: paths/v1/loyalty_programs/{loyaltyProgramId}/statistics.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/export_customer_balances:
-    $ref: paths/v1_loyalty_programs_{loyaltyProgramId}_export_customer_balances.yaml
+    $ref: paths/v1/loyalty_programs/{loyaltyProgramId}/export_customer_balances.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/export_customer_balance:
-    $ref: paths/v1_loyalty_programs_{loyaltyProgramId}_export_customer_balance.yaml
+    $ref: paths/v1/loyalty_programs/{loyaltyProgramId}/export_customer_balance.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/transactions:
-    $ref: paths/v1_loyalty_programs_{loyaltyProgramId}_transactions.yaml
+    $ref: paths/v1/loyalty_programs/{loyaltyProgramId}/transactions.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/import_cards:
-    $ref: paths/v1_loyalty_programs_{loyaltyProgramId}_import_cards.yaml
+    $ref: paths/v1/loyalty_programs/{loyaltyProgramId}/import_cards.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/cards/batch:
-    $ref: paths/v1_loyalty_programs_{loyaltyProgramId}_cards_batch.yaml
+    $ref: paths/v1/loyalty_programs/{loyaltyProgramId}/cards/batch.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/export_card_balances:
-    $ref: paths/v1_loyalty_programs_{loyaltyProgramId}_export_card_balances.yaml
+    $ref: paths/v1/loyalty_programs/{loyaltyProgramId}/export_card_balances.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/cards:
-    $ref: paths/v1_loyalty_programs_{loyaltyProgramId}_cards.yaml
+    $ref: paths/v1/loyalty_programs/{loyaltyProgramId}/cards.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/cards/export:
-    $ref: paths/v1_loyalty_programs_{loyaltyProgramId}_cards_export.yaml
+    $ref: paths/v1/loyalty_programs/{loyaltyProgramId}/cards/export.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/cards/{loyaltyCardId}:
-    $ref: paths/v1_loyalty_programs_{loyaltyProgramId}_cards_{loyaltyCardId}.yaml
+    $ref: paths/v1/loyalty_programs/{loyaltyProgramId}/cards/{loyaltyCardId}.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/cards/{loyaltyCardId}/add_points:
     $ref: >-
-      paths/v1_loyalty_programs_{loyaltyProgramId}_cards_{loyaltyCardId}_add_points.yaml
+      paths/v1/loyalty_programs/{loyaltyProgramId}/cards/{loyaltyCardId}/add_points.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/cards/{loyaltyCardId}/deduct_points:
     $ref: >-
-      paths/v1_loyalty_programs_{loyaltyProgramId}_cards_{loyaltyCardId}_deduct_points.yaml
+      paths/v1/loyalty_programs/{loyaltyProgramId}/cards/{loyaltyCardId}/deduct_points.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/cards/{loyaltyCardId}/export_log:
     $ref: >-
-      paths/v1_loyalty_programs_{loyaltyProgramId}_cards_{loyaltyCardId}_export_log.yaml
+      paths/v1/loyalty_programs/{loyaltyProgramId}/cards/{loyaltyCardId}/export_log.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/cards/{loyaltyCardId}/logs:
     $ref: >-
-      paths/v1_loyalty_programs_{loyaltyProgramId}_cards_{loyaltyCardId}_logs.yaml
+      paths/v1/loyalty_programs/{loyaltyProgramId}/cards/{loyaltyCardId}/logs.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/cards/{loyaltyCardId}/transfer:
     $ref: >-
-      paths/v1_loyalty_programs_{loyaltyProgramId}_cards_{loyaltyCardId}_transfer.yaml
+      paths/v1/loyalty_programs/{loyaltyProgramId}/cards/{loyaltyCardId}/transfer.yaml
   /v1/giveaways/pools/{poolId}/import:
-    $ref: paths/v1_giveaways_pools_{poolId}_import.yaml
+    $ref: paths/v1/giveaways/pools/{poolId}/import.yaml
   /v1/giveaways/pools/{poolId}/export:
-    $ref: paths/v1_giveaways_pools_{poolId}_export.yaml
+    $ref: paths/v1/giveaways/pools/{poolId}/export.yaml
   /v1/collections:
-    $ref: paths/v1_collections.yaml
+    $ref: paths/v1/collections.yaml
   /v1/collections/{collectionId}:
-    $ref: paths/v1_collections_{collectionId}.yaml
+    $ref: paths/v1/collections/{collectionId}.yaml
   /v1/collections/{collectionId}/items:
-    $ref: paths/v1_collections_{collectionId}_items.yaml
+    $ref: paths/v1/collections/{collectionId}/items.yaml
   /v1/applications/{applicationId}/collections:
-    $ref: paths/v1_applications_{applicationId}_collections.yaml
+    $ref: paths/v1/applications/{applicationId}/collections.yaml
   /v1/applications/{applicationId}/campaigns/{campaignId}/collections:
     $ref: >-
-      paths/v1_applications_{applicationId}_campaigns_{campaignId}_collections.yaml
+      paths/v1/applications/{applicationId}/campaigns/{campaignId}/collections.yaml
   /v1/applications/{applicationId}/campaigns/{campaignId}/collections/{collectionId}:
     $ref: >-
-      paths/v1_applications_{applicationId}_campaigns_{campaignId}_collections_{collectionId}.yaml
+      paths/v1/applications/{applicationId}/campaigns/{campaignId}/collections/{collectionId}.yaml
   /v1/collections/{collectionId}/import:
-    $ref: paths/v1_collections_{collectionId}_import.yaml
+    $ref: paths/v1/collections/{collectionId}/import.yaml
   /v1/applications/{applicationId}/campaigns/{campaignId}/collections/{collectionId}/import:
     $ref: >-
-      paths/v1_applications_{applicationId}_campaigns_{campaignId}_collections_{collectionId}_import.yaml
+      paths/v1/applications/{applicationId}/campaigns/{campaignId}/collections/{collectionId}/import.yaml
   /v1/collections/{collectionId}/export:
-    $ref: paths/v1_collections_{collectionId}_export.yaml
+    $ref: paths/v1/collections/{collectionId}/export.yaml
   /v1/applications/{applicationId}/campaigns/{campaignId}/collections/{collectionId}/export:
     $ref: >-
-      paths/v1_applications_{applicationId}_campaigns_{campaignId}_collections_{collectionId}_export.yaml
+      paths/v1/applications/{applicationId}/campaigns/{campaignId}/collections/{collectionId}/export.yaml
   /v1/applications/{applicationId}/health_report:
-    $ref: paths/v1_applications_{applicationId}_health_report.yaml
+    $ref: paths/v1/applications/{applicationId}/health_report.yaml
   /v1/applications/{applicationId}/access_logs/no_total:
-    $ref: paths/v1_applications_{applicationId}_access_logs_no_total.yaml
+    $ref: paths/v1/applications/{applicationId}/access_logs/no_total.yaml
   /v1/applications/{applicationId}/campaigns/{campaignId}/analytics:
     $ref: >-
-      paths/v1_applications_{applicationId}_campaigns_{campaignId}_analytics.yaml
+      paths/v1/applications/{applicationId}/campaigns/{campaignId}/analytics.yaml
   /v1/applications/{applicationId}/customers:
-    $ref: paths/v1_applications_{applicationId}_customers.yaml
+    $ref: paths/v1/applications/{applicationId}/customers.yaml
   /v1/applications/{applicationId}/customer_search:
-    $ref: paths/v1_applications_{applicationId}_customer_search.yaml
+    $ref: paths/v1/applications/{applicationId}/customer_search.yaml
   /v1/customer_search/no_total:
-    $ref: paths/v1_customer_search_no_total.yaml
+    $ref: paths/v1/customer_search/no_total.yaml
   /v1/customers/{customerId}:
-    $ref: paths/v1_customers_{customerId}.yaml
+    $ref: paths/v1/customers/{customerId}.yaml
   /v1/customers/no_total:
-    $ref: paths/v1_customers_no_total.yaml
+    $ref: paths/v1/customers/no_total.yaml
   /v1/applications/{applicationId}/customers/{customerId}:
-    $ref: paths/v1_applications_{applicationId}_customers_{customerId}.yaml
+    $ref: paths/v1/applications/{applicationId}/customers/{customerId}.yaml
   /v1/applications/{applicationId}/customer_activity_reports/no_total:
     $ref: >-
-      paths/v1_applications_{applicationId}_customer_activity_reports_no_total.yaml
+      paths/v1/applications/{applicationId}/customer_activity_reports/no_total.yaml
   /v1/applications/{applicationId}/customer_activity_reports/{customerId}:
     $ref: >-
-      paths/v1_applications_{applicationId}_customer_activity_reports_{customerId}.yaml
+      paths/v1/applications/{applicationId}/customer_activity_reports/{customerId}.yaml
   /v1/applications/{applicationId}/customers/{customerId}/analytics:
     $ref: >-
-      paths/v1_applications_{applicationId}_customers_{customerId}_analytics.yaml
+      paths/v1/applications/{applicationId}/customers/{customerId}/analytics.yaml
   /v1/applications/{applicationId}/sessions:
-    $ref: paths/v1_applications_{applicationId}_sessions.yaml
+    $ref: paths/v1/applications/{applicationId}/sessions.yaml
   /v1/applications/{applicationId}/sessions/{sessionId}:
-    $ref: paths/v1_applications_{applicationId}_sessions_{sessionId}.yaml
+    $ref: paths/v1/applications/{applicationId}/sessions/{sessionId}.yaml
   /v1/applications/{applicationId}/events/no_total:
-    $ref: paths/v1_applications_{applicationId}_events_no_total.yaml
+    $ref: paths/v1/applications/{applicationId}/events/no_total.yaml
   /v1/applications/{applicationId}/event_types:
-    $ref: paths/v1_applications_{applicationId}_event_types.yaml
+    $ref: paths/v1/applications/{applicationId}/event_types.yaml
   /v1/audiences:
-    $ref: paths/v1_audiences.yaml
+    $ref: paths/v1/audiences.yaml
   /v1/audiences/analytics:
-    $ref: paths/v1_audiences_analytics.yaml
+    $ref: paths/v1/audiences/analytics.yaml
   /v1/audiences/{audienceId}/memberships:
-    $ref: paths/v1_audiences_{audienceId}_memberships.yaml
+    $ref: paths/v1/audiences/{audienceId}/memberships.yaml
   /v1/audiences/{audienceId}/memberships/import:
-    $ref: paths/v1_audiences_{audienceId}_memberships_import.yaml
+    $ref: paths/v1/audiences/{audienceId}/memberships/import.yaml
   /v1/audiences/{audienceId}/memberships/export:
-    $ref: paths/v1_audiences_{audienceId}_memberships_export.yaml
+    $ref: paths/v1/audiences/{audienceId}/memberships/export.yaml
   /v1/applications/{applicationId}/profile/{integrationId}/friends:
-    $ref: paths/v1_applications_{applicationId}_profile_{integrationId}_friends.yaml
+    $ref: paths/v1/applications/{applicationId}/profile/{integrationId}/friends.yaml
   /v1/attributes:
-    $ref: paths/v1_attributes.yaml
+    $ref: paths/v1/attributes.yaml
   /v1/attributes/{attributeId}:
-    $ref: paths/v1_attributes_{attributeId}.yaml
+    $ref: paths/v1/attributes/{attributeId}.yaml
   /v1/attributes/{attributeId}/allowed_list/import:
-    $ref: paths/v1_attributes_{attributeId}_allowed_list_import.yaml
+    $ref: paths/v1/attributes/{attributeId}/allowed_list/import.yaml
   /v1/catalogs/{catalogId}/items:
-    $ref: paths/v1_catalogs_{catalogId}_items.yaml
+    $ref: paths/v1/catalogs/{catalogId}/items.yaml
   /v1/additional_costs:
-    $ref: paths/v1_additional_costs.yaml
+    $ref: paths/v1/additional_costs.yaml
   /v1/additional_costs/{additionalCostId}:
-    $ref: paths/v1_additional_costs_{additionalCostId}.yaml
+    $ref: paths/v1/additional_costs/{additionalCostId}.yaml
   /v1/webhooks:
-    $ref: paths/v1_webhooks.yaml
+    $ref: paths/v1/webhooks.yaml
   /v1/webhooks/{webhookId}:
-    $ref: paths/v1_webhooks_{webhookId}.yaml
+    $ref: paths/v1/webhooks/{webhookId}.yaml
   /v1/message_logs:
-    $ref: paths/v1_message_logs.yaml
+    $ref: paths/v1/message_logs.yaml
   /v1/event_types:
-    $ref: paths/v1_event_types.yaml
+    $ref: paths/v1/event_types.yaml
   /v1/applications/{applicationId}/campaigns/{campaignId}/import_coupons:
     $ref: >-
-      paths/v1_applications_{applicationId}_campaigns_{campaignId}_import_coupons.yaml
+      paths/v1/applications/{applicationId}/campaigns/{campaignId}/import_coupons.yaml
   /v1/applications/{applicationId}/export_coupons:
-    $ref: paths/v1_applications_{applicationId}_export_coupons.yaml
+    $ref: paths/v1/applications/{applicationId}/export_coupons.yaml
   /v1/applications/{applicationId}/export_referrals:
-    $ref: paths/v1_applications_{applicationId}_export_referrals.yaml
+    $ref: paths/v1/applications/{applicationId}/export_referrals.yaml
   /v1/applications/{applicationId}/export_effects:
-    $ref: paths/v1_applications_{applicationId}_export_effects.yaml
+    $ref: paths/v1/applications/{applicationId}/export_effects.yaml
   /v1/applications/{applicationId}/export_customer_sessions:
-    $ref: paths/v1_applications_{applicationId}_export_customer_sessions.yaml
+    $ref: paths/v1/applications/{applicationId}/export_customer_sessions.yaml
   /v1/applications/{applicationId}/campaigns/{campaignId}/import_referrals:
     $ref: >-
-      paths/v1_applications_{applicationId}_campaigns_{campaignId}_import_referrals.yaml
+      paths/v1/applications/{applicationId}/campaigns/{campaignId}/import_referrals.yaml
   /v1/users:
-    $ref: paths/v1_users.yaml
+    $ref: paths/v1/users.yaml
   /v1/users/{userId}:
-    $ref: paths/v1_users_{userId}.yaml
+    $ref: paths/v1/users/{userId}.yaml
   /v1/provisioning/okta:
-    $ref: paths/v1_provisioning_okta.yaml
+    $ref: paths/v1/provisioning/okta.yaml
   /v1/provisioning/scim/Groups:
-    $ref: paths/v1_provisioning_scim_Groups.yaml
+    $ref: paths/v1/provisioning/scim/Groups.yaml
   /v1/provisioning/scim/Groups/{groupId}:
-    $ref: paths/v1_provisioning_scim_Groups_{groupId}.yaml
+    $ref: paths/v1/provisioning/scim/Groups/{groupId}.yaml
   /v1/provisioning/scim/Users:
-    $ref: paths/v1_provisioning_scim_Users.yaml
+    $ref: paths/v1/provisioning/scim/Users.yaml
   /v1/provisioning/scim/Users/{userId}:
-    $ref: paths/v1_provisioning_scim_Users_{userId}.yaml
+    $ref: paths/v1/provisioning/scim/Users/{userId}.yaml
   /v1/provisioning/scim/ResourceTypes:
-    $ref: paths/v1_provisioning_scim_ResourceTypes.yaml
+    $ref: paths/v1/provisioning/scim/ResourceTypes.yaml
   /v1/provisioning/scim/ServiceProviderConfig:
-    $ref: paths/v1_provisioning_scim_ServiceProviderConfig.yaml
+    $ref: paths/v1/provisioning/scim/ServiceProviderConfig.yaml
   /v1/provisioning/scim/Schemas:
-    $ref: paths/v1_provisioning_scim_Schemas.yaml
+    $ref: paths/v1/provisioning/scim/Schemas.yaml
   /v1/users/delete:
-    $ref: paths/v1_users_delete.yaml
+    $ref: paths/v1/users/delete.yaml
   /v1/users/activate:
-    $ref: paths/v1_users_activate.yaml
+    $ref: paths/v1/users/activate.yaml
   /v1/users/deactivate:
-    $ref: paths/v1_users_deactivate.yaml
+    $ref: paths/v1/users/deactivate.yaml
   /v1/users/invite:
-    $ref: paths/v1_users_invite.yaml
+    $ref: paths/v1/users/invite.yaml
   /v1/changes:
-    $ref: paths/v1_changes.yaml
+    $ref: paths/v1/changes.yaml
   /v2/invites:
-    $ref: paths/v2_invites.yaml
+    $ref: paths/v2/invites.yaml
   /v1/invite_emails:
-    $ref: paths/v1_invite_emails.yaml
+    $ref: paths/v1/invite_emails.yaml
   /v1/password_recovery_emails:
-    $ref: paths/v1_password_recovery_emails.yaml
+    $ref: paths/v1/password_recovery_emails.yaml
   /v1/reset_password:
-    $ref: paths/v1_reset_password.yaml
+    $ref: paths/v1/reset_password.yaml
   /v1/accounts/{accountId}:
-    $ref: paths/v1_accounts_{accountId}.yaml
+    $ref: paths/v1/accounts/{accountId}.yaml
   /v1/accounts/{accountId}/analytics:
-    $ref: paths/v1_accounts_{accountId}_analytics.yaml
+    $ref: paths/v1/accounts/{accountId}/analytics.yaml
   /v1/sessions:
-    $ref: paths/v1_sessions.yaml
+    $ref: paths/v1/sessions.yaml
   /v1/exports:
-    $ref: paths/v1_exports.yaml
+    $ref: paths/v1/exports.yaml
   /v2/roles:
-    $ref: paths/v2_roles.yaml
+    $ref: paths/v2/roles.yaml
   /v2/roles/{roleId}:
-    $ref: paths/v2_roles_{roleId}.yaml
+    $ref: paths/v2/roles/{roleId}.yaml
   /v1/applications/{applicationId}/stores:
-    $ref: paths/v1_applications_{applicationId}_stores.yaml
+    $ref: paths/v1/applications/{applicationId}/stores.yaml
   /v1/applications/{applicationId}/stores/{storeId}:
-    $ref: paths/v1_applications_{applicationId}_stores_{storeId}.yaml
+    $ref: paths/v1/applications/{applicationId}/stores/{storeId}.yaml
   /v1/applications/{applicationId}/campaigns/{campaignId}/stores/export:
     $ref: >-
-      paths/v1_applications_{applicationId}_campaigns_{campaignId}_stores_export.yaml
+      paths/v1/applications/{applicationId}/campaigns/{campaignId}/stores/export.yaml
   /v1/applications/{applicationId}/campaigns/{campaignId}/stores:
-    $ref: paths/v1_applications_{applicationId}_campaigns_{campaignId}_stores.yaml
+    $ref: paths/v1/applications/{applicationId}/campaigns/{campaignId}/stores.yaml
   /v1/applications/{applicationId}/campaigns/{campaignId}/stores/import:
     $ref: >-
-      paths/v1_applications_{applicationId}_campaigns_{campaignId}_stores_import.yaml
+      paths/v1/applications/{applicationId}/campaigns/{campaignId}/stores/import.yaml
   /v1/applications/{applicationId}/campaigns/{campaignId}/stores/budgets:
     $ref: >-
-      paths/v1_applications_{applicationId}_campaigns_{campaignId}_stores_budgets.yaml
+      paths/v1/applications/{applicationId}/campaigns/{campaignId}/stores/budgets.yaml
   /v1/applications/{applicationId}/campaigns/{campaignId}/stores/budgets/summary:
     $ref: >-
-      paths/v1_applications_{applicationId}_campaigns_{campaignId}_stores_budgets_summary.yaml
+      paths/v1/applications/{applicationId}/campaigns/{campaignId}/stores/budgets/summary.yaml
   /v1/applications/{applicationId}/campaigns/{campaignId}/stores/budgets/import:
     $ref: >-
-      paths/v1_applications_{applicationId}_campaigns_{campaignId}_stores_budgets_import.yaml
+      paths/v1/applications/{applicationId}/campaigns/{campaignId}/stores/budgets/import.yaml
   /v1/applications/{applicationId}/campaigns/{campaignId}/stores/budgets/export:
     $ref: >-
-      paths/v1_applications_{applicationId}_campaigns_{campaignId}_stores_budgets_export.yaml
+      paths/v1/applications/{applicationId}/campaigns/{campaignId}/stores/budgets/export.yaml
   /v1/applications/{applicationId}/campaigns/{campaignId}/achievements:
     $ref: >-
-      paths/v1_applications_{applicationId}_campaigns_{campaignId}_achievements.yaml
+      paths/v1/applications/{applicationId}/campaigns/{campaignId}/achievements.yaml
   /v1/applications/{applicationId}/campaigns/{campaignId}/achievements/{achievementId}:
     $ref: >-
-      paths/v1_applications_{applicationId}_campaigns_{campaignId}_achievements_{achievementId}.yaml
+      paths/v1/applications/{applicationId}/campaigns/{campaignId}/achievements/{achievementId}.yaml
   /v1/applications/{applicationId}/campaigns/{campaignId}/achievements/{achievementId}/export:
     $ref: >-
-      paths/v1_applications_{applicationId}_campaigns_{campaignId}_achievements_{achievementId}_export.yaml
+      paths/v1/applications/{applicationId}/campaigns/{campaignId}/achievements/{achievementId}/export.yaml
   /v1/applications/{applicationId}/achievement_progress/{integrationId}:
     $ref: >-
-      paths/v1_applications_{applicationId}_achievement_progress_{integrationId}.yaml
+      paths/v1/applications/{applicationId}/achievement_progress/{integrationId}.yaml
 components:
   securitySchemes:
     manager_auth:

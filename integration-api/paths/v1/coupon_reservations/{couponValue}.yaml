@@ -1,0 +1,680 @@
+# path: /v1/coupon_reservations/{couponValue}
+post:
+  operationId: createCouponReservation
+  summary: Create coupon reservation
+  description: >
+    Create a coupon reservation for the specified customer profiles on the
+    specified coupon.
+
+    You can also create a reservation via the Campaign Manager using the
+
+    [Create coupon code
+    reservation](https://docs.talon.one/docs/product/rules/effects/using-effects#reserving-a-coupon-code)
+    effect.
+
+
+    **Note:**
+
+
+    - If the **Reservation mandatory** option was selected when creating the
+    specified coupon,
+
+    the endpoint creates a **hard** reservation, meaning only users who have
+    this coupon code reserved can redeem it.
+
+    Otherwise, the endpoint creates a **soft** reservation, meaning the coupon
+    is associated with the specified customer profiles (they show up when using
+    the [List customer
+    data](https://docs.talon.one/integration-api#operation/getCustomerInventory)
+    endpoint), but any user can redeem it.
+
+    This can be useful, for example, to display a _coupon wallet_ for customers
+    when they visit your store.
+
+
+    - If the **Coupon visibility** option was selected when creating the
+    specified coupon,
+
+    the coupon code is implicitly soft-reserved for all customers, and the code
+    will be returned for all customer profiles in the [List customer
+    data](https://docs.talon.one/integration-api#operation/getCustomerInventory)
+    endpoint.
+
+
+    - This endpoint overrides the coupon reservation limit set when [the coupon
+    is
+    created](https://docs.talon.one/docs/product/campaigns/coupons/creating-coupons).
+
+    To ensure that coupons cannot be reserved after the reservation limit is
+    reached, use the [Create coupon code
+    reservation](https://docs.talon.one/docs/product/rules/effects/using-effects#reserving-a-coupon-code)
+    effect in the Rule Builder
+
+    and the [Update customer
+    session](https://docs.talon.one/integration-api#tag/Customer-sessions/operation/updateCustomerSessionV2)
+    endpoint.
+
+
+    To delete a reservation, use the [Delete
+    reservation](https://docs.talon.one/integration-api#tag/Coupons/operation/deleteCouponReservation)
+    endpoint.
+  security:
+    - api_key_v1: []
+  tags:
+    - Coupons
+  parameters:
+    - name: couponValue
+      in: path
+      description: The code of the coupon.
+      example: SUMMER10
+      required: true
+      schema:
+        type: string
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - integrationIDs
+          properties:
+            integrationIDs:
+              type: array
+              description: List of customer integration IDs.
+              example:
+                - URNGV8294NV
+                - BZGGC2454PA
+              maxItems: 1000
+              items:
+                type: string
+    description: body
+    required: true
+  responses:
+    '201':
+      description: Created
+      content:
+        application/json:
+          schema:
+            allOf:
+              - type: object
+                required:
+                  - id
+                  - created
+                properties:
+                  id:
+                    type: integer
+                    description: The internal ID of the coupon.
+                    example: 6
+                  created:
+                    type: string
+                    format: date-time
+                    description: The time the coupon was created.
+                    example: '2020-06-10T09:05:27.993483Z'
+              - type: object
+                required:
+                  - campaignId
+                properties:
+                  campaignId:
+                    type: integer
+                    title: Campaign ID
+                    description: The ID of the campaign that owns this entity.
+                    example: 211
+              - type: object
+                properties:
+                  value:
+                    type: string
+                    title: Coupon Code
+                    description: The coupon code.
+                    minLength: 4
+                    example: XMAS-20-2021
+              - type: object
+                properties:
+                  usageLimit:
+                    type: integer
+                    minimum: 0
+                    maximum: 999999
+                    example: 100
+                    description: >
+                      The number of times the coupon code can be redeemed. `0`
+                      means unlimited redemptions but any campaign usage limits
+                      will still apply.
+                  discountLimit:
+                    type: number
+                    minimum: 0
+                    maximum: 1000000000000000
+                    example: 30
+                    description: >
+                      The total discount value that the code can give. Typically
+                      used to represent a gift card value.
+                  reservationLimit:
+                    type: integer
+                    minimum: 0
+                    maximum: 999999
+                    example: 45
+                    description: >
+                      The number of reservations that can be made with this
+                      coupon code.
+                  startDate:
+                    type: string
+                    format: date-time
+                    example: '2020-01-24T14:15:22Z'
+                    description: Timestamp at which point the coupon becomes valid.
+                  expiryDate:
+                    type: string
+                    format: date-time
+                    example: '2023-08-24T14:15:22Z'
+                    description: >-
+                      Expiration date of the coupon. Coupon never expires if
+                      this is omitted.
+              - type: object
+                properties:
+                  limits:
+                    type: array
+                    description: >
+                      Limits configuration for a coupon. These limits will
+                      override the limits
+
+                      set from the campaign.
+
+
+                      **Note:** Only usable when creating a single coupon which
+                      is not tied to a specific recipient.
+
+                      Only per-profile limits are allowed to be configured.
+                    items:
+                      type: object
+                      required:
+                        - action
+                        - limit
+                        - entities
+                      properties:
+                        action:
+                          type: string
+                          description: >
+                            The limitable action to which this limit applies.
+                            For example:
+
+                            - `setDiscount`
+
+                            - `setDiscountEffect`
+
+                            - `redeemCoupon`
+
+                            - `createCoupon`
+                          example: createCoupon
+                        limit:
+                          type: number
+                          minimum: 0
+                          example: 1000
+                          description: The value to set for the limit.
+                        period:
+                          description: The period on which the budget limit recurs.
+                          type: string
+                          enum:
+                            - daily
+                            - weekly
+                            - monthly
+                            - yearly
+                          example: yearly
+                        entities:
+                          type: array
+                          description: The entity that this limit applies to.
+                          example:
+                            - Coupon
+                          items:
+                            type: string
+                            enum:
+                              - Coupon
+                              - Referral
+                              - Profile
+                              - Identifier
+                              - Store
+                              - Session
+              - type: object
+                required:
+                  - value
+                  - usageCounter
+                  - usageLimit
+                properties:
+                  usageCounter:
+                    type: integer
+                    title: Total coupon redemptions
+                    example: 10
+                    description: >-
+                      The number of times the coupon has been successfully
+                      redeemed.
+                  discountCounter:
+                    type: number
+                    title: Discounts Given
+                    description: >-
+                      The amount of discounts given on rules redeeming this
+                      coupon. Only usable if a coupon discount budget was set
+                      for this coupon.
+                    example: 10
+                  discountRemainder:
+                    type: number
+                    title: Coupon Discount Remainder
+                    description: The remaining discount this coupon can give.
+                    example: 5
+                  reservationCounter:
+                    type: number
+                    title: Number of reservations
+                    description: The number of times this coupon has been reserved.
+                    example: 1
+                  attributes:
+                    type: object
+                    title: Attributes of coupon
+                    description: Custom attributes associated with this coupon.
+                  referralId:
+                    type: integer
+                    title: Advocate ID
+                    description: >-
+                      The integration ID of the referring customer (if any) for
+                      whom this coupon was created as an effect.
+                    example: 326632952
+                  recipientIntegrationId:
+                    title: Recipient ID
+                    example: URNGV8294NV
+                    type: string
+                    maxLength: 1000
+                    description: >-
+                      The Integration ID of the customer that is allowed to
+                      redeem this coupon.
+                  importId:
+                    title: Import ID
+                    type: integer
+                    description: The ID of the Import which created this coupon.
+                    example: 4
+                  reservation:
+                    title: Reservation Type
+                    type: boolean
+                    example: false
+                    description: >
+                      Defines the reservation type:
+
+                      - `true`: The coupon can be reserved for multiple
+                      customers.
+
+                      - `false`: The coupon can be reserved only for one
+                      customer. It is a personal code.
+                    default: true
+                  batchId:
+                    title: Batch ID
+                    type: string
+                    description: The id of the batch the coupon belongs to.
+                    example: 32535-43255
+                  isReservationMandatory:
+                    title: Is reservation mandatory
+                    type: boolean
+                    example: false
+                    description: >-
+                      An indication of whether the code can be redeemed only if
+                      it has been reserved first.
+                    default: false
+                  implicitlyReserved:
+                    title: Is coupon implicitly reserved for all customers
+                    description: >-
+                      An indication of whether the coupon is implicitly reserved
+                      for all customers.
+                    type: boolean
+                    example: false
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
+    '401':
+      description: Unauthorized - Invalid API key
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
+delete:
+  operationId: deleteCouponReservation
+  summary: Delete coupon reservations
+  description: >
+    Remove all the coupon reservations from the provided customer profile
+    integration IDs and the provided
+
+    coupon code.
+  security:
+    - api_key_v1: []
+  tags:
+    - Coupons
+  parameters:
+    - name: couponValue
+      in: path
+      description: The code of the coupon.
+      example: SUMMER10
+      required: true
+      schema:
+        type: string
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - integrationIDs
+          properties:
+            integrationIDs:
+              type: array
+              description: List of customer integration IDs.
+              example:
+                - URNGV8294NV
+                - BZGGC2454PA
+              maxItems: 1000
+              items:
+                type: string
+    description: body
+    required: true
+  responses:
+    '204':
+      description: No Content
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
+    '401':
+      description: Unauthorized - Invalid API key
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code

@@ -1,0 +1,97 @@
+# path: /v1/campaign_groups/{campaignGroupId}
+get:
+  operationId: getCampaignGroup
+  summary: Get campaign access group
+  description: >-
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Get a campaign access group specified by its ID.
+  tags:
+    - Campaign access groups
+  parameters:
+    - name: campaignGroupId
+      in: path
+      description: The ID of the campaign access group.
+      example: 37
+      required: true
+      schema:
+        type: integer
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            allOf:
+              - type: object
+                required:
+                  - id
+                  - created
+                properties:
+                  id:
+                    type: integer
+                    description: The internal ID of this entity.
+                    example: 6
+                  created:
+                    type: string
+                    format: date-time
+                    description: The time this entity was created.
+                    example: '2020-06-10T09:05:27.993483Z'
+              - type: object
+                required:
+                  - modified
+                properties:
+                  modified:
+                    type: string
+                    format: date-time
+                    description: The time this entity was last modified.
+                    example: '2021-09-12T10:12:42Z'
+              - type: object
+                required:
+                  - accountId
+                properties:
+                  accountId:
+                    type: integer
+                    description: The ID of the account that owns this entity.
+                    example: 3886
+              - type: object
+                properties:
+                  name:
+                    type: string
+                    description: The name of the campaign access group.
+                    minLength: 1
+                    example: Europe access group
+                  description:
+                    type: string
+                    description: A longer description of the campaign access group.
+                    example: >-
+                      A group that gives access to all the campaigns for the
+                      Europe market.
+                  subscribedApplicationsIds:
+                    type: array
+                    description: >-
+                      A list of IDs of the Applications that this campaign
+                      access group is enabled for.
+                    items:
+                      type: integer
+                    example:
+                      - 1
+                      - 2
+                      - 3
+                  campaignIds:
+                    type: array
+                    description: >-
+                      A list of IDs of the campaigns that are part of the
+                      campaign access group.
+                    items:
+                      type: integer
+                    example:
+                      - 4
+                      - 6
+                      - 8
+                required:
+                  - name
+              - type: object
