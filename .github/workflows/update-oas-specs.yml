@@ -28,7 +28,7 @@ jobs:
           yq -i 'del(.components.schemas)' temp.yaml -i
           yq -i 'del(.components.requestBodies)' temp.yaml -i
           yq -i 'del(.x-notifications-desc)' temp.yaml -i
-          redocly split temp.yaml --outDir=integration-api --separator=/
+          redocly split temp.yaml --outDir=integration-api --separator=-
           ./scripts/add-path.sh integration-api/paths
       - name: Update Management API specification
         run: |
@@ -38,7 +38,7 @@ jobs:
           yq -i 'del(.components.schemas)' temp.yaml -i
           yq -i 'del(.components.requestBodies)' temp.yaml -i
           yq -i 'del(.x-notifications-desc)' temp.yaml -i
-          redocly split temp.yaml --outDir=management-api --separator=/
+          redocly split temp.yaml --outDir=management-api --separator=-
           ./scripts/add-path.sh management-api/paths
       - name: Update Notification schemas
         run: |
@@ -48,7 +48,7 @@ jobs:
           yq -i 'del(.components.schemas)' temp.yaml -i
           yq -i 'del(.components.requestBodies)' temp.yaml -i
           yq -i 'del(.x-notifications-desc)' temp.yaml -i
-          redocly split temp.yaml --outDir=notifications --separator=/
+          redocly split temp.yaml --outDir=notifications --separator=-
           ./scripts/add-path.sh notifications/paths
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5

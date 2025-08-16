@@ -34,6 +34,9 @@ find "$targetDir" -type f \( -name "*.yml" -o -name "*.yaml" \) | while read -r 
     finalPath="${relativePath%.yml}"
     finalPath="${finalPath%.yaml}"
 
+    # Replace hyphens with slashes for the path.
+    finalPath="${finalPath//-//}"
+
     # Construct the new line to be added to the file.
     newLine="# path: /$finalPath"
 
