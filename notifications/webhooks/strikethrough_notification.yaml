@@ -14,12 +14,6 @@ post:
         schema:
           type: object
           description: The strikethrough labels notification for an application.
-          required:
-            - applicationId
-            - currentBatch
-            - totalBatches
-            - trigger
-            - changedItems
           properties:
             version:
               type: string
@@ -55,12 +49,6 @@ post:
               description: >-
                 Information about the event that triggered the strikethrough
                 labeling.
-              required:
-                - id
-                - type
-                - triggeredAt
-                - totalAffectedItems
-                - payload
               properties:
                 id:
                   type: integer
@@ -97,13 +85,6 @@ post:
               items:
                 type: object
                 description: The information of affected items.
-                required:
-                  - id
-                  - catalogId
-                  - sku
-                  - version
-                  - price
-                  - evaluatedAt
                 properties:
                   id:
                     type: integer
@@ -181,13 +162,6 @@ post:
                     items:
                       type: object
                       description: The effect produced for the catalog item.
-                      required:
-                        - campaignId
-                        - rulesetId
-                        - ruleIndex
-                        - ruleName
-                        - type
-                        - props
                       properties:
                         campaignId:
                           type: integer
@@ -223,9 +197,6 @@ post:
                               description: >-
                                 setDiscountPerItem effect in strikethrough
                                 pricing payload.
-                              required:
-                                - name
-                                - value
                               properties:
                                 name:
                                   description: effect name.
@@ -238,10 +209,6 @@ post:
                               description: >-
                                 customEffectPerItem effect in strikethrough
                                 pricing payload.
-                              required:
-                                - effectId
-                                - name
-                                - payload
                               properties:
                                 effectId:
                                   description: ID of the effect.
@@ -305,8 +272,6 @@ post:
                                     type: string
                                     enum:
                                       - NONE
-                                required:
-                                  - type
                               - type: object
                                 description: |
                                   Represents the targeted audience.
@@ -318,8 +283,6 @@ post:
                                   audience:
                                     allOf:
                                       - type: object
-                                        required:
-                                          - id
                                         properties:
                                           id:
                                             type: integer
@@ -339,9 +302,9 @@ post:
                                               The ID of this audience in the
                                               third-party integration.
                                             example: 382370BKDB946
-                                required:
-                                  - type
-                                  - audience
+            NotificationType:
+              type: string
+              description: The type of the notification
         examples:
           StrikethroughNotification:
             value:

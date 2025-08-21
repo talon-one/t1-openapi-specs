@@ -124,12 +124,14 @@ put:
 
                 - `immediate` or,
 
+                - `on_action` or,
+
                 - an **integer** followed by one letter indicating the time
                 unit.
 
 
                 Examples: `immediate`, `30s`, `40m`, `1h`, `5D`, `7W`, `10M`,
-                `15Y`.
+                `15Y`, `on_action`.
 
 
                 Available units:

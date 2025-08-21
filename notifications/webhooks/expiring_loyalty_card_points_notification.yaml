@@ -12,9 +12,6 @@ post:
       application/json:
         schema:
           type: object
-          required:
-            - TotalResultSize
-            - Data
           properties:
             TotalResultSize:
               type: integer
@@ -25,14 +22,6 @@ post:
               maxLength: 1000
               items:
                 type: object
-                required:
-                  - LoyaltyProgramID
-                  - ExpiryDate
-                  - CardIdentifier
-                  - UsersPerCardLimit
-                  - Profiles
-                  - AmountOfExpiringPoints
-                  - SubledgerID
                 properties:
                   ExpiryDate:
                     type: string
@@ -72,4 +61,9 @@ post:
                     items:
                       type: string
                       example: URNGV8294NV
+            NotificationType:
+              type: string
+              description: The type of notification.
+              enum:
+                - LoyaltyCardPointsExpiring
     required: true

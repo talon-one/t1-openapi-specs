@@ -12,9 +12,6 @@ post:
       application/json:
         schema:
           type: object
-          required:
-            - TotalResultSize
-            - Data
           properties:
             TotalResultSize:
               type: integer
@@ -25,12 +22,6 @@ post:
               maxLength: 1000
               items:
                 type: object
-                required:
-                  - CouponValue
-                  - CampaignId
-                  - UsageLimit
-                  - UsageCounter
-                  - Attributes
                 properties:
                   CouponValue:
                     type: string
@@ -92,4 +83,9 @@ post:
                     title: Attributes of coupon
                     description: Custom attributes associated with this coupon.
                     additionalProperties: true
+            NotificationType:
+              type: string
+              description: The type of notification.
+              enum:
+                - CouponCodeExpiring
     required: true

@@ -12,9 +12,6 @@ post:
       application/json:
         schema:
           type: object
-          required:
-            - TotalResultSize
-            - Data
           properties:
             TotalResultSize:
               type: integer
@@ -25,11 +22,6 @@ post:
               maxLength: 1000
               items:
                 type: object
-                required:
-                  - CustomerProfileID
-                  - LoyaltyProgramID
-                  - SubledgerID
-                  - Points
                 properties:
                   LoyaltyProgramID:
                     type: integer
@@ -69,4 +61,9 @@ post:
                       The integration ID of the session through which the points
                       were earned.
                     example: cc53e4fa-547f-4f5e-8333-76e05c381f67
+            NotificationType:
+              type: string
+              description: The type of notification.
+              enum:
+                - LoyaltyPointsPendingToActive
     required: true

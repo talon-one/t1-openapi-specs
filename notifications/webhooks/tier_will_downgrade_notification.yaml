@@ -12,9 +12,6 @@ post:
       application/json:
         schema:
           type: object
-          required:
-            - TotalResultSize
-            - Data
           properties:
             TotalResultSize:
               type: integer
@@ -25,13 +22,6 @@ post:
               maxLength: 1000
               items:
                 type: object
-                required:
-                  - CustomerProfileID
-                  - LoyaltyProgramID
-                  - SubledgerID
-                  - CurrentTier
-                  - CurrentPoints
-                  - PointsRequiredToRemain
                 properties:
                   CustomerProfileID:
                     type: string
@@ -76,4 +66,9 @@ post:
                     format: date-time
                     description: The date and time the tier expires.
                     example: '2023-12-01T12:23:00+02:00'
+            NotificationType:
+              type: string
+              description: The type of notification.
+              enum:
+                - TierWillDowngrade
     required: true

@@ -12,9 +12,6 @@ post:
       application/json:
         schema:
           type: object
-          required:
-            - TotalResultSize
-            - Data
           properties:
             TotalResultSize:
               type: integer
@@ -25,12 +22,6 @@ post:
               maxLength: 1000
               items:
                 type: object
-                required:
-                  - ExpiryDate
-                  - LoyaltyProgramID
-                  - CustomerProfileID
-                  - AmountOfExpiringPoints
-                  - SubledgerID
                 properties:
                   ExpiryDate:
                     type: string
@@ -57,4 +48,9 @@ post:
                       The ID of the subledger within the loyalty program where
                       these points were added.
                     example: sub-123
+            NotificationType:
+              type: string
+              description: The type of notification.
+              enum:
+                - LoyaltyPointsExpiring
     required: true

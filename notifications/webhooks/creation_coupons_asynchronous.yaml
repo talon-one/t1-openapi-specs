@@ -30,11 +30,6 @@ post:
       application/json:
         schema:
           type: object
-          required:
-            - BatchID
-            - TypeOfChange
-            - Operation
-            - EmployeeName
           properties:
             BatchID:
               type: string
@@ -55,6 +50,9 @@ post:
               type: string
               description: ''
               example: Franziska Schneider
+            NotificationType:
+              type: string
+              description: The type of the notification
         example:
           TypeOfChange: campaign_manager
           Operation: AsyncCouponsCreated

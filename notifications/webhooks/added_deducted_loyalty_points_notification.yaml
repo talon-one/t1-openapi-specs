@@ -12,17 +12,6 @@ post:
       application/json:
         schema:
           type: object
-          required:
-            - ProfileIntegrationID
-            - LoyaltyProgramID
-            - SubledgerID
-            - Amount
-            - Reason
-            - TypeOfChange
-            - EmployeeName
-            - UserID
-            - Operation
-            - SessionIntegrationID
           properties:
             ProfileIntegrationID:
               type: string
@@ -101,4 +90,10 @@ post:
                 The integration ID of the session through which the points were
                 earned or lost.
               example: cc53e4fa-547f-4f5e-8333-76e05c381f67
+            NotificationType:
+              type: string
+              description: The type of notification.
+              enum:
+                - LoyaltyPointsDeducted
+                - LoyaltyPointsAdded
     required: true

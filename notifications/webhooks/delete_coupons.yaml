@@ -22,14 +22,6 @@ post:
       application/json:
         schema:
           type: object
-          required:
-            - TypeOfChange
-            - Operation
-            - EmployeeName
-            - BatchID
-            - ApplicationID
-            - CampaignID
-            - TotalResultSize
           properties:
             TypeOfChange:
               type: string
@@ -48,6 +40,9 @@ post:
             TotalResultSize:
               type: integer
               format: int64
+            NotificationType:
+              type: string
+              description: The type of the notification
         example:
           TypeOfChange: campaign_manager
           Operation: CouponsDeleted

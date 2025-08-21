@@ -13,8 +13,6 @@ post:
         schema:
           allOf:
             - type: object
-              required:
-                - TotalResultSize
               properties:
                 NotificationType:
                   type: string
@@ -24,16 +22,12 @@ post:
                   type: integer
                   description: The total size of the result set.
             - type: object
-              required:
-                - TotalResultSize
               properties:
                 Data:
                   type: array
                   items:
                     allOf:
                       - type: object
-                        required:
-                          - Event
                         properties:
                           Event:
                             description: >
@@ -45,18 +39,12 @@ post:
                             example: campaign_state_changed
                       - type: object
                         description: A notification regarding a collection that was edited.
-                        required:
-                          - campaign
-                          - collection
                         properties:
                           campaign:
                             type: object
                             description: The current campaign.
                             allOf:
                               - type: object
-                                required:
-                                  - id
-                                  - created
                                 properties:
                                   id:
                                     type: integer
@@ -68,8 +56,6 @@ post:
                                     description: The exact moment this entity was created.
                                     example: '2020-06-10T09:05:27.993483Z'
                               - type: object
-                                required:
-                                  - applicationId
                                 properties:
                                   applicationId:
                                     type: integer
@@ -78,8 +64,6 @@ post:
                                       entity.
                                     example: 322
                               - type: object
-                                required:
-                                  - userId
                                 properties:
                                   userId:
                                     type: integer
@@ -226,9 +210,6 @@ post:
                                         pattern: ^[A-Za-z0-9_#-]*$
                                         example: SUMMER-####-####
                                     additionalProperties: false
-                                    required:
-                                      - couponPattern
-                                      - validCharacters
                                   referralSettings:
                                     type: object
                                     properties:
@@ -290,9 +271,6 @@ post:
                                         pattern: ^[A-Za-z0-9_#-]*$
                                         example: SUMMER-####-####
                                     additionalProperties: false
-                                    required:
-                                      - couponPattern
-                                      - validCharacters
                                   limits:
                                     type: array
                                     description: >
@@ -301,10 +279,6 @@ post:
                                       for this campaign.
                                     items:
                                       type: object
-                                      required:
-                                        - action
-                                        - limit
-                                        - entities
                                       properties:
                                         action:
                                           type: string
@@ -393,22 +367,12 @@ post:
                                       - 1
                                       - 2
                                       - 3
-                                required:
-                                  - name
-                                  - state
-                                  - tags
-                                  - limits
-                                  - features
                               - type: object
                                 properties:
                                   budgets:
                                     type: array
                                     items:
                                       type: object
-                                      required:
-                                        - action
-                                        - limit
-                                        - counter
                                       properties:
                                         action:
                                           type: string
@@ -661,12 +625,6 @@ post:
                                     example:
                                       - 100
                                       - 215
-                                required:
-                                  - state
-                                  - description
-                                  - type
-                                  - frontendState
-                                  - storesImported
                               - type: object
                                 properties:
                                   revisionFrontendState:
@@ -723,9 +681,6 @@ post:
                             description: The current ruleset.
                             allOf:
                               - type: object
-                                required:
-                                  - id
-                                  - created
                                 properties:
                                   id:
                                     type: integer
@@ -737,8 +692,6 @@ post:
                                     description: The time this entity was created.
                                     example: '2020-06-10T09:05:27.993483Z'
                               - type: object
-                                required:
-                                  - userId
                                 properties:
                                   userId:
                                     type: integer
@@ -747,19 +700,12 @@ post:
                                       entity.
                                     example: 388
                               - type: object
-                                required:
-                                  - rules
-                                  - bindings
                                 properties:
                                   rules:
                                     type: array
                                     description: Set of rules to apply.
                                     items:
                                       type: object
-                                      required:
-                                        - title
-                                        - condition
-                                        - effects
                                       properties:
                                         id:
                                           type: string
@@ -796,9 +742,6 @@ post:
                                             is decided by the position in the array.
                                           items:
                                             type: object
-                                            required:
-                                              - name
-                                              - expression
                                             properties:
                                               name:
                                                 type: string
@@ -904,10 +847,6 @@ post:
                                     description: Set of rules to apply for strikethrough.
                                     items:
                                       type: object
-                                      required:
-                                        - title
-                                        - condition
-                                        - effects
                                       properties:
                                         id:
                                           type: string
@@ -944,9 +883,6 @@ post:
                                             is decided by the position in the array.
                                           items:
                                             type: object
-                                            required:
-                                              - name
-                                              - expression
                                             properties:
                                               name:
                                                 type: string
@@ -1058,9 +994,6 @@ post:
                                       position in the array.
                                     items:
                                       type: object
-                                      required:
-                                        - name
-                                        - expression
                                       properties:
                                         name:
                                           type: string
@@ -1170,9 +1103,6 @@ post:
                             description: The collection that was edited.
                             allOf:
                               - type: object
-                                required:
-                                  - id
-                                  - created
                                 properties:
                                   id:
                                     type: integer
@@ -1184,8 +1114,6 @@ post:
                                     description: The time this entity was created.
                                     example: '2020-06-10T09:05:27.993483Z'
                               - type: object
-                                required:
-                                  - accountId
                                 properties:
                                   accountId:
                                     type: integer
@@ -1194,8 +1122,6 @@ post:
                                       entity.
                                     example: 3886
                               - type: object
-                                required:
-                                  - modified
                                 properties:
                                   modified:
                                     type: string
@@ -1223,8 +1149,6 @@ post:
                                         items:
                                           type: integer
                                   - type: object
-                                    required:
-                                      - name
                                     properties:
                                       name:
                                         type: string
@@ -1233,8 +1157,6 @@ post:
                                         description: The name of this collection.
                                         example: My collection
                               - type: object
-                                required:
-                                  - createdBy
                                 properties:
                                   modifiedBy:
                                     type: integer

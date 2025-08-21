@@ -23,13 +23,6 @@ post:
       application/json:
         schema:
           type: object
-          required:
-            - BatchID
-            - ApplicationID
-            - CampaignID
-            - TypeOfChange
-            - Operation
-            - EmployeeName
           properties:
             BatchID:
               type: string
@@ -45,6 +38,9 @@ post:
               type: string
             EmployeeName:
               type: string
+            NotificationType:
+              type: string
+              description: The type of the notification
         example:
           TypeOfChange: campaign_manager
           Operation: CouponsUpdated
