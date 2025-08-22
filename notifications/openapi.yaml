@@ -28,13 +28,14 @@ tags:
       campaign change:
 
       - `CampaignNotification` signifies one of the following events:
-        - [Campaign created](#tag/Campaign-notifications/paths/campaign_created/post)
-        - [Campaign state changed](#tag/Campaign-notifications/paths/campaign_state_changed/post)
-        - [Campaign rules changed](#tag/Campaign-notifications/paths/campaign_rusleset_changed/post)
-        - [Campaign edited](#tag/Campaign-notifications/paths/campaign_edited/post)
-        - [Campaign deleted](#tag/Campaign-notifications/paths/campaign_deleted/post)
+        - [Campaign created](#tag/Campaign-notifications/operation/campaignCreatedNotification)
+        - [Campaign state changed](#tag/Campaign-notifications/operation/campaignStateChangedNotification)
+        - [Campaign rules changed](#tag/Campaign-notifications/operation/campaignRulesetChangedNotification)
+        - [Campaign edited](#tag/Campaign-notifications/operation/campaignEditedNotification)
+        - [Campaign collection edited](#tag/Campaign-notifications/operation/campaignCollectionEditedNotification)
+        - [Campaign deleted](#tag/Campaign-notifications/operation/campaignDeletedNotification)
       - `CampaignEvaluationTreeChanged` signifies [Campaign evaluation tree
-      changed](#tag/Campaign-notifications/paths/campaign_evaluation_tree_changed/post).
+      changed](#tag/Campaign-notifications/operation/campaignEvaluationTreeChangedNotification).
   - name: Coupon notifications
     description: >
       Represents the
