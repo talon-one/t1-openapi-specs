@@ -23,12 +23,15 @@ post:
           properties:
             TypeOfChange:
               type: string
+              example: campaign_manager
               description: The type of change that occurred.
             Operation:
               type: string
+              example: CouponUpdated
               description: The operation performed.
             EmployeeName:
               type: string
+              example: Franziska Schneider
               description: The name of the employee associated with the operation.
             data:
               type: array
@@ -258,5 +261,6 @@ post:
               example: 1
             NotificationType:
               type: string
+              example: CouponUpdated
               description: The type of the notification
     required: true
