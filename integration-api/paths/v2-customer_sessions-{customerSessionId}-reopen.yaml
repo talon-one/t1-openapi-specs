@@ -1441,7 +1441,6 @@ put:
                                       ledger entries.
                                     required:
                                       - transactionUUID
-                                      - previousExpiryDate
                                       - newExpiryDate
                                     properties:
                                       transactionUUID:

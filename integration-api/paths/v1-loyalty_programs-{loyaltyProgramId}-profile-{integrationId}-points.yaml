@@ -127,6 +127,31 @@ get:
       example: 100
       schema:
         type: integer
+    - name: sort
+      in: query
+      required: false
+      description: >
+        The field by which results should be sorted. You can enter one of the
+        following values:
+
+
+        - `startDate`: Sorts the results by the start date of the points.
+
+        - `expiryDate`: Sorts the results by the expiry date of the points.
+
+
+        By default, results are sorted in ascending order. 
+
+        To sort them in descending order, prefix the field name with `-`.
+
+
+        **Note:** You can only sort by one field at a time.
+      example: startDate
+      schema:
+        type: string
+        enum:
+          - startDate
+          - expiryDate
   responses:
     '200':
       description: OK

@@ -477,6 +477,12 @@ put:
                                   format: float
                                   description: The value of this price type.
                                   example: 90
+                                adjustmentContextId:
+                                  type: string
+                                  description: >-
+                                    The context identifier of the selected price
+                                    adjustment.
+                                  example: summer25
                                 adjustmentReferenceId:
                                   type: string
                                   format: uuid
@@ -1003,6 +1009,12 @@ put:
                                         format: float
                                         description: The value of this price type.
                                         example: 90
+                                      adjustmentContextId:
+                                        type: string
+                                        description: >-
+                                          The context identifier of the selected
+                                          price adjustment.
+                                        example: summer25
                                       adjustmentReferenceId:
                                         type: string
                                         format: uuid
@@ -4680,7 +4692,6 @@ put:
                                       ledger entries.
                                     required:
                                       - transactionUUID
-                                      - previousExpiryDate
                                       - newExpiryDate
                                     properties:
                                       transactionUUID:
@@ -5932,6 +5943,12 @@ get:
                                         format: float
                                         description: The value of this price type.
                                         example: 90
+                                      adjustmentContextId:
+                                        type: string
+                                        description: >-
+                                          The context identifier of the selected
+                                          price adjustment.
+                                        example: summer25
                                       adjustmentReferenceId:
                                         type: string
                                         format: uuid
@@ -7442,7 +7459,6 @@ get:
                                       ledger entries.
                                     required:
                                       - transactionUUID
-                                      - previousExpiryDate
                                       - newExpiryDate
                                     properties:
                                       transactionUUID:

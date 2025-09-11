@@ -136,6 +136,15 @@ get:
       required: false
       schema:
         type: string
+    - name: effectType
+      in: query
+      description: >-
+        The type of effect that was triggered. See [API
+        effects](https://docs.talon.one/docs/dev/integration-api/api-effects).
+      example: rejectCoupon
+      required: false
+      schema:
+        type: string
     - name: applicationId
       in: path
       required: true
@@ -1663,7 +1672,6 @@ get:
                                                 ledger entries.
                                               required:
                                                 - transactionUUID
-                                                - previousExpiryDate
                                                 - newExpiryDate
                                               properties:
                                                 transactionUUID:
