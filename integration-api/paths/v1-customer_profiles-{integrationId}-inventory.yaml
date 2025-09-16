@@ -1634,6 +1634,12 @@ get:
 
 
                             **Note:** It is an RFC3339 timestamp string.
+                        achievementAllowRollbackAfterCompletion:
+                          type: boolean
+                          description: >-
+                            When `true`, customer progress can be rolled back in
+                            completed achievements.
+                          example: false
     '401':
       description: Unauthorized - Invalid API key
       content:

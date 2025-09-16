@@ -238,6 +238,12 @@ post:
 
 
                     **Note:** It must be an RFC3339 timestamp string.
+                allowRollbackAfterCompletion:
+                  type: boolean
+                  description: >-
+                    When `true`, customer progress can be rolled back in
+                    completed achievements.
+                  example: false
             - type: object
               required:
                 - name
@@ -478,6 +484,12 @@ post:
 
 
                           **Note:** It must be an RFC3339 timestamp string.
+                      allowRollbackAfterCompletion:
+                        type: boolean
+                        description: >-
+                          When `true`, customer progress can be rolled back in
+                          completed achievements.
+                        example: false
                   - type: object
                     required:
                       - name
@@ -947,6 +959,12 @@ get:
 
                                 **Note:** It must be an RFC3339 timestamp
                                 string.
+                            allowRollbackAfterCompletion:
+                              type: boolean
+                              description: >-
+                                When `true`, customer progress can be rolled
+                                back in completed achievements.
+                              example: false
                         - type: object
                           required:
                             - name

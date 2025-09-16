@@ -38,7 +38,8 @@ info:
     <SecurityDefinitions />
 servers:
   - url: https://yourbaseurl.talon.one
-security: []
+security:
+  - api_key_v1: []
 tags:
   - name: Achievements
     description: >
