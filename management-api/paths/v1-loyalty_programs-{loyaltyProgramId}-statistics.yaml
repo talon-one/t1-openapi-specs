@@ -51,6 +51,7 @@ get:
               - totalPendingPoints
               - totalSpentPoints
               - totalExpiredPoints
+              - totalNegativePoints
               - totalMembers
               - newMembers
               - spentPoints
@@ -76,6 +77,10 @@ get:
                 type: number
                 description: Total of expired points for this loyalty program.
                 example: 1156
+              totalNegativePoints:
+                type: number
+                description: Total of negative points for this loyalty program.
+                example: 32
               totalMembers:
                 type: number
                 description: Number of loyalty program members.
