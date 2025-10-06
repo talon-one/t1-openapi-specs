@@ -148,8 +148,8 @@ get:
                         loyaltyMemberships:
                           type: array
                           description: >
-                            **DEPRECATED** A list of loyalty programs joined by
-                            the customer.
+                            **DEPRECATED. Always returns `null`.** A list of
+                            loyalty programs joined by the customer.
                           items:
                             type: object
                             required:
@@ -171,6 +171,7 @@ get:
                                   this entity.
                                 example: 323414846
                           title: Loyalty programed joined
+                          example: null
                         audienceMemberships:
                           type: array
                           description: The audiences the customer belongs to.

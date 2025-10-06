@@ -203,6 +203,9 @@ get:
                                     '5': >-
                                       Campaign access group manager permission
                                       set
+                                account:
+                                  type: string
+                                  description: Name of the account-level permission set
                         members:
                           type: array
                           items:

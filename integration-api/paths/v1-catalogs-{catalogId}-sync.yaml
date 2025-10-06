@@ -316,32 +316,14 @@ put:
                 required:
                   - type
                   - payload
-                properties:
-                  type:
-                    type: string
-                    enum:
-                      - ADD
-                      - PATCH
-                      - PATCH_MANY
-                      - REMOVE
-                      - REMOVE_MANY
-                      - ADD_PRICE_ADJUSTMENT
-                    description: The type of sync action.
-                    example: ADD
-                  payload:
-                    description: The payload of sync action.
-                    example:
-                      sku: T123
-                      attributes:
-                        type: shoes
-                        color: blue
-                      replaceIfExists: true
-                    type: object
-                    oneOf:
-                      - type: object
-                        description: >
-                          The specific properties of the "ADD" catalog sync
-                          action.
+                oneOf:
+                  - properties:
+                      type:
+                        const: ADD
+                        description: The type of sync action.
+                      payload:
+                        description: The payload of sync action.
+                        type: object
                         required:
                           - sku
                         properties:
@@ -383,7 +365,22 @@ put:
                                 - If you do not provide a new `price` value, the existing `price` value is retained.
                                 - If you do not provide a new `product` value, the `product` value is set to `null`.
                             example: false
-                      - type: object
+                    required:
+                      - type
+                      - payload
+                    example:
+                      type: ADD
+                      payload:
+                        sku: T123
+                        attributes:
+                          type: shoes
+                          color: blue
+                        replaceIfExists: true
+                  - properties:
+                      type:
+                        const: PATCH
+                      payload:
+                        type: object
                         description: >
                           The specific properties of the "PATCH" catalog sync
                           action.
@@ -423,7 +420,14 @@ put:
                             description: >-
                               Indicates whether to create an item if the SKU
                               does not exist.
-                      - type: object
+                    required:
+                      - type
+                      - payload
+                  - properties:
+                      type:
+                        const: PATCH_MANY
+                      payload:
+                        type: object
                         description: >-
                           The specific properties of the "PATCH_MANY" catalog
                           sync action.
@@ -469,7 +473,14 @@ put:
                           attributes:
                             type: object
                             description: The attributes of the items to patch.
-                      - type: object
+                    required:
+                      - type
+                      - payload
+                  - properties:
+                      type:
+                        const: REMOVE
+                      payload:
+                        type: object
                         description: >-
                           The specific properties of the "REMOVE" catalog sync
                           action.
@@ -479,7 +490,14 @@ put:
                           sku:
                             type: string
                             description: The unique SKU of the item to remove.
-                      - type: object
+                    required:
+                      - type
+                      - payload
+                  - properties:
+                      type:
+                        const: REMOVE_MANY
+                      payload:
+                        type: object
                         description: >-
                           The specific properties of the "REMOVE_MANY" catalog
                           sync action.
@@ -518,7 +536,14 @@ put:
 
                               **Note:** Every item in the catalog will be
                               removed if there are no filters.
-                      - type: object
+                    required:
+                      - type
+                      - payload
+                  - properties:
+                      type:
+                        const: ADD_PRICE_ADJUSTMENT
+                      payload:
+                        type: object
                         description: >
                           The specific properties of the "ADD_PRICE_ADJUSTMENT"
                           catalog sync action.
@@ -593,6 +618,9 @@ put:
                                     Identifier of the context of this price
                                     adjustment (e.g. summer sale).
                                   example: Summer2025
+                    required:
+                      - type
+                      - payload
             version:
               type: integer
               minimum: 1
