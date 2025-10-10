@@ -96,8 +96,8 @@ get:
                     type: string
                     description: >
                       The default duration of the pending time after which
-                      points should be valid. Can be 'immediate' or a specific
-                      time.
+                      points should be valid. Accepted values: 'immediate',
+                      'on_action' or a specific time.
 
                       The time format is a number followed by one letter
                       indicating the time unit, like '30s', '40m', '1h', '5D',
