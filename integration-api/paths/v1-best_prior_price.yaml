@@ -92,7 +92,7 @@ post:
                 - sku
                 - observedAt
                 - price
-                - adjustmentAssociationId
+                - contextId
                 - metadata
                 - target
               properties:
@@ -105,11 +105,11 @@ post:
                   format: date-time
                   description: The date and time when the best price was observed.
                   example: '2020-11-10T23:00:00Z'
-                adjustmentAssociationId:
+                contextId:
                   type: string
                   description: >
-                    The association ID of the adjustment context active at the
-                    time of observation.
+                    The context ID of the context active at the time of
+                    observation.
                   example: Summer Sale 2007
                 price:
                   type: number
