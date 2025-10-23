@@ -782,6 +782,7 @@ get:
                                               added.
                                             type: string
                                             maxLength: 108
+                                            minLength: 4
                                             pattern: ^[A-Za-z0-9_-]*$
                                             example: summer-loyalty-card-0543
                                           bundleIndex:
@@ -851,6 +852,7 @@ get:
                                               added.
                                             type: string
                                             maxLength: 108
+                                            minLength: 4
                                             pattern: ^[A-Za-z0-9_-]*$
                                             example: summer-loyalty-card-0543
                                       - type: object
@@ -1124,6 +1126,7 @@ get:
                                               originally added.
                                             type: string
                                             maxLength: 108
+                                            minLength: 4
                                             pattern: ^[A-Za-z0-9_-]*$
                                             example: summer-loyalty-card-0543
                                       - type: object
@@ -1189,6 +1192,7 @@ get:
                                               added.
                                             type: string
                                             maxLength: 108
+                                            minLength: 4
                                             pattern: ^[A-Za-z0-9_-]*$
                                             example: summer-loyalty-card-0543
                                       - type: object

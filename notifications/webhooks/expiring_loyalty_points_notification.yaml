@@ -53,4 +53,13 @@ post:
               description: The type of notification.
               enum:
                 - LoyaltyPointsExpiring
+        example:
+          TotalResultSize: 1
+          Data:
+            - ExpiryDate: '2019-08-24'
+              LoyaltyProgramID: 5
+              CustomerProfileID: URNGV8294NV
+              AmountOfExpiringPoints: 10.99
+              SubledgerID: sub-123
+          NotificationType: LoyaltyPointsExpiring
     required: true

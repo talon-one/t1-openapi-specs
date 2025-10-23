@@ -66,4 +66,15 @@ post:
               description: The type of notification.
               enum:
                 - LoyaltyPointsPendingToActive
+        example:
+          TotalResultSize: 1
+          Data:
+            - LoyaltyProgramID: 5
+              SubledgerID: SL001
+              CustomerProfileID: URNGV8294NV
+              Points: 10.99
+              ActiveOn: '2023-08-20T12:22:00+02:00'
+              ExpireOn: '2023-09-01T12:23:00+02:00'
+              SessionIntegrationID: cc53e4fa-547f-4f5e-8333-76e05c381f67
+          NotificationType: LoyaltyPointsPendingToActive
     required: true

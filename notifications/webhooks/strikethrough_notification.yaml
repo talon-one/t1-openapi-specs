@@ -311,6 +311,8 @@ post:
             NotificationType:
               type: string
               description: The type of the notification
+              enum:
+                - StrikethroughPrice
         examples:
           StrikethroughNotification:
             value:

@@ -1654,6 +1654,7 @@ put:
                               description: |
                                 The alphanumeric identifier of the loyalty card.
                               maxLength: 108
+                              minLength: 4
                               pattern: ^[A-Za-z0-9_-]*$
                               example: summer-loyalty-card-0543
                             usersPerCardLimit:
@@ -2002,6 +2003,7 @@ put:
                               example: summer-loyalty-card-0543
                               type: string
                               maxLength: 108
+                              minLength: 4
                               pattern: ^[A-Za-z0-9_-]*$
                             newCardIdentifier:
                               description: >-
@@ -2010,6 +2012,7 @@ put:
                               example: autumn-loyalty-card-5822
                               type: string
                               maxLength: 108
+                              minLength: 4
                               pattern: ^[A-Za-z0-9_-]*$
                             batchId:
                               description: >-
@@ -3846,6 +3849,7 @@ put:
                                   description: The card on which these points were added.
                                   type: string
                                   maxLength: 108
+                                  minLength: 4
                                   pattern: ^[A-Za-z0-9_-]*$
                                   example: summer-loyalty-card-0543
                                 bundleIndex:
@@ -3910,6 +3914,7 @@ put:
                                   description: The card on which these points were added.
                                   type: string
                                   maxLength: 108
+                                  minLength: 4
                                   pattern: ^[A-Za-z0-9_-]*$
                                   example: summer-loyalty-card-0543
                             - type: object
@@ -4169,6 +4174,7 @@ put:
                                     originally added.
                                   type: string
                                   maxLength: 108
+                                  minLength: 4
                                   pattern: ^[A-Za-z0-9_-]*$
                                   example: summer-loyalty-card-0543
                             - type: object
@@ -4229,6 +4235,7 @@ put:
                                   description: The card on which these points were added.
                                   type: string
                                   maxLength: 108
+                                  minLength: 4
                                   pattern: ^[A-Za-z0-9_-]*$
                                   example: summer-loyalty-card-0543
                             - type: object
@@ -6613,6 +6620,7 @@ get:
                                   description: The card on which these points were added.
                                   type: string
                                   maxLength: 108
+                                  minLength: 4
                                   pattern: ^[A-Za-z0-9_-]*$
                                   example: summer-loyalty-card-0543
                                 bundleIndex:
@@ -6677,6 +6685,7 @@ get:
                                   description: The card on which these points were added.
                                   type: string
                                   maxLength: 108
+                                  minLength: 4
                                   pattern: ^[A-Za-z0-9_-]*$
                                   example: summer-loyalty-card-0543
                             - type: object
@@ -6936,6 +6945,7 @@ get:
                                     originally added.
                                   type: string
                                   maxLength: 108
+                                  minLength: 4
                                   pattern: ^[A-Za-z0-9_-]*$
                                   example: summer-loyalty-card-0543
                             - type: object
@@ -6996,6 +7006,7 @@ get:
                                   description: The card on which these points were added.
                                   type: string
                                   maxLength: 108
+                                  minLength: 4
                                   pattern: ^[A-Za-z0-9_-]*$
                                   example: summer-loyalty-card-0543
                             - type: object

@@ -293,6 +293,8 @@ post:
             NotificationType:
               type: string
               description: The type of the not
+              enum:
+                - CouponCreated
         examples:
           LessThan1000Coupons:
             value:

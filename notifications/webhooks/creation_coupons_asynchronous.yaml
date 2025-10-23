@@ -53,6 +53,8 @@ post:
             NotificationType:
               type: string
               description: The type of the notification
+              enum:
+                - AsyncCouponsCreated
         example:
           TypeOfChange: campaign_manager
           Operation: AsyncCouponsCreated

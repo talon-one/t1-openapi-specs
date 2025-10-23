@@ -51,16 +51,6 @@ tags:
       For example, you can use achievements to award your customers when they
       purchase five cups of coffee in one week or when they purchase items worth
       $3000 in three months.
-  - name: Attributes
-    description: >
-      Represents a piece of information related to one of the entities avaialbe
-      in the Campaign Manager. Use
-
-      them to create highly customized rules.
-
-
-      See the
-      [docs](https://docs.talon.one/docs/product/account/dev-tools/managing-attributes).
   - name: Audiences
     description: >
       Represents lists of customer profiles that allow you to target specific

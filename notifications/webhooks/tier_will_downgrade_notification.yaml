@@ -71,4 +71,16 @@ post:
               description: The type of notification.
               enum:
                 - TierWillDowngrade
+        example:
+          TotalResultSize: 1
+          Data:
+            - CustomerProfileID: URNGV8294NV
+              LoyaltyProgramID: 5
+              SubledgerID: SL001
+              CurrentTier: Silver
+              CurrentPoints: 120.55
+              PointsRequiredToRemain: 23.51
+              NextTier: Bronze
+              TierExpirationDate: '2023-12-01T12:23:00+02:00'
+          NotificationType: TierWillDowngrade
     required: true

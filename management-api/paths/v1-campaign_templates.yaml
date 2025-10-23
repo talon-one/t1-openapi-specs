@@ -511,6 +511,10 @@ get:
                             - 1
                             - 2
                             - 3
+                        campaignsCount:
+                          description: The number of Campaigns created from this template.
+                          type: integer
+                          example: 3
                         updated:
                           type: string
                           format: date-time

@@ -26,6 +26,8 @@ post:
                   type: string
                   description: The type of the notification
                   example: CampaignNotification
+                  enum:
+                    - CampaignNotification
                 TotalResultSize:
                   type: integer
                   description: The total size of the result set.
@@ -446,4 +448,42 @@ post:
                                       Name of the user who last updated this
                                       campaign set, if available.
                                     example: Jane Doe
+        example:
+          NotificationType: CampaignNotification
+          TotalResultSize: 0
+          data:
+            - event: string
+              applicationId: 78
+              oldEvaluationTree:
+                applicationId: 322
+                id: 6
+                version: 3
+                set:
+                  type: SET
+                  name: name
+                  operator: ALL
+                  elements:
+                    - type: type
+                  groupId: 0
+                  locked: true
+                  description: string
+                  evaluationMode: stackable
+                  evaluationScope: cartItem
+                updatedBy: Jane Doe
+              evaluationTree:
+                applicationId: 322
+                id: 6
+                version: 3
+                set:
+                  type: SET
+                  name: name
+                  operator: ALL
+                  elements:
+                    - type: type
+                  groupId: 0
+                  locked: true
+                  description: string
+                  evaluationMode: stackable
+                  evaluationScope: cartItem
+                updatedBy: Jane Doe
     required: true

@@ -45,6 +45,7 @@ get:
       required: true
       schema:
         type: string
+        minLength: 4
         maxLength: 108
     - name: status
       in: query

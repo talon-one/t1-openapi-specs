@@ -96,4 +96,18 @@ post:
               enum:
                 - LoyaltyPointsDeducted
                 - LoyaltyPointsAdded
+        example:
+          ProfileIntegrationID: URNGV8294NV
+          LoyaltyProgramID: 5
+          SubledgerID: sub-123
+          Amount: 10.99
+          Reason: Compensation
+          TypeOfChange: campaign_manager
+          EmployeeName: Franziska Schneider
+          UserID: 25
+          Operation: addition
+          StartDate: '2023-01-24T14:15:22Z'
+          ExpiryDate: '2024-01-24T14:15:22Z'
+          SessionIntegrationID: cc53e4fa-547f-4f5e-8333-76e05c381f67
+          NotificationType: LoyaltyPointsDeducted
     required: true

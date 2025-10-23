@@ -263,4 +263,15 @@ post:
               type: string
               example: CouponUpdated
               description: The type of the notification
+              enum:
+                - CouponUpdated
+                - CouponDeleted
+        example:
+          TypeOfChange: campaign_manager
+          Operation: CouponsUpdated
+          EmployeeName: Franziska Schneider
+          NotificationType: CouponsUpdated
+          BatchID: nqylhnni
+          ApplicationID: 5
+          CampaignID: 3
     required: true

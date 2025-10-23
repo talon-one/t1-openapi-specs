@@ -6,7 +6,7 @@ post:
     Returns the best prior price based on historical pricing data for the
     specified SKUs within a defined timeframe.
   tags:
-    - Attributes
+    - Catalogs
   requestBody:
     content:
       application/json:

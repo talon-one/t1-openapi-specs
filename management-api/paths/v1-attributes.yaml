@@ -401,6 +401,42 @@ get:
       example: entity1
       schema:
         type: string
+    - name: applicationIds
+      in: query
+      required: false
+      description: Returned attributes will be filtered by supplied application ids
+      example: 1,2,3
+      schema:
+        type: string
+    - name: type
+      in: query
+      required: false
+      description: Returned attributes will be filtered by supplied type
+      example: string
+      schema:
+        type: string
+    - name: kind
+      in: query
+      required: false
+      description: >-
+        Returned attributes will be filtered by supplied kind (builtin or
+        custom)
+      example: builtin
+      schema:
+        type: string
+        enum:
+          - builtin
+          - custom
+        x-generate-enum-go: true
+    - name: search
+      in: query
+      required: false
+      description: >-
+        Returned attributes will be filtered by searching case insensitive
+        through Attribute name, description and type
+      example: string
+      schema:
+        type: string
   responses:
     '200':
       description: OK

@@ -65,8 +65,8 @@ webhooks:
     $ref: webhooks/campaign_created.yaml
   campaign_state_changed:
     $ref: webhooks/campaign_state_changed.yaml
-  campaign_rusleset_changed:
-    $ref: webhooks/campaign_rusleset_changed.yaml
+  campaign_ruleset_changed:
+    $ref: webhooks/campaign_ruleset_changed.yaml
   campaign_edited:
     $ref: webhooks/campaign_edited.yaml
   campaign_collection_edited:

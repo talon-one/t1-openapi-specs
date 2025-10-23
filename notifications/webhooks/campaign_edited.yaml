@@ -18,6 +18,8 @@ post:
                   type: string
                   description: The type of the notification
                   example: CampaignNotification
+                  enum:
+                    - CampaignNotification
                 TotalResultSize:
                   type: integer
                   description: The total size of the result set.
@@ -1735,4 +1737,239 @@ post:
                                       Timestamp indicating when this Ruleset was
                                       activated.
                   description: A list of campaign notification data.
+        example:
+          NotificationType: CampaignNotification
+          TotalResultSize: 0
+          Data:
+            - Event: campaign_state_changed
+              campaign:
+                id: 4
+                created: '2020-06-10T09:05:27.993483Z'
+                applicationId: 322
+                userId: 388
+                name: Summer promotions
+                description: Campaign for all summer 2021 promotions
+                startTime: '2021-07-20T22:00:00Z'
+                endTime: '2021-09-22T22:00:00Z'
+                attributes: {}
+                state: enabled
+                activeRulesetId: 6
+                tags:
+                  - summer
+                features:
+                  - coupons
+                  - referrals
+                couponSettings:
+                  validCharacters:
+                    - A
+                    - B
+                    - C
+                  couponPattern: SUMMER-####-####
+                referralSettings:
+                  validCharacters:
+                    - A
+                    - B
+                    - C
+                  couponPattern: SUMMER-####-####
+                limits:
+                  - action: createCoupon
+                    limit: 1000
+                    period: yearly
+                    entities:
+                      - Coupon
+                campaignGroups:
+                  - 1
+                  - 3
+                type: advanced
+                linkedStoreIds:
+                  - 1
+                  - 2
+                  - 3
+                budgets:
+                  - action: createCoupon
+                    limit: 1000
+                    counter: 42
+                couponRedemptionCount: 163
+                referralRedemptionCount: 3
+                discountCount: 288
+                discountEffectCount: 343
+                couponCreationCount: 16
+                customEffectCount: 0
+                referralCreationCount: 8
+                addFreeItemEffectCount: 0
+                awardedGiveawaysCount: 9
+                createdLoyaltyPointsCount: 9
+                createdLoyaltyPointsEffectCount: 2
+                redeemedLoyaltyPointsCount: 8
+                redeemedLoyaltyPointsEffectCount: 9
+                callApiEffectCount: 0
+                reservecouponEffectCount: 9
+                lastActivity: '2022-11-10T23:00:00Z'
+                updated: '2022-10-97T35:00:00Z'
+                createdBy: John Doe
+                updatedBy: Jane Doe
+                templateId: 3
+                frontendState: running
+                storesImported: true
+                valueMapsIds:
+                  - 100
+                  - 215
+                revisionFrontendState: revised
+                activeRevisionId: 6
+                activeRevisionVersionId: 6
+                version: 6
+                currentRevisionId: 6
+                currentRevisionVersionId: 6
+                stageRevision: false
+              oldCampaign:
+                id: 4
+                created: '2020-06-10T09:05:27.993483Z'
+                applicationId: 322
+                userId: 388
+                name: Summer promotions
+                description: Campaign for all summer 2021 promotions
+                startTime: '2021-07-20T22:00:00Z'
+                endTime: '2021-09-22T22:00:00Z'
+                attributes: {}
+                state: enabled
+                activeRulesetId: 6
+                tags:
+                  - summer
+                features:
+                  - coupons
+                  - referrals
+                couponSettings:
+                  validCharacters:
+                    - A
+                    - B
+                    - C
+                  couponPattern: SUMMER-####-####
+                referralSettings:
+                  validCharacters:
+                    - A
+                    - B
+                    - C
+                  couponPattern: SUMMER-####-####
+                limits:
+                  - action: createCoupon
+                    limit: 1000
+                    period: yearly
+                    entities:
+                      - Coupon
+                campaignGroups:
+                  - 1
+                  - 3
+                type: advanced
+                linkedStoreIds:
+                  - 1
+                  - 2
+                  - 3
+                budgets:
+                  - action: createCoupon
+                    limit: 1000
+                    counter: 42
+                couponRedemptionCount: 163
+                referralRedemptionCount: 3
+                discountCount: 288
+                discountEffectCount: 343
+                couponCreationCount: 16
+                customEffectCount: 0
+                referralCreationCount: 8
+                addFreeItemEffectCount: 0
+                awardedGiveawaysCount: 9
+                createdLoyaltyPointsCount: 9
+                createdLoyaltyPointsEffectCount: 2
+                redeemedLoyaltyPointsCount: 8
+                redeemedLoyaltyPointsEffectCount: 9
+                callApiEffectCount: 0
+                reservecouponEffectCount: 9
+                lastActivity: '2022-11-10T23:00:00Z'
+                updated: '2022-10-97T35:00:00Z'
+                createdBy: John Doe
+                updatedBy: Jane Doe
+                templateId: 3
+                frontendState: running
+                storesImported: true
+                valueMapsIds:
+                  - 100
+                  - 215
+                revisionFrontendState: revised
+                activeRevisionId: 6
+                activeRevisionVersionId: 6
+                version: 6
+                currentRevisionId: 6
+                currentRevisionVersionId: 6
+                stageRevision: false
+              ruleset:
+                id: 6
+                created: '2020-06-10T09:05:27.993483Z'
+                userId: 388
+                rules:
+                  - id: 7fa800a8-ac8d-4792-85dc-c4650dcc8f23
+                    parentId: 7fa800a8-ac8d-4792-85dc-c4650dcc8f23
+                    title: Give discount via coupon
+                    description: Creates a discount when a coupon is valid
+                    bindings:
+                      - name: my property
+                        type: templateParameter
+                        expression:
+                          - string1
+                          - string2
+                        valueType: string
+                        minValue: 0
+                        maxValue: 19.9
+                        attributeId: 100
+                        description: This is a template parameter of type `number`.
+                    condition:
+                      - and
+                      - - couponValid
+                    effects:
+                      - catch
+                      - - noop
+                      - - setDiscount
+                        - 10% off
+                        - - '*'
+                          - - .
+                            - Session
+                            - Total
+                          - - /
+                            - 10
+                            - 100
+                strikethroughRules:
+                  - id: 7fa800a8-ac8d-4792-85dc-c4650dcc8f23
+                    parentId: 7fa800a8-ac8d-4792-85dc-c4650dcc8f23
+                    title: Give discount via coupon
+                    description: Creates a discount when a coupon is valid
+                    bindings:
+                      - name: my property
+                        type: templateParameter
+                        expression:
+                          - string1
+                          - string2
+                        valueType: string
+                        minValue: 0
+                        maxValue: 19.9
+                        attributeId: 100
+                        description: This is a template parameter of type `number`.
+                    condition:
+                      - and
+                      - - couponValid
+                    effects:
+                      - catch
+                      - - noop
+                      - - setDiscount
+                        - 10% off
+                        - - '*'
+                          - - .
+                            - Session
+                            - Total
+                          - - /
+                            - 10
+                            - 100
+                bindings: []
+                rbVersion: v2
+                activate: true
+                campaignId: 320
+                templateId: 3
+                activatedAt: '2019-08-24T14:15:22Z'
     required: true

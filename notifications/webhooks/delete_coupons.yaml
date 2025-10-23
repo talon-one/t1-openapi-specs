@@ -43,6 +43,8 @@ post:
             NotificationType:
               type: string
               description: The type of the notification
+              enum:
+                - CouponsDeleted
         example:
           TypeOfChange: campaign_manager
           Operation: CouponsDeleted

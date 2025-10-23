@@ -88,4 +88,18 @@ post:
               description: The type of notification.
               enum:
                 - CouponCodeExpiring
+        example:
+          TotalResultSize: 1
+          Data:
+            - CouponValue: XMAS-20-2021
+              CreatedDate: '2024-07-24T14:15:22Z'
+              ValidFrom: '2024-10-24T14:15:22Z'
+              ValidUntil: '2024-12-24T14:15:22Z'
+              CampaignId: 3
+              CustomerProfileId: URNGV8294NV
+              UsageLimit: 100
+              UsageCounter: 10
+              BatchId: 32535-43255
+              Attributes: {}
+          NotificationType: CouponCodeExpiring
     required: true

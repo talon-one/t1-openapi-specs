@@ -110,4 +110,22 @@ post:
                 The max amount of user profiles with whom a card can be shared.
                 This can be set to `0` for no limit.
               example: 10
+        example:
+          ProfileIntegrationIDs:
+            - yJSObdNNtOetCHWHPFuz
+            - test-user-4zoj1c
+          LoyaltyProgramID: 5
+          SubledgerID: sub-123
+          Amount: 10.99
+          Reason: Compensation
+          TypeOfChange: campaign_manager
+          EmployeeName: Franziska Schneider
+          UserID: 25
+          Operation: addition
+          StartDate: '2023-01-24T14:15:22Z'
+          ExpiryDate: '2024-01-24T14:15:22Z'
+          SessionIntegrationID: cc53e4fa-547f-4f5e-8333-76e05c381f67
+          NotificationType: LoyaltyCardPointsDeducted
+          CardIdentifier: 123-456-789ATBC
+          UsersPerCardLimit: 10
     required: true

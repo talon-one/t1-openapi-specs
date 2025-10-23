@@ -66,4 +66,16 @@ post:
               description: The type of notification.
               enum:
                 - LoyaltyCardPointsExpiring
+        example:
+          TotalResultSize: 1
+          Data:
+            - ExpiryDate: '2019-08-24'
+              LoyaltyProgramID: 5
+              AmountOfExpiringPoints: 10.99
+              SubledgerID: sub-123
+              CardIdentifier: summer-loyalty-card-0543
+              UsersPerCardLimit: 5
+              Profiles:
+                - URNGV8294NV
+          NotificationType: LoyaltyCardPointsExpiring
     required: true

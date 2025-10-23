@@ -260,6 +260,7 @@ get:
                       description: |
                         The alphanumeric identifier of the loyalty card.
                       maxLength: 108
+                      minLength: 4
                       pattern: ^[A-Za-z0-9_-]*$
                       example: summer-loyalty-card-0543
                     subledgerId:
