@@ -35,7 +35,13 @@ post:
     - `startdate` (optional): The earliest date when the points can be redeemed.
     The points are `active` from this date until the expiration date.
 
-      **Note**: It must be an RFC3339 timestamp string or string `immediate`. Empty or missing values are considered `immediate`.
+      This parameter accepts one of the following values:
+      - A timestamp string in RFC3339 format.
+      - `immediate`
+      - `on_action`
+      
+      **Note**:
+      Empty or missing values default to `immediate`.
     - `expirydate` (optional): The latest date when the points can be redeemed.
     The points are `expired` after this date.
 

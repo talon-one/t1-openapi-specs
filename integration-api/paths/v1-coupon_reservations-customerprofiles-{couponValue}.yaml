@@ -12,7 +12,16 @@ get:
   parameters:
     - name: couponValue
       in: path
-      description: The code of the coupon.
+      description: >
+        The code of the coupon.
+
+
+        **Important:** The coupon code requires [URL
+        encoding](https://www.w3schools.com/tags//ref_urlencode.asp) 
+
+        if it contains special characters.
+
+        For example, you must encode `SUMMER25%OFF` as `SUMMER25%25OFF`.
       example: SUMMER10
       required: true
       schema:

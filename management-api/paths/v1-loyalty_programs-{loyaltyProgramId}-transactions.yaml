@@ -160,6 +160,16 @@ get:
       example: 100
       schema:
         type: integer
+    - name: awaitsActivation
+      in: query
+      required: false
+      description: >
+        If `true`: Filters results to include only point transactions that have
+        action-based activation and have not expired. If `false`: Returns an
+        error.
+      example: true
+      schema:
+        type: boolean
   responses:
     '200':
       description: OK
@@ -238,6 +248,7 @@ get:
                       description: |
                         When points become active. Possible values:
                           - `immediate`: Points are immediately active.
+                          - `on_action`: Points become active based on the customer's action.
                           - a timestamp value: Points become active at a given date and time.
                       maxLength: 64
                       example: 2022-01-02T15:04:05Z07:00

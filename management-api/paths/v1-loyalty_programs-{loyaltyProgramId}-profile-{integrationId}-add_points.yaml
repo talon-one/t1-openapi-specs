@@ -66,13 +66,13 @@ put:
               description: >
                 The time format is either:
 
-                - `immediate` or,
+                - `unlimited` or,
 
                 - an **integer** followed by one letter indicating the time
                 unit.
 
 
-                Examples: `immediate`, `30s`, `40m`, `1h`, `5D`, `7W`, `10M`,
+                Examples: `unlimited`, `30s`, `40m`, `1h`, `5D`, `7W`, `10M`,
                 `15Y`.
 
 
