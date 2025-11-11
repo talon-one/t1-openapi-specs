@@ -221,6 +221,8 @@ paths:
   /v1/loyalty_programs/{loyaltyProgramId}/profile/{integrationId}/points:
     $ref: >-
       paths/v1-loyalty_programs-{loyaltyProgramId}-profile-{integrationId}-points.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/activate_points:
+    $ref: paths/v1-loyalty_programs-{loyaltyProgramId}-activate_points.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/cards:
     $ref: paths/v1-loyalty_programs-{loyaltyProgramId}-cards.yaml
   /v1/best_prior_price:

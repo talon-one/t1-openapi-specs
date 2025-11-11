@@ -160,16 +160,6 @@ get:
       example: 100
       schema:
         type: integer
-    - name: awaitsActivation
-      in: query
-      required: false
-      description: >
-        If `true`: Filters results to include only point transactions that have
-        action-based activation and have not expired. If `false`: Returns an
-        error.
-      example: true
-      schema:
-        type: boolean
   responses:
     '200':
       description: OK
