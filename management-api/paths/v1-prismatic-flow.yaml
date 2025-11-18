@@ -1,172 +1,86 @@
-# path: /v1/loyalty_programs/{loyaltyProgramId}/activate_points
+# path: /v1/prismatic/flow
 post:
-  operationId: activateLoyaltyPoints
-  summary: Activate loyalty points.
-  description: >
-    Activate points for the given loyalty card in the specified card-based
-    loyalty program.
+  operationId: postPrismaticFlow
+  x-internal: false
+  summary: registers a prismatic flow for an event
   tags:
-    - Loyalty
-  security:
-    - api_key_v1: []
-  parameters:
-    - name: loyaltyProgramId
-      in: path
-      description: The identifier for the loyalty program.
-      example: 33
-      required: true
-      schema:
-        type: integer
+    - Prismatic
   requestBody:
     content:
       application/json:
         schema:
           type: object
-          description: Activate loyalty points.
-          additionalProperties: false
+          required:
+            - EventType
+            - PrismaticFlowUrl
+            - Config
           properties:
-            transactionUUIDs:
-              type: array
-              items:
-                type: string
-                format: uuid
-              minItems: 1
-              maxItems: 50
-              uniqueItems: true
-              description: >
-                The list of transaction UUIDs used to activate point
-                transactions.
-
-
-                If passed, `sessionId` must be omitted.
-            sessionId:
+            EventType:
               type: string
-              minLength: 1
-              description: >
-                The integration ID of the session with the point transactions to
-                be activated.
-
-
-                If passed, `transactionUUIDs` must be omitted.
-        examples:
-          UsingTransactionUUIDs:
-            summary: >-
-              Activates point transactions using a given list of transaction
-              UUIDs.
-            value:
-              transactionUUIDs:
-                - 8f1a8d7c-9c3e-4a5e-9f0d-2c5f7a3b1cde
-                - 12b3c456-78d9-4e0f-a1b2-3456789abcde
-          UsingSessionId:
-            summary: Activate point transactions created during the given session.
-            value:
-              sessionId: ac08cc3c43470426591ad75b2d685ec04_v2
-    description: body
+              enum:
+                - StrikethroughPrice
+                - CampaignEvaluationTreeChanged
+                - CampaignNotification
+                - LoyaltyCardPointsExpiring
+                - AsyncCouponsCreated
+                - CouponCodeExpiring
+                - LoyaltyPointsExpiring
+                - LoyaltyPointsPendingToActive
+                - TierDowngrade
+                - TierUpgrade
+                - TierWillDowngrade
+                - CouponCreated
+                - CouponUpdated
+                - CouponDeleted
+                - CouponsUpdated
+                - CouponsDeleted
+                - LoyaltyCardPointsAdded
+                - LoyaltyCardPointsDeducted
+                - LoyaltyPointsAdded
+                - LoyaltyPointsDeducted
+              x-generate-enum-go: PrismaticEventType
+              description: The event type we want to register a flow for.
+            PrismaticFlowUrl:
+              type: string
+              description: >-
+                The URL of the prismatic flow that we want to trigger for the
+                event.
+            Config:
+              type: object
+              required:
+                - ApiKey
+              properties:
+                ApiKey:
+                  type: string
+                BatchSize:
+                  type: integer
+                  description: >-
+                    Available for LoyaltyCardPointsExpiring,
+                    LoyaltyPointsExpiring, TierWillDowngrade, TierDowngrade,
+                    TierUpgrade, CouponCodeExpiring, CampaignNotification
+                PeriodsInDays:
+                  type: array
+                  description: >-
+                    Available for LoyaltyCardPointsExpiring,
+                    LoyaltyPointsExpiring, TierWillDowngrade
+                  items:
+                    type: integer
     required: true
   responses:
-    '200':
-      description: OK
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              ledgerEntries:
-                type: array
-                description: Updated ledger entries after activation.
-                items:
-                  type: object
-                  description: >-
-                    A single row of the ledger, describing one addition or
-                    deduction.
-                  required:
-                    - programID
-                    - type
-                    - amount
-                    - created
-                    - name
-                    - subLedgerID
-                  properties:
-                    created:
-                      type: string
-                      format: date-time
-                      example: '2021-07-20T22:00:00Z'
-                    programID:
-                      type: integer
-                      example: 5
-                    customerProfileID:
-                      type: string
-                      example: URNGV8294NV
-                    cardID:
-                      type: integer
-                      example: 241
-                    customerSessionID:
-                      type: string
-                      example: t2gy5s-47274
-                    eventID:
-                      type: integer
-                      example: 5
-                    type:
-                      type: string
-                      description: |
-                        The type of the ledger transaction. Possible values are:
-                        - `addition`
-                        - `subtraction`
-                        - `expire`
-                        - `expiring` (for expiring points ledgers)
-                      example: addition
-                    amount:
-                      type: number
-                      example: 100
-                    startDate:
-                      type: string
-                      format: date-time
-                      example: '2021-07-20T22:00:00Z'
-                    expiryDate:
-                      type: string
-                      format: date-time
-                      example: '2022-07-20T22:00:00Z'
-                    name:
-                      type: string
-                      description: >-
-                        A name referencing the condition or effect that added
-                        this entry, or the specific name provided in an API
-                        call.
-                      example: Add points on purchase
-                    subLedgerID:
-                      type: string
-                      description: >-
-                        This specifies if we are adding loyalty points to the
-                        main ledger or a subledger.
-                      example: mysubledger
-                    userID:
-                      type: integer
-                      description: >-
-                        This is the ID of the user who created this entry, if
-                        the addition or subtraction was done manually.
-                      example: 499
-                    archived:
-                      type: boolean
-                      description: Indicates if the entry belongs to the archived session.
-                      example: false
-                    flags:
-                      description: >-
-                        A map of flags providing additional details about the
-                        entry.
-                      type: object
-                      properties:
-                        createsNegativeBalance:
-                          type: boolean
-                          description: Set to true if the entry creates negative balance.
+    '201':
+      description: Created
     '400':
-      description: Bad request
+      description: Bad Request
       content:
         application/json:
           schema:
             type: object
+            required:
+              - message
             properties:
               message:
                 type: string
+                description: A message describing the error.
               errors:
                 type: array
                 description: >-
@@ -208,18 +122,18 @@ post:
                         resource:
                           type: string
                           description: Pointer to the resource that caused this error.
-              StatusCode:
-                type: integer
-                description: The error code
-    '401':
-      description: Unauthorized
+    '500':
+      description: Internal Server Error
       content:
         application/json:
           schema:
             type: object
+            required:
+              - message
             properties:
               message:
                 type: string
+                description: A message describing the error.
               errors:
                 type: array
                 description: >-
@@ -261,18 +175,73 @@ post:
                         resource:
                           type: string
                           description: Pointer to the resource that caused this error.
-              StatusCode:
-                type: integer
-                description: The error code
-    '404':
-      description: Not found
+  description: >-
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    undefined
+delete:
+  operationId: deletePrismaticFlow
+  x-internal: false
+  summary: de-registers a prismatic flow for an event
+  tags:
+    - Prismatic
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - EventType
+            - PrismaticFlowUrl
+          properties:
+            EventType:
+              type: string
+              enum:
+                - StrikethroughPrice
+                - CampaignEvaluationTreeChanged
+                - CampaignNotification
+                - LoyaltyCardPointsExpiring
+                - AsyncCouponsCreated
+                - CouponCodeExpiring
+                - LoyaltyPointsExpiring
+                - LoyaltyPointsPendingToActive
+                - TierDowngrade
+                - TierUpgrade
+                - TierWillDowngrade
+                - CouponCreated
+                - CouponUpdated
+                - CouponDeleted
+                - CouponsUpdated
+                - CouponsDeleted
+                - LoyaltyCardPointsAdded
+                - LoyaltyCardPointsDeducted
+                - LoyaltyPointsAdded
+                - LoyaltyPointsDeducted
+              description: The event type we want to register a flow for.
+            PrismaticFlowUrl:
+              type: string
+              description: >-
+                The URL of the prismatic flow that we want to trigger for the
+                event.
+    required: true
+  responses:
+    '204':
+      description: No Content
+    '400':
+      description: Bad Request
       content:
         application/json:
           schema:
             type: object
+            required:
+              - message
             properties:
               message:
                 type: string
+                description: A message describing the error.
               errors:
                 type: array
                 description: >-
@@ -314,6 +283,63 @@ post:
                         resource:
                           type: string
                           description: Pointer to the resource that caused this error.
-              StatusCode:
-                type: integer
-                description: The error code
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - message
+            properties:
+              message:
+                type: string
+                description: A message describing the error.
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+  description: >-
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    undefined

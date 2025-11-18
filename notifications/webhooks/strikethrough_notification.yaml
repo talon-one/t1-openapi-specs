@@ -310,9 +310,13 @@ post:
                                             example: 382370BKDB946
             NotificationType:
               type: string
-              description: The type of the notification
+              description: The type of notification.
               enum:
                 - StrikethroughPrice
+            sentAt:
+              type: string
+              description: Timestamp at which the notification was sent.
+              format: date-time
         examples:
           StrikethroughNotification:
             value:
@@ -344,6 +348,7 @@ post:
                         name: 1EuroOff
                         value: 1
               NotificationType: StrikethroughPrice
+              sentAt: '2020-06-10T09:05:29.123483Z'
           ScheduledStrikethroughNotification:
             value:
               version: v2
@@ -378,4 +383,5 @@ post:
                         name: 1EuroOff
                         value: 1
               NotificationType: StrikethroughPrice
+              sentAt: '2020-06-10T09:05:29.123483Z'
     required: true

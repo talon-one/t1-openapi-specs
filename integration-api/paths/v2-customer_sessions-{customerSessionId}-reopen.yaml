@@ -606,6 +606,24 @@ put:
                                 bundleName:
                                   type: string
                                   description: The name of the bundle definition.
+                                awaitsActivation:
+                                  type: boolean
+                                  description: >
+                                    If `true`, the loyalty points are pending
+                                    until  action-based activation takes place.
+                                    The `startDate` parameter automatically 
+                                    defaults to `on_action`.
+                                validityDuration:
+                                  type: string
+                                  description: >
+                                    The duration for which the points remain
+                                    active, relative to the  activation date.
+
+                                    Example: `30D`.  
+
+                                    **Note**: This value is only returned if
+                                    `awaitsActivation` is `true`  and
+                                    `expiryDate` is not set.
                             - type: object
                               description: >-
                                 The properties specific to the
