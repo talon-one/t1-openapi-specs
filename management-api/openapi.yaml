@@ -216,9 +216,6 @@ tags:
       cards](https://docs.talon.one/docs/product/loyalty-programs/card-based/card-based-overview)
       allow your customers to collect and spend loyalty points within a
       card-based loyalty program.
-  - name: Prismatic
-    description: |
-      All endpoints for the prismatic integration
   - name: Referrals
     description: >
       A referral is a code shared between a customer and a prospect.
@@ -568,8 +565,6 @@ paths:
   /v1/applications/{applicationId}/achievement_progress/{integrationId}:
     $ref: >-
       paths/v1-applications-{applicationId}-achievement_progress-{integrationId}.yaml
-  /v1/prismatic/flow:
-    $ref: paths/v1-prismatic-flow.yaml
 components:
   securitySchemes:
     manager_auth:
