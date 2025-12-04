@@ -141,12 +141,12 @@ get:
           examples:
             response:
               value: >
-                customerprofileid,customersessionid,rulesetid,rulename,programid,type,name,subledgerid,startdate,expirydate,id,created,amount,archived,campaignid,flags,transactionuuid
+                customerprofileid,customersessionid,rulesetid,rulename,programid,type,name,subledgerid,startdate,expirydate,id,created,amount,archived,campaignid,flags,transactionuuid,validityduration
 
                 8NHOS78H,06b0fafb-ccbf-42c7-b44b-d858e8b525022,1691,test,37,subtraction,10%
                 of current total,,immediate,unlimited,60803,2022-11-29
-                16:16:10,100.00,false,5,,8c122fb1-1874-4ee2-b7e2-e7b5f8b7b801
+                16:16:10,100.00,false,5,createsNegativeBalance,8c122fb1-1874-4ee2-b7e2-e7b5f8b7b801,""
 
                 EB780RDN,06b0fafb-ccbf-42c7-b44b-d858e8b525022,1691,test,37,addition,Reimbursed
-                loyalty points,,immediate,unlimited,60804,2022-11-29
-                16:16:23,100.00,false,5,createsNegativeBalance,8c122fb1-1874-4ee2-b7e2-e7b5f8b7b801
+                loyalty points,,on_action,unlimited,60804,2022-11-29
+                16:16:23,100.00,false,5,,8c122fb1-1874-4ee2-b7e2-e7b5f8b7b801,"30D"

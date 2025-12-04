@@ -72,8 +72,6 @@ post:
                   description: List of cart items to be returned.
                   items:
                     type: object
-                    required:
-                      - position
                     properties:
                       position:
                         description: >-
@@ -86,6 +84,13 @@ post:
                           Number of cart items to return.
                         type: integer
                         example: 1
+                      sku:
+                        description: >-
+                          The SKU of the cart item in the provided customer
+                          session's `cartItems` property.
+                        type: string
+                        example: SKU1241028
+                        minLength: 1
             responseContent:
               type: array
               description: >
@@ -3358,17 +3363,6 @@ post:
                                     until  action-based activation takes place.
                                     The `startDate` parameter automatically 
                                     defaults to `on_action`.
-                                validityDuration:
-                                  type: string
-                                  description: >
-                                    The duration for which the points remain
-                                    active, relative to the  activation date.
-
-                                    Example: `30D`.  
-
-                                    **Note**: This value is only returned if
-                                    `awaitsActivation` is `true`  and
-                                    `expiryDate` is not set.
                             - type: object
                               description: >-
                                 The properties specific to the
@@ -4752,8 +4746,6 @@ post:
                         description: List of cart items to be returned.
                         items:
                           type: object
-                          required:
-                            - position
                           properties:
                             position:
                               description: >-
@@ -4766,6 +4758,13 @@ post:
                                 Number of cart items to return.
                               type: integer
                               example: 1
+                            sku:
+                              description: >-
+                                The SKU of the cart item in the provided
+                                customer session's `cartItems` property.
+                              type: string
+                              example: SKU1241028
+                              minLength: 1
                   - type: object
                     required:
                       - eventId
@@ -4855,8 +4854,6 @@ post:
                           description: List of cart items to be returned.
                           items:
                             type: object
-                            required:
-                              - position
                             properties:
                               position:
                                 description: >-
@@ -4869,6 +4866,13 @@ post:
                                   Number of cart items to return.
                                 type: integer
                                 example: 1
+                              sku:
+                                description: >-
+                                  The SKU of the cart item in the provided
+                                  customer session's `cartItems` property.
+                                type: string
+                                example: SKU1241028
+                                minLength: 1
                     - type: object
                       required:
                         - eventId
