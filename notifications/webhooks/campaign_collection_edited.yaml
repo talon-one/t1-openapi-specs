@@ -3,6 +3,15 @@ post:
   summary: Campaign collection edited
   tags:
     - Campaign notifications
+  parameters:
+    - name: X-UUID
+      in: header
+      description: >-
+        The unique message ID. You can use it, for example, to deduplicate
+        messages.
+      schema:
+        type: string
+      example: 9aa05ee1-876f-42e6-9a5d-fc0bd424d9cb
   requestBody:
     description: >-
       The

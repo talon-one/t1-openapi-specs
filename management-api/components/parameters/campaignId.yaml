@@ -1,0 +1,7 @@
+name: campaignId
+in: path
+description: The ID of the campaign. It is displayed in your Talon.One deployment URL.
+example: 18
+required: true
+schema:
+  type: integer
