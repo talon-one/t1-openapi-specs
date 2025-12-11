@@ -1,7 +1,0 @@
-name: applicationId
-in: path
-required: true
-description: The ID of the Application. It is displayed in your Talon.One deployment URL.
-example: 42
-schema:
-  type: integer

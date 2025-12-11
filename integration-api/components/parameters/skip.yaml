@@ -1,7 +1,0 @@
-name: skip
-in: query
-required: false
-description: The number of items to skip when paging through large result sets.
-example: 100
-schema:
-  type: integer
