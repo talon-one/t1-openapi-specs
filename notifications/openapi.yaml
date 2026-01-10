@@ -93,6 +93,8 @@ webhooks:
     $ref: webhooks/expiring_loyalty_card_points_notification.yaml
   added_deducted_loyalty_points_notification:
     $ref: webhooks/added_deducted_loyalty_points_notification.yaml
+  added_deducted_loyalty_points_balances_notification:
+    $ref: webhooks/added_deducted_loyalty_points_balances_notification.yaml
   pending_active_points_notification:
     $ref: webhooks/pending_active_points_notification.yaml
   tier_upgrade_notification:
@@ -105,5 +107,7 @@ webhooks:
     $ref: webhooks/expiring_coupons_notification.yaml
   card_added_deducted_loyalty_points_notification:
     $ref: webhooks/card_added_deducted_loyalty_points_notification.yaml
+  card_added_deducted_loyalty_points_balances_notification:
+    $ref: webhooks/card_added_deducted_loyalty_points_balances_notification.yaml
 components:
   securitySchemes: {}

@@ -645,12 +645,6 @@ get:
                                 `True` if the tier definitions can be updated.
                               default: false
                               example: true
-                            canUpdateJoinPolicy:
-                              type: boolean
-                              description: >
-                                `True` if the program join policy can be
-                                updated.
-                              example: true
                             canUpdateTierExpirationPolicy:
                               type: boolean
                               description: >

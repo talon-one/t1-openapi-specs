@@ -565,6 +565,7 @@ paths:
   /v1/applications/{applicationId}/achievement_progress/{integrationId}:
     $ref: >-
       paths/v1-applications-{applicationId}-achievement_progress-{integrationId}.yaml
+webhooks: {}
 components:
   securitySchemes:
     manager_auth:

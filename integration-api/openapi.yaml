@@ -227,6 +227,7 @@ paths:
     $ref: paths/v1-best_prior_price.yaml
   /v1/catalogs/{catalogId}/sync:
     $ref: paths/v1-catalogs-{catalogId}-sync.yaml
+webhooks: {}
 components:
   securitySchemes:
     api_key_v1:

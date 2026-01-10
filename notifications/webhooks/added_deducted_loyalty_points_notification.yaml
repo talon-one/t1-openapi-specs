@@ -22,31 +22,39 @@ post:
         schema:
           type: object
           properties:
+            EmployeeName:
+              type: string
+              description: The name of the employee who added or deducted points.
+              example: Franziska Schneider
+            LoyaltyProgramID:
+              type: integer
+              description: The ID of the loyalty program.
+              minimum: 1
+              example: 5
+            NotificationType:
+              type: string
+              description: The type of notification.
+              enum:
+                - LoyaltyPointsDeducted
+                - LoyaltyPointsAdded
             ProfileIntegrationID:
               type: string
               description: >-
                 The integration ID of the customer profile to whom points were
                 added or deducted.
               example: URNGV8294NV
-            LoyaltyProgramID:
-              type: integer
-              description: The ID of the loyalty program.
-              minimum: 1
-              example: 5
+            SessionIntegrationID:
+              type: string
+              description: >-
+                The integration ID of the session through which the points were
+                earned or lost.
+              example: cc53e4fa-547f-4f5e-8333-76e05c381f67
             SubledgerID:
               type: string
               description: >-
                 The ID of the subledger within the loyalty program where these
                 points were added.
               example: sub-123
-            Amount:
-              type: number
-              description: The amount of added or deducted loyalty points.
-              example: 10.99
-            Reason:
-              type: string
-              description: The reason for the points addition or deduction.
-              example: Compensation
             TypeOfChange:
               type: string
               enum:
@@ -68,43 +76,34 @@ post:
 
                 - [Rule
                 Engine](/docs/product/applications/evaluation-order-for-rules-and-filters)
-            EmployeeName:
-              type: string
-              description: The name of the employee who added or deducted points.
-              example: Franziska Schneider
             UserID:
               type: integer
               description: The ID of the employee who added or deducted points.
-              minimum: 1
               example: 25
+            Amount:
+              type: number
+              description: The amount of added or deducted loyalty points.
+              example: 10.99
+            ExpiryDate:
+              type: string
+              format: date-time
+              description: The expiration date for loyalty points.
+              example: '2024-01-24T14:15:22Z'
             Operation:
               type: string
               description: The action (addition or deduction) made with loyalty points.
               enum:
                 - addition
                 - deduction
+            Reason:
+              type: string
+              description: The reason for the points addition or deduction.
+              example: Compensation
             StartDate:
               type: string
               format: date-time
               description: The start date for loyalty points.
               example: '2023-01-24T14:15:22Z'
-            ExpiryDate:
-              type: string
-              format: date-time
-              description: The expiration date for loyalty points.
-              example: '2024-01-24T14:15:22Z'
-            SessionIntegrationID:
-              type: string
-              description: >-
-                The integration ID of the session through which the points were
-                earned or lost.
-              example: cc53e4fa-547f-4f5e-8333-76e05c381f67
-            NotificationType:
-              type: string
-              description: The type of notification.
-              enum:
-                - LoyaltyPointsDeducted
-                - LoyaltyPointsAdded
         example:
           ProfileIntegrationID: URNGV8294NV
           LoyaltyProgramID: 5

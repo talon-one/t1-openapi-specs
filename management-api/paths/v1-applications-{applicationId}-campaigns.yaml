@@ -123,6 +123,50 @@ get:
       schema:
         type: string
         format: date-time
+    - name: startBefore
+      in: query
+      description: >-
+        Filter results comparing the parameter value, expected to be an RFC3339
+        timestamp string, to the campaign start time timestamp. You can use any
+        time zone setting. Talon.One will convert to UTC internally.
+      required: false
+      example: '2024-05-29T15:04:05+07:00'
+      schema:
+        type: string
+        format: date-time
+    - name: startAfter
+      in: query
+      description: >-
+        Filter results comparing the parameter value, expected to be an RFC3339
+        timestamp string, to the campaign start time timestamp. You can use any
+        time zone setting. Talon.One will convert to UTC internally.
+      required: false
+      example: '2024-05-29T15:04:05+07:00'
+      schema:
+        type: string
+        format: date-time
+    - name: endBefore
+      in: query
+      description: >-
+        Filter results comparing the parameter value, expected to be an RFC3339
+        timestamp string, to the campaign end time timestamp. You can use any
+        time zone setting. Talon.One will convert to UTC internally.
+      required: false
+      example: '2024-05-29T15:04:05+07:00'
+      schema:
+        type: string
+        format: date-time
+    - name: endAfter
+      in: query
+      description: >-
+        Filter results comparing the parameter value, expected to be an RFC3339
+        timestamp string, to the campaign end time timestamp. You can use any
+        time zone setting. Talon.One will convert to UTC internally.
+      required: false
+      example: '2024-05-29T15:04:05+07:00'
+      schema:
+        type: string
+        format: date-time
     - name: campaignGroupId
       in: query
       description: >-

@@ -1,6 +1,6 @@
 post:
-  operationId: cardAddedDeductedPointsNotification
-  summary: Added or deducted card points
+  operationId: cardAddedDeductedPointsBalancesNotification
+  summary: Added or deducted card points with current balance
   tags:
     - Loyalty card notifications
   parameters:
@@ -16,7 +16,8 @@ post:
     description: >-
       The
       [notification](/docs/product/loyalty-programs/loyalty-notifications/overview)
-      informing users when loyalty points are added or deducted.
+      informing users when loyalty points are added or deducted from a card,
+      including the current balance of points.
     content:
       application/json:
         schema:
@@ -39,8 +40,7 @@ post:
               type: string
               description: The type of notification.
               enum:
-                - LoyaltyCardPointsDeducted
-                - LoyaltyCardPointsAdded
+                - LoyaltyCardAddedDeductedPointsBalances
             ProfileIntegrationIDs:
               type: array
               description: >-
@@ -70,17 +70,12 @@ post:
                 - rule_engine
                 - management_api
               description: >
-                The notification source, that is, it indicates
-
-                whether the points were added or deducted via one of the
-                following routes:
-
+                The notification source, that is, it indicates whether the
+                points were added or deducted via one of the following routes:
 
                 - [The Campaign Manager](/docs/product/getting-started)
 
-
                 - [Management API](/management-api#tag/Loyalty)
-
 
                 - [Rule
                 Engine](/docs/product/applications/evaluation-order-for-rules-and-filters)
@@ -94,46 +89,63 @@ post:
                 The max amount of user profiles with whom a card can be shared.
                 This can be set to `0` for no limit.
               example: 10
-            Amount:
+            Actions:
+              type: array
+              description: >-
+                The list of actions that have been triggered in the loyalty
+                program.
+              minItems: 1
+              items:
+                type: object
+                properties:
+                  Amount:
+                    type: number
+                    description: The amount of added or deducted loyalty points.
+                    example: 10.99
+                  Reason:
+                    type: string
+                    description: The reason for the points addition or deduction.
+                    example: Compensation
+                  Operation:
+                    type: string
+                    description: >-
+                      The action (addition or deduction) made with loyalty
+                      points.
+                    enum:
+                      - addition
+                      - deduction
+                  StartDate:
+                    type: string
+                    format: date-time
+                    description: The start date for loyalty points.
+                    example: '2023-01-24T14:15:22Z'
+                  ExpiryDate:
+                    type: string
+                    format: date-time
+                    description: The expiration date for loyalty points.
+                    example: '2024-01-24T14:15:22Z'
+            CurrentPoints:
               type: number
-              description: The amount of added or deducted loyalty points.
+              description: The current points balance.
               example: 10.99
-            ExpiryDate:
-              type: string
-              format: date-time
-              description: The expiration date for loyalty points.
-              example: '2024-01-24T14:15:22Z'
-            Operation:
-              type: string
-              description: The action (addition or deduction) made with loyalty points.
-              enum:
-                - addition
-                - deduction
-            Reason:
-              type: string
-              description: The reason for the points addition or deduction.
-              example: Compensation
-            StartDate:
-              type: string
-              format: date-time
-              description: The start date for loyalty points.
-              example: '2023-01-24T14:15:22Z'
         example:
+          LoyaltyProgramID: 5
+          SubledgerID: sub-123
+          CardIdentifier: 123-456-789ATBC
+          UsersPerCardLimit: 10
           ProfileIntegrationIDs:
             - yJSObdNNtOetCHWHPFuz
             - test-user-4zoj1c
-          LoyaltyProgramID: 5
-          SubledgerID: sub-123
-          Amount: 10.99
-          Reason: Compensation
           TypeOfChange: campaign_manager
           EmployeeName: Franziska Schneider
           UserID: 25
-          Operation: addition
-          StartDate: '2023-01-24T14:15:22Z'
-          ExpiryDate: '2024-01-24T14:15:22Z'
           SessionIntegrationID: cc53e4fa-547f-4f5e-8333-76e05c381f67
-          NotificationType: LoyaltyCardPointsDeducted
-          CardIdentifier: 123-456-789ATBC
-          UsersPerCardLimit: 10
+          NotificationType: LoyaltyCardAddedDeductedPointsBalances
+          CurrentPoints: 10.99
+          Actions:
+            - Amount: 10.99
+              Reason: Compensation
+              Operation: addition
+              StartDate: '2023-01-24T14:15:22Z'
+              ExpiryDate: '2024-01-24T14:15:22Z'
     required: true

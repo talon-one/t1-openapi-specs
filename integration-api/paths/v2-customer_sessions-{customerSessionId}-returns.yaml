@@ -3359,10 +3359,23 @@ post:
                                 awaitsActivation:
                                   type: boolean
                                   description: >
-                                    If `true`, the loyalty points are pending
-                                    until  action-based activation takes place.
-                                    The `startDate` parameter automatically 
-                                    defaults to `on_action`.
+                                    If `true`, the loyalty points remain pending
+                                    until a specific action is complete. The
+                                    `startDate` parameter automatically sets to
+                                    `on_action`.
+                                validityDuration:
+                                  type: string
+                                  description: >
+                                    The duration for which the points remain
+                                    active, calculated relative to the 
+
+                                    activation date.  
+
+
+                                    **Note**: This value is returned only if
+                                    `awaitsActivation` is `true` 
+
+                                    and `expiryDate` is not set.
                             - type: object
                               description: >-
                                 The properties specific to the

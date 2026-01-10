@@ -1,6 +1,6 @@
 post:
   operationId: expiringCardPointsNotification
-  summary: Expiring points
+  summary: Expiring card points
   tags:
     - Loyalty card notifications
   parameters:
