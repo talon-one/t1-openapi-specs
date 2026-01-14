@@ -2,6 +2,7 @@
 get:
   operationId: getLoyaltyPoints
   summary: Get customer's full loyalty ledger
+  deprecated: true
   description: >
     <div class="redoc-warning small">Management API endpoints are <b>not</b>
     meant to be used in real-time integrations that directly serve your end
@@ -205,6 +206,17 @@ get:
                               description: >-
                                 Set to true if the entry creates negative
                                 balance.
+                        validityDuration:
+                          type: string
+                          description: >
+                            The duration for which the points remain active,
+                            relative to the  activation date.
+
+
+                            **Note**: This only applies to points for which
+                            `awaitsActivation` is `true` and `expiryDate` is not
+                            set.
+                          example: 30D
                   expiringPoints:
                     description: List of all points that will expire.
                     type: array
@@ -301,6 +313,17 @@ get:
                               description: >-
                                 Set to true if the entry creates negative
                                 balance.
+                        validityDuration:
+                          type: string
+                          description: >
+                            The duration for which the points remain active,
+                            relative to the  activation date.
+
+
+                            **Note**: This only applies to points for which
+                            `awaitsActivation` is `true` and `expiryDate` is not
+                            set.
+                          example: 30D
                   activePoints:
                     description: List of all currently active points.
                     type: array
@@ -397,6 +420,17 @@ get:
                               description: >-
                                 Set to true if the entry creates negative
                                 balance.
+                        validityDuration:
+                          type: string
+                          description: >
+                            The duration for which the points remain active,
+                            relative to the  activation date.
+
+
+                            **Note**: This only applies to points for which
+                            `awaitsActivation` is `true` and `expiryDate` is not
+                            set.
+                          example: 30D
                   pendingPoints:
                     description: List of all points pending activation.
                     type: array
@@ -493,6 +527,17 @@ get:
                               description: >-
                                 Set to true if the entry creates negative
                                 balance.
+                        validityDuration:
+                          type: string
+                          description: >
+                            The duration for which the points remain active,
+                            relative to the  activation date.
+
+
+                            **Note**: This only applies to points for which
+                            `awaitsActivation` is `true` and `expiryDate` is not
+                            set.
+                          example: 30D
                   expiredPoints:
                     description: List of expired points.
                     type: array
@@ -589,6 +634,17 @@ get:
                               description: >-
                                 Set to true if the entry creates negative
                                 balance.
+                        validityDuration:
+                          type: string
+                          description: >
+                            The duration for which the points remain active,
+                            relative to the  activation date.
+
+
+                            **Note**: This only applies to points for which
+                            `awaitsActivation` is `true` and `expiryDate` is not
+                            set.
+                          example: 30D
                   currentTier:
                     description: Tier for which the ledger is eligible.
                     type: object
@@ -777,6 +833,17 @@ get:
                                 description: >-
                                   Set to true if the entry creates negative
                                   balance.
+                          validityDuration:
+                            type: string
+                            description: >
+                              The duration for which the points remain active,
+                              relative to the  activation date.
+
+
+                              **Note**: This only applies to points for which
+                              `awaitsActivation` is `true` and `expiryDate` is
+                              not set.
+                            example: 30D
                     expiringPoints:
                       description: List of all points that will expire.
                       type: array
@@ -873,6 +940,17 @@ get:
                                 description: >-
                                   Set to true if the entry creates negative
                                   balance.
+                          validityDuration:
+                            type: string
+                            description: >
+                              The duration for which the points remain active,
+                              relative to the  activation date.
+
+
+                              **Note**: This only applies to points for which
+                              `awaitsActivation` is `true` and `expiryDate` is
+                              not set.
+                            example: 30D
                     activePoints:
                       description: List of all currently active points.
                       type: array
@@ -969,6 +1047,17 @@ get:
                                 description: >-
                                   Set to true if the entry creates negative
                                   balance.
+                          validityDuration:
+                            type: string
+                            description: >
+                              The duration for which the points remain active,
+                              relative to the  activation date.
+
+
+                              **Note**: This only applies to points for which
+                              `awaitsActivation` is `true` and `expiryDate` is
+                              not set.
+                            example: 30D
                     pendingPoints:
                       description: List of all points pending activation.
                       type: array
@@ -1065,6 +1154,17 @@ get:
                                 description: >-
                                   Set to true if the entry creates negative
                                   balance.
+                          validityDuration:
+                            type: string
+                            description: >
+                              The duration for which the points remain active,
+                              relative to the  activation date.
+
+
+                              **Note**: This only applies to points for which
+                              `awaitsActivation` is `true` and `expiryDate` is
+                              not set.
+                            example: 30D
                     expiredPoints:
                       description: List of expired points.
                       type: array
@@ -1161,6 +1261,17 @@ get:
                                 description: >-
                                   Set to true if the entry creates negative
                                   balance.
+                          validityDuration:
+                            type: string
+                            description: >
+                              The duration for which the points remain active,
+                              relative to the  activation date.
+
+
+                              **Note**: This only applies to points for which
+                              `awaitsActivation` is `true` and `expiryDate` is
+                              not set.
+                            example: 30D
                     currentTier:
                       description: Tier for which the ledger is eligible.
                       type: object

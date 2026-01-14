@@ -235,6 +235,17 @@ get:
                       type: number
                       description: Amount of loyalty points added in the transaction.
                       example: 10.25
+                    validityDuration:
+                      type: string
+                      description: >
+                        The duration for which the points remain active,
+                        relative to the  activation date.
+
+
+                        **Note**: This only applies to points for which
+                        `awaitsActivation` is `true` and `expiryDate` is not
+                        set.
+                      example: 30D
     '400':
       description: Bad request
       content:

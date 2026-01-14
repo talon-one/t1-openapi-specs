@@ -51,17 +51,13 @@ put:
 
     <p>To see an example of a rollback, see the <a
     href="https://docs.talon.one/docs/dev/tutorials/rolling-back-effects">Cancelling
-    a session with campaign budgets</a>tutorial.</p>
+    a session with campaign budgets</a> tutorial.</p>
 
 
     **Note:** If your order workflow requires you to create a new session
-    instead of reopening a session, use the
-
-    [Update customer
+    instead of reopening a session, use the [Update customer
     session](https://docs.talon.one/integration-api#tag/Customer-sessions/operation/updateCustomerSessionV2)
-    endpoint to cancel
-
-    a closed session and create a new one.
+    endpoint to cancel a closed session and create a new one.
   security:
     - api_key_v1: []
   tags:

@@ -1,162 +1,81 @@
-# path: /v1/loyalty_programs/{loyaltyProgramId}/cards/{loyaltyCardId}/points
-get:
-  operationId: getLoyaltyCardPoints
-  summary: List card's unused loyalty points
+# path: /v1/loyalty_programs/{loyaltyProgramId}/activate_points
+post:
+  operationId: activateLoyaltyPoints
+  summary: Activate loyalty points
   description: >
-    Get paginated results of loyalty points for a given loyalty card identifier
-    in a card-based loyalty program. This endpoint returns only the balances of
-    unused points on a loyalty card.
+    Activate points when a defined action occurs.
 
 
-    You can filter points by status:
+    You can activate pending points using one of the following parameters:
 
-    - `active`: Points ready to be redeemed.
+    - `sessionId`: Activates all points earned in the specified session. 
 
-    - `pending`: Points with a start date in the future.
+    - `transactionUUIDs`: Activates points earned in the transactions specified
+    by the 
 
-    - `expired`: Points with an expiration date in the past.
+    given UUIDs. 
+  tags:
+    - Loyalty
   security:
     - api_key_v1: []
-  tags:
-    - Loyalty cards
   parameters:
     - name: loyaltyProgramId
       in: path
       description: >
-        Identifier of the card-based loyalty program containing the loyalty
-        card. You can get the ID with
+        The identifier for the loyalty program. You can get the ID with the
+        [List loyalty
 
-        the [List loyalty
         programs](https://docs.talon.one/management-api#tag/Loyalty/operation/getLoyaltyPrograms)
+
         endpoint.
       example: 33
       required: true
       schema:
         type: integer
-    - name: loyaltyCardId
-      in: path
-      description: >
-        Identifier of the loyalty card. You can get the identifier with
-
-        the [List loyalty
-        cards](https://docs.talon.one/management-api#tag/Loyalty-cards/operation/getLoyaltyCards)
-        endpoint.
-      example: summer-loyalty-card-0543
-      required: true
-      schema:
-        type: string
-        minLength: 4
-        maxLength: 108
-    - name: status
-      in: query
-      required: false
-      description: Filter points based on their status.
-      example: active
-      schema:
-        type: string
-        enum:
-          - active
-          - pending
-          - expired
-        default: active
-    - name: subledgerId
-      in: query
-      required: false
-      description: Filter results by one or more subledger IDs. Must be exact match.
-      example:
-        - subledger1
-        - subledger2
-      style: form
-      explode: true
-      schema:
-        type: array
-        items:
-          type: string
-    - name: customerSessionIDs
-      in: query
-      required: false
-      description: >
-        Filter the results by a list of customer session IDs. 
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          description: Activate loyalty points
+          additionalProperties: false
+          properties:
+            transactionUUIDs:
+              type: array
+              items:
+                type: string
+                format: uuid
+              minItems: 1
+              maxItems: 50
+              uniqueItems: true
+              description: >
+                An array of transaction UUIDs used to activate specific pending
+                point transactions. 
 
 
-        To include multiple IDs, repeat the parameter for each one, for
-        example, 
-
-        `?customerSessionIDs=id1&customerSessionIDs=id2`.
-
-
-        The response contains only data associated with the specified sessions.
-      example:
-        - session_integration_id_1
-        - session_integration_id_1
-      schema:
-        type: array
-        items:
-          type: string
-    - name: transactionUUIDs
-      in: query
-      required: false
-      description: >
-        Filter the results by a list of transaction UUIDs.
+                If provided, do not include the `sessionId` parameter.
+            sessionId:
+              type: string
+              minLength: 1
+              description: >
+                The ID of the session containing the pending point transactions
+                to activate.
 
 
-        To include multiple IDs, repeat the parameter for each one, for
-        example, 
-
-        `?transactionUUIDs=uuid1&transactionUUIDs=uuid2`.
-
-
-        The response contains only data associated with the specified
-        transactions.
-      example:
-        - dc608634-0100-40d9-b371-e964476bbe0f
-        - 9e829590-05cf-407b-b4c0-5f28468a81e1
-      schema:
-        type: array
-        items:
-          type: string
-    - name: pageSize
-      in: query
-      required: false
-      description: The number of items in the response.
-      example: 50
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 1000
-        default: 50
-    - name: skip
-      in: query
-      required: false
-      description: The number of items to skip when paging through large result sets.
-      example: 100
-      schema:
-        type: integer
-    - name: sort
-      in: query
-      required: false
-      description: >
-        The field by which results should be sorted. You can enter one of the
-        following values:
-
-
-        - `startDate`: Sorts the results by the start date of the points.
-
-        - `expiryDate`: Sorts the results by the expiry date of the points.
-
-
-        By default, results are sorted in ascending order. 
-
-        To sort them in descending order, prefix the field name with `-`.
-
-
-        **Note:** You can only sort by one field at a time.
-      example: startDate
-      schema:
-        type: string
-        enum:
-          - startDate
-          - expiryDate
+                If provided, do not include the `transactionUUIDs` parameter.
+        examples:
+          UsingTransactionUUIDs:
+            summary: Activate points using transaction UUIDs
+            value:
+              transactionUUIDs:
+                - 8f1a8d7c-9c3e-4a5e-9f0d-2c5f7a3b1cde
+                - 12b3c456-78d9-4e0f-a1b2-3456789abcde
+          UsingSessionId:
+            summary: Activate points using sessionID
+            value:
+              sessionId: ac08cc3c43470426591ad75b2d685ec04_v2
+    description: body
+    required: true
   responses:
     '200':
       description: OK
@@ -164,88 +83,94 @@ get:
         application/json:
           schema:
             type: object
-            required:
-              - hasMore
-              - data
             properties:
-              hasMore:
-                type: boolean
-                example: true
-              data:
+              ledgerEntries:
                 type: array
+                description: Updated ledger entries after activation.
                 items:
                   type: object
-                  description: Loyalty card points with start and expiry dates.
+                  description: >-
+                    A single row of the ledger, describing one addition or
+                    deduction.
                   required:
-                    - id
-                    - transactionUUID
-                    - created
-                    - programId
-                    - name
-                    - startDate
-                    - expiryDate
-                    - subledgerId
+                    - programID
+                    - type
                     - amount
+                    - created
+                    - name
+                    - subLedgerID
                   properties:
-                    id:
-                      type: integer
-                      description: ID of the transaction that adds loyalty points.
-                      example: 123
-                    transactionUUID:
-                      type: string
-                      description: Unique identifier of the transaction in the UUID format.
-                      example: ce59f12a-f53b-4014-a745-636d93f2bd3f
                     created:
                       type: string
                       format: date-time
-                      description: Date and time the loyalty card points were added.
-                      example: 2022-01-02T15:04:05Z07:00
-                    programId:
+                      example: '2021-07-20T22:00:00Z'
+                    programID:
                       type: integer
-                      description: ID of the loyalty program.
-                      example: 324
+                      example: 5
                     customerProfileID:
                       type: string
-                      description: >-
-                        Integration ID of the customer profile linked to the
-                        card.
                       example: URNGV8294NV
-                    customerSessionId:
+                    cardID:
+                      type: integer
+                      example: 241
+                    customerSessionID:
                       type: string
-                      description: ID of the customer session where points were added.
-                      maxLength: 255
-                      example: 05c2da0d-48fa-4aa1-b629-898f58f1584d
+                      example: t2gy5s-47274
+                    eventID:
+                      type: integer
+                      example: 5
+                    type:
+                      type: string
+                      description: |
+                        The type of the ledger transaction. Possible values are:
+                        - `addition`
+                        - `subtraction`
+                        - `expire`
+                        - `expiring` (for expiring points ledgers)
+                      example: addition
+                    amount:
+                      type: number
+                      example: 100
+                    startDate:
+                      type: string
+                      format: date-time
+                      example: '2021-07-20T22:00:00Z'
+                    expiryDate:
+                      type: string
+                      format: date-time
+                      example: '2022-07-20T22:00:00Z'
                     name:
                       type: string
                       description: >-
-                        Name or reason of the transaction that adds loyalty
-                        points.
-                      maxLength: 255
-                      example: Reward 10% points of a purchase's current total
-                    startDate:
+                        A name referencing the condition or effect that added
+                        this entry, or the specific name provided in an API
+                        call.
+                      example: Add points on purchase
+                    subLedgerID:
                       type: string
-                      description: |
-                        When points become active. Possible values:
-                          - `immediate`: Points are active immediately.
-                          - `timestamp value`: Points become active at a given date and time.
-                      maxLength: 64
-                      example: 2022-01-02T15:04:05Z07:00
-                    expiryDate:
-                      type: string
-                      description: |
-                        Date when points expire. Possible values are:
-                          - `unlimited`: Points have no expiration date.
-                          - `timestamp value`: Points expire on the given date and time.
-                      example: 2022-08-02T15:04:05Z07:00
-                    subledgerId:
-                      type: string
-                      description: ID of the subledger.
-                      maxLength: 64
-                      example: sub-123
-                    amount:
-                      type: number
-                      description: Amount of loyalty points added in the transaction.
-                      example: 10.25
+                      description: >-
+                        This specifies if we are adding loyalty points to the
+                        main ledger or a subledger.
+                      example: mysubledger
+                    userID:
+                      type: integer
+                      description: >-
+                        This is the ID of the user who created this entry, if
+                        the addition or subtraction was done manually.
+                      example: 499
+                    archived:
+                      type: boolean
+                      description: Indicates if the entry belongs to the archived session.
+                      example: false
+                    flags:
+                      description: >-
+                        A map of flags providing additional details about the
+                        entry.
+                      type: object
+                      properties:
+                        createsNegativeBalance:
+                          type: boolean
+                          description: Set to true if the entry creates negative balance.
                     validityDuration:
                       type: string
                       description: >

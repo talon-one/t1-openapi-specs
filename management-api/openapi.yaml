@@ -257,6 +257,12 @@ tags:
 
       See the [docs](https://docs.talon.one/docs/dev/getting-started/webhooks).
 paths:
+  /v1/loyalty_programs/{loyaltyProgramId}/profile/{integrationId}/ledger_balances:
+    $ref: >-
+      paths/v1-loyalty_programs-{loyaltyProgramId}-profile-{integrationId}-ledger_balances.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/profile/{integrationId}/ledger_transactions:
+    $ref: >-
+      paths/v1-loyalty_programs-{loyaltyProgramId}-profile-{integrationId}-ledger_transactions.yaml
   /v1/applications:
     $ref: paths/v1-applications.yaml
   /v1/applications/{applicationId}:
@@ -618,7 +624,10 @@ components:
 
         1. Click **Create Key** and give it a name.
 
-        1. Set an expiration date.
+        1. Set an expiration date. 
+           
+           **Tip**: Avoid choosing expiration dates that fall at the end of
+           the year or during other high-traffic periods.
 
         1. Choose the endpoints the key should give access to.
 

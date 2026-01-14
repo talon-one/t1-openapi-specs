@@ -160,6 +160,18 @@ get:
       example: 100
       schema:
         type: integer
+    - name: awaitsActivation
+      in: query
+      required: false
+      description: >
+        If `true`: Filters results to include only point transactions that have
+        action-based activation and have not expired.
+
+
+        If `false`: Returns a `400` response.
+      example: true
+      schema:
+        type: boolean
   responses:
     '200':
       description: OK
@@ -316,6 +328,17 @@ get:
                         createsNegativeBalance:
                           type: boolean
                           description: Set to true if the entry creates negative balance.
+                    validityDuration:
+                      type: string
+                      description: >
+                        The duration for which the points remain active,
+                        relative to the  activation date.
+
+
+                        **Note**: This only applies to points for which
+                        `awaitsActivation` is `true` and `expiryDate` is not
+                        set.
+                      example: 30D
     '400':
       description: Bad request
       content:

@@ -434,6 +434,7 @@ get:
                                   - boolean
                                   - percent
                                   - (list string)
+                                  - (list number)
                                   - time
                                 description: Defines the type of parameter value.
                                 example: number
