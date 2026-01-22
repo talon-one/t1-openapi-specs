@@ -218,6 +218,9 @@ paths:
   /v1/loyalty_programs/{loyaltyProgramId}/profile/{integrationId}/transactions:
     $ref: >-
       paths/v1-loyalty_programs-{loyaltyProgramId}-profile-{integrationId}-transactions.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/profile/{integrationId}/delete_transactions:
+    $ref: >-
+      paths/v1-loyalty_programs-{loyaltyProgramId}-profile-{integrationId}-delete_transactions.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/cards/{loyaltyCardId}/points:
     $ref: >-
       paths/v1-loyalty_programs-{loyaltyProgramId}-cards-{loyaltyCardId}-points.yaml
@@ -256,7 +259,7 @@ components:
 
         1. Click **Create API Key** and give it a name and an expiration date,
         then click **Create API Key**.
-           
+
            **Tip**: Avoid choosing expiration dates that fall at the end of
            the year or during other high-traffic periods.
 

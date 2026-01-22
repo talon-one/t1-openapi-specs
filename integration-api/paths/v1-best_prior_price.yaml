@@ -38,7 +38,6 @@ post:
               example: '2020-11-10T23:00:00Z'
             timeframe:
               type: string
-              format: integer
               description: >-
                 The number of days prior to the timeframeEndDate. Only prices
                 within this look back period are considered for the best prior

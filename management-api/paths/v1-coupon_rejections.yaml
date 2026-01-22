@@ -1,0 +1,118 @@
+# path: /v1/coupon_rejections
+get:
+  operationId: generateCouponRejections
+  summary: Summarize coupon redemption failures in session
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Create a summary of the reasons for coupon redemption failures in a given
+    customer session.
+  tags:
+    - Coupons
+  parameters:
+    - name: sessionIntegrationId
+      in: query
+      description: The integration ID of the session to summarize.
+      example: cc53e4fa-547f-4f5e-8333-76e05c381f67
+      required: true
+      schema:
+        type: string
+    - name: applicationId
+      in: query
+      description: Filter results by Application ID.
+      example: 19
+      schema:
+        type: number
+    - name: language
+      in: query
+      description: >
+        The
+        [ISO-639](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes)
+        code of the language
+
+        in which the summary will be generated.
+      example: en
+      schema:
+        type: string
+    - name: couponCode
+      in: query
+      description: The coupon code for which to get the rejection reason.
+      example: SUMMER2025
+      schema:
+        type: string
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  description: Summary of the reasons for coupon redemption failure.
+                  required:
+                    - id
+                    - eventID
+                    - couponCode
+                    - language
+                    - status
+                    - summary
+                    - createdAt
+                    - updatedAt
+                  properties:
+                    id:
+                      type: integer
+                      description: ID of the evaluation record.
+                      example: 1
+                    eventID:
+                      type: integer
+                      description: ID of the event.
+                      example: 1011
+                    sessionID:
+                      type: string
+                      description: >-
+                        ID of the customer session set by your integration
+                        layer.
+                      example: 1
+                    profileID:
+                      type: string
+                      description: >-
+                        ID of the customer profile set by your integration
+                        layer.
+                      example: a48f10dddb5c9493aad194e49bb9c1dac
+                    status:
+                      type: string
+                      description: >-
+                        Status defines if the coupon code was applied or
+                        rejected.
+                      example: rejected
+                    couponCode:
+                      type: string
+                      description: Coupon code passed for evaluation.
+                      example: ABC123
+                    language:
+                      type: string
+                      description: Language of the summary.
+                      example: en
+                    summary:
+                      type: string
+                      description: A summary of the reasons for coupon redemption failure.
+                      example: Session total was less than the required total.
+                    createdAt:
+                      type: string
+                      format: date-time
+                      description: Timestamp when the request was made.
+                      example: '2021-07-20T21:59:00Z'
+                    updatedAt:
+                      type: string
+                      format: date-time
+                      description: Timestamp when the request was last updated.
+                      example: '2021-07-20T21:59:00Z'

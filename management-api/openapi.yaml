@@ -571,6 +571,8 @@ paths:
   /v1/applications/{applicationId}/achievement_progress/{integrationId}:
     $ref: >-
       paths/v1-applications-{applicationId}-achievement_progress-{integrationId}.yaml
+  /v1/coupon_rejections:
+    $ref: paths/v1-coupon_rejections.yaml
 webhooks: {}
 components:
   securitySchemes:
@@ -624,8 +626,8 @@ components:
 
         1. Click **Create Key** and give it a name.
 
-        1. Set an expiration date. 
-           
+        1. Set an expiration date.
+
            **Tip**: Avoid choosing expiration dates that fall at the end of
            the year or during other high-traffic periods.
 

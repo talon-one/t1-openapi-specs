@@ -1,0 +1,253 @@
+# path: /v1/loyalty_programs/{loyaltyProgramId}/profile/{integrationId}/delete_transactions
+post:
+  operationId: deleteLoyaltyTransactionsFromLedgers
+  summary: Delete customer's transactions from loyalty ledgers
+  description: >
+    Delete a customer's transactions in all loyalty ledgers or a specified
+    ledger.
+
+
+    **Note:** To retrieve loyalty transaction logs for a specific customer in a
+    given
+
+    loyalty program, use the [List customer's loyalty
+    transactions](https://docs.talon.one/integration-api#tag/Loyalty/operation/getLoyaltyProgramProfileTransactions)
+
+    endpoint.
+  security:
+    - api_key_v1: []
+  tags:
+    - Loyalty
+  parameters:
+    - name: loyaltyProgramId
+      in: path
+      required: true
+      description: >
+        Identifier of the profile-based loyalty program. You can get the ID with
+
+        the [List loyalty
+        programs](https://docs.talon.one/management-api#tag/Loyalty/operation/getLoyaltyPrograms)
+        endpoint.
+      example: 33
+      schema:
+        type: integer
+    - name: integrationId
+      in: path
+      required: true
+      description: >
+        The integration ID of the customer profile. You can get the
+        `integrationId` of a profile using:
+
+        - A customer session integration ID with the [Update customer
+        session](https://docs.talon.one/integration-api#operation/updateCustomerSessionV2)
+        endpoint.
+
+        - The Management API with the [List application's
+        customers](https://docs.talon.one/management-api#operation/getApplicationCustomers)
+        endpoint.
+      example: customer1
+      schema:
+        type: string
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          description: Request to delete transactions based on the specified scope.
+          additionalProperties: false
+          required:
+            - scope
+          properties:
+            scope:
+              type: string
+              description: >
+                `AllSubledgers` deletes all transactions for the specified
+                customer profile from all ledgers in the loyalty program.
+
+
+                `SelectedSubledgers` deletes all transactions for the specified
+                customer profile only from the given ledgers in the loyalty
+                program.
+              enum:
+                - AllSubledgers
+                - SelectedSubledgers
+              example: SelectedSubledgers
+            subledgerIds:
+              type:
+                - array
+                - 'null'
+              description: >
+                The IDs of the ledgers from which to delete the customer's
+                transactions. This parameter is required if the `scope` is set
+                to `SelectedSubledgers`.
+
+
+                To specify the main ledger, provide an empty string ("").
+              items:
+                type: string
+              example:
+                - subledger1
+                - subledger2
+  responses:
+    '204':
+      description: No Content
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
