@@ -123,6 +123,13 @@ get:
                       type: string
                       minLength: 1
                       maxLength: 50
+                  reevaluateOnReturn:
+                    type: boolean
+                    title: Reevaluate on return
+                    description: >-
+                      Indicates whether this campaign should be reevaluated when
+                      a customer returns an item.
+                    example: true
                   features:
                     type: array
                     description: The features enabled in this campaign.
@@ -602,6 +609,10 @@ get:
                     example:
                       - 100
                       - 215
+                  experimentId:
+                    type: integer
+                    description: The ID of the Experiment this Campaign is part of.
+                    example: 1
                 required:
                   - state
                   - description
@@ -655,6 +666,9 @@ get:
                       sending requests with staging API key.
                     example: false
                     default: false
+              - type: object
+                required:
+                  - reevaluateOnReturn
 put:
   operationId: updateCampaign
   summary: Update campaign
@@ -755,6 +769,13 @@ put:
                 type: string
                 minLength: 1
                 maxLength: 50
+            reevaluateOnReturn:
+              type: boolean
+              title: Reevaluate on return
+              description: >-
+                Indicates whether this campaign should be reevaluated when a
+                customer returns an item.
+              example: true
             features:
               type: array
               description: A list of features for the campaign.
@@ -1096,6 +1117,13 @@ put:
                       type: string
                       minLength: 1
                       maxLength: 50
+                  reevaluateOnReturn:
+                    type: boolean
+                    title: Reevaluate on return
+                    description: >-
+                      Indicates whether this campaign should be reevaluated when
+                      a customer returns an item.
+                    example: true
                   features:
                     type: array
                     description: The features enabled in this campaign.
@@ -1575,6 +1603,10 @@ put:
                     example:
                       - 100
                       - 215
+                  experimentId:
+                    type: integer
+                    description: The ID of the Experiment this Campaign is part of.
+                    example: 1
                 required:
                   - state
                   - description
@@ -1628,6 +1660,9 @@ put:
                       sending requests with staging API key.
                     example: false
                     default: false
+              - type: object
+                required:
+                  - reevaluateOnReturn
 delete:
   operationId: deleteCampaign
   summary: Delete campaign

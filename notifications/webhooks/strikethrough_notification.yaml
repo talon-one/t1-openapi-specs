@@ -173,6 +173,7 @@ post:
                     format: date-time
                     example: '2020-06-10T09:05:27.993483Z'
                   effects:
+                    x-omit-if-zero: true
                     type: array
                     items:
                       type: object

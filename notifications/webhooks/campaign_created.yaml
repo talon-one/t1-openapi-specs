@@ -145,6 +145,14 @@ post:
                                       type: string
                                       minLength: 1
                                       maxLength: 50
+                                  reevaluateOnReturn:
+                                    type: boolean
+                                    title: Reevaluate on return
+                                    description: >-
+                                      Indicates whether this campaign should be
+                                      reevaluated when a customer returns an
+                                      item.
+                                    example: true
                                   features:
                                     type: array
                                     description: The features enabled in this campaign.
@@ -636,6 +644,12 @@ post:
                                     example:
                                       - 100
                                       - 215
+                                  experimentId:
+                                    type: integer
+                                    description: >-
+                                      The ID of the Experiment this Campaign is
+                                      part of.
+                                    example: 1
                               - type: object
                                 properties:
                                   revisionFrontendState:
@@ -687,6 +701,7 @@ post:
                                       with staging API key.
                                     example: false
                                     default: false
+                              - type: object
                           ruleset:
                             type: object
                             description: The current ruleset.
@@ -1151,6 +1166,7 @@ post:
                 activeRulesetId: 6
                 tags:
                   - summer
+                reevaluateOnReturn: false
                 features:
                   - coupons
                   - referrals

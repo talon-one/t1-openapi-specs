@@ -159,6 +159,13 @@ post:
                 attributes:
                   type: object
                   description: Arbitrary properties associated with coupons.
+                isReservationMandatory:
+                  type: boolean
+                  example: false
+                  description: >-
+                    An indication of whether the code can be redeemed only if it
+                    has been reserved first.
+                  default: false
     description: body
     required: true
   responses:

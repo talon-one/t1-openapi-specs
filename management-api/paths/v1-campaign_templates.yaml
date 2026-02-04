@@ -195,6 +195,13 @@ get:
                             type: string
                             minLength: 1
                             maxLength: 50
+                        reevaluateOnReturn:
+                          type: boolean
+                          description: >-
+                            Indicates whether campaigns created from this
+                            template should be reevaluated when a customer
+                            returns an item.
+                          example: true
                         features:
                           type: array
                           description: A list of features for the campaign template.
@@ -547,3 +554,6 @@ get:
                             template as a favorite.
                           default: false
                           example: false
+                    - type: object
+                      required:
+                        - reevaluateOnReturn

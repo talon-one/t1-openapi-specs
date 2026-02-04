@@ -255,6 +255,12 @@ get:
                                   - ruleName
                                   - effectType
                                 properties:
+                                  experimentId:
+                                    type: integer
+                                    description: >-
+                                      The ID of the experiment that campaign
+                                      belongs to.
+                                    example: 12
                                   campaignId:
                                     type: integer
                                     description: >-

@@ -539,6 +539,26 @@ post:
                                       effectiveUntil: '2025-05-30T00:00:00Z'
                                     base:
                                       price: 100
+                          experimentVariantAllocations:
+                            type: array
+                            description: >
+                              The experiment variant allocations to add to this
+                              session.
+                            title: Experiment variant allocations
+                            items:
+                              type: object
+                              required:
+                                - experimentID
+                                - variantID
+                              properties:
+                                experimentID:
+                                  description: The ID of the experiment.
+                                  type: integer
+                                  example: 1
+                                variantID:
+                                  description: The ID of the variant to be allocated.
+                                  type: integer
+                                  example: 2
                           additionalCosts:
                             type: object
                             description: >
@@ -2305,6 +2325,13 @@ post:
                             type: string
                             minLength: 1
                             maxLength: 50
+                        reevaluateOnReturn:
+                          type: boolean
+                          title: Reevaluate on return
+                          description: >-
+                            Indicates whether this campaign should be
+                            reevaluated when a customer returns an item.
+                          example: true
                         features:
                           type: array
                           description: The features enabled in this campaign.
@@ -2792,6 +2819,10 @@ post:
                           example:
                             - 100
                             - 215
+                        experimentId:
+                          type: integer
+                          description: The ID of the Experiment this Campaign is part of.
+                          example: 1
                       required:
                         - state
                         - description
@@ -2847,6 +2878,9 @@ post:
                             when sending requests with staging API key.
                           example: false
                           default: false
+                    - type: object
+                      required:
+                        - reevaluateOnReturn
               effects:
                 type: array
                 description: >-
@@ -2866,6 +2900,10 @@ post:
                         - ruleName
                         - effectType
                       properties:
+                        experimentId:
+                          type: integer
+                          description: The ID of the experiment that campaign belongs to.
+                          example: 12
                         campaignId:
                           type: integer
                           description: The ID of the campaign that triggered this effect.

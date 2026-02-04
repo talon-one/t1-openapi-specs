@@ -216,6 +216,7 @@ get:
                                           - number
                                           - time
                                           - (list string)
+                                          - (list number)
                                         description: The type of value this argument expects.
                                         minLength: 1
                                       description:
