@@ -118,17 +118,51 @@ post:
                   type: object
                   description: Auxiliary data for found price observation.
                   properties:
-                    influencingCampaignIDs:
+                    influencingCampaignDetails:
                       type: array
+                      description: Details about campaigns that influenced the final price.
                       items:
-                        type: integer
-                    adjustmentReferenceID:
-                      type: string
-                      description: >-
-                        Identifier related to the `referenceId` used during a
-                        `ADD_PRICE_ADJUSTMENT` action  using the [Sync cart item
-                        catalog
-                        endpoint](https://docs.talon.one/integration-api#tag/Catalogs/operation/syncCatalog).
+                        type: object
+                        description: >-
+                          Details about a campaign that influenced the final
+                          price.
+                        properties:
+                          campaignId:
+                            type: integer
+                            description: >-
+                              Identifier of the campaign that influenced the
+                              final price.
+                          discountValue:
+                            type: number
+                            description: Discount value applied by the campaign.
+                        required:
+                          - campaignId
+                          - discountValue
+                    adjustmentDetails:
+                      type: object
+                      description: Details about the applied price adjustment.
+                      properties:
+                        referenceId:
+                          type: string
+                          description: >-
+                            The reference identifier used during an
+                            `ADD_PRICE_ADJUSTMENT` action.
+                          example: 68851723-e6fa-488f-ace9-112581e6c19b
+                        selectedPriceType:
+                          type: string
+                          description: >-
+                            The selected price type for the SKU targeted by this
+                            effect.
+                          example: member
+                        value:
+                          type: number
+                          description: The value of the applied price adjustment.
+                      required:
+                        - referenceId
+                        - selectedPriceType
+                        - value
+                  required:
+                    - influencingCampaignDetails
                 target:
                   type: object
                   oneOf:
