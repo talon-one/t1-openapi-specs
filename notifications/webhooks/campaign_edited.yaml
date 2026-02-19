@@ -1775,6 +1775,32 @@ post:
                                     description: >-
                                       Timestamp indicating when this Ruleset was
                                       activated.
+                          placeholders:
+                            type: array
+                            description: >-
+                              The current details of the
+                              [placeholders](https://docs.talon.one/docs/product/campaigns/templates/create-templates#use-placeholders)
+                              in the campaign.
+                            items:
+                              type: object
+                              properties:
+                                name:
+                                  type: string
+                                  description: The name of the placeholder.
+                                  example: my property
+                                type:
+                                  type: string
+                                  description: >-
+                                    The type of the value assigned to the
+                                    placeholder.
+                                  example: list string
+                                value:
+                                  type: array
+                                  description: The current value of the placeholder.
+                                  example:
+                                    - 1
+                                    - sku_value
+                                  items: {}
                   description: A list of campaign notification data.
         example:
           NotificationType: CampaignNotification
@@ -1960,7 +1986,7 @@ post:
                         minValue: 0
                         maxValue: 19.9
                         attributeId: 100
-                        description: This is a template parameter of type `number`.
+                        description: This is a template parameter of type `text`.
                     condition:
                       - and
                       - - couponValid
@@ -2013,4 +2039,9 @@ post:
                 campaignId: 320
                 templateId: 3
                 activatedAt: '2019-08-24T14:15:22Z'
+              placeholders:
+                - name: my property
+                  type: String
+                  value:
+                    - string2
     required: true

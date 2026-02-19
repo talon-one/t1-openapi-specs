@@ -79,6 +79,7 @@ get:
                           - Coupon
                           - Event
                           - Giveaway
+                          - LoyaltyCard
                           - Referral
                           - Store
                         example: Event
@@ -259,6 +260,7 @@ put:
                     - Coupon
                     - Event
                     - Giveaway
+                    - LoyaltyCard
                     - Referral
                     - Store
                   example: Event
@@ -428,6 +430,7 @@ put:
                           - Coupon
                           - Event
                           - Giveaway
+                          - LoyaltyCard
                           - Referral
                           - Store
                         example: Event

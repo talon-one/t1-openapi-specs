@@ -120,6 +120,26 @@ put:
                     - 10
                     - 12
             - type: object
+              properties:
+                responseContent:
+                  type: array
+                  description: >
+                    Extends the response with the chosen data entities. Use this
+                    property to get as much data back as needed from one request
+                    instead of sending extra requests to other endpoints.
+                  example:
+                    - triggeredCampaigns
+                    - customerProfile
+                  items:
+                    type: string
+                    enum:
+                      - customerProfile
+                      - triggeredCampaigns
+                      - loyalty
+                      - event
+                      - awardedGiveaways
+                      - ruleFailureReasons
+            - type: object
               description: >-
                 The body of a V2 integration API request (customer profile
                 update). Next to the customer profile details, this contains an
@@ -150,26 +170,6 @@ put:
                       description: The IDs of the audiences for the customer to leave.
                       example:
                         - 7
-                responseContent:
-                  type: array
-                  description: >
-                    Extends the response with the chosen data entities. Use this
-                    property to get as much data
-
-                    as you need in one _Update customer profile_ request instead
-                    of sending extra requests to other endpoints.
-                  example:
-                    - triggeredCampaigns
-                    - customerProfile
-                  items:
-                    type: string
-                    enum:
-                      - customerProfile
-                      - triggeredCampaigns
-                      - loyalty
-                      - event
-                      - awardedGiveaways
-                      - ruleFailureReasons
     description: body
     required: true
   responses:

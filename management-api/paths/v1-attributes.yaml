@@ -64,6 +64,7 @@ post:
                     - Coupon
                     - Event
                     - Giveaway
+                    - LoyaltyCard
                     - Referral
                     - Store
                   example: Event
@@ -233,6 +234,7 @@ post:
                           - Coupon
                           - Event
                           - Giveaway
+                          - LoyaltyCard
                           - Referral
                           - Store
                         example: Event
@@ -506,6 +508,7 @@ get:
                                 - Coupon
                                 - Event
                                 - Giveaway
+                                - LoyaltyCard
                                 - Referral
                                 - Store
                               example: Event
