@@ -1,0 +1,157 @@
+# path: /v1/loyalty_programs/{loyaltyProgramId}/export_join_dates
+get:
+  operationId: exportLoyaltyJoinDates
+  summary: Export customers' loyalty program join dates
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Download a CSV file containing the join dates of all customers in the
+    loyalty program.
+
+
+    **Tip:** If the exported CSV file is too large to view, you can [split it
+    into multiple
+    files](https://www.makeuseof.com/tag/how-to-split-a-huge-csv-excel-workbook-into-seperate-files/).
+
+
+    The generated file can contain the following columns:
+
+
+    - `loyaltyProgramID`: The ID of the loyalty program.
+
+    - `profileIntegrationID`: The integration ID of the customer profile.
+
+    - `joinDate`: The customer's loyalty program join date in RFC3339 format.
+  tags:
+    - Loyalty
+  parameters:
+    - name: loyaltyProgramId
+      in: path
+      description: The identifier of the loyalty program.
+      example: '45'
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: OK
+      content:
+        application/csv:
+          schema:
+            type: string
+            format: csv
+          examples:
+            response:
+              value: |
+                loyaltyProgramID,profileIntegrationID,joinDate
+                40,8786NTHSAO8,2024-05-29T15:04:05Z
+                40,2735HATHOH8,2023-11-13T07:12:34Z
+    '400':
+      description: Bad request
+      content:
+        application/csv:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
+    '401':
+      description: Unauthorized
+      content:
+        application/csv:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code

@@ -338,6 +338,8 @@ paths:
   /v1/loyalty_programs/{loyaltyProgramId}/profile/{integrationId}/export_log:
     $ref: >-
       paths/v1-loyalty_programs-{loyaltyProgramId}-profile-{integrationId}-export_log.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/export_join_dates:
+    $ref: paths/v1-loyalty_programs-{loyaltyProgramId}-export_join_dates.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/export_customers_tiers:
     $ref: paths/v1-loyalty_programs-{loyaltyProgramId}-export_customers_tiers.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/statistics:
