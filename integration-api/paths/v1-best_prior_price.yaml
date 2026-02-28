@@ -88,6 +88,7 @@ post:
             items:
               type: object
               required:
+                - id
                 - sku
                 - observedAt
                 - price
@@ -95,6 +96,10 @@ post:
                 - metadata
                 - target
               properties:
+                id:
+                  type: integer
+                  description: The ID of the historical price.
+                  example: 1
                 sku:
                   type: string
                   description: sku
@@ -102,14 +107,14 @@ post:
                 observedAt:
                   type: string
                   format: date-time
-                  description: The date and time when the best price was observed.
+                  description: The date and time when the price was observed.
                   example: '2020-11-10T23:00:00Z'
                 contextId:
                   type: string
                   description: >
                     The context ID of the context active at the time of
                     observation.
-                  example: Summer Sale 2007
+                  example: Summer Sale 2025
                 price:
                   type: number
                   description: Price of the item.

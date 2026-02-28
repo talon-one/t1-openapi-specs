@@ -61,53 +61,53 @@ tags:
       about strikethrough pricing updates.
 paths: {}
 webhooks:
-  campaign_created:
-    $ref: webhooks/campaign_created.yaml
-  campaign_state_changed:
-    $ref: webhooks/campaign_state_changed.yaml
-  campaign_ruleset_changed:
-    $ref: webhooks/campaign_ruleset_changed.yaml
-  campaign_edited:
-    $ref: webhooks/campaign_edited.yaml
-  campaign_collection_edited:
-    $ref: webhooks/campaign_collection_edited.yaml
-  campaign_deleted:
-    $ref: webhooks/campaign_deleted.yaml
-  campaign_evaluation_tree_changed:
-    $ref: webhooks/campaign_evaluation_tree_changed.yaml
-  strikethrough_notification:
-    $ref: webhooks/strikethrough_notification.yaml
-  coupon_creation:
-    $ref: webhooks/coupon_creation.yaml
-  coupon_update_delete:
-    $ref: webhooks/coupon_update_delete.yaml
-  creation_coupons_asynchronous:
-    $ref: webhooks/creation_coupons_asynchronous.yaml
-  update_coupons:
-    $ref: webhooks/update_coupons.yaml
-  delete_coupons:
-    $ref: webhooks/delete_coupons.yaml
-  expiring_loyalty_points_notification:
-    $ref: webhooks/expiring_loyalty_points_notification.yaml
-  expiring_loyalty_card_points_notification:
-    $ref: webhooks/expiring_loyalty_card_points_notification.yaml
-  added_deducted_loyalty_points_notification:
-    $ref: webhooks/added_deducted_loyalty_points_notification.yaml
-  added_deducted_loyalty_points_balances_notification:
-    $ref: webhooks/added_deducted_loyalty_points_balances_notification.yaml
-  pending_active_points_notification:
-    $ref: webhooks/pending_active_points_notification.yaml
-  tier_upgrade_notification:
-    $ref: webhooks/tier_upgrade_notification.yaml
-  tier_downgrade_notification:
-    $ref: webhooks/tier_downgrade_notification.yaml
-  tier_will_downgrade_notification:
-    $ref: webhooks/tier_will_downgrade_notification.yaml
-  expiring_coupons_notification:
-    $ref: webhooks/expiring_coupons_notification.yaml
-  card_added_deducted_loyalty_points_notification:
-    $ref: webhooks/card_added_deducted_loyalty_points_notification.yaml
-  card_added_deducted_loyalty_points_balances_notification:
-    $ref: webhooks/card_added_deducted_loyalty_points_balances_notification.yaml
+  campaignCreatedNotification:
+    $ref: webhooks/campaignCreatedNotification.yaml
+  campaignStateChangedNotification:
+    $ref: webhooks/campaignStateChangedNotification.yaml
+  campaignRulesetChangedNotification:
+    $ref: webhooks/campaignRulesetChangedNotification.yaml
+  campaignEditedNotification:
+    $ref: webhooks/campaignEditedNotification.yaml
+  campaignCollectionEditedNotification:
+    $ref: webhooks/campaignCollectionEditedNotification.yaml
+  campaignDeletedNotification:
+    $ref: webhooks/campaignDeletedNotification.yaml
+  campaignEvaluationTreeChangedNotification:
+    $ref: webhooks/campaignEvaluationTreeChangedNotification.yaml
+  strikethroughLabelingNotification:
+    $ref: webhooks/strikethroughLabelingNotification.yaml
+  createCouponData:
+    $ref: webhooks/createCouponData.yaml
+  couponsData:
+    $ref: webhooks/couponsData.yaml
+  asyncCouponsData:
+    $ref: webhooks/asyncCouponsData.yaml
+  updateCouponsData:
+    $ref: webhooks/updateCouponsData.yaml
+  deleteCouponsData:
+    $ref: webhooks/deleteCouponsData.yaml
+  expiringPointsNotification:
+    $ref: webhooks/expiringPointsNotification.yaml
+  expiringCardPointsNotification:
+    $ref: webhooks/expiringCardPointsNotification.yaml
+  addedDeductedPointsNotification:
+    $ref: webhooks/addedDeductedPointsNotification.yaml
+  addedDeductedPointsBalancesNotification:
+    $ref: webhooks/addedDeductedPointsBalancesNotification.yaml
+  pendingActivePointsNotification:
+    $ref: webhooks/pendingActivePointsNotification.yaml
+  tierUpgradeNotification:
+    $ref: webhooks/tierUpgradeNotification.yaml
+  tierDowngradeNotification:
+    $ref: webhooks/tierDowngradeNotification.yaml
+  tierWillDowngradeNotification:
+    $ref: webhooks/tierWillDowngradeNotification.yaml
+  expiringCouponsNotification:
+    $ref: webhooks/expiringCouponsNotification.yaml
+  cardAddedDeductedPointsNotification:
+    $ref: webhooks/cardAddedDeductedPointsNotification.yaml
+  cardAddedDeductedPointsBalancesNotification:
+    $ref: webhooks/cardAddedDeductedPointsBalancesNotification.yaml
 components:
   securitySchemes: {}

@@ -15,7 +15,11 @@ post:
     The CSV file contains the following columns:
 
 
-    - `value` (required): The coupon code.
+    - `value` (required): The coupon code. Must be at least 3 characters long.
+    We recommend using alphanumeric characters.
+      There is no maximum length but limiting the code to 30 characters
+      ensures it is fully readable in the Campaign Manager.
+      The code should be unique unless you set `skipDuplicates` to `true`.
 
     - `expirydate`: The end date in RFC3339 of the code redemption period.
 

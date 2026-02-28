@@ -1,0 +1,190 @@
+# path: /v1/best_prior_price_history
+post:
+  operationId: priceHistory
+  summary: Get summary of price history
+  description: |
+    Fetch the historical price data for a given SKU within a defined timeframe.
+  tags:
+    - Catalogs
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - sku
+            - endDate
+            - startDate
+          properties:
+            sku:
+              type: string
+              description: >-
+                The SKU of the item for which the historical prices are being
+                retrieved.
+              example:
+                - sku-124
+            startDate:
+              type: string
+              format: date-time
+              description: >-
+                The start date of the period for which historical prices should
+                be retrieved.
+              example: '2020-11-10T23:00:00Z'
+            endDate:
+              type: string
+              format: date-time
+              description: >-
+                The end date of the period for which historical prices should be
+                retrieved.
+              example: '2020-12-10T23:00:00Z'
+    description: body
+    required: true
+  responses:
+    '200':
+      description: Ok
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - sku
+              - history
+            properties:
+              sku:
+                type: string
+                description: >-
+                  The SKU of the item for which historical prices should be
+                  retrieved.
+                example:
+                  - SKU1241028
+              history:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                    - observedAt
+                    - price
+                    - contextId
+                    - metadata
+                    - target
+                  properties:
+                    id:
+                      type: integer
+                      description: The ID of the historical price.
+                      example: 1
+                    observedAt:
+                      type: string
+                      format: date-time
+                      description: The date and time when the price was observed.
+                      example: '2020-11-10T23:00:00Z'
+                    contextId:
+                      type: string
+                      description: >
+                        Identifier of the relevant context at the time the price
+                        was observed (e.g. summer sale).
+                      example: Summer Sale 2025
+                    price:
+                      type: number
+                      description: Price of the item.
+                      example: 99.99
+                    metadata:
+                      type: object
+                      description: Auxiliary data for found price observation.
+                      properties:
+                        influencingCampaignDetails:
+                          type: array
+                          description: >-
+                            Details about campaigns that influenced the final
+                            price.
+                          items:
+                            type: object
+                            description: >-
+                              Details about a campaign that influenced the final
+                              price.
+                            properties:
+                              campaignId:
+                                type: integer
+                                description: >-
+                                  Identifier of the campaign that influenced the
+                                  final price.
+                              discountValue:
+                                type: number
+                                description: Discount value applied by the campaign.
+                            required:
+                              - campaignId
+                              - discountValue
+                        adjustmentDetails:
+                          type: object
+                          description: Details about the applied price adjustment.
+                          properties:
+                            referenceId:
+                              type: string
+                              description: >-
+                                The reference identifier used during an
+                                `ADD_PRICE_ADJUSTMENT` action.
+                              example: 68851723-e6fa-488f-ace9-112581e6c19b
+                            selectedPriceType:
+                              type: string
+                              description: >-
+                                The selected price type for the SKU targeted by
+                                this effect.
+                              example: member
+                            value:
+                              type: number
+                              description: The value of the applied price adjustment.
+                          required:
+                            - referenceId
+                            - selectedPriceType
+                            - value
+                      required:
+                        - influencingCampaignDetails
+                    target:
+                      type: object
+                      oneOf:
+                        - type: object
+                          description: >-
+                            Represents the target type when no entity is
+                            selected.
+                          properties:
+                            type:
+                              type: string
+                              enum:
+                                - NONE
+                          required:
+                            - type
+                        - type: object
+                          description: |
+                            Represents the targeted audience.
+                          properties:
+                            type:
+                              type: string
+                              enum:
+                                - AUDIENCE
+                            audience:
+                              allOf:
+                                - type: object
+                                  required:
+                                    - id
+                                  properties:
+                                    id:
+                                      type: integer
+                                      description: The ID of the audience.
+                                    integration:
+                                      type: string
+                                      description: >-
+                                        The third-party integration of the
+                                        audience.
+                                - type: object
+                                  properties:
+                                    integrationId:
+                                      type: string
+                                      minLength: 1
+                                      maxLength: 1000
+                                      description: >-
+                                        The ID of this audience in the
+                                        third-party integration.
+                                      example: 382370BKDB946
+                          required:
+                            - type
+                            - audience
