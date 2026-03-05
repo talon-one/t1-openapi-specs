@@ -179,6 +179,9 @@ tags:
       - **Custom events:** They are triggered by the [Track
       event](https://docs.talon.one/integration-api#tag/Events/operation/trackEventV2)
       endpoint.
+  - name: Experiments
+    description: |
+      Operations for managing experiments and experiment variants.
   - name: Giveaways
     description: >
       Represents a program that rewards customers with giveaways, such as free
@@ -315,6 +318,10 @@ paths:
     $ref: paths/v1-campaign_groups-{campaignGroupId}.yaml
   /v1/campaign_templates:
     $ref: paths/v1-campaign_templates.yaml
+  /v1/applications/{applicationId}/experiments:
+    $ref: paths/v1-applications-{applicationId}-experiments.yaml
+  /v1/applications/{applicationId}/experiments/{experimentId}:
+    $ref: paths/v1-applications-{applicationId}-experiments-{experimentId}.yaml
   /v1/applications/{applicationId}/create_campaign_from_template:
     $ref: paths/v1-applications-{applicationId}-create_campaign_from_template.yaml
   /v1/loyalty_programs:
