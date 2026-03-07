@@ -1,0 +1,137 @@
+# path: /v1/applications/{applicationId}/campaign_analytics/export
+get:
+  operationId: exportApplicationCampaignAnalytics
+  summary: Export Application analytics aggregated by campaign
+  description: >
+    <div class="redoc-warning small">Management API endpoints are <b>not</b>
+    meant to be used in real-time integrations that directly serve your end
+    users. Rate limit: 3 requests per second.</div>
+
+
+    Download a CSV file containing analytics data aggregated by campaign for the
+    campaigns of an Application.
+
+
+    **Tip:** If the exported CSV file is too large to view, you can [split it
+    into multiple
+    files](https://www.makeuseof.com/tag/how-to-split-a-huge-csv-excel-workbook-into-seperate-files/).
+
+
+    The CSV file contains the following columns:
+
+    - `campaign_id`: The ID of the campaign. This column also contains labels
+    for the [total and influenced
+    values](https://docs.talon.one/docs/product/campaigns/analytics/application-dashboard#understanding-the-analytics-data).
+
+    - `start_date`: The start of the aggregation time frame in UTC.
+
+    - `end_date`: The end of the aggregation time frame in UTC.
+
+    - `revenue`: The total, pre-discount value of all items purchased in a
+    customer session.
+
+    - `sessions`: The number of all closed sessions.
+
+    - `average_session_value`: The average customer session value, calculated by
+    dividing the revenue value by the number of sessions.
+
+    - `average_items_per_session`: The number of items from sessions divided by
+    the number of sessions.
+
+    - `coupons`: The number of times a coupon was successfully redeemed in
+    sessions.
+
+    - `discounts`: The total value of discounts given for cart items in
+    sessions.
+  tags:
+    - Campaigns
+  parameters:
+    - name: applicationId
+      in: path
+      required: true
+      description: >-
+        The ID of the Application. It is displayed in your Talon.One deployment
+        URL.
+      example: 42
+      schema:
+        type: integer
+    - name: campaignIds
+      in: query
+      required: false
+      description: >
+        Filter by one or more Campaign IDs, separated by a comma.
+
+
+        **Note:** If no campaigns are specified, data for all the campaigns in
+        the Application is returned.
+      example:
+        - '11'
+        - '20'
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+    - name: rangeStart
+      in: query
+      required: true
+      description: >
+        Only return results from after this timestamp.
+
+
+        **Note:**
+
+        - This must be an RFC3339 timestamp string.
+
+        - You can include a time component in your string, for example,
+        `T23:59:59` to specify the end of the day. The time zone setting
+        considered is `UTC`. If you do not include a time component, a default
+        time value of `T00:00:00` (midnight) in `UTC` is considered.
+      example: '2024-05-29T15:04:05+07:00'
+      schema:
+        type: string
+        format: date-time
+    - name: rangeEnd
+      in: query
+      required: true
+      description: >
+        Only return results from before this timestamp.
+
+
+        **Note:**
+
+        - This must be an RFC3339 timestamp string.
+
+        - You can include a time component in your string, for example,
+        `T23:59:59` to specify the end of the day. The time zone setting
+        considered is `UTC`. If you do not include a time component, a default
+        time value of `T00:00:00` (midnight) in `UTC` is considered.
+      example: '2024-05-29T15:04:05+07:00'
+      schema:
+        type: string
+        format: date-time
+  responses:
+    '200':
+      description: OK
+      content:
+        application/csv:
+          schema:
+            type: string
+            format: csv
+          examples:
+            response:
+              value: >
+                campaign_id,start_date,end_date,revenue,sessions,average_session_value,average_items_per_session,coupons,discounts
+
+                Total,2025-02-01T00:00:00+00:00,2025-02-07T00:00:00+00:00,751916.88,5919,127.03,3.96,N/A,N/A
+
+                Influenced,2025-02-01T00:00:00+00:00,2025-02-07T00:00:00+00:00,525816.00,5246,100.23,4.46,374,47675.73
+
+                41,2025-02-01T00:00:00+00:00,2025-02-07T00:00:00+00:00,284089.80,3105,91.49,4.62,247,8435.65
+
+                75,2025-02-01T00:00:00+00:00,2025-02-07T00:00:00+00:00,416001.81,4771,87.19,4.52,0,16768.71
+
+                178,2025-02-01T00:00:00+00:00,2025-02-07T00:00:00+00:00,313390.53,1098,285.42,4.81,65,16097.05
+
+                195,2025-02-01T00:00:00+00:00,2025-02-07T00:00:00+00:00,34345.86,595,57.72,4.58,62,6374.32

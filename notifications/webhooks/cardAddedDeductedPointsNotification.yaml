@@ -118,6 +118,10 @@ post:
               format: date-time
               description: The start date for loyalty points.
               example: '2023-01-24T14:15:22Z'
+            TransactionUUID:
+              type: string
+              format: uuid
+              description: The identifier of the transaction in the loyalty ledger.
         example:
           ProfileIntegrationIDs:
             - yJSObdNNtOetCHWHPFuz

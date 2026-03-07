@@ -8,7 +8,8 @@ get:
     users. Rate limit: 3 requests per second.</div>
 
 
-    Get a list of experiments per application.
+    List all experiments of the specified Application that match your filter
+    criteria.
   tags:
     - Experiments
   parameters:

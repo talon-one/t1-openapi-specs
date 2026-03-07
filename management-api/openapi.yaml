@@ -180,8 +180,10 @@ tags:
       event](https://docs.talon.one/integration-api#tag/Events/operation/trackEventV2)
       endpoint.
   - name: Experiments
-    description: |
-      Operations for managing experiments and experiment variants.
+    description: >
+      Represents an A/B testing configuration within a campaign that splits
+      customer sessions across multiple variants to compare rule effects against
+      each other.
   - name: Giveaways
     description: >
       Represents a program that rewards customers with giveaways, such as free
@@ -577,6 +579,8 @@ paths:
   /v1/applications/{applicationId}/campaigns/{campaignId}/achievements/{achievementId}/export:
     $ref: >-
       paths/v1-applications-{applicationId}-campaigns-{campaignId}-achievements-{achievementId}-export.yaml
+  /v1/applications/{applicationId}/campaign_analytics/export:
+    $ref: paths/v1-applications-{applicationId}-campaign_analytics-export.yaml
   /v1/applications/{applicationId}/achievement_progress/{integrationId}:
     $ref: >-
       paths/v1-applications-{applicationId}-achievement_progress-{integrationId}.yaml

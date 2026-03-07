@@ -8,7 +8,7 @@ get:
     users. Rate limit: 3 requests per second.</div>
 
 
-    Retrieve a given experiment associated with an Application.
+    Retrieve the given experiment associated with the Application.
   tags:
     - Experiments
   parameters:

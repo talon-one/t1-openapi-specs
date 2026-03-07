@@ -110,6 +110,10 @@ post:
                     format: date-time
                     description: The expiration date for loyalty points.
                     example: '2024-01-24T14:15:22Z'
+                  TransactionUUID:
+                    type: string
+                    format: uuid
+                    description: The identifier of the transaction in the loyalty ledger.
             CurrentPoints:
               type: number
               description: The current points balance.
