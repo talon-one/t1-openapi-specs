@@ -26,11 +26,6 @@ post:
     identifiers of the customer profiles linked to the loyalty card. The
     identifiers should be separated with a semicolon (;).
 
-    - `attributes` (optional): A JSON object that contains the loyalty card's
-    custom attributes and their values. These attributes must be created and
-    connected to this loyalty program before  they can be assigned to the cards
-    through this endpoint.
-
 
     **Note:** We recommend limiting your file size to 500MB.
 
@@ -40,9 +35,9 @@ post:
 
     ```csv
 
-    identifier,state,customerprofileids,attributes
+    identifier,state,customerprofileids
 
-    123-456-789AT,active,Alexa001;UserA,"{""my_attribute"": ""10_off""}"
+    123-456-789AT,active,Alexa001;UserA
 
     ```
   tags:

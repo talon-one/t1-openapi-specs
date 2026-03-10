@@ -43,10 +43,29 @@ get:
       example: name
       schema:
         type: string
+    - name: partialMatch
+      in: query
+      required: false
+      description: >-
+        Enables partial matching for a single text search field. When enabled,
+        the search term matches anywhere within the field value
+        (case-insensitive). Minimum 3 characters required for partial matches;
+        shorter inputs automatically fall back to exact match.
+
+
+        **Note:** Use with one of: `integrationId`, `profile`, `coupon`,
+        `referral`, or `storeIntegrationId`.
+      example: false
+      schema:
+        type: boolean
+        default: false
     - name: profile
       in: query
       required: false
-      description: Profile integration ID filter for sessions. Must be exact match.
+      description: >-
+        Filter by sessions with this profile integration ID. By default,
+        requires exact match. Use `partialMatch=true` to search for partial
+        matches (minimum 3 characters).
       example: customer1
       schema:
         type: string
@@ -85,22 +104,31 @@ get:
     - name: coupon
       in: query
       required: false
-      description: Filter by sessions with this coupon. Must be exact match.
+      description: >-
+        Filter by sessions with this coupon. By default, requires exact match.
+        Use `partialMatch=true` to search for partial matches (minimum 3
+        characters).
       example: SUMMER10
       schema:
         type: string
     - name: referral
       in: query
       required: false
-      description: Filter by sessions with this referral. Must be exact match.
+      description: >-
+        Filter by sessions with this referral. By default, requires exact match.
+        Use `partialMatch=true` to search for partial matches (minimum 3
+        characters).
       example: WPCNAQ5C
       schema:
         type: string
     - name: integrationId
       in: query
       required: false
-      description: Filter by sessions with this integration ID. Must be exact match.
-      example: customer1
+      description: >-
+        Filter by sessions with this integration ID. By default, requires exact
+        match. Use `partialMatch=true` to search for partial matches (minimum 3
+        characters).
+      example: STORE-123-REGION-WEST
       schema:
         type: string
     - name: storeIntegrationId
@@ -108,7 +136,8 @@ get:
       required: false
       description: >-
         The integration ID of the store. You choose this ID when you create a
-        store.
+        store. By default, requires exact match. Use `partialMatch=true` to
+        search for partial matches (minimum 3 characters).
       example: store1
       schema:
         type: string
