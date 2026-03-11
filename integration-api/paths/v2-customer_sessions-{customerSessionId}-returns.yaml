@@ -4972,6 +4972,14 @@ post:
                               anonymous sessions.
                             title: First session ever?
                             example: true
+                          updateCount:
+                            type: integer
+                            description: >-
+                              The number of times the session was updated. When
+                              the session is created, this value is initialized
+                              to `1`.
+                            title: Update count
+                            example: 3
                           total:
                             type: number
                             title: Session Total

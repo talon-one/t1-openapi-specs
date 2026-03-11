@@ -21,7 +21,7 @@ get:
 
     - `campaign_id`: The ID of the campaign. This column also contains labels
     for the [total and influenced
-    values](https://docs.talon.one/docs/product/campaigns/analytics/application-dashboard#understanding-the-analytics-data).
+    values](https://docs.talon.one/docs/product/campaigns/analytics/application-dashboard#display-the-analytics-data).
 
     - `start_date`: The start of the aggregation time frame in UTC.
 

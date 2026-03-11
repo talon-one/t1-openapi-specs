@@ -52,7 +52,7 @@ get:
                   requests in the last 5 minutes.
 
                   - `WARNING`: The Application received at least one failed
-                  request in the last 50 minutes.
+                  request in the last 5 minutes.
 
                   - `ERROR`: More than 50% of received requests failed.
 
