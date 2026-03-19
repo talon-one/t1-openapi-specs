@@ -660,11 +660,13 @@ put:
                           properties:
                             identifier:
                               type: string
-                              description: |
-                                The alphanumeric identifier of the loyalty card.
+                              description: >
+                                The identifier of the loyalty card, which must
+                                match the regular expression
+                                `^[A-Za-z0-9._%+@-]+$`.
                               maxLength: 108
                               minLength: 4
-                              pattern: ^[A-Za-z0-9_-]*$
+                              pattern: ^[A-Za-z0-9._%+@-]+$
                               example: summer-loyalty-card-0543
                             usersPerCardLimit:
                               type: integer
@@ -1013,7 +1015,7 @@ put:
                               type: string
                               maxLength: 108
                               minLength: 4
-                              pattern: ^[A-Za-z0-9_-]*$
+                              pattern: ^[A-Za-z0-9._%+@-]+$
                             newCardIdentifier:
                               description: >-
                                 The identifier of the card to which the points
@@ -1022,7 +1024,7 @@ put:
                               type: string
                               maxLength: 108
                               minLength: 4
-                              pattern: ^[A-Za-z0-9_-]*$
+                              pattern: ^[A-Za-z0-9._%+@-]+$
                             batchId:
                               description: >-
                                 The ID of the batch in which the loyalty card
@@ -1534,7 +1536,7 @@ put:
                                 `validCharacters` set.
                               maxLength: 100
                               minLength: 3
-                              pattern: ^[A-Za-z0-9_#-]*$
+                              pattern: ^[A-Za-z0-9._%+@#-]+$
                               example: SUMMER-####-####
                           additionalProperties: false
                           required:
@@ -1597,7 +1599,7 @@ put:
                                 `validCharacters` set.
                               maxLength: 100
                               minLength: 3
-                              pattern: ^[A-Za-z0-9_#-]*$
+                              pattern: ^[A-Za-z0-9._%+@#-]+$
                               example: SUMMER-####-####
                           additionalProperties: false
                           required:
@@ -2662,7 +2664,7 @@ put:
                                   type: string
                                   maxLength: 108
                                   minLength: 4
-                                  pattern: ^[A-Za-z0-9_-]*$
+                                  pattern: ^[A-Za-z0-9._%+@-]+$
                                   example: summer-loyalty-card-0543
                                 bundleIndex:
                                   type: integer
@@ -2747,7 +2749,7 @@ put:
                                   type: string
                                   maxLength: 108
                                   minLength: 4
-                                  pattern: ^[A-Za-z0-9_-]*$
+                                  pattern: ^[A-Za-z0-9._%+@-]+$
                                   example: summer-loyalty-card-0543
                             - type: object
                               description: >
@@ -3007,7 +3009,7 @@ put:
                                   type: string
                                   maxLength: 108
                                   minLength: 4
-                                  pattern: ^[A-Za-z0-9_-]*$
+                                  pattern: ^[A-Za-z0-9._%+@-]+$
                                   example: summer-loyalty-card-0543
                             - type: object
                               description: >-
@@ -3068,7 +3070,7 @@ put:
                                   type: string
                                   maxLength: 108
                                   minLength: 4
-                                  pattern: ^[A-Za-z0-9_-]*$
+                                  pattern: ^[A-Za-z0-9._%+@-]+$
                                   example: summer-loyalty-card-0543
                             - type: object
                               description: >

@@ -91,10 +91,10 @@ post:
               example: '2024-01-24T14:15:22Z'
             Operation:
               type: string
-              description: The action (addition or deduction) made with loyalty points.
+              description: The action (addition or subtraction) made with loyalty points.
               enum:
                 - addition
-                - deduction
+                - subtraction
             Reason:
               type: string
               description: The reason for the points addition or deduction.

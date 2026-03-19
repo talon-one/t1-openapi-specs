@@ -32,8 +32,19 @@ put:
         Identifier of the loyalty card. You can get the identifier with
 
         the [List loyalty
+
         cards](https://docs.talon.one/management-api#tag/Loyalty-cards/operation/getLoyaltyCards)
+
         endpoint.
+
+
+        **Important**: The loyalty card ID requires [URL
+
+        encoding](https://www.w3schools.com/tags//ref_urlencode.asp) if it
+
+        contains special characters. For example, you must encode `NewCard2026%`
+
+        as `NewCard2026%25`.
       example: summer-loyalty-card-0543
       required: true
       schema:

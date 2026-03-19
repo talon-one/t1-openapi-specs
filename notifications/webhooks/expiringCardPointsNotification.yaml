@@ -53,7 +53,9 @@ post:
                     example: sub-123
                   CardIdentifier:
                     type: string
-                    description: The alphanumeric identifier of the loyalty card.
+                    description: >
+                      The identifier of the loyalty card, `which must match the
+                      regular expression `^[A-Za-z0-9._%+@-]+$`.
                     example: summer-loyalty-card-0543
                   UsersPerCardLimit:
                     type: integer

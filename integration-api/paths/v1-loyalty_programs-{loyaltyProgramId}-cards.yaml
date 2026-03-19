@@ -73,11 +73,12 @@ post:
                 - G244519
             cardIdentifier:
               type: string
-              description: |
-                The alphanumeric identifier of the loyalty card.
+              description: >
+                The identifier of the loyalty card, which must match the regular
+                expression `^[A-Za-z0-9._%+@-]+$`.
               maxLength: 108
               minLength: 4
-              pattern: ^[A-Za-z0-9_-]*$
+              pattern: ^[A-Za-z0-9._%+@-]+$
               example: summer-loyalty-card-0543
           example:
             status: inactive
@@ -152,11 +153,12 @@ post:
                 properties:
                   identifier:
                     type: string
-                    description: |
-                      The alphanumeric identifier of the loyalty card.
+                    description: >
+                      The identifier of the loyalty card, which must match the
+                      regular expression `^[A-Za-z0-9._%+@-]+$`.
                     maxLength: 108
                     minLength: 4
-                    pattern: ^[A-Za-z0-9_-]*$
+                    pattern: ^[A-Za-z0-9._%+@-]+$
                     example: summer-loyalty-card-0543
                   usersPerCardLimit:
                     type: integer
@@ -482,7 +484,7 @@ post:
                     type: string
                     maxLength: 108
                     minLength: 4
-                    pattern: ^[A-Za-z0-9_-]*$
+                    pattern: ^[A-Za-z0-9._%+@-]+$
                   newCardIdentifier:
                     description: >-
                       The identifier of the card to which the points were
@@ -491,7 +493,7 @@ post:
                     type: string
                     maxLength: 108
                     minLength: 4
-                    pattern: ^[A-Za-z0-9_-]*$
+                    pattern: ^[A-Za-z0-9._%+@-]+$
                   batchId:
                     description: The ID of the batch in which the loyalty card was created.
                     type: string

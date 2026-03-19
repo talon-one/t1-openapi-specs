@@ -536,7 +536,7 @@ get:
                                           set.
                                         maxLength: 100
                                         minLength: 3
-                                        pattern: ^[A-Za-z0-9_#-]*$
+                                        pattern: ^[A-Za-z0-9._%+@#-]+$
                                         example: SUMMER-####-####
                                     additionalProperties: false
                                     required:

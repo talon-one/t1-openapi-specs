@@ -95,11 +95,11 @@ post:
                   Operation:
                     type: string
                     description: >-
-                      The action (addition or deduction) made with loyalty
+                      The action (addition or subtraction) made with loyalty
                       points.
                     enum:
                       - addition
-                      - deduction
+                      - subtraction
                   StartDate:
                     type: string
                     format: date-time

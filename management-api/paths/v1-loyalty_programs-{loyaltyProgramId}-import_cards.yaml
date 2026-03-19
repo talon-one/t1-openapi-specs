@@ -17,7 +17,8 @@ post:
     It contains the following columns for each card:
 
 
-    - `identifier` (required): The alphanumeric identifier of the loyalty card.
+    - `identifier` (required): The identifier of the loyalty card,  which must
+    match the regular expression `^[A-Za-z0-9._%+@-]+$`.
 
     - `state` (required): The state of the loyalty card. It can be `active` or
     `inactive`.

@@ -221,6 +221,8 @@ post:
                                 value:
                                   description: discount value.
                                   example: 1
+                                excludeFromBestPriorPriceHistory:
+                                  type: boolean
                             - type: object
                               description: >-
                                 customEffectPerItem effect in strikethrough

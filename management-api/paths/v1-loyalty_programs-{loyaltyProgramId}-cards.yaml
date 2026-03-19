@@ -58,7 +58,13 @@ get:
       schema:
         type: integer
     - name: identifier
-      description: The card code by which to filter loyalty cards in the response.
+      description: |
+        The card code by which to filter loyalty cards in the response.
+
+        **Important**: The loyalty card ID requires [URL
+        encoding](https://www.w3schools.com/tags//ref_urlencode.asp) if it
+        contains special characters. For example, you must encode `NewCard2026%`
+        as `NewCard2026%25`.
       example: summer-loyalty-card-054
       in: query
       required: false
@@ -155,11 +161,12 @@ get:
                       properties:
                         identifier:
                           type: string
-                          description: |
-                            The alphanumeric identifier of the loyalty card.
+                          description: >
+                            The identifier of the loyalty card, which must match
+                            the regular expression `^[A-Za-z0-9._%+@-]+$`.
                           maxLength: 108
                           minLength: 4
-                          pattern: ^[A-Za-z0-9_-]*$
+                          pattern: ^[A-Za-z0-9._%+@-]+$
                           example: summer-loyalty-card-0543
                         usersPerCardLimit:
                           type: integer
@@ -505,7 +512,7 @@ get:
                           type: string
                           maxLength: 108
                           minLength: 4
-                          pattern: ^[A-Za-z0-9_-]*$
+                          pattern: ^[A-Za-z0-9._%+@-]+$
                         newCardIdentifier:
                           description: >-
                             The identifier of the card to which the points were
@@ -514,7 +521,7 @@ get:
                           type: string
                           maxLength: 108
                           minLength: 4
-                          pattern: ^[A-Za-z0-9_-]*$
+                          pattern: ^[A-Za-z0-9._%+@-]+$
                         batchId:
                           description: >-
                             The ID of the batch in which the loyalty card was
