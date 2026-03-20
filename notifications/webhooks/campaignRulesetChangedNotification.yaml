@@ -388,6 +388,11 @@ post:
                                       - 1
                                       - 2
                                       - 3
+                                  couponAttributes:
+                                    type: object
+                                    description: >-
+                                      Arbitrary properties associated with
+                                      coupons in this campaign.
                               - type: object
                                 properties:
                                   budgets:

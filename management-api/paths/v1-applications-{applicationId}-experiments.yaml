@@ -450,6 +450,11 @@ get:
                                     - 1
                                     - 2
                                     - 3
+                                couponAttributes:
+                                  type: object
+                                  description: >-
+                                    Arbitrary properties associated with coupons
+                                    in this campaign.
                               required:
                                 - name
                                 - state
