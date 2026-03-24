@@ -3,9 +3,9 @@ delete:
   operationId: deleteLoyaltyCard
   summary: Delete loyalty card
   description: >-
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Delete the given loyalty card.
@@ -163,9 +163,9 @@ put:
   operationId: updateLoyaltyCard
   summary: Update loyalty card
   description: >-
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Update the details of a specific loyalty card. You can set the card's status
@@ -796,9 +796,9 @@ get:
   operationId: getLoyaltyCard
   summary: Get loyalty card
   description: >-
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Get the given loyalty card.

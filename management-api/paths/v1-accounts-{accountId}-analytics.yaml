@@ -3,9 +3,9 @@ get:
   operationId: getAccountAnalytics
   summary: Get account analytics
   description: >
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Return the analytics of your Talon.One account.
@@ -18,7 +18,7 @@ get:
         The identifier of the account. Retrieve it via the
 
         [List users in
-        account](https://docs.talon.one/management-api#operation/getUsers)
+        account](https://docs.talon.one/management-api#tag/Accounts-and-users/operation/getUsers)
         endpoint in the `accountId`
 
         property.

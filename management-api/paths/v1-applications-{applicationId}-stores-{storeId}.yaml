@@ -3,9 +3,9 @@ get:
   operationId: getStore
   summary: Get store
   description: >-
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Get store details for a specific store ID.
@@ -181,9 +181,9 @@ put:
   operationId: updateStore
   summary: Update store
   description: >-
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Update store details for a specific store ID.
@@ -457,9 +457,9 @@ delete:
   operationId: deleteStore
   summary: Delete store
   description: >-
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Delete the specified store.

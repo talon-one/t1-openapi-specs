@@ -20,15 +20,19 @@ put:
 
 
     You can either add, update, or delete up to 1000 cart items in a single
+
     request. Each item synced to a catalog must have a unique `SKU`.
 
 
-    **Important**: You can perform only one type of action in a single sync
+    > [!important] You can perform only one type of action in a single sync
+
     request. Syncing items with duplicate `SKU` values in a single request
+
     returns an error message with a `400` status code.
 
 
     For more information, read [managing cart item
+
     catalogs](https://docs.talon.one/docs/product/account/dev-tools/managing-cart-item-catalogs).
 
 
@@ -39,9 +43,8 @@ put:
     attributes](https://docs.talon.one/docs/product/account/dev-tools/managing-attributes)
 
     to filter items and select the ones you want to edit or delete when editing
-    or deleting more than one item
 
-    at a time.
+    or deleting more than one item at a time.
 
 
     The `filters` array contains an object with the following properties:
@@ -51,8 +54,7 @@ put:
     attribute](https://docs.talon.one/docs/product/account/dev-tools/managing-attributes)
       connected to the catalog. It is applied to all items in the catalog.
     - `op`: The filtering operator indicating the relationship between the value
-    of each
-      cart item in the catalog and the value of the `value` property for the attribute selected
+      of each cart item in the catalog and the value of the `value` property for the attribute selected
       in `attr`.
 
       The value of `op` can be one of the following:
@@ -65,7 +67,6 @@ put:
       - `IN`: One of the comma-separated values that `value` is set to.
 
       **Note:** `GE`, `LE`, `GT`, `LT` are for numeric values only.
-
     - `value`: The value of the attribute selected in `attr`.
 
 
@@ -73,6 +74,7 @@ put:
 
 
     Synchronization actions are sent as `PUT` requests. See the structure for
+
     each action:
 
 

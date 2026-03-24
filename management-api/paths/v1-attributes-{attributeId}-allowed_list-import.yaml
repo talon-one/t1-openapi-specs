@@ -3,13 +3,15 @@ post:
   operationId: importAllowedList
   summary: Import allowed values for attribute
   description: >
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Upload a CSV file containing a list of [picklist
+
     values](https://docs.talon.one/docs/product/account/dev-tools/managing-attributes#picklist-values)
+
     for the specified attribute.
 
 
@@ -17,19 +19,20 @@ post:
 
 
     The import **replaces** the previous list of allowed values for this
+
     attribute, if any.
 
 
     The CSV file **must** only contain the following column:
 
-    - `item` (required): the values in your allowed list, for example a list of
-    SKU's.
+
+    - `item`: The values in your allowed list, for example a list of SKUs.
 
 
     An allowed list is limited to 500,000 items.
 
 
-    Example:
+    ## Example
 
 
     ```text

@@ -4,19 +4,21 @@ get:
   summary: List customer's loyalty transactions
   description: >
     Retrieve paginated results of loyalty transaction logs for the given
+
     Integration ID in the specified loyalty program.
 
 
     You can filter transactions by date. If no filters are applied, the last 50
+
     loyalty transactions for the given integration ID are returned.
 
 
-    **Note:** To retrieve all loyalty program transaction logs in a given
-    loyalty program,
+    > [!note] To retrieve all loyalty program transaction logs in a given
 
-    use the [List loyalty program
+    > loyalty program, use the [List loyalty program
     transactions](https://docs.talon.one/management-api#tag/Loyalty/operation/getLoyaltyProgramTransactions)
-    endpoint.
+
+    > endpoint.
   security:
     - api_key_v1: []
   tags:
@@ -53,15 +55,11 @@ get:
     - name: customerSessionIDs
       in: query
       required: false
-      description: >
-        Filter the results by a list of customer session IDs. 
+      description: |
+        Filter the results by a list of customer session IDs.
 
-
-        To include multiple IDs, repeat the parameter for each one, for
-        example, 
-
+        To include multiple IDs, repeat the parameter for each one, for example,
         `?customerSessionIDs=id1&customerSessionIDs=id2`.
-
 
         The response contains only data associated with the specified sessions.
       example:
@@ -78,8 +76,7 @@ get:
         Filter the results by a list of transaction UUIDs.
 
 
-        To include multiple IDs, repeat the parameter for each one, for
-        example, 
+        To include multiple IDs, repeat the parameter for each one, for example,
 
         `?transactionUUIDs=uuid1&transactionUUIDs=uuid2`.
 
@@ -120,18 +117,19 @@ get:
       required: false
       description: >
         Date and time from which results are returned. Results are filtered by
+
         transaction creation date.
 
 
-        **Note:**
+        > [!note] **Note**
 
+        > - This must be an RFC3339 timestamp string.
 
-        - It must be an RFC3339 timestamp string.
-
-        - You can include a time component in your string, for example,
+        > - You can include a time component in your string, for example,
         `T23:59:59` to specify the end of the day. The time zone setting
-        considered is `UTC`. If you do not include a time component, a default
-        time value of `T00:00:00` (midnight) in `UTC` is considered.
+
+        >   considered is `UTC`. If you do not include a time component, a
+        default time value of `T00:00:00` (midnight) in `UTC` is considered.
       example: '2024-05-29T15:04:05+07:00'
       schema:
         type: string
@@ -141,18 +139,19 @@ get:
       required: false
       description: >
         Date and time by which results are returned. Results are filtered by
+
         transaction creation date.
 
 
-        **Note:**
+        > [!note] **Note**
 
+        > - This must be an RFC3339 timestamp string.
 
-        - It must be an RFC3339 timestamp string.
-
-        - You can include a time component in your string, for example,
+        > - You can include a time component in your string, for example,
         `T23:59:59` to specify the end of the day. The time zone setting
-        considered is `UTC`. If you do not include a time component, a default
-        time value of `T00:00:00` (midnight) in `UTC` is considered.
+
+        >   considered is `UTC`. If you do not include a time component, a
+        default time value of `T00:00:00` (midnight) in `UTC` is considered.
       example: '2024-05-29T15:04:05+07:00'
       schema:
         type: string

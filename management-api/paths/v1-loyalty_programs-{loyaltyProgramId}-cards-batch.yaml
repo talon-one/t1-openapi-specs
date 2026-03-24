@@ -3,26 +3,28 @@ post:
   operationId: createBatchLoyaltyCards
   summary: Create loyalty cards
   description: >
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Create a batch of loyalty cards in a specified [card-based loyalty
+
     program](https://docs.talon.one/docs/product/loyalty-programs/overview#loyalty-program-types).
 
 
     Customers can use loyalty cards to collect and spend loyalty points.
 
 
-    **Important:**
+    > [!important] **Note**
 
+    > - The specified card-based loyalty program must have a defined card code
 
-    - The specified card-based loyalty program must have a defined card code
-    format that is used to generate the loyalty card codes.
+    >   format that is used to generate the loyalty card codes.
 
-    - Trying to create more than 20,000 loyalty cards in a single request
-    returns an error message with a `400` status code.
+    > - Trying to create more than 20,000 loyalty cards in a single request
+
+    >   returns an error message with a `400` status code.
   tags:
     - Loyalty cards
   parameters:

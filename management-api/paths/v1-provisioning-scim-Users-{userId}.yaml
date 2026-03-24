@@ -3,9 +3,9 @@ get:
   operationId: scimGetUser
   summary: Get SCIM user
   description: >-
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Retrieve data for a specific Talon.One user created using the SCIM
@@ -88,9 +88,9 @@ delete:
   operationId: scimDeleteUser
   summary: Delete SCIM user
   description: >-
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Delete a specific Talon.One user created using the SCIM provisioning
@@ -112,9 +112,9 @@ put:
   operationId: scimReplaceUserAttributes
   summary: Update SCIM user
   description: >
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Update the details of a specific Talon.One user created using the SCIM
@@ -247,9 +247,9 @@ patch:
   operationId: scimPatchUser
   summary: Update SCIM user attributes
   description: >
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Update certain attributes of a specific Talon.One user created using the

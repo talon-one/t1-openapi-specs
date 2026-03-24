@@ -3,20 +3,24 @@ post:
   operationId: createInviteV2
   summary: Invite user
   description: >
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Create a new user in the account and send an invitation to their email
+
     address.
 
 
-    **Note**: The invitation token is valid for 24 hours after the email has
-    been sent. You can resend an invitation to a user with the [Resend
-    invitation
+    > [!note] The invitation token is valid for 24 hours after the email has
+
+    > been sent. You can resend an invitation to a user with the [Resend
+
+    > invitation
     email](https://docs.talon.one/management-api#tag/Accounts-and-users/operation/createInviteEmail)
-    endpoint.
+
+    > endpoint.
   tags:
     - Accounts and users
   requestBody:

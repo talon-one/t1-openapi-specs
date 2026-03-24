@@ -7,31 +7,31 @@ post:
 
 
     This endpoint automatically changes the session state from `closed` to
+
     `partially_returned`.
 
 
-    **Important:** This will roll back any effects associated with these cart
-    items. For more information, see
+    > [!note] This will roll back any effects associated with these cart items.
 
-    [our documentation on session
+    > For more information, see [our documentation on session
+
+    >
     states](https://docs.talon.one/docs/dev/concepts/entities/customer-sessions#customer-session-states)
 
-    and [this
+    > and [this
     tutorial](https://docs.talon.one/docs/dev/tutorials/partially-returning-a-session).
 
 
-    **Note:** To make request processing idempotent for this endpoint, include
-    the `Idempotency-Key` header with an idempotency key in requests.
+    > [!note] To make request processing idempotent for this endpoint, include
+    the `Idempotency-Key` header with an idempotency key in requests. Also:
 
-    Also:
-
-    - Requests with the `Idempotency-Key` header are logged in the Talon.One
+    > - Requests with the `Idempotency-Key` header are logged in the Talon.One
     access logs.
 
-    - Responses for idempotent requests are stored in the database and expire 24
-    hours after the request is sent.
+    > - Responses for idempotent requests are stored in the database and expire
+    24 hours after the request is sent.
 
-    - Idempotency keys are typically UUID keys and should not exceed 255
+    > - Idempotency keys are typically UUID keys and should not exceed 255
     characters in length.
   security:
     - api_key_v1: []
@@ -59,7 +59,7 @@ post:
         Manager's **Sessions** menu, or via the
 
         [List Application
-        session](https://docs.talon.one/management-api#operation/getApplicationSessions)
+        session](https://docs.talon.one/management-api#tag/Customer-data/operation/getApplicationSessions)
         endpoint.
       example: session1
       schema:
@@ -183,6 +183,7 @@ post:
                         properties:
                           attributes:
                             type: object
+                            additionalProperties: true
                             description: Arbitrary properties associated with this item.
                             example:
                               Language: english
@@ -286,7 +287,7 @@ post:
 
 
                               For example, [reserving a
-                              coupon](https://docs.talon.one/integration-api#operation/createCouponReservation)
+                              coupon](https://docs.talon.one/integration-api#tag/Coupons/operation/createCouponReservation)
 
                               for a customer doesn't impact this field.
                             example: '2020-02-08T14:15:20Z'
@@ -1171,7 +1172,7 @@ post:
                               type: integer
                               description: >
                                 [ID of
-                                Ruleset](https://docs.talon.one/management-api#operation/getRulesets)
+                                Ruleset](https://docs.talon.one/management-api#tag/Campaigns/operation/getRulesets)
                                 this
 
                                 campaign applies on customer session evaluation.
@@ -4966,6 +4967,7 @@ post:
                                     d41306257915f83fe01e54092ae470f631161ea16fcf4415842eed41470386ea
                               attributes:
                                 type: object
+                                additionalProperties: true
                                 description: >
                                   Use this property to set a value for the
                                   attributes of your choice. Attributes

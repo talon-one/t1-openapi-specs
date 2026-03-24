@@ -3,12 +3,13 @@ post:
   operationId: importCoupons
   summary: Import coupons
   description: >
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Upload a CSV file containing the coupons that should be created. The file
+
     should be sent as multipart data.
 
 
@@ -20,7 +21,6 @@ post:
       There is no maximum length but limiting the code to 30 characters
       ensures it is fully readable in the Campaign Manager.
       The code should be unique unless you set `skipDuplicates` to `true`.
-
     - `expirydate`: The end date in RFC3339 of the code redemption period.
 
     - `startdate`: The start date in RFC3339 of the code redemption period.
@@ -35,8 +35,7 @@ post:
     typically used to represent a gift card value.
 
     - `attributes`: A JSON object describing _custom_ coupon attribute names and
-    their values, enclosed with double quotation marks.
-
+    their values, enclosed with double quotation marks.<br />
       For example, if you created a [custom attribute](https://docs.talon.one/docs/dev/concepts/attributes#custom-attributes)
       called `category` associated with the coupon entity, the object in the CSV file, when opened in a text editor, must be: `"{"category": "10_off"}"`.
 
@@ -44,10 +43,10 @@ post:
     by Talon.One.
 
 
-    **Note:** We recommend limiting your file size to 500MB.
+    > [!note] We recommend limiting your file size to 500 MB.
 
 
-    **Example:**
+    ## Example
 
 
     ```text
@@ -55,13 +54,13 @@ post:
     "value","expirydate","startdate","recipientintegrationid","limitval","attributes","discountlimit"
 
     COUP1,2018-07-01T04:00:00Z,2018-05-01T04:00:00Z,cust123,1,"{""Category"":
+
     ""10_off""}",2.4
 
     ```
 
 
     Once imported, you can find the `batchId` in the Campaign Manager or by
-
     using [List coupons](#tag/Coupons/operation/getCouponsWithoutTotalCount).
   tags:
     - Coupons

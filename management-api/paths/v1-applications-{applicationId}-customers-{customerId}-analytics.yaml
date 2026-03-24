@@ -3,9 +3,9 @@ get:
   operationId: getCustomerAnalytics
   summary: Get customer's analytics report
   description: >-
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Fetch analytics for a given customer in the given application.
@@ -58,7 +58,7 @@ get:
         The value of the `id` property of a customer profile. Get it with the
 
         [List Application's
-        customers](https://docs.talon.one/management-api#operation/getApplicationCustomers)
+        customers](https://docs.talon.one/management-api#tag/Customer-data/operation/getApplicationCustomers)
         endpoint.
       example: 3778
       required: true

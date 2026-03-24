@@ -3,33 +3,43 @@ get:
   operationId: getLoyaltyLedgerBalances
   summary: Get customer's loyalty balances
   description: >
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Retrieve loyalty ledger balances for the given Integration ID in the
+
     specified loyalty program.
 
+
     You can filter balances by date and subledger ID, and include tier-related
+
     information in the response.
 
 
-    **Note**: If no filtering options are applied, you retrieve all loyalty
-    balances on the current date for the given integration ID.
+    > [!note] If no filtering options are applied, you retrieve all loyalty
+
+    > balances on the current date for the given integration ID.
 
 
     Loyalty balances are calculated when Talon.One receives your request using
+
     the points stored in our database, so retrieving a large number of balances
+
     at once can impact performance.
 
 
     For more information, see:
 
+
     - [Managing card-based loyalty program
+
     data](https://docs.talon.one/docs/product/loyalty-programs/card-based/managing-loyalty-cards)
 
+
     - [Managing profile-based loyalty program
+
     data](https://docs.talon.one/docs/product/loyalty-programs/profile-based/managing-pb-lp-data)
   tags:
     - Loyalty
@@ -67,18 +77,19 @@ get:
       required: false
       description: >
         Used to return expired, active, and pending loyalty balances before this
+
         timestamp. You can enter any past, present, or future timestamp value.
 
 
-        **Note:**
+        > [!note] **Note**
 
+        > - This must be an RFC3339 timestamp string.
 
-        - It must be an RFC3339 timestamp string.
-
-        - You can include a time component in your string, for example,
+        > - You can include a time component in your string, for example,
         `T23:59:59` to specify the end of the day. The time zone setting
-        considered is `UTC`. If you do not include a time component, a default
-        time value of `T00:00:00` (midnight) in `UTC` is considered.
+
+        >   considered is `UTC`. If you do not include a time component, a
+        default time value of `T00:00:00` (midnight) in `UTC` is considered.
       example: '2024-05-29T15:04:05+07:00'
       schema:
         type: string

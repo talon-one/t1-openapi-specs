@@ -3,20 +3,21 @@ put:
   operationId: updateCoupon
   summary: Update coupon
   description: >
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Update the specified coupon.
 
 
-    <div class="redoc-section">
-      <p class="title">Important</p>
+    > [!note]
 
-      <p>With this <code>PUT</code> endpoint, if you do not explicitly set a value for the <code>startDate</code>, <code>expiryDate</code>, and <code>recipientIntegrationId</code> properties in your request, it is automatically set to <code>null</code>.</p>
+    > With this `PUT` endpoint, if you do not explicitly set a value for the
+    `startDate`, `expiryDate`,
 
-    </div>
+    > and `recipientIntegrationId` properties in your request, it is
+    automatically set to `null`.
   tags:
     - Coupons
   parameters:
@@ -421,9 +422,9 @@ delete:
   operationId: deleteCoupon
   summary: Delete coupon
   description: >-
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Delete the specified coupon.

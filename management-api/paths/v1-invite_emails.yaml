@@ -3,15 +3,15 @@ post:
   operationId: createInviteEmail
   summary: Resend invitation email
   description: >
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Resend an email invitation to an existing user.
 
 
-    **Note:** The invitation token is valid for 24 hours after the email has
+    > [!note] The invitation token is valid for 24 hours after the email has
     been sent.
   tags:
     - Accounts and users

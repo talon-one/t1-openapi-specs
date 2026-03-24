@@ -11,7 +11,7 @@ post:
     To get the `integrationId` of a customer profile, you can use the
 
     [Update customer
-    session](https://docs.talon.one/integration-api#operation/updateCustomerSessionV2)
+    session](https://docs.talon.one/integration-api#tag/Customer-sessions/operation/updateCustomerSessionV2)
 
     endpoint.
   tags:

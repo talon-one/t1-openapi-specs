@@ -8,41 +8,52 @@ post:
 
     To use this endpoint:
 
+
     1. Define a [custom
     event](https://docs.talon.one/docs/dev/concepts/entities/events#creating-a-custom-event)
+
     in the Campaign Manager.
 
     1. Update or create a rule to check for this event.
 
     1. Trigger the event with this endpoint. After you have successfully sent an
+
     event to Talon.One, you can list the received events in the **Events** view
+
     in the Campaign Manager.
 
 
     Talon.One also offers a set of [built-in
-    events](https://docs.talon.one/docs/dev/concepts/entities/events). Ensure
-    you do not create
 
-    a custom event when you can use a built-in event.
+    events](https://docs.talon.one/docs/dev/concepts/entities/events). Ensure
+
+    you do not create a custom event when you can use a built-in event.
 
 
     For example, use this endpoint to trigger an event when a customer shares a
+
     link to a product.
+
 
     See the
     [tutorial](https://docs.talon.one/docs/product/tutorials/referrals/incentivizing-product-link-sharing).
 
 
-    <div class="redoc-section">
+    > [!note] **Note**
 
-      <p class="title">Important</p>
+    > - `profileId` is required even though the schema does not specify it.
 
-      1. `profileId` is required even though the schema does not specify it.
-      1. If the customer profile ID is new, a new profile is automatically created but the `customer_profile_created` [built-in event ](https://docs.talon.one/docs/dev/concepts/entities/events) is **not** triggered.
-      1. We recommend sending requests sequentially. See [Managing parallel requests](https://docs.talon.one/docs/dev/getting-started/integration-tutorial#managing-parallel-requests).
-      1. [Archived campaigns](https://docs.talon.one/docs/product/campaigns/managing-campaigns#archiving-a-campaign) are not considered in rule evaluation.
+    > - If the customer profile ID is new, a new profile is automatically
+    created but the `customer_profile_created` [built-in event
+    ](https://docs.talon.one/docs/dev/concepts/entities/events) is **not**
+    triggered.
 
-    </div>
+    > - We recommend sending requests sequentially. See [Managing parallel
+    requests](https://docs.talon.one/docs/dev/getting-started/integration-tutorial#managing-parallel-requests).
+
+    > - [Archived
+    campaigns](https://docs.talon.one/docs/product/campaigns/managing-campaigns#archiving-a-campaign)
+    are not considered in rule evaluation.
   security:
     - api_key_v1: []
   tags:
@@ -185,6 +196,88 @@ post:
                   description: Identifiers of the loyalty cards used during this event.
                   example:
                     - loyalty-card-1
+        examples:
+          Full request:
+            summary: Full request
+            x-vertical: none
+            value:
+              profileId: URNGV8294NV
+              storeIntegrationId: STORE-001
+              evaluableCampaignIds:
+                - 10
+                - 12
+              type: pageViewed
+              attributes:
+                myAttribute: myValue
+              responseContent:
+                - triggeredCampaigns
+                - customerProfile
+              loyaltyCards:
+                - loyalty-card-1
+          eCommerce:
+            x-vertical: ecommerce
+            summary: 'Example: eCommerce'
+            description: Track a custom event such as newsletter sign-up.
+            value:
+              profileId: customer-123
+              type: newsletter_signup
+              attributes:
+                SubscriptionType: weekly
+              responseContent:
+                - customerProfile
+                - triggeredCampaigns
+          QSR & dining:
+            x-vertical: qsr
+            summary: 'Example: QSR & dining'
+            description: >
+              Record a customer's first app sign-in so you can automatically
+              trigger a welcome reward or bonus loyalty points.
+            value:
+              profileId: customer-456
+              type: app_first_signin
+              attributes:
+                SignupChannel: mobile_app
+                DeviceType: ios
+              responseContent:
+                - customerProfile
+                - triggeredCampaigns
+                - loyalty
+          Financial services:
+            x-vertical: finance
+            summary: 'Example: Financial services'
+            description: >
+              Track when a customer completes identity verification on a
+              cryptocurrency platform
+
+              to trigger a reward, such as €10 in cryptocurrency.
+            value:
+              profileId: customer-789
+              type: identity_verification_completed
+              attributes:
+                VerificationLevel: full_kyc
+                Platform: mobile_app
+              responseContent:
+                - customerProfile
+                - triggeredCampaigns
+          Travel & hospitality:
+            x-vertical: travel
+            summary: 'Example: Travel & hospitality'
+            description: >
+              Track when a customer attends their fifth show in a year to
+              automatically
+
+              assign a unique voucher code to their account as an omnichannel
+              reward.
+            value:
+              profileId: customer-321
+              type: show_attendance
+              attributes:
+                Venue: Grand Theater
+                EventCategory: live_music
+                AttendanceCount: 5
+              responseContent:
+                - customerProfile
+                - triggeredCampaigns
     description: body
     required: true
   responses:
@@ -240,6 +333,7 @@ post:
                         properties:
                           attributes:
                             type: object
+                            additionalProperties: true
                             description: Arbitrary properties associated with this item.
                             example:
                               Language: english
@@ -343,7 +437,7 @@ post:
 
 
                               For example, [reserving a
-                              coupon](https://docs.talon.one/integration-api#operation/createCouponReservation)
+                              coupon](https://docs.talon.one/integration-api#tag/Coupons/operation/createCouponReservation)
 
                               for a customer doesn't impact this field.
                             example: '2020-02-08T14:15:20Z'
@@ -1228,7 +1322,7 @@ post:
                               type: integer
                               description: >
                                 [ID of
-                                Ruleset](https://docs.talon.one/management-api#operation/getRulesets)
+                                Ruleset](https://docs.talon.one/management-api#tag/Campaigns/operation/getRulesets)
                                 this
 
                                 campaign applies on customer session evaluation.

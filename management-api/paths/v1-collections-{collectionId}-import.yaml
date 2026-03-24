@@ -3,13 +3,15 @@ post:
   operationId: importAccountCollection
   summary: Import data into existing account-level collection
   description: >
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Upload a CSV file containing the collection of string values that should be
+
     attached as payload for collection.
+
 
     The file should be sent as multipart data.
 
@@ -26,14 +28,14 @@ post:
     A collection is limited to 500,000 items.
 
 
-    Example:
+    ## Example
 
 
     ```
 
     item
 
-    Addidas
+    Adidas
 
     Nike
 
@@ -42,8 +44,10 @@ post:
     ```
 
 
-    **Note:** Before sending a request to this endpoint, ensure the data in the
-    CSV to import is different from the data currently stored in the collection.
+    > [!note] Before sending a request to this endpoint, ensure the data in the
+
+    > CSV to import is different from the data currently stored in the
+    collection.
   tags:
     - Collections
   parameters:
@@ -52,7 +56,7 @@ post:
       required: true
       description: >-
         The ID of the collection. You can get it with the [List collections in
-        account](#operation/listAccountCollections) endpoint.
+        account](#tag/Collections/operation/listAccountCollections) endpoint.
       example: 22
       schema:
         type: integer

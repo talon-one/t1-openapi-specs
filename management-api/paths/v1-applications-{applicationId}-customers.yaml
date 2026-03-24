@@ -3,9 +3,9 @@ get:
   operationId: getApplicationCustomers
   summary: List application's customers
   description: >-
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     List all the customers of the specified application.
@@ -148,6 +148,7 @@ get:
                           properties:
                             attributes:
                               type: object
+                              additionalProperties: true
                               description: Arbitrary properties associated with this item.
                               example:
                                 Language: english
@@ -251,7 +252,7 @@ get:
 
 
                                 For example, [reserving a
-                                coupon](https://docs.talon.one/integration-api#operation/createCouponReservation)
+                                coupon](https://docs.talon.one/integration-api#tag/Coupons/operation/createCouponReservation)
 
                                 for a customer doesn't impact this field.
                               example: '2020-02-08T14:15:20Z'

@@ -78,6 +78,7 @@ get:
                       properties:
                         attributes:
                           type: object
+                          additionalProperties: true
                           description: Arbitrary properties associated with this item.
                           example:
                             Language: english
@@ -181,7 +182,7 @@ get:
 
 
                             For example, [reserving a
-                            coupon](https://docs.talon.one/integration-api#operation/createCouponReservation)
+                            coupon](https://docs.talon.one/integration-api#tag/Coupons/operation/createCouponReservation)
 
                             for a customer doesn't impact this field.
                           example: '2020-02-08T14:15:20Z'

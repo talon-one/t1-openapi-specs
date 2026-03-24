@@ -5,26 +5,35 @@ post:
   description: >
     [Loyalty
     cards](https://docs.talon.one/docs/product/loyalty-programs/card-based/card-based-overview)
-    allow customers to collect
 
-    and spend loyalty points within a [card-based loyalty
+    allow customers to collect and spend loyalty points within a [card-based
+    loyalty
+
     program](https://docs.talon.one/docs/product/loyalty-programs/overview#loyalty-program-types).
 
+
     They are useful to gamify loyalty programs and can be used with or without
+
     customer profiles linked to them.
 
 
     Link a customer profile to a given loyalty card for the card to be set as
+
     **Registered**.
 
+
     This affects how it can be used. See the
+
     [docs](https://docs.talon.one/docs/product/loyalty-programs/card-based/managing-loyalty-cards#linking-customer-profiles-to-a-loyalty-card).
 
 
-    **Note:** You can link as many customer profiles to a given loyalty card as
-    the [**card user
+    > [!note] You can link as many customer profiles to a given loyalty card as
+    the
+
+    > [**card user
     limit**](https://docs.talon.one/docs/product/loyalty-programs/card-based/creating-cb-programs)
-    allows.
+
+    > allows.
   tags:
     - Loyalty cards
   security:

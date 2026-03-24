@@ -4,7 +4,9 @@ put:
   summary: Update multiple customer profiles
   description: >
     Update (or create) up to 1000 [customer
+
     profiles](https://docs.talon.one/docs/dev/concepts/entities/customer-profiles)
+
     in 1 request.
 
 
@@ -16,13 +18,15 @@ put:
 
 
     A customer profile [can be linked to one or more
+
     sessions](https://docs.talon.one/integration-api#tag/Customer-sessions).
 
 
-    **Note:** This endpoint does not trigger the Rule Engine. To trigger the
-    Rule Engine for customer profile updates,
+    > [!note] This endpoint does not trigger the Rule Engine.
 
-    use the [Update customer
+    > To trigger the Rule Engine for customer profile updates,
+
+    > use the [Update customer
     profile](#tag/Customer-profiles/operation/updateCustomerProfileV2) endpoint.
   security:
     - api_key_v1: []
@@ -58,6 +62,7 @@ put:
                     properties:
                       attributes:
                         type: object
+                        additionalProperties: true
                         description: Arbitrary properties associated with this item.
                         example:
                           Language: english
@@ -84,7 +89,7 @@ put:
                           `sessionId`, use the
 
                           [Update customer
-                          session](https://docs.talon.one/integration-api#operation/updateCustomerSessionV2).
+                          session](https://docs.talon.one/integration-api#tag/Customer-sessions/operation/updateCustomerSessionV2).
                         type: string
                         example: R195412
                         maxLength: 1000
@@ -147,6 +152,7 @@ put:
                           properties:
                             attributes:
                               type: object
+                              additionalProperties: true
                               description: Arbitrary properties associated with this item.
                               example:
                                 Language: english
@@ -250,7 +256,7 @@ put:
 
 
                                 For example, [reserving a
-                                coupon](https://docs.talon.one/integration-api#operation/createCouponReservation)
+                                coupon](https://docs.talon.one/integration-api#tag/Coupons/operation/createCouponReservation)
 
                                 for a customer doesn't impact this field.
                               example: '2020-02-08T14:15:20Z'

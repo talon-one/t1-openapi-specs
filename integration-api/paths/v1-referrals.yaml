@@ -4,14 +4,18 @@ post:
   summary: Create referral code for an advocate
   description: >
     Creates a referral code for an advocate. The code will be valid for the
+
     referral campaign for which is created, indicated in the `campaignId`
+
     parameter, and will be associated with the profile specified in the
+
     `advocateProfileIntegrationId` parameter as the advocate's profile.
 
 
-    **Note:** Any [referral
+    > [!note] Any [referral
     limits](https://docs.talon.one/docs/product/campaigns/settings/managing-campaign-budgets#referral-limits)
-    set are ignored when you use this endpoint.
+
+    > set are ignored when you use this endpoint.
   security:
     - api_key_v1: []
   tags:

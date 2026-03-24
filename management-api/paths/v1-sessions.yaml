@@ -3,32 +3,38 @@ post:
   operationId: createSession
   summary: Create session
   description: >
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Create a session to use the Management API endpoints.
 
+
     Use the value of the `token` property provided in the response as bearer
+
     token in other API calls.
 
 
     A token is valid for 3 months. In accordance with best pratices, use your
-    generated token
 
-    for all your API requests. Do **not** regenerate a token for each request.
+    generated token for all your API requests. Do **not** regenerate a token for
+    each request.
 
 
     This endpoint has a rate limit of 3 to 6 requests per second per account,
+
     depending on your setup.
 
 
-    <div class="redoc-section">
-      <p class="title">Granular API key</p>
-      Instead of using a session, you can also use the <a href="https://docs.talon.one/docs/product/account/dev-tools/managing-mapi-keys">Management API key feature</a>
-      in the Campaign Manager to decide which endpoints can be used with a given key.
-    </div>
+    > [!note]
+
+    > Instead of using a session, you can also use the <a
+    href="https://docs.talon.one/docs/product/account/dev-tools/managing-mapi-keys">Management
+    API key feature</a>
+
+    > in the Campaign Manager to decide which endpoints can be used with a given
+    key.
   tags:
     - Sessions
   requestBody:
@@ -86,9 +92,9 @@ delete:
   operationId: destroySession
   summary: Destroy session
   description: >-
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Destroys the session.

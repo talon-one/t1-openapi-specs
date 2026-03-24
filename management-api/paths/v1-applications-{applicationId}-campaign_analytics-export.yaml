@@ -3,26 +3,27 @@ get:
   operationId: exportApplicationCampaignAnalytics
   summary: Export Application analytics aggregated by campaign
   description: >
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Download a CSV file containing analytics data aggregated by campaign for the
+
     campaigns of an Application.
 
 
-    **Tip:** If the exported CSV file is too large to view, you can [split it
-    into multiple
-    files](https://www.makeuseof.com/tag/how-to-split-a-huge-csv-excel-workbook-into-seperate-files/).
+    > [!tip] If the exported CSV file is too large to view, you can
+
+    > [split it into multiple
+    files](https://www.google.com/search?q=split+CSV+into+multiple+files).
 
 
     The CSV file contains the following columns:
 
-    - `campaign_id`: The ID of the campaign. This column also contains labels
-    for the [total and influenced
-    values](https://docs.talon.one/docs/product/campaigns/analytics/application-dashboard#display-the-analytics-data).
 
+    - `campaign_id`: The ID of the campaign. This column also contains labels
+      for the [total and influenced values](https://docs.talon.one/docs/product/campaigns/analytics/application-dashboard#display-the-analytics-data).
     - `start_date`: The start of the aggregation time frame in UTC.
 
     - `end_date`: The end of the aggregation time frame in UTC.
@@ -80,14 +81,15 @@ get:
         Only return results from after this timestamp.
 
 
-        **Note:**
+        > [!note] **Note**
 
-        - This must be an RFC3339 timestamp string.
+        > - This must be an RFC3339 timestamp string.
 
-        - You can include a time component in your string, for example,
+        > - You can include a time component in your string, for example,
         `T23:59:59` to specify the end of the day. The time zone setting
-        considered is `UTC`. If you do not include a time component, a default
-        time value of `T00:00:00` (midnight) in `UTC` is considered.
+
+        >   considered is `UTC`. If you do not include a time component, a
+        default time value of `T00:00:00` (midnight) in `UTC` is considered.
       example: '2024-05-29T15:04:05+07:00'
       schema:
         type: string
@@ -99,14 +101,15 @@ get:
         Only return results from before this timestamp.
 
 
-        **Note:**
+        > [!note] **Note**
 
-        - This must be an RFC3339 timestamp string.
+        > - This must be an RFC3339 timestamp string.
 
-        - You can include a time component in your string, for example,
+        > - You can include a time component in your string, for example,
         `T23:59:59` to specify the end of the day. The time zone setting
-        considered is `UTC`. If you do not include a time component, a default
-        time value of `T00:00:00` (midnight) in `UTC` is considered.
+
+        >   considered is `UTC`. If you do not include a time component, a
+        default time value of `T00:00:00` (midnight) in `UTC` is considered.
       example: '2024-05-29T15:04:05+07:00'
       schema:
         type: string

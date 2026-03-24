@@ -131,7 +131,7 @@ post:
                                     type: integer
                                     description: >
                                       [ID of
-                                      Ruleset](https://docs.talon.one/management-api#operation/getRulesets)
+                                      Ruleset](https://docs.talon.one/management-api#tag/Campaigns/operation/getRulesets)
                                       this
 
                                       campaign applies on customer session

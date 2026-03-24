@@ -3,22 +3,25 @@ get:
   operationId: getLoyaltyProgram
   summary: Get loyalty program
   description: >
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Get the specified [loyalty
+
     program](https://docs.talon.one/docs/product/loyalty-programs/overview).
 
+
     To list all loyalty programs in your Application, use [List loyalty
-    programs](#operation/getLoyaltyPrograms).
+
+    programs](#tag/Loyalty/operation/getLoyaltyPrograms).
 
 
-    To list the loyalty programs that a customer profile is part of, use the
+    To list the loyalty programs that a customer profile is part of, use
 
     [List customer
-    data](https://docs.talon.one/integration-api#tag/Customer-profiles/operation/getCustomerInventory)
+    data](https://docs.talon.one/integration-api#tag/Customer-profiles/operation/getCustomerInventory).
   tags:
     - Loyalty
   parameters:

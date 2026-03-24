@@ -5,10 +5,13 @@ info:
   description: >
     Use [Application
     notifications](/docs/product/applications/application-notifications/overview)
+
     and [loyalty
     notifications](/docs/product/loyalty-programs/loyalty-notifications/overview)
+
     to notify the system of your choice of certain changes that happened in
     Talon.One.
+
 
     **Note:** Required fields are not omitted if they are empty (have `null`
     value).
@@ -24,17 +27,30 @@ tags:
       about campaign-related changes.
 
 
-      **Note:** The value of the `NotificationType` property indicates the
+      > [!note] The value of the `NotificationType` property indicates the
       campaign change:
 
-      - `CampaignNotification` signifies one of the following events:
-        - [Campaign created](#tag/Campaign-notifications/operation/campaignCreatedNotification)
-        - [Campaign state changed](#tag/Campaign-notifications/operation/campaignStateChangedNotification)
-        - [Campaign rules changed](#tag/Campaign-notifications/operation/campaignRulesetChangedNotification)
-        - [Campaign edited](#tag/Campaign-notifications/operation/campaignEditedNotification)
-        - [Campaign collection edited](#tag/Campaign-notifications/operation/campaignCollectionEditedNotification)
-        - [Campaign deleted](#tag/Campaign-notifications/operation/campaignDeletedNotification)
-      - `CampaignEvaluationTreeChanged` signifies [Campaign evaluation tree
+      > - `CampaignNotification` signifies one of the following events:
+
+      >   - [Campaign
+      created](#tag/Campaign-notifications/operation/campaignCreatedNotification)
+
+      >   - [Campaign state
+      changed](#tag/Campaign-notifications/operation/campaignStateChangedNotification)
+
+      >   - [Campaign rules
+      changed](#tag/Campaign-notifications/operation/campaignRulesetChangedNotification)
+
+      >   - [Campaign
+      edited](#tag/Campaign-notifications/operation/campaignEditedNotification)
+
+      >   - [Campaign collection
+      edited](#tag/Campaign-notifications/operation/campaignCollectionEditedNotification)
+
+      >   - [Campaign
+      deleted](#tag/Campaign-notifications/operation/campaignDeletedNotification)
+
+      > - `CampaignEvaluationTreeChanged` signifies [Campaign evaluation tree
       changed](#tag/Campaign-notifications/operation/campaignEvaluationTreeChangedNotification).
   - name: Coupon notifications
     description: >

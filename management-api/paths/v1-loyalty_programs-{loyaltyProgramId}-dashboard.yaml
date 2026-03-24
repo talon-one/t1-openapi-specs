@@ -3,22 +3,23 @@ get:
   operationId: getDashboardStatistics
   summary: Get statistics for loyalty dashboard
   description: >
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Retrieve the statistics displayed on the specified loyalty program's
-    dashboard,
 
-    such as the total active points, pending points, spent points, and expired
+    dashboard, such as the total active points, pending points, spent points,
+    and expired
+
     points.
 
 
-    **Important:** The returned data does not include the current day. All
+    > [!important] The returned data does not include the current day. All
     statistics
 
-    are updated daily at 11:59 PM in the loyalty program time zone.
+    > are updated daily at 11:59 PM in the loyalty program time zone.
   tags:
     - Loyalty
   parameters:
@@ -48,14 +49,15 @@ get:
         Only return results from after this timestamp.
 
 
-        **Note:**
+        > [!note] **Note**
 
-        - This must be an RFC3339 timestamp string.
+        > - This must be an RFC3339 timestamp string.
 
-        - You can include a time component in your string, for example,
+        > - You can include a time component in your string, for example,
         `T23:59:59` to specify the end of the day. The time zone setting
-        considered is `UTC`. If you do not include a time component, a default
-        time value of `T00:00:00` (midnight) in `UTC` is considered.
+
+        >   considered is `UTC`. If you do not include a time component, a
+        default time value of `T00:00:00` (midnight) in `UTC` is considered.
       example: '2024-05-29T15:04:05+07:00'
       schema:
         type: string
@@ -67,14 +69,15 @@ get:
         Only return results from before this timestamp.
 
 
-        **Note:**
+        > [!note] **Note**
 
-        - This must be an RFC3339 timestamp string.
+        > - This must be an RFC3339 timestamp string.
 
-        - You can include a time component in your string, for example,
+        > - You can include a time component in your string, for example,
         `T23:59:59` to specify the end of the day. The time zone setting
-        considered is `UTC`. If you do not include a time component, a default
-        time value of `T00:00:00` (midnight) in `UTC` is considered.
+
+        >   considered is `UTC`. If you do not include a time component, a
+        default time value of `T00:00:00` (midnight) in `UTC` is considered.
       example: '2024-05-29T15:04:05+07:00'
       schema:
         type: string

@@ -3,9 +3,9 @@ put:
   operationId: deductLoyaltyCardPoints
   summary: Deduct points from card
   description: >
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Deduct points from the given loyalty card in the specified card-based

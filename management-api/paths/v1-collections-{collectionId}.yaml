@@ -3,9 +3,9 @@ get:
   operationId: getAccountCollection
   summary: Get account-level collection
   description: >-
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Retrieve a given account-level collection.
@@ -17,7 +17,7 @@ get:
       required: true
       description: >-
         The ID of the collection. You can get it with the [List collections in
-        account](#operation/listAccountCollections) endpoint.
+        account](#tag/Collections/operation/listAccountCollections) endpoint.
       example: 22
       schema:
         type: integer
@@ -180,9 +180,9 @@ put:
   operationId: updateAccountCollection
   summary: Update account-level collection
   description: >-
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Edit the description of a given account-level collection and enable or
@@ -195,7 +195,7 @@ put:
       required: true
       description: >-
         The ID of the collection. You can get it with the [List collections in
-        account](#operation/listAccountCollections) endpoint.
+        account](#tag/Collections/operation/listAccountCollections) endpoint.
       example: 22
       schema:
         type: integer
@@ -487,9 +487,9 @@ delete:
   operationId: deleteAccountCollection
   summary: Delete account-level collection
   description: >-
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Delete a given account-level collection.
@@ -501,7 +501,7 @@ delete:
       required: true
       description: >-
         The ID of the collection. You can get it with the [List collections in
-        account](#operation/listAccountCollections) endpoint.
+        account](#tag/Collections/operation/listAccountCollections) endpoint.
       example: 22
       schema:
         type: integer

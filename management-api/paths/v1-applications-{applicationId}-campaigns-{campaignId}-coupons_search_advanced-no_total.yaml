@@ -5,23 +5,22 @@ post:
     List coupons that match the given attributes in campaign (without total
     count)
   description: >
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
-    List the coupons whose attributes match the query criteria
-
-    in the given campaign.
+    List the coupons whose attributes match the query criteria in the given
+    campaign.
 
 
     The match is successful if all the attributes of the request are found in a
-    coupon,
 
-    even if the coupon has more attributes that are not present on the request.
+    coupon, even if the coupon has more attributes that are not present on the
+    request.
 
 
-    **Note:** The total count is not included in the response.
+    > [!note] The total count is not included in the response.
   tags:
     - Coupons
   parameters:

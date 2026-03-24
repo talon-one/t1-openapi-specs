@@ -3,9 +3,9 @@ post:
   operationId: createCoupons
   summary: Create coupons
   description: >-
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Create coupons according to some pattern. Up to 20.000 coupons can be
@@ -173,7 +173,7 @@ post:
                   description: >
                     **DEPRECATED** To create more than 20,000 coupons in one
                     request, use [Create coupons
-                    asynchronously](https://docs.talon.one/management-api#operation/createCouponsAsync)
+                    asynchronously](https://docs.talon.one/management-api#tag/Coupons/operation/createCouponsAsync)
                     endpoint.
                   example: ''
                 attributes:
@@ -476,32 +476,34 @@ put:
   operationId: updateCouponBatch
   summary: Update coupons
   description: >
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Update all coupons or a specific batch of coupons in the given campaign.
 
-    You can find the `batchId` on the **Coupons** page of your campaign
 
-    in the Campaign Manager, or you can use [List
-    coupons](#operation/getCouponsWithoutTotalCount).
+    You can find the `batchId` on the **Coupons** page of your campaign in the
 
-
-    <div class="redoc-section">
-      <p class="title">Important</p>
-
-      <ul>
-        <li>Only send sequential requests to this endpoint.</li>
-        <li>Requests to this endpoint time out after 30 minutes. If you hit a timeout, contact our support team.</li>
-        <li>With this <code>PUT</code> endpoint, if you do not explicitly set a value for the <code>startDate</code> and <code>expiryDate</code> properties in your request, it is automatically set to <code>null</code>.</li>
-      </ul>
-
-    </div>
+    Campaign Manager, or you can use [List
+    coupons](#tag/Coupons/operation/getCouponsWithoutTotalCount).
 
 
-    To update a specific coupon, use [Update coupon](#operation/updateCoupon).
+    > [!note] **Note**
+
+    > - Only send sequential requests to this endpoint.
+
+    > - Requests to this endpoint time out after 30 minutes. If you hit a
+    timeout, contact our support team.
+
+    > - With this `PUT` endpoint, if you do not explicitly set a value for the
+    `startDate` and `expiryDate` properties in your request, it is automatically
+    set to `null`.
+
+
+    To update a specific coupon, use [Update
+    coupon](#tag/Coupons/operation/updateCoupon).
   tags:
     - Coupons
   parameters:
@@ -599,9 +601,9 @@ delete:
   operationId: deleteCoupons
   summary: Delete coupons
   description: >-
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Deletes all the coupons matching the specified criteria.

@@ -3,17 +3,18 @@ get:
   operationId: exportCoupons
   summary: Export coupons
   description: >
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Download a CSV file containing the coupons that match the given properties.
 
 
-    **Tip:** If the exported CSV file is too large to view, you can [split it
-    into multiple
-    files](https://www.makeuseof.com/tag/how-to-split-a-huge-csv-excel-workbook-into-seperate-files/).
+    > [!tip] If the exported CSV file is too large to view, you can
+
+    > [split it into multiple
+    files](https://www.google.com/search?q=split+CSV+into+multiple+files).
 
 
     The CSV file can contain the following columns:
@@ -58,7 +59,7 @@ get:
 
     - `recipientintegrationid`: The integration ID of the recipient of the
     coupon.
-      Only the customer with this integration ID can redeem this code. Available only for personal codes.
+       Only the customer with this integration ID can redeem this code. Available only for personal codes.
     - `referralid`: The ID of the referral code that triggered the creation of
     this coupon (create coupon effect).
 

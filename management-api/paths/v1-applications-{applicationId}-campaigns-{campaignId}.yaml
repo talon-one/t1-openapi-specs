@@ -3,9 +3,9 @@ get:
   operationId: getCampaign
   summary: Get campaign
   description: >-
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Retrieve the given campaign.
@@ -108,7 +108,7 @@ get:
                     type: integer
                     description: >
                       [ID of
-                      Ruleset](https://docs.talon.one/management-api#operation/getRulesets)
+                      Ruleset](https://docs.talon.one/management-api#tag/Campaigns/operation/getRulesets)
                       this
 
                       campaign applies on customer session evaluation.
@@ -678,18 +678,21 @@ put:
   operationId: updateCampaign
   summary: Update campaign
   description: >
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Update the given campaign.
 
 
-    **Important:** You cannot use this endpoint to update campaigns if [campaign
+    > [!important] You cannot use this endpoint to update campaigns if [campaign
     staging and
+
+    >
     revisions](https://docs.talon.one/docs/product/applications/managing-general-settings#campaign-staging-and-revisions)
-    is enabled for your Application.
+
+    > is enabled for your Application.
   tags:
     - Campaigns
   parameters:
@@ -758,7 +761,7 @@ put:
               type: integer
               description: >
                 [ID of
-                Ruleset](https://docs.talon.one/management-api#operation/getRulesets)
+                Ruleset](https://docs.talon.one/management-api#tag/Campaigns/operation/getRulesets)
                 this
 
                 campaign applies on customer session evaluation.
@@ -1004,17 +1007,20 @@ put:
                 A list of store IDs that you want to link to the campaign.
 
 
-                **Note:**
+                > [!note] **Note**
 
-                - Campaigns with linked store IDs will only be evaluated when
-                there is a [customer session
+                > - Campaigns with linked store IDs will only be evaluated when
+                there is a
+
+                >   [customer session
                 update](https://docs.talon.one/integration-api#tag/Customer-sessions/operation/updateCustomerSessionV2)
-                that references a linked store.
 
-                - If you linked stores to the campaign by uploading a CSV file,
-                you cannot use this property and it should be empty.
+                >   that references a linked store.
 
-                - Use of this property is limited to 50 stores. To link more
+                > - If you linked stores to the campaign by uploading a CSV
+                file, you cannot use this property and it should be empty.
+
+                > - Use of this property is limited to 50 stores. To link more
                 than 50 stores, upload them via a CSV file.
               items:
                 type: integer
@@ -1110,7 +1116,7 @@ put:
                     type: integer
                     description: >
                       [ID of
-                      Ruleset](https://docs.talon.one/management-api#operation/getRulesets)
+                      Ruleset](https://docs.talon.one/management-api#tag/Campaigns/operation/getRulesets)
                       this
 
                       campaign applies on customer session evaluation.
@@ -1680,9 +1686,9 @@ delete:
   operationId: deleteCampaign
   summary: Delete campaign
   description: >-
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Delete the given campaign.

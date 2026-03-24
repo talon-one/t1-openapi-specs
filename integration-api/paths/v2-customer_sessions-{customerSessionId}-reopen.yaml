@@ -4,15 +4,20 @@ put:
   summary: Reopen customer session
   description: >
     Reopen a closed [customer
+
     session](https://docs.talon.one/docs/dev/concepts/entities/customer-sessions).
 
+
     For example, if a session has been completed but still needs to be edited,
+
     you can reopen it with this endpoint.
+
 
     A reopen session is treated like a standard open session.
 
 
     When reopening a session:
+
 
     - The `talon_session_reopened` event is triggered. You can see it in the
     **Events** view in the Campaign Manager.
@@ -26,10 +31,9 @@ put:
     policy](https://docs.talon.one/docs/product/loyalty-programs/managing-loyalty-programs#return-policy)
      in your loyalty programs, points are rolled back in the following ways:
       - Pending points are rolled back automatically.
-      - If **Active points deduction** setting is enabled, any points that were earned and activated when the session closed 
+      - If **Active points deduction** setting is enabled, any points that were earned and activated when the session closed
       are rolled back.
       - If **Negative balance** is enabled, the rollback can create a negative points balance.
-
 
     <details>
       <summary><strong>Effects and budgets unimpacted by a session reopening</strong></summary>
@@ -45,19 +49,24 @@ put:
           <li>Update cart item attribute value</li>
         </ul>
       </div>
-
-
     </details>
 
-    <p>To see an example of a rollback, see the <a
-    href="https://docs.talon.one/docs/dev/tutorials/rolling-back-effects">Cancelling
-    a session with campaign budgets</a> tutorial.</p>
+
+    To see an example of a rollback, see the
+
+    [Cancelling a session with campaign
+    budgets](https://docs.talon.one/docs/dev/tutorials/rolling-back-effects)
+    tutorial.
 
 
-    **Note:** If your order workflow requires you to create a new session
-    instead of reopening a session, use the [Update customer
+    > [!note] If your order workflow requires you to create a new session
+
+    > instead of reopening a session, use the
+
+    > [Update customer
     session](https://docs.talon.one/integration-api#tag/Customer-sessions/operation/updateCustomerSessionV2)
-    endpoint to cancel a closed session and create a new one.
+
+    > endpoint to cancel a closed session and create a new one.
   security:
     - api_key_v1: []
   tags:
@@ -75,7 +84,7 @@ put:
         Manager's **Sessions** menu, or via the
 
         [List Application
-        session](https://docs.talon.one/management-api#operation/getApplicationSessions)
+        session](https://docs.talon.one/management-api#tag/Customer-data/operation/getApplicationSessions)
         endpoint.
       example: session1
       schema:

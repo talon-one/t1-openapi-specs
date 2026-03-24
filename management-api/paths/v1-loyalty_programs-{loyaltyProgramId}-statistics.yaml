@@ -4,16 +4,17 @@ get:
   summary: Get loyalty program statistics
   deprecated: true
   description: >
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
-    ⚠️ Deprecation notice: Support for requests to this endpoint will end soon.
+    > [warning] This endpoint is deprecated.
 
-    To retrieve statistics for a loyalty program, use the [Get statistics for
 
-    loyalty
+    To retrieve statistics for a loyalty program, use the
+
+    [Get statistics for loyalty
     dashboard](/management-api#tag/Loyalty/operation/getDashboardStatistics)
 
     endpoint.

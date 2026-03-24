@@ -3,23 +3,27 @@ get:
   operationId: getCustomerProfile
   summary: Get customer profile
   description: >
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Return the details of the specified customer profile.
 
 
-    <div class="redoc-section">
-      <p class="title">Performance tips</p>
+    > [!note]
 
-      You can retrieve the same information via the Integration API, which can save you extra API requests. consider these options:
+    > You can retrieve the same information via the Integration API, which can
+    save you extra API requests. Consider these options:
 
-      - Request the customer profile to be part of the response content using
-        [Update Customer Session](https://docs.talon.one/integration-api#tag/Customer-sessions/operation/updateCustomerSessionV2).
-      - Send an empty update with the [Update Customer Profile](https://docs.talon.one/integration-api#tag/Customer-profiles/operation/updateCustomerProfileV2) endpoint with `runRuleEngine=false`.
-    </div>
+    > - Request the customer profile to be part of the response content using
+
+    >   [Update Customer
+    Session](https://docs.talon.one/integration-api#tag/Customer-sessions/operation/updateCustomerSessionV2).
+
+    > - Send an empty update with the [Update Customer
+    Profile](https://docs.talon.one/integration-api#tag/Customer-profiles/operation/updateCustomerProfileV2)
+    endpoint with `runRuleEngine=false`.
   tags:
     - Customer data
   parameters:
@@ -29,7 +33,7 @@ get:
         The value of the `id` property of a customer profile. Get it with the
 
         [List Application's
-        customers](https://docs.talon.one/management-api#operation/getApplicationCustomers)
+        customers](https://docs.talon.one/management-api#tag/Customer-data/operation/getApplicationCustomers)
         endpoint.
       example: 3778
       required: true
@@ -76,6 +80,7 @@ get:
                 properties:
                   attributes:
                     type: object
+                    additionalProperties: true
                     description: Arbitrary properties associated with this item.
                     example:
                       Language: english
@@ -171,7 +176,7 @@ get:
 
 
                       For example, [reserving a
-                      coupon](https://docs.talon.one/integration-api#operation/createCouponReservation)
+                      coupon](https://docs.talon.one/integration-api#tag/Coupons/operation/createCouponReservation)
 
                       for a customer doesn't impact this field.
                     example: '2020-02-08T14:15:20Z'

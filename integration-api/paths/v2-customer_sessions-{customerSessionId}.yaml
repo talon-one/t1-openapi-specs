@@ -4,20 +4,28 @@ put:
   summary: Update customer session
   description: >
     Update or create a [customer
+
     session](https://docs.talon.one/docs/dev/concepts/entities/customer-sessions).
 
+
     The endpoint responds with the potential promotion rule
+
     [effects](https://docs.talon.one/docs/dev/integration-api/api-effects) that
+
     match the current cart.
 
+
     For example, use this endpoint to share the contents of a customer's cart
+
     with Talon.One.
 
 
-    **Note:** 
+    > [!note] **Note**
 
-    - The currency for the session and the cart items in it is the currency set
-    for the Application linked to this session. - [Archived
+    > - The currency for the session and the cart items in it is the currency
+    set for the Application linked to this session.
+
+    > - [Archived
     campaigns](https://docs.talon.one/docs/product/campaigns/managing-campaigns#archiving-a-campaign)
     are not considered for rule evaluation.
 
@@ -26,9 +34,11 @@ put:
 
 
     To use this endpoint, start by learning about [customer
+
     sessions](https://docs.talon.one/docs/dev/concepts/entities/customer-sessions)
 
     and their states and refer to the `state` parameter documentation the
+
     request body schema docs below.
 
 
@@ -36,30 +46,41 @@ put:
 
 
     - To link a session to a customer profile, set the `profileId` parameter in
+
     the request body to a customer profile's `integrationId`.
 
+
     - While you can create an anonymous session with `profileId=""`, we
+
     recommend you use a guest ID instead.
 
+
     - A profile can be linked to simultaneous sessions in different
+
     Applications. Either:
       - Use unique session integration IDs or,
       - Use the same session integration ID across all of the Applications.
 
-    **Note:** If the specified profile does not exist, an empty profile is
-    **created automatically**.
-      You can update it with [Update customer profile](https://docs.talon.one/integration-api#tag/Customer-profiles/operation/updateCustomerProfileV2).
+    > [!note] **Note**
 
-    <div class="redoc-section">
-      <p class="title">Performance tips</p>
+    > - If the specified profile does not exist, an empty profile is **created
+    automatically**.
 
-      - Updating a customer session returns a response with the new integration state. Use the `responseContent` property to save yourself extra API calls.
-        For example, you can get the customer profile details directly without extra requests.
-      - We recommend sending requests sequentially. See [Managing parallel requests](https://docs.talon.one/docs/dev/getting-started/integration-tutorial#managing-parallel-requests).
-    </div>
+    >   You can update it with [Update customer
+    profile](https://docs.talon.one/integration-api#tag/Customer-profiles/operation/updateCustomerProfileV2).
+
+    > - Updating a customer session returns a response with the new integration
+    state. Use the `responseContent` property to save yourself extra API calls.
+
+    >   For example, you can get the customer profile details directly without
+    extra requests.
+
+    > - We recommend sending requests sequentially. See [Managing parallel
+    requests](https://docs.talon.one/docs/dev/getting-started/integration-tutorial#managing-parallel-requests).
 
 
     For more information, see:
+
 
     - The introductory video in [Getting
     started](https://docs.talon.one/docs/dev/getting-started/overview).
@@ -105,7 +126,7 @@ put:
         Manager's **Sessions** menu, or via the
 
         [List Application
-        session](https://docs.talon.one/management-api#operation/getApplicationSessions)
+        session](https://docs.talon.one/management-api#tag/Customer-data/operation/getApplicationSessions)
         endpoint.
       example: session1
       schema:
@@ -115,23 +136,25 @@ put:
       required: false
       description: >
         A timestamp value of a future date that acts as a current date when
+
         included in the query.
 
 
         Use this parameter, for example, to test campaigns that would be
+
         evaluated for this customer session in the future (say, [scheduled
+
         campaigns](https://docs.talon.one/docs/product/campaigns/settings/managing-campaign-schedule)).
 
 
-        **Note:**
+        > [!note] **Note**
 
+        > - It must be an RFC3339 timestamp string.
 
-        - It must be an RFC3339 timestamp string.
+        > - It can **only** be a date in the future.
 
-        - It can **only** be a date in the future.
-
-        - It can **only** be used if the `dry` parameter in the query is set to
-        `true`.
+        > - It can **only** be used if the `dry` parameter in the query is set
+        to `true`.
       example: '2024-05-29T15:04:05+07:00'
       schema:
         type: string
@@ -595,6 +618,7 @@ put:
                           d41306257915f83fe01e54092ae470f631161ea16fcf4415842eed41470386ea
                     attributes:
                       type: object
+                      additionalProperties: true
                       description: >
                         Use this property to set a value for the attributes of
                         your choice. Attributes represent any information to
@@ -638,6 +662,170 @@ put:
                   - awardedGiveaways
                   - ruleFailureReasons
                   - previousReturns
+        examples:
+          Full request:
+            summary: Full request
+            x-vertical: none
+            value:
+              customerSession:
+                profileId: URNGV8294NV
+                storeIntegrationId: STORE-001
+                evaluableCampaignIds:
+                  - 10
+                  - 12
+                couponCodes:
+                  - XMAS-20-2021
+                referralCode: NT2K54D9
+                loyaltyCards:
+                  - loyalty-card-1
+                state: open
+                cartItems:
+                  - name: Air Glide
+                    sku: SKU1241028
+                    quantity: 1
+                    returnedQuantity: 1
+                    remainingQuantity: 1
+                    price: 99.99
+                    category: shoes
+                    product:
+                      name: sample_product
+                    weight: 1130
+                    height: 0
+                    width: 0
+                    length: 0
+                    position: 0
+                    attributes:
+                      image: 11.jpeg
+                      material: leather
+                    additionalCosts:
+                      shipping:
+                        price: 9
+                    catalogItemID: 0
+                    selectedPriceType: member
+                    adjustmentReferenceId: 68851723-e6fa-488f-ace9-112581e6c19b
+                    adjustmentEffectiveFrom: '2021-09-12T10:12:42Z'
+                    adjustmentEffectiveUntil: '2021-09-12T10:12:42Z'
+                    prices:
+                      member:
+                        price: 90
+                        adjustmentReferenceId: 68851723-e6fa-488f-ace9-112581e6c19b
+                        effectiveFrom: '2025-05-25T00:00:00Z'
+                        effectiveUntil: '2025-05-30T00:00:00Z'
+                      base:
+                        price: 100
+                experimentVariantAllocations:
+                  - experimentID: 1
+                    variantID: 2
+                additionalCosts:
+                  shipping:
+                    price: 9
+                identifiers:
+                  - >-
+                    d41306257915f83fe01e54092ae470f631161ea16fcf4415842eed41470386ea
+                attributes:
+                  ShippingCity: Berlin
+              responseContent:
+                - customerSession
+                - customerProfile
+          eCommerce:
+            x-vertical: ecommerce
+            summary: 'Example: eCommerce'
+            description: |
+              Update a customer session with multiple cart items and attributes,
+              including SKUs, prices, and more.
+            value:
+              customerSession:
+                profileId: 382370BKDB946
+                cartItems:
+                  - name: Wireless Bluetooth Headphones
+                    sku: AUDIO-WH350
+                    quantity: 1
+                    price: 79.99
+                    weight: 310
+                  - name: USB-C Charging Cable
+                    sku: CABLE-USBC-2M
+                    quantity: 2
+                    price: 15.99
+                    weight: 40
+              responseContent:
+                - customerSession
+                - customerProfile
+          QSR & dining:
+            x-vertical: qsr
+            summary: 'Example: QSR & dining'
+            description: >
+              Update a customer session as a customer builds a combo meal,
+              including
+
+              quantities, categories, and more.
+            value:
+              customerSession:
+                profileId: 382370BKDB946
+                cartItems:
+                  - name: Cheeseburger
+                    sku: BURGER-001
+                    quantity: 1
+                    price: 8.99
+                    category: Main
+                  - name: French Fries
+                    sku: SIDE-002
+                    quantity: 1
+                    price: 3.49
+                    category: Side
+                  - name: Cola
+                    sku: DRINK-003
+                    quantity: 1
+                    price: 2.49
+                    category: Beverage
+              responseContent:
+                - customerSession
+                - customerProfile
+                - loyalty
+          Financial services:
+            x-vertical: finance
+            summary: 'Example: Financial services'
+            description: |
+              Update a customer session when a cardholder completes a purchase.
+            value:
+              customerSession:
+                profileId: customer-789
+                cartItems:
+                  - name: Card Purchase - Electronics Store
+                    sku: TXN-CC-001
+                    quantity: 1
+                    price: 250
+                attributes:
+                  CardType: credit
+                  MerchantCategory: electronics
+                  TransactionType: card_payment
+              responseContent:
+                - customerSession
+                - customerProfile
+                - loyalty
+          Travel & hospitality:
+            x-vertical: travel
+            summary: 'Example: Travel & hospitality'
+            description: |
+              Update a customer session when a guest books a hotel stay to
+              automatically award bonus loyalty points for stays that exceed
+              the minimum night count.
+            value:
+              customerSession:
+                profileId: customer-321
+                cartItems:
+                  - name: Deluxe Room - 5 nights
+                    sku: HOTEL-ROOM-DLX
+                    quantity: 5
+                    price: 189
+                attributes:
+                  CheckInDate: '2026-06-10'
+                  CheckOutDate: '2026-06-15'
+                  StayNights: 5
+                  PropertyType: hotel
+              responseContent:
+                - customerSession
+                - customerProfile
+                - loyalty
     description: body
     required: true
   responses:
@@ -693,6 +881,7 @@ put:
                         properties:
                           attributes:
                             type: object
+                            additionalProperties: true
                             description: Arbitrary properties associated with this item.
                             example:
                               Language: english
@@ -796,7 +985,7 @@ put:
 
 
                               For example, [reserving a
-                              coupon](https://docs.talon.one/integration-api#operation/createCouponReservation)
+                              coupon](https://docs.talon.one/integration-api#tag/Coupons/operation/createCouponReservation)
 
                               for a customer doesn't impact this field.
                             example: '2020-02-08T14:15:20Z'
@@ -1681,7 +1870,7 @@ put:
                               type: integer
                               description: >
                                 [ID of
-                                Ruleset](https://docs.talon.one/management-api#operation/getRulesets)
+                                Ruleset](https://docs.talon.one/management-api#tag/Campaigns/operation/getRulesets)
                                 this
 
                                 campaign applies on customer session evaluation.
@@ -5476,6 +5665,7 @@ put:
                                     d41306257915f83fe01e54092ae470f631161ea16fcf4415842eed41470386ea
                               attributes:
                                 type: object
+                                additionalProperties: true
                                 description: >
                                   Use this property to set a value for the
                                   attributes of your choice. Attributes
@@ -5931,7 +6121,7 @@ get:
         Manager's **Sessions** menu, or via the
 
         [List Application
-        session](https://docs.talon.one/management-api#operation/getApplicationSessions)
+        session](https://docs.talon.one/management-api#tag/Customer-data/operation/getApplicationSessions)
         endpoint.
       example: session1
       schema:
@@ -6438,6 +6628,7 @@ get:
                                 d41306257915f83fe01e54092ae470f631161ea16fcf4415842eed41470386ea
                           attributes:
                             type: object
+                            additionalProperties: true
                             description: >
                               Use this property to set a value for the
                               attributes of your choice. Attributes represent

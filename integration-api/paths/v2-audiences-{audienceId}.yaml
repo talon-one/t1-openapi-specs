@@ -6,11 +6,13 @@ delete:
     Delete an audience created by a third-party integration.
 
 
-    **Warning:** This endpoint also removes any associations recorded between a
+    > [!warning] This endpoint also removes any associations recorded between a
+
     customer profile and this audience.
 
 
-    **Note:** Audiences can also be deleted via the Campaign Manager. See the
+    > [!note] Audiences can also be deleted via the Campaign Manager. See the
+
     [docs](https://docs.talon.one/docs/product/audiences/managing-audiences#deleting-an-audience).
   tags:
     - Audiences

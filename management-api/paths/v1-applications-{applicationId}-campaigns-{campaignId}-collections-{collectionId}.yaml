@@ -3,9 +3,9 @@ get:
   operationId: getCollection
   summary: Get campaign-level collection
   description: >-
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Retrieve a given campaign-level collection.
@@ -35,7 +35,8 @@ get:
       required: true
       description: >-
         The ID of the collection. You can get it with the [List collections in
-        Application](#operation/listCollectionsInApplication) endpoint.
+        Application](#tag/Collections/operation/listCollectionsInApplication)
+        endpoint.
       example: 44
       schema:
         type: integer
@@ -198,9 +199,9 @@ put:
   operationId: updateCollection
   summary: Update campaign-level collection's description
   description: >-
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Edit the description of a given campaign-level collection.
@@ -230,7 +231,8 @@ put:
       required: true
       description: >-
         The ID of the collection. You can get it with the [List collections in
-        Application](#operation/listCollectionsInApplication) endpoint.
+        Application](#tag/Collections/operation/listCollectionsInApplication)
+        endpoint.
       example: 44
       schema:
         type: integer
@@ -405,9 +407,9 @@ delete:
   operationId: deleteCollection
   summary: Delete campaign-level collection
   description: >-
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Delete a given campaign-level collection.
@@ -437,7 +439,8 @@ delete:
       required: true
       description: >-
         The ID of the collection. You can get it with the [List collections in
-        Application](#operation/listCollectionsInApplication) endpoint.
+        Application](#tag/Collections/operation/listCollectionsInApplication)
+        endpoint.
       example: 44
       schema:
         type: integer

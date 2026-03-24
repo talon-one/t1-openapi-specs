@@ -4,18 +4,23 @@ post:
   summary: Create audience
   description: >
     Create an audience. The audience can be created directly from scratch or can
+
     come from third party platforms.
 
 
-    **Note:** Audiences can also be created from scratch via the Campaign
+    > [!note] Audiences can also be created from scratch via the Campaign
+
     Manager. See the
     [docs](https://docs.talon.one/docs/product/audiences/creating-audiences).
 
 
     To create an audience from an existing audience from a [technology
+
     partner](https://docs.talon.one/docs/dev/technology-partners/overview):
 
+
     1. Set the `integration` property to `mparticle`, `segment` etc., depending
+
     on a third-party platform.
 
     1. Set `integrationId` to the ID of this audience in a third-party platform.
@@ -23,17 +28,17 @@ post:
 
     To create an audience from an existing audience in another platform:
 
+
     1. Do not use the `integration` property.
 
     1. Set `integrationId` to the ID of this audience in the 3rd-party platform.
 
 
-    To create an audience from scratch:
-
-    1. Only set the `name` property.
+    To create an audience from scratch, only set the `name` property.
 
 
     Once you create your first audience, audience-specific rule conditions are
+
     enabled in the Rule Builder.
   security:
     - api_key_v1: []
@@ -100,6 +105,73 @@ post:
                   format: date-time
                   description: The last time that the audience memberships changed.
                   example: '2022-04-26T11:02:38Z'
+        examples:
+          Full request:
+            summary: Full request
+            x-vertical: none
+            value:
+              name: Travel audience
+              sandbox: true
+              description: Travel audience 18-27
+              integration: mparticle
+              integrationId: 382370BKDB946
+              createdIn3rdParty: false
+              lastUpdate: '2022-04-26T11:02:38Z'
+          eCommerce:
+            x-vertical: ecommerce
+            summary: 'Example: eCommerce'
+            description: Create an audience for high-value customers.
+            value:
+              name: VIP Customers
+              description: Customers with high lifetime value and frequent purchases
+              sandbox: false
+              createdIn3rdParty: false
+          QSR & dining:
+            x-vertical: qsr
+            summary: 'Example: QSR & dining'
+            description: >
+              Creating an audience for customers who frequently order breakfast
+              items during morning hours.
+
+              This audience can be targeted with breakfast promotions,
+              early-bird offers, or morning loyalty bonuses.
+            value:
+              name: Breakfast Regulars
+              description: >-
+                Customers who order breakfast items 3+ times per week during
+                weekday mornings
+              sandbox: false
+              createdIn3rdParty: false
+          Financial services:
+            x-vertical: finance
+            summary: 'Example: Financial services'
+            description: >
+              Create an audience for customers who recently opened an account to
+
+              target them with welcome bonuses or first-transaction cashback
+              rewards.
+            value:
+              name: New Account Holders
+              description: Customers who opened an account within the last 30 days
+              sandbox: false
+              createdIn3rdParty: false
+          Travel & hospitality:
+            x-vertical: travel
+            summary: 'Example: Travel & hospitality'
+            description: >
+              Create an audience for luxury-oriented travelers so tour operators
+
+              can automatically trigger personalized offers, such as
+              complimentary
+
+              spa vouchers, when they initiate a booking.
+            value:
+              name: Luxury Seekers
+              description: >-
+                Travelers who consistently book premium accommodations and
+                high-end tour packages
+              sandbox: false
+              createdIn3rdParty: false
     description: body
     required: true
   responses:

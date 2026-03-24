@@ -9,9 +9,12 @@ post:
     The endpoint supports 1000 audience actions (`add` or `remove`) per request.
 
 
-    **Note:** You can also do this using the [Update
+    > [!note] You can also do this using the
+
+    > [Update
     audience](https://docs.talon.one/docs/product/rules/effects/using-effects#updating-an-audience)
-    effect.
+
+    > effect.
   security:
     - api_key_v1: []
   tags:
@@ -57,7 +60,8 @@ post:
                     type: integer
                     description: >-
                       The ID of the audience. You get it via the `id` property
-                      when [creating an audience](#operation/createAudienceV2).
+                      when [creating an
+                      audience](#tag/Audiences/operation/createAudienceV2).
                     example: 748
     description: body
     required: true

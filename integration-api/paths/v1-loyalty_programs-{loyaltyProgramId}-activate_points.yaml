@@ -50,10 +50,12 @@ post:
               uniqueItems: true
               description: >
                 An array of transaction UUIDs used to activate specific pending
-                point transactions. 
+                point transactions.
 
 
                 If provided, do not include the `sessionId` parameter.
+              example:
+                - 8f1a8d7c-9c3e-4a5e-9f0d-2c5f7a3b1cde
             sessionId:
               type: string
               minLength: 1
@@ -63,7 +65,15 @@ post:
 
 
                 If provided, do not include the `transactionUUIDs` parameter.
+              example: ac08cc3c43470426591ad75b2d685ec04_v2
         examples:
+          Full request:
+            summary: Full request
+            x-vertical: none
+            value:
+              transactionUUIDs:
+                - 8f1a8d7c-9c3e-4a5e-9f0d-2c5f7a3b1cde
+              sessionId: ac08cc3c43470426591ad75b2d685ec04_v2
           UsingTransactionUUIDs:
             summary: Activate points using transaction UUIDs
             value:

@@ -3,18 +3,21 @@ post:
   operationId: importLoyaltyPoints
   summary: Import loyalty points
   description: >
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Upload a CSV file containing the loyalty points you want to import into a
+
     given loyalty program.
+
 
     Send the file as multipart data.
 
 
     Depending on the type of loyalty program, you can import points into a given
+
     customer profile or loyalty card.
 
 
@@ -22,9 +25,8 @@ post:
 
 
     - `customerprofileid` (optional): For profile-based loyalty programs, the
-    integration ID of the customer profile where the loyalty points are
-    imported.
-
+      integration ID of the customer profile where the loyalty points are
+      imported.
       **Note**: If the customer profile does not exist, it will be created. The profile will not be visible in any Application
       until a session or profile update is received for that profile.
     - `identifier` (optional): For card-based loyalty programs, the identifier
@@ -34,32 +36,21 @@ post:
 
     - `startdate` (optional): The earliest date when the points can be redeemed.
     The points are `active` from this date until the expiration date.
-
       This parameter accepts one of the following values:
-      - A timestamp string in RFC3339 format.
-      - `immediate`
-      - `on_action`
-      
-      **Note**:
-      Empty or missing values default to `immediate`.
+        - A timestamp string in RFC3339 format.
+        - `immediate`
+        - `on_action`
+      **Note**: Empty or missing values default to `immediate`.
     - `expirydate` (optional): The latest date when the points can be redeemed.
-    The points are `expired` after this date.
-
+      The points are `expired` after this date.
       **Note**: It must be an RFC3339 timestamp string or string `unlimited`. Empty or missing values are considered `unlimited`.
-      
       If passed, `validityDuration` should be omitted.
     - `validityDuration` (optional): The duration for which the points remain
-    active, relative to the 
-      activation date.
-
-      The time format is an **integer** followed by one letter indicating the time unit.
-
-
+    active, relative to the
+      activation date. The time format is an **integer** followed by one letter indicating the time unit.<br />
       Examples: `30s`, `40m`, `1h`, `5D`, `7W`, `10M`, `15Y`.
 
-
       Available units:
-
 
       - `s`: seconds
       - `m`: minutes
@@ -68,7 +59,6 @@ post:
       - `W`: weeks
       - `M`: months
       - `Y`: years
-
 
       You can round certain units up or down:
 
@@ -87,19 +77,24 @@ post:
     by Talon.One.
 
 
-    **Note:** For existing customer profiles and loyalty cards, the imported
-    points are added to any previous active or pending points, depending on the
+    > [!note] For existing customer profiles and loyalty cards, the imported
 
-    value provided for `startdate`. If `startdate` matches the current date, the
-    imported points are _active_. If it is later, the points are _pending_ until
+    > points are added to any previous active or pending points, depending on
+    the
 
-    the date provided for `startdate` is reached.
+    > value provided for `startdate`. If `startdate` matches the current date,
+    the
+
+    > imported points are _active_. If it is later, the points are _pending_
+    until
+
+    > the date provided for `startdate` is reached.
 
 
-    **Note:** We recommend limiting your file size to 500MB.
+    > [!note] We recommend limiting your file size to 500 MB.
 
 
-    **Example for profile-based programs:**
+    ## Example for profile-based programs
 
 
     ```text
@@ -111,7 +106,7 @@ post:
     ```
 
 
-    **Example for card-based programs:**
+    ## Example for card-based programs
 
 
     ```text

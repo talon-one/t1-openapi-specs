@@ -4,38 +4,32 @@ info:
   version: ''
   description: >
     Use the Integration API to push data to and retrieve data from Talon.One in
+
     real time.
 
-    For more background information about this API, see [Integration API
-    overview](https://docs.talon.one/docs/dev/integration-api/overview)
+
+    For example, use it to apply promotional offers or loyalty rewards during
+    customer interactions,
+
+    track customer behavior, or deliver personalized incentives based on
+    customer activity.
 
 
-    For example, use this API to share shopping cart information as a session
-    with Talon.One and evaluate promotion
+    For more background information about this API, see
 
-    rules. You can also create custom events to track specific actions that do
-    not fit into the session data model.
+    [Integration API](https://docs.talon.one/docs/dev/integration-api/overview).
 
 
-    Ensure you [authenticate](#section/Authentication) to make requests to the
-    API.
+    Ensure you authenticate to make requests to the API.
 
 
-    <div class="redoc-section">
-      <p class="title">Are you looking for a different API?</p>
+    > [!note] **Are you looking for a different API?**
 
-      If you need the API to:
+    > - If you need the API to interact with the Campaign Manager for backoffice
+    operations, see the [Management API](https://docs.talon.one/management-api).
 
-      - Interact with the Campaign Manager for backoffice operations, see [the Management API reference docs](https://docs.talon.one/management-api).
-      - Integrate with Talon.One from a CEP or CDP platform, see [the Third-party API reference docs](https://docs.talon.one/third-party-api).
-
-    </div>
-
-
-    # Authentication
-
-
-    <SecurityDefinitions />
+    > - If you need the API to integrate with Talon.One from a CEP or CDP
+    platform, see the [Third-party API](https://docs.talon.one/third-party-api).
 servers:
   - url: https://yourbaseurl.talon.one
 security:

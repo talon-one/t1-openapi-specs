@@ -7,13 +7,13 @@ post:
     ledger.
 
 
-    **Note:** To retrieve loyalty transaction logs for a specific customer in a
-    given
+    > [!note] To retrieve loyalty transaction logs for a specific customer in a
+    given loyalty program,
 
-    loyalty program, use the [List customer's loyalty
+    > use the [List customer's loyalty
     transactions](https://docs.talon.one/integration-api#tag/Loyalty/operation/getLoyaltyProgramProfileTransactions)
 
-    endpoint.
+    > endpoint.
   security:
     - api_key_v1: []
   tags:
@@ -39,11 +39,11 @@ post:
         `integrationId` of a profile using:
 
         - A customer session integration ID with the [Update customer
-        session](https://docs.talon.one/integration-api#operation/updateCustomerSessionV2)
+        session](https://docs.talon.one/integration-api#tag/Customer-sessions/operation/updateCustomerSessionV2)
         endpoint.
 
         - The Management API with the [List application's
-        customers](https://docs.talon.one/management-api#operation/getApplicationCustomers)
+        customers](https://docs.talon.one/management-api#tag/Customer-data/operation/getApplicationCustomers)
         endpoint.
       example: customer1
       schema:

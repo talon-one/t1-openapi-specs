@@ -3,9 +3,9 @@ get:
   operationId: getCustomerActivityReportsWithoutTotalCount
   summary: Get Activity Reports for Application Customers
   description: >
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Fetch summary reports for all application customers based on a time range.
@@ -53,14 +53,15 @@ get:
         Only return results from after this timestamp.
 
 
-        **Note:**
+        > [!note] **Note**
 
-        - This must be an RFC3339 timestamp string.
+        > - This must be an RFC3339 timestamp string.
 
-        - You can include a time component in your string, for example,
+        > - You can include a time component in your string, for example,
         `T23:59:59` to specify the end of the day. The time zone setting
-        considered is `UTC`. If you do not include a time component, a default
-        time value of `T00:00:00` (midnight) in `UTC` is considered.
+
+        >   considered is `UTC`. If you do not include a time component, a
+        default time value of `T00:00:00` (midnight) in `UTC` is considered.
       example: '2024-05-29T15:04:05+07:00'
       schema:
         type: string
@@ -72,14 +73,15 @@ get:
         Only return results from before this timestamp.
 
 
-        **Note:**
+        > [!note] **Note**
 
-        - This must be an RFC3339 timestamp string.
+        > - This must be an RFC3339 timestamp string.
 
-        - You can include a time component in your string, for example,
+        > - You can include a time component in your string, for example,
         `T23:59:59` to specify the end of the day. The time zone setting
-        considered is `UTC`. If you do not include a time component, a default
-        time value of `T00:00:00` (midnight) in `UTC` is considered.
+
+        >   considered is `UTC`. If you do not include a time component, a
+        default time value of `T00:00:00` (midnight) in `UTC` is considered.
       example: '2024-05-29T15:04:05+07:00'
       schema:
         type: string

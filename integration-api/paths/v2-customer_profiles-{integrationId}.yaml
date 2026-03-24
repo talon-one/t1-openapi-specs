@@ -4,7 +4,9 @@ put:
   summary: Update customer profile
   description: >
     Update or create a [Customer
+
     Profile](https://docs.talon.one/docs/dev/concepts/entities/customer-profiles).
+
     This endpoint triggers the Rule Builder.
 
 
@@ -15,19 +17,25 @@ put:
 
     - Modify the audience the customer profile is a member of.
 
-    **Note:** [Archived
+
+    > [!note] **Note**
+
+    > - Updating a customer profile returns a response with the requested
+    integration state.
+
+    > - You can use the `responseContent` property to save yourself extra API
+    calls. For example, you can get
+
+    >   the customer profile details directly without extra requests.
+
+    > - We recommend sending requests sequentially.
+
+    >   See [Managing parallel
+    requests](https://docs.talon.one/docs/dev/getting-started/integration-tutorial#managing-parallel-requests).
+
+    > - [Archived
     campaigns](https://docs.talon.one/docs/product/campaigns/managing-campaigns#archiving-a-campaign)
     are not considered in rule evaluation when `runRuleEngine` is `true`.
-
-    <div class="redoc-section">
-      <p class="title">Performance tips</p>
-
-      - Updating a customer profile returns a response with the requested integration state.
-      - You can use the `responseContent` property to save yourself extra API calls. For example, you can get
-        the customer profile details directly without extra requests.
-      - We recommend sending requests sequentially.
-        See [Managing parallel requests](https://docs.talon.one/docs/dev/getting-started/integration-tutorial#managing-parallel-requests).
-    </div>
   security:
     - api_key_v1: []
   tags:
@@ -97,6 +105,7 @@ put:
               properties:
                 attributes:
                   type: object
+                  additionalProperties: true
                   description: Arbitrary properties associated with this item.
                   example:
                     Language: english
@@ -170,6 +179,75 @@ put:
                       description: The IDs of the audiences for the customer to leave.
                       example:
                         - 7
+        examples:
+          Full request:
+            summary: Full request
+            x-vertical: none
+            value:
+              attributes:
+                Language: english
+                ShippingCountry: DE
+              evaluableCampaignIds:
+                - 10
+                - 12
+              responseContent:
+                - triggeredCampaigns
+                - customerProfile
+              audiencesChanges:
+                adds:
+                  - 2
+                  - 4
+                deletes:
+                  - 7
+          eCommerce:
+            x-vertical: ecommerce
+            summary: 'Example: eCommerce'
+            description: Create a new customer with basic information and sign-up date.
+            value:
+              attributes:
+                Name: Chris Taylor
+                Email: chris.taylor@example.com
+                SignupDate: '2026-01-21T15:04:05+07:00'
+                PaymentMethod: Bank transfer
+          QSR & dining:
+            x-vertical: qsr
+            summary: 'Example: QSR & dining'
+            description: >
+              Update a customer profile with dietary preferences and ordering
+              behaviors to personalize offers.
+            value:
+              attributes:
+                Name: Jane Doe
+                Email: jane.doe@example.com
+                DietaryPreferences: vegetarian
+          Financial services:
+            x-vertical: finance
+            summary: 'Example: Financial services'
+            description: >
+              Update a customer profile with account type and card details to
+              enable
+
+              personalized cashback campaigns.
+            value:
+              attributes:
+                Name: Alex Johnson
+                Email: alex.johnson@example.com
+                AccountType: premium_checking
+                PreferredCard: credit
+          Travel & hospitality:
+            x-vertical: travel
+            summary: 'Example: Travel & hospitality'
+            description: >
+              Update a traveler profile with a churn risk score to identify
+              travelers who
+
+              haven't booked a flight in several months and offer time-sensitive
+              rewards.
+            value:
+              attributes:
+                Name: Maria Chen
+                Email: maria.chen@example.com
+                ChurnRisk: 0.872
     description: body
     required: true
   responses:
@@ -223,6 +301,7 @@ put:
                     properties:
                       attributes:
                         type: object
+                        additionalProperties: true
                         description: Arbitrary properties associated with this item.
                         example:
                           Language: english
@@ -324,7 +403,7 @@ put:
 
 
                           For example, [reserving a
-                          coupon](https://docs.talon.one/integration-api#operation/createCouponReservation)
+                          coupon](https://docs.talon.one/integration-api#tag/Coupons/operation/createCouponReservation)
 
                           for a customer doesn't impact this field.
                         example: '2020-02-08T14:15:20Z'
@@ -1442,7 +1521,7 @@ put:
                           type: integer
                           description: >
                             [ID of
-                            Ruleset](https://docs.talon.one/management-api#operation/getRulesets)
+                            Ruleset](https://docs.talon.one/management-api#tag/Campaigns/operation/getRulesets)
                             this
 
                             campaign applies on customer session evaluation.

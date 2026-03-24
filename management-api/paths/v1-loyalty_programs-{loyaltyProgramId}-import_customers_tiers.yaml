@@ -3,61 +3,77 @@ post:
   operationId: importLoyaltyCustomersTiers
   summary: Import customers into loyalty tiers
   description: >
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Upload a CSV file containing existing customers to be assigned to existing
+
     tiers.
+
 
     Send the file as multipart data.
 
 
-    **Important:** This endpoint only works with loyalty programs with advanced
-    tiers (with expiration and downgrade policy) feature enabled.
+    > [!important] This endpoint only works with loyalty programs with advanced
+
+    > tiers (with expiration and downgrade policy) feature enabled.
 
 
     The CSV file should contain the following columns:
 
+
     - `subledgerid` (optional): The ID of the subledger. If this field is empty,
+
     the main ledger will be used.
 
     - `customerprofileid`: The integration ID of the customer profile to whom
+
     the tier should be assigned.
 
     - `tiername`: The name of an existing tier to assign to the customer.
 
     - `expirydate`: The expiration date of the tier when the tier is
+
     reevaluated. It should be a future date.
 
 
     About customer assignment to a tier:
 
+
     - If the customer isn't already in a tier, the customer is assigned to the
+
     specified tier during the tier import.
 
     - If the customer is already in the tier that's specified in the CSV file,
+
     only the expiration date is updated.
 
 
-    **Note:** We recommend not using this endpoint to update the tier of a
+    > [!note] We recommend not using this endpoint to update the tier of a
     customer.
 
+
     To update a customer's tier, you can
+
     [add](/management-api#tag/Loyalty/operation/addLoyaltyPoints) or
+
     [deduct](/management-api#tag/Loyalty/operation/removeLoyaltyPoints) their
+
     loyalty points.
 
 
     You can use the time zone of your choice. It is converted to UTC internally
+
     by Talon.One.
 
 
-    **Note:** We recommend limiting your file size to 500MB.
+    > [!note] We recommend limiting your file size to 500 MB.
 
 
-    **Example:**
+    ## Example
+
 
     ```csv
 

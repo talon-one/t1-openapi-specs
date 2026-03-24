@@ -3,9 +3,9 @@ get:
   operationId: scimGetGroups
   summary: List SCIM groups
   description: >-
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Retrieve a paginated list of groups created using the SCIM protocol with an
@@ -118,9 +118,9 @@ post:
   operationId: scimCreateGroup
   summary: Create SCIM group
   description: >-
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Create a new Talon.One group using the SCIM Group provisioning protocol with

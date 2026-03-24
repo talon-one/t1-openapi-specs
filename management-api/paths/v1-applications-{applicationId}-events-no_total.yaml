@@ -3,9 +3,9 @@ get:
   operationId: getApplicationEventsWithoutTotalCount
   summary: List Applications events
   description: >
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Lists all events recorded for an application. Instead of having the total

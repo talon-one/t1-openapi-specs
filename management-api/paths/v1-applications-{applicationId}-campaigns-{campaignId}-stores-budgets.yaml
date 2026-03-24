@@ -3,9 +3,9 @@ post:
   operationId: createCampaignStoreBudget
   summary: Create campaign store budget
   description: >-
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Create a new store budget for a given campaign.
@@ -186,9 +186,9 @@ get:
   operationId: listCampaignStoreBudgetLimits
   summary: List campaign store budget limits
   description: >-
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Return the store budget limits for a given campaign.
@@ -437,9 +437,9 @@ delete:
   operationId: deleteCampaignStoreBudgets
   summary: Delete campaign store budgets
   description: >-
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Delete the store budgets for a given campaign.

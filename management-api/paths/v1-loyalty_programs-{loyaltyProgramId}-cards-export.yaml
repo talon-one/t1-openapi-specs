@@ -3,21 +3,24 @@ get:
   operationId: exportLoyaltyCards
   summary: Export loyalty cards
   description: >
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Download a CSV file containing the loyalty cards from a specified loyalty
+
     program.
 
 
-    **Tip:** If the exported CSV file is too large to view, you can [split it
-    into multiple
-    files](https://www.makeuseof.com/tag/how-to-split-a-huge-csv-excel-workbook-into-seperate-files/).
+    > [!tip] If the exported CSV file is too large to view, you can
+
+    > [split it into multiple
+    files](https://www.google.com/search?q=split+CSV+into+multiple+files).
 
 
     The CSV file contains the following columns:
+
 
     - `identifier`: The unique identifier of the loyalty card.
 
@@ -64,8 +67,7 @@ get:
       description: |
         Only return loyalty cards created before this timestamp.
 
-        **Note:**
-        - This must be an RFC3339 timestamp string.
+        **Note:** This must be an RFC3339 timestamp string.
       required: false
       example: '2024-05-29T15:04:05+07:00'
       schema:
@@ -76,8 +78,7 @@ get:
       description: |
         Only return loyalty cards created after this timestamp.
 
-        **Note:**
-        - This must be an RFC3339 timestamp string.
+        **Note:** This must be an RFC3339 timestamp string.
       required: false
       example: '2024-04-15T15:04:05+07:00'
       schema:

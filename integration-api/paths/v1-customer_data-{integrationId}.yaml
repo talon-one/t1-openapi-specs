@@ -4,18 +4,29 @@ delete:
   summary: Delete customer's personal data
   description: >
     Delete all attributes on the customer profile and on entities that reference
+
     this customer profile.
 
 
-    **Important:**
+    > [!warning] **Warning**
 
-    - Customer data is deleted from all Applications in the
+    > - Customer data is deleted from all Applications in the
+
+    >  
     [environment](https://docs.talon.one/docs/product/applications/overview#application-environments)
-      that the API key belongs to. For example, if you use this endpoint with an API key that belongs to a sandbox Application,
-      customer data will be deleted from all sandbox Applications. This is because customer data is shared
-      between Applications from the same environment.
-    - To preserve performance, we recommend avoiding deleting customer data
-    during peak-traffic hours.
+
+    >   that the API key belongs to. For example, if you use this endpoint with
+    an API key that belongs
+
+    >   to a sandbox Application, customer data will be deleted from all sandbox
+    Applications.
+
+    >   This is because customer data is shared between Applications from the
+    same environment.
+
+    > - To preserve performance, we recommend avoiding deleting customer data
+
+    >   during peak-traffic hours.
   security:
     - api_key_v1: []
   tags:
@@ -29,11 +40,11 @@ delete:
         `integrationId` of a profile using:
 
         - A customer session integration ID with the [Update customer
-        session](https://docs.talon.one/integration-api#operation/updateCustomerSessionV2)
+        session](https://docs.talon.one/integration-api#tag/Customer-sessions/operation/updateCustomerSessionV2)
         endpoint.
 
         - The Management API with the [List application's
-        customers](https://docs.talon.one/management-api#operation/getApplicationCustomers)
+        customers](https://docs.talon.one/management-api#tag/Customer-data/operation/getApplicationCustomers)
         endpoint.
       example: customer1
       schema:

@@ -3,17 +3,18 @@ get:
   operationId: exportAccountCollectionItems
   summary: Export account-level collection's items
   description: >
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Download a CSV file containing items from a given account-level collection.
 
 
-    **Tip:** If the exported CSV file is too large to view, you can [split it
-    into multiple
-    files](https://www.makeuseof.com/tag/how-to-split-a-huge-csv-excel-workbook-into-seperate-files/).
+    > [!tip] If the exported CSV file is too large to view, you can
+
+    > [split it into multiple
+    files](https://www.google.com/search?q=split+CSV+into+multiple+files).
   tags:
     - Collections
   parameters:
@@ -22,7 +23,7 @@ get:
       required: true
       description: >-
         The ID of the collection. You can get it with the [List collections in
-        account](#operation/listAccountCollections) endpoint.
+        account](#tag/Collections/operation/listAccountCollections) endpoint.
       example: 22
       schema:
         type: integer

@@ -17,26 +17,51 @@ post:
     effect.
 
 
-    **Note:**
+    > [!note] **Note**
 
+    > - If the **Reservation mandatory** option was selected when creating the
 
-    - If the **Reservation mandatory** option was selected when creating the
-      specified coupon, the endpoint creates a **hard** reservation, meaning only users who have
-      this coupon code reserved can redeem it.
-      Otherwise, the endpoint creates a **soft** reservation, meaning the coupon
-      is associated with the specified customer profiles (they show up when using
-      the [List customer data](https://docs.talon.one/integration-api#operation/getCustomerInventory)
-      endpoint), but any user can redeem it.
-      This can be useful, for example, to display a _coupon wallet_ for customers
-      when they visit your store.
+    >   specified coupon, the endpoint creates a **hard** reservation, meaning
+    only users who have
 
-    - If the **Coupon visibility** option was selected when creating the
-      specified coupon, the coupon code is implicitly soft-reserved for all customers, and the code
-      will be returned for all customer profiles in the [List customer
-      data](https://docs.talon.one/integration-api#operation/getCustomerInventory) endpoint.
+    >   this coupon code reserved can redeem it.
 
-    - This endpoint overrides the coupon reservation limit set when
-      [the coupon is created](https://docs.talon.one/docs/product/campaigns/coupons/creating-coupons).
+    >
+
+    >   Otherwise, the endpoint creates a **soft** reservation, meaning the
+    coupon
+
+    >   is associated with the specified customer profiles (they show up when
+    using
+
+    >   the [List customer
+    data](https://docs.talon.one/integration-api#tag/Customer-profiles/operation/getCustomerInventory)
+
+    >   endpoint), but any user can redeem it.
+
+    >
+
+    >   This can be useful, for example, to display a _coupon wallet_ for
+    customers
+
+    >   when they visit your store.
+
+    > - If the **Coupon visibility** option was selected when creating the
+
+    >   specified coupon, the coupon code is implicitly soft-reserved for all
+    customers, and the code
+
+    >   will be returned for all customer profiles in the [List customer
+
+    >  
+    data](https://docs.talon.one/integration-api#tag/Customer-profiles/operation/getCustomerInventory)
+    endpoint.
+
+    > - This endpoint overrides the coupon reservation limit set when
+
+    >   [the coupon is
+    created](https://docs.talon.one/docs/product/campaigns/coupons/creating-coupons).
+
 
     To ensure that coupons cannot be reserved after the reservation limit is
 
@@ -67,7 +92,7 @@ post:
 
 
         **Important:** The coupon code requires [URL
-        encoding](https://www.w3schools.com/tags//ref_urlencode.asp) 
+        encoding](https://www.w3schools.com/tags//ref_urlencode.asp)
 
         if it contains special characters.
 
@@ -503,7 +528,7 @@ delete:
 
 
         **Important:** The coupon code requires [URL
-        encoding](https://www.w3schools.com/tags//ref_urlencode.asp) 
+        encoding](https://www.w3schools.com/tags//ref_urlencode.asp)
 
         if it contains special characters.
 

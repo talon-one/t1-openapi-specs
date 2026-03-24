@@ -3,9 +3,9 @@ get:
   operationId: scimGetGroup
   summary: Get SCIM group
   description: >-
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Retrieve data for a specific group created using the SCIM provisioning
@@ -85,9 +85,9 @@ delete:
   operationId: scimDeleteGroup
   summary: Delete SCIM group
   description: >-
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Delete a specific group created using the SCIM provisioning protocol with an
@@ -115,9 +115,9 @@ put:
   operationId: scimReplaceGroupAttributes
   summary: Update SCIM group
   description: >
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Update the details of a specific group created using the SCIM provisioning
@@ -232,9 +232,9 @@ patch:
   operationId: scimPatchGroup
   summary: Update SCIM group attributes
   description: >
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Update certain attributes of a group created using the SCIM provisioning

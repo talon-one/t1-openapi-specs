@@ -56,18 +56,19 @@ get:
       required: false
       description: >
         Used to return expired, active, and pending loyalty balances before this
+
         timestamp. You can enter any past, present, or future timestamp value.
 
 
-        **Note:**
+        > [!note] **Note**
 
+        > - This must be an RFC3339 timestamp string.
 
-        - It must be an RFC3339 timestamp string.
-
-        - You can include a time component in your string, for example,
+        > - You can include a time component in your string, for example,
         `T23:59:59` to specify the end of the day. The time zone setting
-        considered is `UTC`. If you do not include a time component, a default
-        time value of `T00:00:00` (midnight) in `UTC` is considered.
+
+        >   considered is `UTC`. If you do not include a time component, a
+        default time value of `T00:00:00` (midnight) in `UTC` is considered.
       example: '2024-05-29T15:04:05+07:00'
       schema:
         type: string

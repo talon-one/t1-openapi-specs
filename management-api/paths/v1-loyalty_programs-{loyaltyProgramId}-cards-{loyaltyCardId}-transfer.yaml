@@ -3,23 +3,23 @@ put:
   operationId: transferLoyaltyCard
   summary: Transfer card data
   description: >
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Transfer loyalty card data, such as linked customers, loyalty balances and
+
     transactions, from a given loyalty card to a new, automatically created
+
     loyalty card.
 
 
-    **Important:**
+    > [!important] **Note**
 
-
-    - The original card is automatically blocked once the new card is created,
-    and it cannot be activated again.
-
-    - The default status of the new card is _active_.
+    > - The original card is automatically blocked once the new card is created,
+        and it cannot be activated again.
+    > - The default status of the new card is _active_.
   tags:
     - Loyalty cards
   parameters:

@@ -3,9 +3,9 @@ post:
   operationId: copyCampaignToApplications
   summary: Copy the campaign into the specified Application
   description: >-
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Copy the campaign into all specified Applications.
@@ -176,7 +176,7 @@ post:
                           type: integer
                           description: >
                             [ID of
-                            Ruleset](https://docs.talon.one/management-api#operation/getRulesets)
+                            Ruleset](https://docs.talon.one/management-api#tag/Campaigns/operation/getRulesets)
                             this
 
                             campaign applies on customer session evaluation.

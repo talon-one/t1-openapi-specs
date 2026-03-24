@@ -3,9 +3,9 @@ get:
   operationId: scimGetUsers
   summary: List SCIM users
   description: >-
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Retrieve a paginated list of users that have been provisioned using the SCIM
@@ -113,9 +113,9 @@ post:
   operationId: scimCreateUser
   summary: Create SCIM user
   description: >-
-    <div class="redoc-warning small">Management API endpoints are <b>not</b>
-    meant to be used in real-time integrations that directly serve your end
-    users. Rate limit: 3 requests per second.</div>
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
 
 
     Create a new Talon.One user using the SCIM provisioning protocol with an
