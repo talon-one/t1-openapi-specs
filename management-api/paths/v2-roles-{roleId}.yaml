@@ -163,6 +163,18 @@ get:
                                   type: string
                                   description: Name of the tools-related permission set.
                                   example: Tools permission set
+                                thresholds:
+                                  type: object
+                                  description: >-
+                                    Support user limits for actions that require
+                                    admin approval within the given application.
+                                  properties:
+                                    loyaltyPointsLimit:
+                                      type: integer
+                                      description: >-
+                                        Maximum number of loyalty points a
+                                        support user can award without approval.
+                                      example: 100
                             example:
                               '1':
                                 application: Application permission set
@@ -348,6 +360,18 @@ put:
                             type: string
                             description: Name of the tools-related permission set.
                             example: Tools permission set
+                          thresholds:
+                            type: object
+                            description: >-
+                              Support user limits for actions that require admin
+                              approval within the given application.
+                            properties:
+                              loyaltyPointsLimit:
+                                type: integer
+                                description: >-
+                                  Maximum number of loyalty points a support
+                                  user can award without approval.
+                                example: 100
                       example:
                         '1':
                           application: Application permission set
@@ -532,6 +556,18 @@ put:
                                   type: string
                                   description: Name of the tools-related permission set.
                                   example: Tools permission set
+                                thresholds:
+                                  type: object
+                                  description: >-
+                                    Support user limits for actions that require
+                                    admin approval within the given application.
+                                  properties:
+                                    loyaltyPointsLimit:
+                                      type: integer
+                                      description: >-
+                                        Maximum number of loyalty points a
+                                        support user can award without approval.
+                                      example: 100
                             example:
                               '1':
                                 application: Application permission set
