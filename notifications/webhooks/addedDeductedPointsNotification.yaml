@@ -122,4 +122,5 @@ post:
           ExpiryDate: '2024-01-24T14:15:22Z'
           SessionIntegrationID: cc53e4fa-547f-4f5e-8333-76e05c381f67
           NotificationType: LoyaltyPointsDeducted
+          TransactionUUID: 1a6a7599-2622-4489-9034-5a62da3944e0
     required: true

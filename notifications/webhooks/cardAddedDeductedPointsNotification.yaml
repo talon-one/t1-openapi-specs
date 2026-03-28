@@ -140,4 +140,5 @@ post:
           NotificationType: LoyaltyCardPointsDeducted
           CardIdentifier: 123-456-789ATBC
           UsersPerCardLimit: 10
+          TransactionUUID: 1a6a7599-2622-4489-9034-5a62da3944e0
     required: true

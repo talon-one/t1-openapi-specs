@@ -134,4 +134,5 @@ post:
               Operation: addition
               StartDate: '2023-01-24T14:15:22Z'
               ExpiryDate: '2024-01-24T14:15:22Z'
+              TransactionUUID: 1a6a7599-2622-4489-9034-5a62da3944e0
     required: true

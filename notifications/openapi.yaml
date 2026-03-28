@@ -13,8 +13,15 @@ info:
     Talon.One.
 
 
-    **Note:** Required fields are not omitted if they are empty (have `null`
-    value).
+    > [!note] **Note:**
+
+    > - Required fields are not omitted if they are empty (have `null` value).
+
+    > - The notification schemas may be extended with additional properties in
+    future releases.
+
+    > To maintain forward compatibility, ensure your implementation ignores
+    unknown properties.
 servers:
   - url: https://yourbaseurl.talon.one
 security: []
