@@ -227,8 +227,6 @@ paths:
     $ref: paths/v1-loyalty_programs-{loyaltyProgramId}-cards.yaml
   /v1/best_prior_price:
     $ref: paths/v1-best_prior_price.yaml
-  /v1/best_prior_price_history:
-    $ref: paths/v1-best_prior_price_history.yaml
   /v1/catalogs/{catalogId}/sync:
     $ref: paths/v1-catalogs-{catalogId}-sync.yaml
 webhooks: {}

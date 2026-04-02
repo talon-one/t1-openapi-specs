@@ -177,6 +177,7 @@ get:
                         returnedQuantity:
                           title: Returned quantity of item
                           type: integer
+                          readOnly: true
                           description: >-
                             Number of returned items, calculated internally
                             based on returns of this item.
@@ -184,6 +185,7 @@ get:
                         remainingQuantity:
                           title: Remaining quantity of item
                           type: integer
+                          readOnly: true
                           description: >-
                             Remaining quantity of the item, calculated
                             internally based on returns of this item.
@@ -237,6 +239,7 @@ get:
                         position:
                           title: Position of Cart Item
                           type: number
+                          readOnly: true
                           description: >-
                             Position of the Cart Item in the Cart (calculated
                             internally).
@@ -286,10 +289,12 @@ get:
                         catalogItemID:
                           title: The catalog item ID
                           type: integer
+                          readOnly: true
                           description: The catalog item ID.
                         selectedPriceType:
                           title: Price Type
                           type: string
+                          readOnly: true
                           description: >-
                             The selected price type for this cart item (e.g. the
                             price for members only).
@@ -298,6 +303,7 @@ get:
                           title: Price Adjustment ID
                           type: string
                           format: uuid
+                          readOnly: true
                           description: >-
                             The reference ID of the selected price adjustment
                             for this cart item. Only returned if the selected
@@ -307,6 +313,7 @@ get:
                           title: Price Adjustment Start Date
                           type: string
                           format: date-time
+                          readOnly: true
                           description: >-
                             The date and time from which the price adjustment is
                             effective. Only returned if the selected price
@@ -317,6 +324,7 @@ get:
                           title: Price Adjustment Expiry Date
                           type: string
                           format: date-time
+                          readOnly: true
                           description: >-
                             The date and time until which the price adjustment
                             is effective. Only returned if the selected price
@@ -324,6 +332,7 @@ get:
                             field.
                           example: '2021-09-12T10:12:42Z'
                         prices:
+                          readOnly: true
                           type: object
                           description: >
                             A map of keys and values representing the price

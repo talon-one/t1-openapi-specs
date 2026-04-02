@@ -39,6 +39,9 @@ get:
     - `generated`: An indicator of whether the loyalty card was generated.
 
     - `batchid`: The ID of the batch the loyalty card is in.
+
+    - `attributes`: The custom attributes of this loyalty card. Currently, this
+    feature is only available upon request.
   tags:
     - Loyalty cards
   parameters:
@@ -105,10 +108,10 @@ get:
           examples:
             response:
               value: >
-                identifier,created,status,userpercardlimit,customerprofileids,blockreason,generated,batchid
+                identifier,created,status,userpercardlimit,customerprofileids,blockreason,generated,batchid,attributes
 
                 CARD-1234,2020-06-10T09:05:27.993483Z,active,3,['profile1'],card
-                limit reached,false,gwedcbfp
+                limit reached,false,gwedcbfp,{"ForumPosts": 17}
     '400':
       description: Bad request
       content:

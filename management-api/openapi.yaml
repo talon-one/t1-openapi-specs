@@ -461,6 +461,8 @@ paths:
     $ref: paths/v1-audiences-{audienceId}-memberships-export.yaml
   /v1/applications/{applicationId}/profile/{integrationId}/friends:
     $ref: paths/v1-applications-{applicationId}-profile-{integrationId}-friends.yaml
+  /v1/applications/{applicationId}/price_history:
+    $ref: paths/v1-applications-{applicationId}-price_history.yaml
   /v1/attributes:
     $ref: paths/v1-attributes.yaml
   /v1/attributes/{attributeId}:
