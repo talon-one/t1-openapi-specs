@@ -2,6 +2,7 @@
 post:
   operationId: bestPriorPrice
   summary: Fetch best prior price
+  x-scalar-stability: experimental
   description: >
     Returns the best prior price based on historical pricing data for the
     specified SKUs within a defined timeframe.

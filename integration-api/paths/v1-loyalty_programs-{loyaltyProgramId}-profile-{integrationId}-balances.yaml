@@ -249,8 +249,19 @@ get:
                         example: 20
                       nextTierName:
                         type: string
-                        description: The name of the tier consecutive to the current tier.
-                        example: silver
+                        description: >
+                          The name of the next higher tier level in the loyalty
+                          program.
+
+
+                          **Note**:
+
+                          - Returns `null` if the customer has reached the
+                          highest available tier.
+
+                          - Returns the lowest level tier name if the customer
+                          is not currently assigned to any tier.
+                        example: Silver
               subledgerBalances:
                 type: object
                 description: Map of the loyalty balances of the subledgers of a ledger.
@@ -371,10 +382,19 @@ get:
                           example: 20
                         nextTierName:
                           type: string
-                          description: >-
-                            The name of the tier consecutive to the current
-                            tier.
-                          example: silver
+                          description: >
+                            The name of the next higher tier level in the
+                            loyalty program.
+
+
+                            **Note**:
+
+                            - Returns `null` if the customer has reached the
+                            highest available tier.
+
+                            - Returns the lowest level tier name if the customer
+                            is not currently assigned to any tier.
+                          example: Silver
                 example:
                   mysubledger:
                     activePoints: 286

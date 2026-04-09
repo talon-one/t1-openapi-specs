@@ -655,6 +655,12 @@ get:
                                               The sub-position of the targeted bundle
                                               item on which the applied discount is
                                               based.
+                                          excludedFromPriceHistory:
+                                            type: boolean
+                                            description: >-
+                                              When set to `true`, the applied discount
+                                              is excluded from the item's price
+                                              history.
                                       - type: object
                                         description: >-
                                           The properties specific to the

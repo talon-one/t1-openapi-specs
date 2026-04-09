@@ -50,15 +50,15 @@ get:
     - name: withTotalResultSize
       in: query
       description: >
-        When this flag is set, the result includes the total size of the result,
-        across all pages. This might decrease performance on large data sets.
+        When this flag is set, the result includes the total number of results
+        for this query. This might decrease performance on large data sets.
 
 
-        - When `true`: `hasMore` is true when there is a next page.
-        `totalResultSize` is always zero.
+        - When `true`: `totalResultSize` contains the total number of results
+        for this query.
 
-        - When `false`: `hasMore` is always false. `totalResultSize` contains
-        the total number of results for this query.
+        - When `false`: Only `hasMore` is returned, and it is set to `true` when
+        there are more results than shown on the page.
       example: false
       schema:
         type: boolean

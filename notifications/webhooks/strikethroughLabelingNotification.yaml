@@ -221,7 +221,7 @@ post:
                                 value:
                                   description: discount value.
                                   example: 1
-                                excludeFromBestPriorPriceHistory:
+                                excludedFromPriceHistory:
                                   type: boolean
                             - type: object
                               description: >-

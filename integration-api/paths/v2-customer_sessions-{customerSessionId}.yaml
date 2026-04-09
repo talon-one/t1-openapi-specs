@@ -1260,6 +1260,22 @@ put:
                                           type: number
                                           description: Points required to move up a tier.
                                           example: 20
+                                        nextTierName:
+                                          type: string
+                                          description: >
+                                            The name of the next higher tier level
+                                            in the loyalty program.
+
+
+                                            **Note**:
+
+                                            - Returns `null` if the customer has
+                                            reached the highest available tier.
+
+                                            - Returns the lowest level tier name if
+                                            the customer is not currently assigned
+                                            to any tier.
+                                          example: Silver
                                 subledgers:
                                   type: object
                                   description: >-
@@ -1411,6 +1427,22 @@ put:
                                             type: number
                                             description: Points required to move up a tier.
                                             example: 20
+                                          nextTierName:
+                                            type: string
+                                            description: >
+                                              The name of the next higher tier level
+                                              in the loyalty program.
+
+
+                                              **Note**:
+
+                                              - Returns `null` if the customer has
+                                              reached the highest available tier.
+
+                                              - Returns the lowest level tier name if
+                                              the customer is not currently assigned
+                                              to any tier.
+                                            example: Silver
                                 modified:
                                   type: string
                                   format: date-time
@@ -1630,6 +1662,22 @@ put:
                                       type: number
                                       description: Points required to move up a tier.
                                       example: 20
+                                    nextTierName:
+                                      type: string
+                                      description: >
+                                        The name of the next higher tier level
+                                        in the loyalty program.
+
+
+                                        **Note**:
+
+                                        - Returns `null` if the customer has
+                                        reached the highest available tier.
+
+                                        - Returns the lowest level tier name if
+                                        the customer is not currently assigned
+                                        to any tier.
+                                      example: Silver
                             subLedgers:
                               type: object
                               description: >-
@@ -1781,6 +1829,22 @@ put:
                                         type: number
                                         description: Points required to move up a tier.
                                         example: 20
+                                      nextTierName:
+                                        type: string
+                                        description: >
+                                          The name of the next higher tier level
+                                          in the loyalty program.
+
+
+                                          **Note**:
+
+                                          - Returns `null` if the customer has
+                                          reached the highest available tier.
+
+                                          - Returns the lowest level tier name if
+                                          the customer is not currently assigned
+                                          to any tier.
+                                        example: Silver
                   triggeredCampaigns:
                     type: array
                     description: >-
@@ -2852,6 +2916,12 @@ put:
                                         The sub-position of the targeted bundle
                                         item on which the applied discount is
                                         based.
+                                    excludedFromPriceHistory:
+                                      type: boolean
+                                      description: >-
+                                        When set to `true`, the applied discount
+                                        is excluded from the item's price
+                                        history.
                                 - type: object
                                   description: >-
                                     The properties specific to the
@@ -7103,6 +7173,11 @@ get:
                                   description: >
                                     The sub-position of the targeted bundle item
                                     on which the applied discount is based.
+                                excludedFromPriceHistory:
+                                  type: boolean
+                                  description: >-
+                                    When set to `true`, the applied discount is
+                                    excluded from the item's price history.
                             - type: object
                               description: >-
                                 The properties specific to the
