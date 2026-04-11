@@ -8,7 +8,7 @@ get:
     second.
 
 
-    List all applications in the current account.
+    List all the Applications in the current account.
   tags:
     - Applications
   parameters:

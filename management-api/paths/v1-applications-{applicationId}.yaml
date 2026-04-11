@@ -8,7 +8,7 @@ get:
     second.
 
 
-    Get the application specified by the ID.
+    Get the Application specified by the ID.
   tags:
     - Applications
   parameters:

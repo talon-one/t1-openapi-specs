@@ -255,6 +255,10 @@ tags:
   - name: Stores
     description: |
       Represents physical or digital stores, branches, and franchises.
+  - name: Value maps
+    description: >-
+      Represents the value maps that the user can create within a campaign
+      ruleset.
   - name: Webhooks
     description: |
       A way to send information from Talon.One to the URI of your choice.
@@ -547,6 +551,9 @@ paths:
     $ref: paths/v2-roles.yaml
   /v2/roles/{roleId}:
     $ref: paths/v2-roles-{roleId}.yaml
+  /v1/applications/{applicationId}/campaigns/{campaignId}/value_maps/{valueMapId}/export:
+    $ref: >-
+      paths/v1-applications-{applicationId}-campaigns-{campaignId}-value_maps-{valueMapId}-export.yaml
   /v1/applications/{applicationId}/stores:
     $ref: paths/v1-applications-{applicationId}-stores.yaml
   /v1/applications/{applicationId}/stores/{storeId}:
@@ -554,6 +561,11 @@ paths:
   /v1/applications/{applicationId}/campaigns/{campaignId}/stores/export:
     $ref: >-
       paths/v1-applications-{applicationId}-campaigns-{campaignId}-stores-export.yaml
+  /v1/applications/{applicationId}/cart_item_filters:
+    $ref: paths/v1-applications-{applicationId}-cart_item_filters.yaml
+  /v1/applications/{applicationId}/cart_item_filters/{cartItemFilterId}/expressions/{expressionId}:
+    $ref: >-
+      paths/v1-applications-{applicationId}-cart_item_filters-{cartItemFilterId}-expressions-{expressionId}.yaml
   /v1/applications/{applicationId}/campaigns/{campaignId}/stores:
     $ref: paths/v1-applications-{applicationId}-campaigns-{campaignId}-stores.yaml
   /v1/applications/{applicationId}/campaigns/{campaignId}/stores/import:

@@ -1,0 +1,131 @@
+# path: /v1/applications/{applicationId}/cart_item_filters
+get:
+  operationId: listApplicationCartItemFilters
+  summary: List Application cart item filters
+  description: >-
+    > [!note] Management API endpoints are **not** meant to be used in real-time
+    integrations that directly serve your end users. Rate limit: 3 requests per
+    second.
+
+
+    Return all the Application cart item filters for a specific Application.
+  tags:
+    - Applications
+  parameters:
+    - name: applicationId
+      in: path
+      required: true
+      description: >-
+        The ID of the Application. It is displayed in your Talon.One deployment
+        URL.
+      example: 42
+      schema:
+        type: integer
+    - name: pageSize
+      in: query
+      required: false
+      description: The number of items in the response.
+      example: 50
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 50
+        default: 50
+    - name: skip
+      in: query
+      required: false
+      description: The number of items to skip when paging through large result sets.
+      example: 100
+      schema:
+        type: integer
+    - name: title
+      in: query
+      description: >
+        Filter by the display name of the Application cart item filter in the
+        Application.
+
+
+        **Note**: If no `title` is provided, all the Application cart item
+        filters in the Application are returned.
+      example: cartItemFilter1
+      required: false
+      schema:
+        type: string
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              hasMore:
+                type: boolean
+              data:
+                type: array
+                items:
+                  allOf:
+                    - type: object
+                      required:
+                        - id
+                        - created
+                      properties:
+                        id:
+                          type: integer
+                          description: The internal ID of this entity.
+                          example: 6
+                        created:
+                          type: string
+                          format: date-time
+                          description: The time this entity was created.
+                          example: '2020-06-10T09:05:27.993483Z'
+                    - type: object
+                      required:
+                        - name
+                      properties:
+                        name:
+                          type: string
+                          description: >-
+                            The name of the Application cart item filter used in
+                            API requests.
+                          example: Filter items by product
+                        description:
+                          type: string
+                          description: >-
+                            A short description of the Application cart item
+                            filter.
+                          example: This filter allows filtering by shoes
+                        activeExpressionId:
+                          type: integer
+                          description: >-
+                            The ID of the expression that the Application cart
+                            item filter uses.
+                          example: 1
+                        modifiedBy:
+                          type: integer
+                          description: >-
+                            The ID of the user who last updated the Application
+                            cart item filter.
+                          example: 334
+                        createdBy:
+                          type: integer
+                          description: >-
+                            The ID of the user who created the Application cart
+                            item filter.
+                          example: 216
+                        modified:
+                          type: string
+                          format: date-time
+                          description: >-
+                            Timestamp of the most recent update to the
+                            Application cart item filter.
+                    - type: object
+                      required:
+                        - applicationId
+                      properties:
+                        applicationId:
+                          type: integer
+                          description: The ID of the Application that owns this entity.
+                          example: 322
