@@ -1,0 +1,375 @@
+# path: /v1/integration/campaigns
+get:
+  operationId: integrationGetAllCampaigns
+  summary: List all running campaigns
+  description: |
+    Retrieve all running campaigns for the specified Application. You
+    can filter the results by providing specific campaign IDs or a range of 
+    start and end dates.
+  security:
+    - api_key_v1: []
+  tags:
+    - Campaigns
+  parameters:
+    - name: pageSize
+      in: query
+      required: false
+      description: The number of items in the response.
+      example: 50
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 50
+    - name: skip
+      in: query
+      required: false
+      description: The number of items to skip when paging through large result sets.
+      example: 100
+      schema:
+        type: integer
+    - name: campaignIds
+      in: query
+      required: false
+      description: |
+        Filter by one or more campaign IDs, separated by a comma.
+
+        **Note:** If no campaigns are specified, data for all the campaigns in
+        the Application is returned.
+      example:
+        - '11'
+        - '20'
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+    - name: startAfter
+      in: query
+      description: |
+        Filter results to only include campaigns that start on or after 
+        the specified timestamp.
+
+        **Note:**
+
+        - It must be an RFC3339 timestamp string.
+
+        - You can include a time component in your string, for example,
+        `T23:59:59` to specify the end of the day. The time zone setting
+        considered is `UTC`. If you do not include a time component, a default
+        time value of `T00:00:00` (midnight) in `UTC` is considered.
+      example: '2024-05-29T15:04:05+07:00'
+      schema:
+        type: string
+        format: date-time
+    - name: startBefore
+      in: query
+      description: |
+        Filter results to only include campaigns that start on or before 
+        the specified timestamp.
+
+        **Note:**
+
+        - It must be an RFC3339 timestamp string.
+
+        - You can include a time component in your string, for example,
+        `T23:59:59` to specify the end of the day. The time zone setting
+        considered is `UTC`. If you do not include a time component, a default
+        time value of `T00:00:00` (midnight) in `UTC` is considered.
+      example: '2024-05-29T15:04:05+07:00'
+      schema:
+        type: string
+        format: date-time
+    - name: endAfter
+      in: query
+      description: |
+        Filter results to only include campaigns that end on or after 
+        the specified timestamp.
+
+        **Note:**
+
+        - It must be an RFC3339 timestamp string.
+
+        - You can include a time component in your string, for example,
+        `T23:59:59` to specify the end of the day. The time zone setting
+        considered is `UTC`. If you do not include a time component, a default
+        time value of `T00:00:00` (midnight) in `UTC` is considered.
+      example: '2024-05-29T15:04:05+07:00'
+      schema:
+        type: string
+        format: date-time
+    - name: endBefore
+      in: query
+      description: |
+        Filter results to only include campaigns that end on or before 
+        the specified timestamp.
+
+        **Note:**
+
+        - It must be an RFC3339 timestamp string.
+
+        - You can include a time component in your string, for example,
+        `T23:59:59` to specify the end of the day. The time zone setting
+        considered is `UTC`. If you do not include a time component, a default
+        time value of `T00:00:00` (midnight) in `UTC` is considered.
+      example: '2024-05-29T15:04:05+07:00'
+      schema:
+        type: string
+        format: date-time
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - hasMore
+              - data
+            properties:
+              hasMore:
+                type: boolean
+              data:
+                type: array
+                items:
+                  allOf:
+                    - type: object
+                      required:
+                        - id
+                      properties:
+                        id:
+                          type: integer
+                          description: Unique ID of Campaign.
+                          example: 4
+                    - type: object
+                      required:
+                        - applicationId
+                      properties:
+                        applicationId:
+                          type: integer
+                          description: The ID of the Application that owns this entity.
+                          example: 322
+                    - type: object
+                      required:
+                        - name
+                        - state
+                        - tags
+                        - features
+                      properties:
+                        name:
+                          type: string
+                          title: Campaign Name
+                          description: A user-facing name for this campaign.
+                          minLength: 1
+                          example: Summer promotions
+                        description:
+                          type: string
+                          title: Campaign Description
+                          description: A detailed description of the campaign.
+                          example: Campaign for all summer 2021 promotions
+                        startTime:
+                          type: string
+                          format: date-time
+                          description: Timestamp when the campaign will become active.
+                          example: '2021-07-20T22:00:00Z'
+                        endTime:
+                          type: string
+                          format: date-time
+                          description: Timestamp when the campaign will become inactive.
+                          example: '2021-09-22T22:00:00Z'
+                        attributes:
+                          type: object
+                          description: Arbitrary properties associated with this campaign.
+                        state:
+                          type: string
+                          enum:
+                            - enabled
+                          default: enabled
+                          example: enabled
+                          description: |
+                            The state of the campaign.
+                        tags:
+                          type: array
+                          description: A list of tags for the campaign.
+                          example:
+                            - summer
+                          maxItems: 50
+                          items:
+                            type: string
+                            minLength: 1
+                            maxLength: 50
+                        features:
+                          type: array
+                          description: The features enabled in this campaign.
+                          example:
+                            - coupons
+                            - referrals
+                          items:
+                            type: string
+                            enum:
+                              - coupons
+                              - referrals
+                              - loyalty
+                              - giveaways
+                              - strikethrough
+                              - achievements
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code
+    '404':
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: array
+                description: >-
+                  An array of individual problems encountered during the
+                  request.
+                items:
+                  type: object
+                  required:
+                    - source
+                    - title
+                  properties:
+                    title:
+                      type: string
+                      description: Short description of the problem.
+                    details:
+                      type: string
+                      description: >-
+                        Longer description of this specific instance of the
+                        problem.
+                    source:
+                      type: object
+                      description: >
+                        The source of the current error, exactly one of
+                        `pointer`, `parameter` or `line` will be defined.
+                      properties:
+                        pointer:
+                          type: string
+                          description: >-
+                            Pointer to the path in the payload that caused this
+                            error.
+                        parameter:
+                          type: string
+                          description: Query parameter that caused this error.
+                        line:
+                          type: string
+                          description: >-
+                            Line number in uploaded multipart file that caused
+                            this error. 'N/A' if unknown.
+                        resource:
+                          type: string
+                          description: Pointer to the resource that caused this error.
+              StatusCode:
+                type: integer
+                description: The error code

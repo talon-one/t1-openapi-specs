@@ -64,6 +64,16 @@ post:
       example: session1
       schema:
         type: string
+    - name: runRuleEngine
+      in: query
+      description: >
+        When set to `true`, reevaluates the updated session after items are
+        returned. Only reevaluates campaigns where `reevaluateOnReturn` is set
+        to `true` and which produced an effect when the session was closed.
+      example: false
+      required: false
+      schema:
+        type: boolean
   requestBody:
     content:
       application/json:

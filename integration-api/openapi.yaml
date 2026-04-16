@@ -55,6 +55,15 @@ tags:
 
 
       See the [docs](https://docs.talon.one/docs/product/audiences/overview).
+  - name: Campaigns
+    description: >
+      Represents the primary resource used to control the behavior of the
+      Talon.One Rule Engine.
+
+      They combine rulesets, coupons, and limits into a single unit.
+
+
+      See the [docs](https://docs.talon.one/docs/product/campaigns/overview).
   - name: Catalogs
     description: >
       Represents a catalog of cart items with unique SKUs. Cart item catalogs
@@ -181,6 +190,8 @@ paths:
   /v2/loyalty_programs/{loyaltyProgramId}/cards/{loyaltyCardId}/unlink_profile:
     $ref: >-
       paths/v2-loyalty_programs-{loyaltyProgramId}-cards-{loyaltyCardId}-unlink_profile.yaml
+  /v1/integration/campaigns:
+    $ref: paths/v1-integration-campaigns.yaml
   /v2/events:
     $ref: paths/v2-events.yaml
   /v1/referrals:
