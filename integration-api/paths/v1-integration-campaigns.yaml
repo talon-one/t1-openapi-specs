@@ -214,6 +214,44 @@ get:
                               - giveaways
                               - strikethrough
                               - achievements
+                        rules:
+                          type: array
+                          description: >-
+                            A list of rules containing customer-facing details
+                            of the rewards defined in the campaign.
+                          items:
+                            type: object
+                            required:
+                              - title
+                            properties:
+                              title:
+                                type: string
+                                description: A short description of the rule.
+                                example: Give discount via coupon
+                              displayName:
+                                type: string
+                                description: A customer-facing name for the rule.
+                                example: 20% off all shoes!
+                              displayDescription:
+                                type: string
+                                description: >
+                                  A customer-facing description that explains
+                                  the details of the rule. 
+
+
+                                  For example, this property can contain details
+                                  about eligibility requirements, reward
+                                  timelines, or terms and conditions.
+                                example: >-
+                                  Get a 20% discount on all shoes during
+                                  Thanksgiving! Offer valid till Dec 5 only.
+                              relatedData:
+                                type: string
+                                description: >
+                                  Any additional data associated with the rule,
+                                  such as an image URL, vendor name, or a
+                                  content management system (CMS) ID.
+                                example: https://example.com/discounts/20-off-shoes.png
     '400':
       description: Bad request
       content:
