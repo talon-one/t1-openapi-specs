@@ -223,6 +223,17 @@ put:
               minLength: 1
               description: The human-friendly display name for this audience.
               example: Travel audience
+            subscribedApplicationsIds:
+              type: array
+              description: >-
+                A list of the IDs of the Applications that are connected to this
+                audience.
+              items:
+                type: integer
+              uniqueItems: true
+              example:
+                - 3
+                - 13
     description: body
     required: true
   responses:
@@ -272,6 +283,17 @@ put:
                         type: string
                         description: A description of the audience.
                         example: Travel audience 18-27
+                      subscribedApplicationsIds:
+                        type: array
+                        description: >-
+                          A list of the IDs of the Applications that are
+                          connected to this audience.
+                        uniqueItems: true
+                        items:
+                          type: integer
+                        example:
+                          - 3
+                          - 13
                   - type: object
                     required:
                       - name

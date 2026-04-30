@@ -66,6 +66,17 @@ post:
                   type: string
                   description: A description of the audience.
                   example: Travel audience 18-27
+                subscribedApplicationsIds:
+                  type: array
+                  description: >-
+                    A list of the IDs of the Applications that are connected to
+                    this audience.
+                  uniqueItems: true
+                  items:
+                    type: integer
+                  example:
+                    - 3
+                    - 13
             - type: object
               required:
                 - name
@@ -113,6 +124,9 @@ post:
               name: Travel audience
               sandbox: true
               description: Travel audience 18-27
+              subscribedApplicationsIds:
+                - 3
+                - 13
               integration: mparticle
               integrationId: 382370BKDB946
               createdIn3rdParty: false
@@ -221,6 +235,17 @@ post:
                         type: string
                         description: A description of the audience.
                         example: Travel audience 18-27
+                      subscribedApplicationsIds:
+                        type: array
+                        description: >-
+                          A list of the IDs of the Applications that are
+                          connected to this audience.
+                        uniqueItems: true
+                        items:
+                          type: integer
+                        example:
+                          - 3
+                          - 13
                   - type: object
                     required:
                       - name

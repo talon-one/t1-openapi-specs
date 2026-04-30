@@ -160,7 +160,7 @@ get:
                         name:
                           type: string
                           title: Campaign Name
-                          description: A user-facing name for this campaign.
+                          description: The name of the campaign.
                           minLength: 1
                           example: Summer promotions
                         description:
@@ -252,6 +252,85 @@ get:
                                   such as an image URL, vendor name, or a
                                   content management system (CMS) ID.
                                 example: https://example.com/discounts/20-off-shoes.png
+                              eligibility:
+                                type: array
+                                items:
+                                  type: object
+                                  description: >-
+                                    The customer's eligibility for a rule in the
+                                    current session, based on whether all of the
+                                    rule's conditions were met.
+                                  required:
+                                    - passed
+                                  properties:
+                                    passed:
+                                      type: boolean
+                                      description: >-
+                                        Indicates whether the customer was
+                                        eligible for the rule in the current
+                                        session, based on whether all of the
+                                        rule's conditions were met.
+                                      example: true
+                                    couponCode:
+                                      type: string
+                                      description: >-
+                                        The coupon code used to check a
+                                        customer's eligibility for the rule in
+                                        the current session, if applicable.
+                                    details:
+                                      description: >-
+                                        The details about why the customer was
+                                        not eligible for the rule in the current
+                                        session. Only returned when `passed` is
+                                        `false`.
+                                      type: object
+                                      required:
+                                        - failureCode
+                                        - details
+                                      properties:
+                                        failureCode:
+                                          type: string
+                                          description: >-
+                                            A code identifying why the customer was
+                                            not eligible for the rule in the current
+                                            session.
+                                          enum:
+                                            - CONDITION_NOT_MET
+                                            - EFFECT_FAILED
+                                        couponID:
+                                          type: integer
+                                          description: >
+                                            The ID of the coupon that was being
+                                            evaluated when the rule failed.
+                                          example: 4928
+                                        couponValue:
+                                          type: string
+                                          description: >
+                                            The coupon code that was being evaluated
+                                            when the rule failed.
+                                        referralID:
+                                          type: integer
+                                          description: >
+                                            The ID of the referral that was being
+                                            evaluated when the rule failed.
+                                        referralValue:
+                                          type: string
+                                          description: >
+                                            The referral code that was being
+                                            evaluated when the rule failed.
+                                        conditionIndex:
+                                          type: integer
+                                          description: >-
+                                            The index of the condition that caused
+                                            the rule to fail.
+                                        effectIndex:
+                                          type: integer
+                                          description: >-
+                                            The index of the effect that caused the
+                                            rule to fail.
+                                        details:
+                                          type: string
+                                          description: Additional details about the failure.
     '400':
       description: Bad request
       content:

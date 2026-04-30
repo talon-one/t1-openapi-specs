@@ -79,6 +79,43 @@ get:
       schema:
         type: string
         format: date-time
+    - name: balances
+      in: query
+      required: false
+      description: >
+        Filters which balance fields are included in the CSV export. By default,
+
+        all balance fields are included. When this parameter is provided, only
+        the
+
+        listed fields contain values and the rest are returned empty.
+
+
+        Accepted values:
+
+        - `currentBalance`
+
+        - `pendingBalance`
+
+        - `expiredBalance`
+
+        - `spentBalance`
+
+        - `negativeBalance`
+
+
+        Multiple values must be provided as a comma-separated list.
+
+
+        **Note:**
+
+        - The `negativeBalance` value is not supported for card balance exports.
+
+        - Providing an unsupported or invalid value returns a `400 Bad Request`
+        error.
+      example: currentBalance,pendingBalance
+      schema:
+        type: string
   responses:
     '200':
       description: OK
