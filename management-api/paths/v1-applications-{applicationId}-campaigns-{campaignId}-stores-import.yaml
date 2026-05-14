@@ -50,9 +50,9 @@ post:
           type: object
           properties:
             upFile:
-              description: The file containing the data that is being imported.
+              description: The CSV file containing the data that is being imported.
               type: string
-              format: csv
+              format: binary
   responses:
     '200':
       description: OK

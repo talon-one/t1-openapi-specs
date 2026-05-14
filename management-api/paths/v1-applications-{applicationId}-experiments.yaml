@@ -1281,6 +1281,27 @@ get:
                                   isPrimary:
                                     type: boolean
                                     example: true
+                        goalType:
+                          type: string
+                          enum:
+                            - other
+                            - maximize_revenue
+                            - optimize_discount_efficiency
+                            - maximize_items_sold
+                          description: >
+                            The goal of the experiment. Determines which single
+                            metric is used to decide the winning variant. When
+                            set to `other`, multiple metrics are used.
+                        goalDescription:
+                          type: string
+                          description: >
+                            A description of the experiment goal. Provides
+                            context for the AI summary and helps it interpret
+                            the outcome of the experiment against the stated
+                            goal.
+                          example: >-
+                            Offering free shipping will increase average order
+                            revenue more than a 10% discount
                         deletedat:
                           type: string
                           format: date-time
@@ -1288,3 +1309,4 @@ get:
                             The date and time the experiment was deleted.
                       required:
                         - state
+                        - goalType

@@ -1,7 +1,7 @@
 # path: /v1/loyalty_programs/{loyaltyProgramId}/cards/{loyaltyCardId}/logs
 get:
   operationId: getLoyaltyCardTransactionLogs
-  summary: List card's transactions
+  summary: List card's transactions (Management API)
   description: >
     > [!note] Management API endpoints are **not** meant to be used in real-time
     integrations that directly serve your end users. Rate limit: 3 requests per
@@ -13,9 +13,19 @@ get:
 
     within the specified [card-based loyalty
     program](https://docs.talon.one/docs/product/loyalty-programs/overview#loyalty-program-types)
+
     with filtering options applied.
 
+
+    > [!note] For most use cases, especially real-time integrations, use the
+    Integration API endpoint:
+
+    > [List card's
+    transactions](https://docs.talon.one/integration-api#tag/Loyalty-cards/operation/getLoyaltyCardTransactions).
+
+
     If no filtering options are applied, the last 50 loyalty transactions for
+
     the given loyalty card are returned.
   tags:
     - Loyalty cards

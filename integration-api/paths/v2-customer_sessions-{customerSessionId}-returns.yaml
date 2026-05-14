@@ -1850,14 +1850,6 @@ post:
                         - allOf:
                             - type: object
                               required:
-                                - id
-                              properties:
-                                id:
-                                  type: integer
-                                  description: Unique ID of Campaign.
-                                  example: 4
-                            - type: object
-                              required:
                                 - applicationId
                               properties:
                                 applicationId:
@@ -1868,11 +1860,16 @@ post:
                                   example: 322
                             - type: object
                               required:
+                                - id
                                 - name
                                 - state
                                 - tags
                                 - features
                               properties:
+                                id:
+                                  type: integer
+                                  description: Unique ID of Campaign.
+                                  example: 4
                                 name:
                                   type: string
                                   title: Campaign Name
@@ -1936,14 +1933,74 @@ post:
                                       - giveaways
                                       - strikethrough
                                       - achievements
-                                rules:
-                                  type: array
-                                  description: >-
-                                    A list of rules containing customer-facing
-                                    details of the rewards defined in the
-                                    campaign.
-                                  items:
+                        - type: object
+                          description: >
+                            A list of campaigns and their evaluation status for
+                            the current customer session.
+
+
+                            **Note**:
+
+
+                            - This response can **only** be included if the
+                            `dry` parameter in the query is set to `true`. 
+
+                            - Do not include `triggeredCampaigns` or
+                            `ruleFailureReasons` in `responseContent` to avoid
+                            duplicate results.
+                          required:
+                            - eligibility
+                            - rules
+                          properties:
+                            eligibility:
+                              type: array
+                              description: >-
+                                The customer's eligibility for each campaign in
+                                the current customer session.
+                              items:
+                                type: object
+                                required:
+                                  - passed
+                                properties:
+                                  passed:
+                                    type: boolean
+                                    description: >-
+                                      Indicates whether the customer was
+                                      eligible for the campaign in the current
+                                      session.
+                                  couponCode:
+                                    type: string
+                                    description: >-
+                                      The coupon code used to check a customer's
+                                      eligibility for the campaign in the
+                                      current session, if applicable.
+                                  details:
+                                    description: >-
+                                      The details about why the customer was not
+                                      eligible for the campaign in the current
+                                      session. Only returned when `passed` is
+                                      `false`.
                                     type: object
+                                    required:
+                                      - failureCode
+                                    properties:
+                                      failureCode:
+                                        type: string
+                                        description: >-
+                                          A code identifying why the customer was
+                                          not eligible for the campaign.
+                                        enum:
+                                          - ALL_RULES_FAILED
+                                          - SKIPPED
+                                          - AUDIENCE_NOT_MATCHED
+                            rules:
+                              type: array
+                              description: >-
+                                A list of rules containing customer-facing
+                                details of the rewards defined in the campaign.
+                              items:
+                                allOf:
+                                  - type: object
                                     required:
                                       - title
                                     properties:
@@ -1978,6 +2035,10 @@ post:
                                           or a content management system (CMS) ID.
                                         example: >-
                                           https://example.com/discounts/20-off-shoes.png
+                                  - type: object
+                                    required:
+                                      - eligibility
+                                    properties:
                                       eligibility:
                                         type: array
                                         items:
@@ -2057,65 +2118,6 @@ post:
                                                 details:
                                                   type: string
                                                   description: Additional details about the failure.
-                        - type: object
-                          description: >
-                            A list of campaigns and their evaluation status for
-                            the current customer session.
-
-
-                            **Note**:
-
-
-                            - This response can **only** be included if the
-                            `dry` parameter in the query is set to `true`. 
-
-                            - Do not include `triggeredCampaigns` or
-                            `ruleFailureReasons` in `responseContent` to avoid
-                            duplicate results.
-                          required:
-                            - eligibility
-                          properties:
-                            eligibility:
-                              type: array
-                              description: >-
-                                The customer's eligibility for each campaign in
-                                the current customer session.
-                              items:
-                                type: object
-                                required:
-                                  - passed
-                                properties:
-                                  passed:
-                                    type: boolean
-                                    description: >-
-                                      Indicates whether the customer was
-                                      eligible for the campaign in the current
-                                      session.
-                                  couponCode:
-                                    type: string
-                                    description: >-
-                                      The coupon code used to check a customer's
-                                      eligibility for the campaign in the
-                                      current session, if applicable.
-                                  details:
-                                    description: >-
-                                      The details about why the customer was not
-                                      eligible for the campaign in the current
-                                      session. Only returned when `passed` is
-                                      `false`.
-                                    type: object
-                                    required:
-                                      - failureCode
-                                    properties:
-                                      failureCode:
-                                        type: string
-                                        description: >-
-                                          A code identifying why the customer was
-                                          not eligible for the campaign.
-                                        enum:
-                                          - ALL_RULES_FAILED
-                                          - SKIPPED
-                                          - AUDIENCE_NOT_MATCHED
                   effects:
                     type: array
                     description: >-

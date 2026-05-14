@@ -1,7 +1,7 @@
 # path: /v1/loyalty_programs/{loyaltyProgramId}/profile/{integrationId}/ledger_transactions
 get:
   operationId: getLoyaltyProgramProfileLedgerTransactions
-  summary: List customer's loyalty transactions
+  summary: List customer's loyalty transactions (Management API)
   description: >
     > [!note] Management API endpoints are **not** meant to be used in real-time
     integrations that directly serve your end users. Rate limit: 3 requests per
@@ -19,12 +19,20 @@ get:
     loyalty transactions for the given integration ID are returned.
 
 
-    > [!note] To retrieve all loyalty program transaction logs in a given
+    > [!note] **Note**
 
-    > loyalty program, use the [List loyalty program
+    > - For most use cases, especially real-time integrations, use the
+    Integration API endpoint:
+
+    >   [List customer's loyalty
+    transactions](https://docs.talon.one/integration-api#tag/Loyalty/operation/getLoyaltyProgramProfileTransactions).
+
+    > - To retrieve all loyalty program transaction logs in a given loyalty
+    program, use the
+
+    >   [List loyalty program
     transactions](https://docs.talon.one/management-api#tag/Loyalty/operation/getLoyaltyProgramTransactions)
-
-    > endpoint.
+    endpoint.
   tags:
     - Loyalty
   parameters:

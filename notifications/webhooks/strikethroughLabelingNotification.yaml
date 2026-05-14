@@ -26,7 +26,9 @@ post:
           properties:
             version:
               type: string
-              description: The version of the strikethrough pricing notification.
+              description: >
+                The version of the strikethrough pricing notification. Set for
+                **scheduled** strikethrough pricing updates only.
               enum:
                 - v2
             validFrom:
@@ -215,13 +217,16 @@ post:
                                 pricing payload.
                               properties:
                                 name:
-                                  description: effect name.
+                                  description: The effect name.
                                   type: string
                                   example: 1EuroOff
                                 value:
-                                  description: discount value.
+                                  description: The discount value.
                                   example: 1
                                 excludedFromPriceHistory:
+                                  description: >-
+                                    When set to `true`, the applied discount is
+                                    excluded from the item's price history.
                                   type: boolean
                             - type: object
                               description: >-
@@ -246,11 +251,11 @@ post:
                                 strikethrough pricing payload.
                               properties:
                                 name:
-                                  description: effect name.
+                                  description: The effect name.
                                   type: string
                                   example: 10% off members only
                                 value:
-                                  description: discount value.
+                                  description: The discount value.
                                   example: 9
                         startTime:
                           type: string
@@ -350,97 +355,168 @@ post:
               trigger:
                 id: 1
                 type: CATALOG_SYNC
-                triggeredAt: '2020-06-10T09:05:27.993483Z'
+                triggeredAt: '2025-05-27T09:05:27.993483Z'
                 totalAffectedItems: 1500
                 payload:
                   catalogId: 2
                   catalogVersion: 10
               changedItems:
                 - id: 1
-                  catalogId": 10
+                  catalogId: 10
                   sku: SKU1241028
                   version: 6
                   price: 100
-                  evaluatedAt: '2020-06-10T09:05:27.993483Z'
+                  prices:
+                    base:
+                      price: 100
+                    member:
+                      price: 90
+                      adjustmentReferenceId: 68851723-e6fa-488f-ace9-112581e6c19b
+                      effectiveFrom: '2025-05-25T00:00:00Z'
+                      effectiveUntil: '2025-05-30T00:00:00Z'
+                  evaluatedAt: '2025-05-27T09:05:27.993483Z'
                   effects:
                     - campaignId: 3
                       rulesetId: 11
                       ruleIndex: 2
-                      ruleName: Add 2 points
+                      ruleName: Give 10% off
                       type: setDiscountPerItem
                       props:
-                        name: 1EuroOff
-                        value: 1
+                        name: 10% off
+                        value: 10
+                      selectedPriceType: base
+                      selectedPrice: 100
+                      targets:
+                        - type: NONE
+                    - campaignId: 3
+                      startTime: '2025-05-25T00:00:00Z'
+                      endTime: '2025-05-30T00:00:00Z'
+                      rulesetId: 11
+                      ruleIndex: 2
+                      ruleName: Give 10% off
+                      type: setDiscountPerItem
+                      props:
+                        name: 10% off
+                        value: 9
+                      selectedPriceType: member
+                      selectedPrice: 90
+                      adjustmentReferenceId: 68851723-e6fa-488f-ace9-112581e6c19b
+                      targets:
+                        - type: AUDIENCE
+                          audience:
+                            id: 1
               NotificationType: StrikethroughPrice
-              sentAt: '2020-06-10T09:05:29.123483Z'
+              sentAt: '2025-05-27T09:05:27.993483Z'
           ScheduledStrikethroughNotification:
             value:
               version: v2
-              validFrom: '2021-07-20T22:00:00Z'
+              validFrom: '2025-05-28T09:05:27.993483Z'
               applicationId: 322
               currentBatch: 1
               totalBatches: 10
               trigger:
                 id: 1
                 type: CATALOG_SYNC
-                triggeredAt: '2020-06-10T09:05:27.993483Z'
+                triggeredAt: '2025-05-27T09:05:27.993483Z'
                 totalAffectedItems: 1500
                 payload:
                   catalogId: 2
                   catalogVersion: 10
               changedItems:
                 - id: 1
-                  catalogId": 10
+                  catalogId: 10
                   sku: SKU1241028
                   version: 6
                   price: 100
-                  evaluatedAt: '2020-06-10T09:05:27.993483Z'
+                  prices:
+                    base:
+                      price: 100
+                    member:
+                      price: 90
+                      adjustmentReferenceId: 68851723-e6fa-488f-ace9-112581e6c19b
+                      effectiveFrom: '2025-05-25T00:00:00Z'
+                      effectiveUntil: '2025-05-30T00:00:00Z'
+                  evaluatedAt: '2025-05-27T09:05:27.993483Z'
                   effects:
                     - campaignId: 3
-                      startTime: '2021-07-20T22:00:00Z'
-                      endTime: '2021-10-01T02:00:00Z'
                       rulesetId: 11
                       ruleIndex: 2
-                      ruleName: Add 2 points
+                      ruleName: Give 10% off
                       type: setDiscountPerItem
                       props:
-                        name: 1EuroOff
-                        value: 1
+                        name: 10% off
+                        value: 10
+                      selectedPriceType: base
+                      selectedPrice: 100
+                      targets:
+                        - type: NONE
+                    - campaignId: 3
+                      startTime: '2025-05-25T00:00:00Z'
+                      endTime: '2025-05-30T00:00:00Z'
+                      rulesetId: 11
+                      ruleIndex: 2
+                      ruleName: Give 10% off
+                      type: setDiscountPerItem
+                      props:
+                        name: 10% off
+                        value: 9
+                      selectedPriceType: member
+                      selectedPrice: 90
+                      adjustmentReferenceId: 68851723-e6fa-488f-ace9-112581e6c19b
+                      targets:
+                        - type: AUDIENCE
+                          audience:
+                            id: 1
               NotificationType: StrikethroughPrice
-              sentAt: '2020-06-10T09:05:29.123483Z'
+              sentAt: '2025-05-27T09:05:27.993483Z'
           ScheduledMemberStrikethroughNotification:
             value:
               version: v2
-              validFrom: '2021-07-20T22:00:00Z'
+              validFrom: '2025-05-28T09:05:27.993483Z'
               applicationId: 322
               currentBatch: 1
               totalBatches: 10
               trigger:
                 id: 1
                 type: CATALOG_SYNC
-                triggeredAt: '2020-06-10T09:05:27.993483Z'
+                triggeredAt: '2025-05-27T09:05:27.993483Z'
                 totalAffectedItems: 1500
                 payload:
                   catalogId: 2
                   catalogVersion: 10
               changedItems:
                 - id: 1
-                  catalogId": 10
+                  catalogId: 10
                   sku: SKU1241028
                   version: 6
                   price: 100
-                  evaluatedAt: '2020-06-10T09:05:27.993483Z'
+                  prices:
+                    base:
+                      price: 100
+                    member:
+                      price: 90
+                      adjustmentReferenceId: 68851723-e6fa-488f-ace9-112581e6c19b
+                      effectiveFrom: '2025-05-25T00:00:00Z'
+                      effectiveUntil: '2025-05-30T00:00:00Z'
+                  evaluatedAt: '2025-05-27T09:05:27.993483Z'
                   effects:
                     - campaignId: 3
-                      startTime: '2021-07-20T22:00:00Z'
-                      endTime: '2021-10-01T02:00:00Z'
+                      startTime: '2025-05-25T00:00:00Z'
+                      endTime: '2025-05-30T00:00:00Z'
                       rulesetId: 11
                       ruleIndex: 2
-                      ruleName: Add 2 points
+                      ruleName: Give 10% off
                       type: setDiscountPerItem
                       props:
-                        name: 10% off members only
+                        name: 10% off
                         value: 9
+                      selectedPriceType: member
+                      selectedPrice: 90
+                      adjustmentReferenceId: 68851723-e6fa-488f-ace9-112581e6c19b
+                      targets:
+                        - type: AUDIENCE
+                          audience:
+                            id: 1
               NotificationType: StrikethroughPrice
-              sentAt: '2020-06-10T09:05:29.123483Z'
+              sentAt: '2025-05-27T09:05:27.993483Z'
     required: true

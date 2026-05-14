@@ -1,7 +1,7 @@
 # path: /v1/loyalty_programs/{loyaltyProgramId}/profile/{integrationId}/ledger_balances
 get:
   operationId: getLoyaltyLedgerBalances
-  summary: Get customer's loyalty balances
+  summary: Get customer's loyalty balances (Management API)
   description: >
     > [!note] Management API endpoints are **not** meant to be used in real-time
     integrations that directly serve your end users. Rate limit: 3 requests per
@@ -18,9 +18,13 @@ get:
     information in the response.
 
 
-    > [!note] If no filtering options are applied, you retrieve all loyalty
+    > [!note] **Note**
 
-    > balances on the current date for the given integration ID.
+    > - For most use cases, especially real-time integrations, use the
+    Integration API endpoint:
+        [Get customer's loyalty balances](https://docs.talon.one/integration-api#tag/Loyalty/operation/getLoyaltyBalances).
+    > - If no filtering options are applied, you retrieve all loyalty balances
+    on the current date for the given integration ID.
 
 
     Loyalty balances are calculated when Talon.One receives your request using

@@ -134,86 +134,92 @@ get:
                 type: array
                 items:
                   allOf:
+                    - allOf:
+                        - type: object
+                          required:
+                            - applicationId
+                          properties:
+                            applicationId:
+                              type: integer
+                              description: The ID of the Application that owns this entity.
+                              example: 322
+                        - type: object
+                          required:
+                            - id
+                            - name
+                            - state
+                            - tags
+                            - features
+                          properties:
+                            id:
+                              type: integer
+                              description: Unique ID of Campaign.
+                              example: 4
+                            name:
+                              type: string
+                              title: Campaign Name
+                              description: The name of the campaign.
+                              minLength: 1
+                              example: Summer promotions
+                            description:
+                              type: string
+                              title: Campaign Description
+                              description: A detailed description of the campaign.
+                              example: Campaign for all summer 2021 promotions
+                            startTime:
+                              type: string
+                              format: date-time
+                              description: Timestamp when the campaign will become active.
+                              example: '2021-07-20T22:00:00Z'
+                            endTime:
+                              type: string
+                              format: date-time
+                              description: >-
+                                Timestamp when the campaign will become
+                                inactive.
+                              example: '2021-09-22T22:00:00Z'
+                            attributes:
+                              type: object
+                              description: >-
+                                Arbitrary properties associated with this
+                                campaign.
+                            state:
+                              type: string
+                              enum:
+                                - enabled
+                              default: enabled
+                              example: enabled
+                              description: |
+                                The state of the campaign.
+                            tags:
+                              type: array
+                              description: A list of tags for the campaign.
+                              example:
+                                - summer
+                              maxItems: 50
+                              items:
+                                type: string
+                                minLength: 1
+                                maxLength: 50
+                            features:
+                              type: array
+                              description: The features enabled in this campaign.
+                              example:
+                                - coupons
+                                - referrals
+                              items:
+                                type: string
+                                enum:
+                                  - coupons
+                                  - referrals
+                                  - loyalty
+                                  - giveaways
+                                  - strikethrough
+                                  - achievements
                     - type: object
                       required:
-                        - id
+                        - rules
                       properties:
-                        id:
-                          type: integer
-                          description: Unique ID of Campaign.
-                          example: 4
-                    - type: object
-                      required:
-                        - applicationId
-                      properties:
-                        applicationId:
-                          type: integer
-                          description: The ID of the Application that owns this entity.
-                          example: 322
-                    - type: object
-                      required:
-                        - name
-                        - state
-                        - tags
-                        - features
-                      properties:
-                        name:
-                          type: string
-                          title: Campaign Name
-                          description: The name of the campaign.
-                          minLength: 1
-                          example: Summer promotions
-                        description:
-                          type: string
-                          title: Campaign Description
-                          description: A detailed description of the campaign.
-                          example: Campaign for all summer 2021 promotions
-                        startTime:
-                          type: string
-                          format: date-time
-                          description: Timestamp when the campaign will become active.
-                          example: '2021-07-20T22:00:00Z'
-                        endTime:
-                          type: string
-                          format: date-time
-                          description: Timestamp when the campaign will become inactive.
-                          example: '2021-09-22T22:00:00Z'
-                        attributes:
-                          type: object
-                          description: Arbitrary properties associated with this campaign.
-                        state:
-                          type: string
-                          enum:
-                            - enabled
-                          default: enabled
-                          example: enabled
-                          description: |
-                            The state of the campaign.
-                        tags:
-                          type: array
-                          description: A list of tags for the campaign.
-                          example:
-                            - summer
-                          maxItems: 50
-                          items:
-                            type: string
-                            minLength: 1
-                            maxLength: 50
-                        features:
-                          type: array
-                          description: The features enabled in this campaign.
-                          example:
-                            - coupons
-                            - referrals
-                          items:
-                            type: string
-                            enum:
-                              - coupons
-                              - referrals
-                              - loyalty
-                              - giveaways
-                              - strikethrough
-                              - achievements
                         rules:
                           type: array
                           description: >-
@@ -252,85 +258,6 @@ get:
                                   such as an image URL, vendor name, or a
                                   content management system (CMS) ID.
                                 example: https://example.com/discounts/20-off-shoes.png
-                              eligibility:
-                                type: array
-                                items:
-                                  type: object
-                                  description: >-
-                                    The customer's eligibility for a rule in the
-                                    current session, based on whether all of the
-                                    rule's conditions were met.
-                                  required:
-                                    - passed
-                                  properties:
-                                    passed:
-                                      type: boolean
-                                      description: >-
-                                        Indicates whether the customer was
-                                        eligible for the rule in the current
-                                        session, based on whether all of the
-                                        rule's conditions were met.
-                                      example: true
-                                    couponCode:
-                                      type: string
-                                      description: >-
-                                        The coupon code used to check a
-                                        customer's eligibility for the rule in
-                                        the current session, if applicable.
-                                    details:
-                                      description: >-
-                                        The details about why the customer was
-                                        not eligible for the rule in the current
-                                        session. Only returned when `passed` is
-                                        `false`.
-                                      type: object
-                                      required:
-                                        - failureCode
-                                        - details
-                                      properties:
-                                        failureCode:
-                                          type: string
-                                          description: >-
-                                            A code identifying why the customer was
-                                            not eligible for the rule in the current
-                                            session.
-                                          enum:
-                                            - CONDITION_NOT_MET
-                                            - EFFECT_FAILED
-                                        couponID:
-                                          type: integer
-                                          description: >
-                                            The ID of the coupon that was being
-                                            evaluated when the rule failed.
-                                          example: 4928
-                                        couponValue:
-                                          type: string
-                                          description: >
-                                            The coupon code that was being evaluated
-                                            when the rule failed.
-                                        referralID:
-                                          type: integer
-                                          description: >
-                                            The ID of the referral that was being
-                                            evaluated when the rule failed.
-                                        referralValue:
-                                          type: string
-                                          description: >
-                                            The referral code that was being
-                                            evaluated when the rule failed.
-                                        conditionIndex:
-                                          type: integer
-                                          description: >-
-                                            The index of the condition that caused
-                                            the rule to fail.
-                                        effectIndex:
-                                          type: integer
-                                          description: >-
-                                            The index of the effect that caused the
-                                            rule to fail.
-                                        details:
-                                          type: string
-                                          description: Additional details about the failure.
     '400':
       description: Bad request
       content:
