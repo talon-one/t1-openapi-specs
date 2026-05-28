@@ -476,8 +476,9 @@ put:
                             type: string
                             title: Event Type
                             description: >-
-                              A string representing the event. Must not be a
-                              reserved event name.
+                              The name of the event. Must be a [custom
+                              event](https://docs.talon.one/docs/dev/concepts/entities/events#custom-events),
+                              not a built-in event.
                             minLength: 1
                             example: pageViewed
                           attributes:
@@ -490,6 +491,15 @@ put:
                         required:
                           - type
                           - attributes
+                  - type: object
+                    properties:
+                      integrationId:
+                        type: string
+                        description: >
+                          The unique ID of the event. Only one event with this
+                          ID can be registered.
+                        minLength: 1
+                        example: 175KJPS947296
                   - type: object
                     required:
                       - effects
@@ -1623,6 +1633,7 @@ put:
                               - giveaways
                               - strikethrough
                               - achievements
+                              - advancedEvents
                         couponSettings:
                           type: object
                           properties:

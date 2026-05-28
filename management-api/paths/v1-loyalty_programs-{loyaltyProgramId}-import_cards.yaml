@@ -34,7 +34,8 @@ post:
     identifiers should be separated with a semicolon (;).
 
 
-    > [!note] We recommend limiting your file size to 500MB.
+    > [!note] Your CSV file must contain less than 500,000 rows. Requests time
+    out after 30 seconds.
 
 
     ## Example

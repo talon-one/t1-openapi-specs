@@ -1965,6 +1965,7 @@ put:
                                   - giveaways
                                   - strikethrough
                                   - achievements
+                                  - advancedEvents
                             couponSettings:
                               type: object
                               properties:
@@ -5230,8 +5231,9 @@ put:
                                 type: string
                                 title: Event Type
                                 description: >-
-                                  A string representing the event. Must not be a
-                                  reserved event name.
+                                  The name of the event. Must be a [custom
+                                  event](https://docs.talon.one/docs/dev/concepts/entities/events#custom-events),
+                                  not a built-in event.
                                 minLength: 1
                                 example: pageViewed
                               attributes:
@@ -5244,6 +5246,15 @@ put:
                             required:
                               - type
                               - attributes
+                      - type: object
+                        properties:
+                          integrationId:
+                            type: string
+                            description: >
+                              The unique ID of the event. Only one event with
+                              this ID can be registered.
+                            minLength: 1
+                            example: 175KJPS947296
                       - type: object
                         required:
                           - effects
@@ -5425,95 +5436,108 @@ put:
                     description: The advanced event that was processed.
                     allOf:
                       - type: object
-                        required:
-                          - profileId
                         properties:
-                          profileId:
+                          connectedSessionId:
                             type: string
-                            description: >
-                              ID of the customer profile set by your integration
-                              layer.
-
-
-                              **Note:** If the customer does not yet have a
-                              known `profileId`, we recommend you use a guest
-                              `profileId`.
-                            example: URNGV8294NV
-                      - type: object
-                        properties:
-                          storeIntegrationId:
-                            type: string
-                            minLength: 1
-                            maxLength: 1000
                             description: >-
-                              The integration ID of the store. You choose this
-                              ID when you create a store.
-                            example: STORE-001
-                      - type: object
-                        properties:
-                          evaluableCampaignIds:
-                            type: array
-                            items:
-                              type: integer
-                            description: >
-                              When using the `dry` query parameter, use this
-                              property to list the campaign to be evaluated by
-                              the Rule Engine.
-
-
-                              These campaigns will be evaluated, even if they
-                              are disabled, allowing you to test specific
-                              campaigns before activating them.
-                            title: Campaigns to evaluate
-                            example:
-                              - 10
-                              - 12
+                              The ID of the session to reference. The session
+                              must be in `closed` state. Otherwise, the API call
+                              will fail.
+                            minLength: 1
+                            example: 175KJPS947296
                       - type: object
                         required:
-                          - integrationId
-                          - type
+                          - id
+                          - created
+                        properties:
+                          id:
+                            type: integer
+                            description: The internal ID of this entity.
+                            example: 6
+                          created:
+                            type: string
+                            format: date-time
+                            description: The time this entity was created.
+                            example: '2020-06-10T09:05:27.993483Z'
+                      - type: object
+                        required:
+                          - applicationId
+                        properties:
+                          applicationId:
+                            type: integer
+                            description: The ID of the Application that owns this entity.
+                            example: 322
+                      - allOf:
+                          - type: object
+                            properties:
+                              profileId:
+                                type: string
+                                description: >
+                                  ID of the customer profile set by your
+                                  integration layer.
+
+
+                                  **Note:** If the customer does not yet have a
+                                  known `profileId`, we recommend you use a
+                                  guest `profileId`.
+                                example: URNGV8294NV
+                          - type: object
+                            properties:
+                              storeIntegrationId:
+                                type: string
+                                minLength: 1
+                                maxLength: 1000
+                                description: >-
+                                  The integration ID of the store. You choose
+                                  this ID when you create a store.
+                                example: STORE-001
+                          - type: object
+                            properties:
+                              type:
+                                type: string
+                                title: Event Type
+                                description: >-
+                                  The name of the event. Must be a [custom
+                                  event](https://docs.talon.one/docs/dev/concepts/entities/events#custom-events),
+                                  not a built-in event.
+                                minLength: 1
+                                example: pageViewed
+                              attributes:
+                                type: object
+                                description: >-
+                                  Arbitrary additional JSON data associated with
+                                  the event.
+                                example:
+                                  myAttribute: myValue
+                            required:
+                              - type
+                              - attributes
+                      - type: object
                         properties:
                           integrationId:
                             type: string
                             description: >
-                              The unique ID of the current event. Only one event
-                              with this ID could be activated, duplicated events
-                              are forbidden.
+                              The unique ID of the event. Only one event with
+                              this ID can be registered.
                             minLength: 1
                             example: 175KJPS947296
-                          type:
-                            type: string
-                            title: Event Type
+                      - type: object
+                        required:
+                          - effects
+                        properties:
+                          effects:
+                            type: array
                             description: >
-                              A string representing the event name. Must not be
-                              a reserved event name. You create this value when
-                              you [create an
-                              attribute](https://docs.talon.one/docs/dev/concepts/entities/events#creating-a-custom-event)
-                              of type `event` in the Campaign Manager.
-                            minLength: 1
-                            example: pageViewed
-                          attributes:
-                            type: object
-                            description: >-
-                              Arbitrary additional JSON properties associated
-                              with the event. They must be created in the
-                              Campaign Manager before setting them with this
-                              property. See [creating custom
-                              attributes](https://docs.talon.one/docs/product/account/dev-tools/managing-attributes#creating-a-custom-attribute).
-                            example:
-                              myAttribute: myValue
-                          connectedSessionID:
-                            type: string
-                            description: The ID of the session that happened in the past.
-                            minLength: 1
-                            example: 175KJPS947296
-                          previousEventID:
-                            type: string
-                            description: >-
-                              The unique identifier of the event that happened
-                              in the past.
-                            minLength: 1
-                            example: 175KJPS947296
+                              An array of effects generated by the rules of the
+                              enabled campaigns of the Application.
+
+
+                              You decide how to apply them in your system. See
+                              the list of [API
+                              effects](https://docs.talon.one/docs/dev/integration-api/api-effects).
+                            items:
+                              type: array
+                              items: {}
                   customerSession:
                     description: The session that was processed.
                     allOf:
@@ -6069,7 +6093,7 @@ put:
                             description: >-
                               The total value of cart items and additional costs
                               in the session, before any discounts are applied.
-                            example: 119.99
+                            example: 134.99
                           cartItemTotal:
                             type: number
                             title: Cart Items Total
@@ -6084,6 +6108,15 @@ put:
                               The total value of additional costs, before any
                               discounts are applied.
                             example: 20
+                          cartItemAdditionalCostTotal:
+                            readOnly: true
+                            type: number
+                            title: Cart Item Additional Cost Total
+                            description: >-
+                              The total value of additional costs applied to
+                              individual items, before any discounts are
+                              applied.
+                            example: 15
                           updated:
                             type: string
                             format: date-time
@@ -6106,6 +6139,7 @@ put:
                           - total
                           - cartItemTotal
                           - additionalCostTotal
+                          - cartItemAdditionalCostTotal
                           - updated
                   return:
                     description: The return that was processed.
@@ -7039,7 +7073,7 @@ get:
                         description: >-
                           The total value of cart items and additional costs in
                           the session, before any discounts are applied.
-                        example: 119.99
+                        example: 134.99
                       cartItemTotal:
                         type: number
                         title: Cart Items Total
@@ -7054,6 +7088,14 @@ get:
                           The total value of additional costs, before any
                           discounts are applied.
                         example: 20
+                      cartItemAdditionalCostTotal:
+                        readOnly: true
+                        type: number
+                        title: Cart Item Additional Cost Total
+                        description: >-
+                          The total value of additional costs applied to
+                          individual items, before any discounts are applied.
+                        example: 15
                       updated:
                         type: string
                         format: date-time
@@ -7076,6 +7118,7 @@ get:
                       - total
                       - cartItemTotal
                       - additionalCostTotal
+                      - cartItemAdditionalCostTotal
                       - updated
               effects:
                 type: array

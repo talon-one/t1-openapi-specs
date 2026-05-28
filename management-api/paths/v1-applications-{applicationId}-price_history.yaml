@@ -81,7 +81,7 @@ post:
                     - id
                     - observedAt
                     - price
-                    - contextId
+                    - contextIds
                     - metadata
                     - target
                   properties:
@@ -93,13 +93,26 @@ post:
                       type: string
                       format: date-time
                       description: The date and time when the price was observed.
-                      example: '2020-11-10T23:00:00Z'
+                      example: '2025-11-10T23:00:00Z'
+                    contextIds:
+                      type: array
+                      items:
+                        type: string
+                      description: >
+                        The identifiers of the relevant context at the time the
+                        price was observed. Includes the context IDs of any
+                        price adjustments and of the campaigns that influenced
+                        the final price.
+                      example:
+                        - SpringSale
+                        - SummerSale2025
                     contextId:
                       type: string
+                      default: ''
                       description: >
-                        Identifier of the relevant context at the time the price
-                        was observed (e.g. summer sale).
-                      example: Summer Sale 2025
+                        This property is **deprecated**. Use `contextIds`
+                        instead. Defaults to an empty string.
+                      example: ''
                     price:
                       type: number
                       description: Price of the item.

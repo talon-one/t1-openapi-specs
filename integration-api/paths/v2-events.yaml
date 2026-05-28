@@ -9,33 +9,27 @@ post:
     To use this endpoint:
 
 
-    1. Define a [custom
+    1. [Create a custom
     event](https://docs.talon.one/docs/dev/concepts/entities/events#creating-a-custom-event)
 
     in the Campaign Manager.
 
-    1. Update or create a rule to check for this event.
+    1. In a rule, add the **Check for event types**
+    [condition](https://docs.talon.one/docs/dev/concepts/entities/events#use-an-event-in-a-rule)
+    and select the event you created.
 
-    1. Trigger the event with this endpoint. After you have successfully sent an
-
-    event to Talon.One, you can list the received events in the **Events** view
-
-    in the Campaign Manager.
+    1. Trigger the event with this endpoint.
 
 
-    Talon.One also offers a set of [built-in
-
-    events](https://docs.talon.one/docs/dev/concepts/entities/events). Ensure
-
-    you do not create a custom event when you can use a built-in event.
+    You can
+    [list](https://docs.talon.one/docs/product/applications/display-events#list-events)
+    the received events in the **Events** view of the Campaign Manager.
 
 
-    For example, use this endpoint to trigger an event when a customer shares a
+    For example, you can use this endpoint to trigger an event when a customer
+    shares a
 
-    link to a product.
-
-
-    See the
+    link to a product. See our
     [tutorial](https://docs.talon.one/docs/product/tutorials/referrals/incentivizing-product-link-sharing).
 
 
@@ -148,12 +142,10 @@ post:
                     type:
                       type: string
                       title: Event Type
-                      description: >
-                        A string representing the event name. Must not be a
-                        reserved event name. You create this value when you
-                        [create an
-                        attribute](https://docs.talon.one/docs/dev/concepts/entities/events#creating-a-custom-event)
-                        of type `event` in the Campaign Manager.
+                      description: >-
+                        The name of the event. Must be a [custom
+                        event](https://docs.talon.one/docs/dev/concepts/entities/events#custom-events),
+                        not a built-in event.
                       minLength: 1
                       example: pageViewed
                     attributes:
@@ -1424,6 +1416,7 @@ post:
                                   - giveaways
                                   - strikethrough
                                   - achievements
+                                  - advancedEvents
                             couponSettings:
                               type: object
                               properties:
@@ -4308,8 +4301,9 @@ post:
                                 type: string
                                 title: Event Type
                                 description: >-
-                                  A string representing the event. Must not be a
-                                  reserved event name.
+                                  The name of the event. Must be a [custom
+                                  event](https://docs.talon.one/docs/dev/concepts/entities/events#custom-events),
+                                  not a built-in event.
                                 minLength: 1
                                 example: pageViewed
                               attributes:
@@ -4322,6 +4316,15 @@ post:
                             required:
                               - type
                               - attributes
+                      - type: object
+                        properties:
+                          integrationId:
+                            type: string
+                            description: >
+                              The unique ID of the event. Only one event with
+                              this ID can be registered.
+                            minLength: 1
+                            example: 175KJPS947296
                       - type: object
                         required:
                           - effects

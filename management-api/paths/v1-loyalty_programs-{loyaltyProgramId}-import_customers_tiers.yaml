@@ -34,7 +34,7 @@ post:
 
     - `tiername`: The name of an existing tier to assign to the customer.
 
-    - `expirydate`: The expiration date of the tier when the tier is
+    - `expirydate`: The expiry date of the tier when the tier is
 
     reevaluated. It should be a future date.
 
@@ -48,11 +48,14 @@ post:
 
     - If the customer is already in the tier that's specified in the CSV file,
 
-    only the expiration date is updated.
+    only the expiry date is updated.
 
 
-    > [!note] We recommend not using this endpoint to update the tier of a
-    customer.
+    > [!note] We recommend importing customers into the tier that matches their
+
+    > current balance. If a customer is imported into a lower tier, any session
+
+    > or points update automatically upgrades them to the tier they qualify for.
 
 
     To update a customer's tier, you can

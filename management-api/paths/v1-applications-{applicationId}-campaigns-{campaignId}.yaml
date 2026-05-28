@@ -145,6 +145,7 @@ get:
                         - giveaways
                         - strikethrough
                         - achievements
+                        - advancedEvents
                   couponSettings:
                     type: object
                     properties:
@@ -796,6 +797,7 @@ put:
                   - giveaways
                   - strikethrough
                   - achievements
+                  - advancedEvents
               example:
                 - coupons
                 - loyalty
@@ -1153,6 +1155,7 @@ put:
                         - giveaways
                         - strikethrough
                         - achievements
+                        - advancedEvents
                   couponSettings:
                     type: object
                     properties:

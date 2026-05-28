@@ -177,6 +177,7 @@ get:
                                 - giveaways
                                 - strikethrough
                                 - achievements
+                                - advancedEvents
                           couponSettings:
                             type: object
                             properties:
