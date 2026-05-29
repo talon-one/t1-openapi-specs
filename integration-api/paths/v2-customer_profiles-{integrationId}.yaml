@@ -2342,6 +2342,13 @@ put:
                         current customer session.
 
 
+                        For experiment campaigns, the experiment and variant
+                        assigned to the customer profile are
+
+                        returned through the `experiment` field. Customer
+                        profiles with no variant assignment are not included.
+
+
                         **Note**:
 
 
@@ -2518,6 +2525,29 @@ put:
                                             details:
                                               type: string
                                               description: Additional details about the failure.
+                        experiment:
+                          type: object
+                          description: >
+                            The identifiers for the
+                            [experiment](https://docs.talon.one/management-api#tag/Experiments)
+                            and the variant assigned to the customer profile.
+
+                            Only returned when the customer profile has been
+                            assigned to a variant in an experiment campaign.
+                          required:
+                            - id
+                            - variantId
+                          properties:
+                            id:
+                              type: integer
+                              format: int64
+                              description: The ID of the experiment.
+                            variantId:
+                              type: integer
+                              format: int64
+                              description: >-
+                                The ID of the variant assigned to the customer
+                                profile.
               awardedGiveaways:
                 type: array
                 items:

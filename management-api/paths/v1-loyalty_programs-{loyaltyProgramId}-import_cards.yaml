@@ -33,6 +33,15 @@ post:
 
     identifiers should be separated with a semicolon (;).
 
+    - `attributes` (optional): A JSON object that contains the loyalty card's
+    custom
+
+    attributes and their values. These attributes must be created and connected
+    to this
+
+    loyalty program before they can be assigned to the cards through this
+    endpoint.
+
 
     > [!note] Your CSV file must contain less than 500,000 rows. Requests time
     out after 30 seconds.
@@ -43,9 +52,9 @@ post:
 
     ```csv
 
-    identifier,state,customerprofileids
+    identifier,state,customerprofileids,attributes
 
-    123-456-789AT,active,Alexa001;UserA
+    123-456-789AT,active,Alexa001;UserA,'{""my_attributes"": ""10_off""}"
 
     ```
   tags:

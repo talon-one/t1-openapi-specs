@@ -240,6 +240,10 @@ paths:
     $ref: paths/v1-best_prior_price.yaml
   /v1/catalogs/{catalogId}/sync:
     $ref: paths/v1-catalogs-{catalogId}-sync.yaml
+  /v3/events:
+    $ref: paths/v3-events.yaml
+  /v3/events/{integrationId}:
+    $ref: paths/v3-events-{integrationId}.yaml
 webhooks: {}
 components:
   securitySchemes:

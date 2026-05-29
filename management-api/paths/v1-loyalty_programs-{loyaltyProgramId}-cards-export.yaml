@@ -40,8 +40,7 @@ get:
 
     - `batchid`: The ID of the batch the loyalty card is in.
 
-    - `attributes`: The custom attributes of this loyalty card. Currently, this
-    feature is only available upon request.
+    - `attributes`: The custom attributes of this loyalty card.
   tags:
     - Loyalty cards
   parameters:
