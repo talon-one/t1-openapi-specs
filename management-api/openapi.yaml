@@ -339,6 +339,8 @@ paths:
     $ref: paths/v1-loyalty_programs-{loyaltyProgramId}-import_points.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/import_customers_tiers:
     $ref: paths/v1-loyalty_programs-{loyaltyProgramId}-import_customers_tiers.yaml
+  /v1/loyalty_programs/{loyaltyProgramId}/import_join_dates:
+    $ref: paths/v1-loyalty_programs-{loyaltyProgramId}-import_join_dates.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/profile/{integrationId}:
     $ref: paths/v1-loyalty_programs-{loyaltyProgramId}-profile-{integrationId}.yaml
   /v1/loyalty_programs/{loyaltyProgramId}/profile/{integrationId}/add_points:

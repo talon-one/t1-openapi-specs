@@ -3,7 +3,7 @@ post:
   operationId: trackEventV2
   summary: Track event
   description: >
-    Triggers a custom event.
+    Trigger a custom event.
 
 
     To use this endpoint:

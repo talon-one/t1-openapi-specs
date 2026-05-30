@@ -3,7 +3,7 @@ post:
   operationId: trackEventV3
   summary: Track advanced event
   description: >
-    Triggers an advanced event.
+    Trigger an advanced event.
 
 
     Advanced events are idempotent, uniquely identifiable events. They can also

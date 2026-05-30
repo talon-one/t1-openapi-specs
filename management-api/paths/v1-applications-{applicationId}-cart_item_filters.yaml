@@ -38,14 +38,14 @@ get:
       example: 100
       schema:
         type: integer
-    - name: title
+    - name: name
       in: query
       description: >
         Filter by the display name of the Application cart item filter in the
         Application.
 
 
-        **Note**: If no `title` is provided, all the Application cart item
+        **Note**: If no `name` is provided, all the Application cart item
         filters in the Application are returned.
       example: cartItemFilter1
       required: false

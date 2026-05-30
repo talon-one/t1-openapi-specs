@@ -3,7 +3,7 @@ delete:
   operationId: deleteAudienceV2
   summary: Delete audience
   description: >
-    Delete an audience created by a third-party integration.
+    Delete an audience.
 
 
     > [!warning] This endpoint also removes any associations recorded between a

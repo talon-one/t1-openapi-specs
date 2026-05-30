@@ -1,9 +1,9 @@
 # path: /v3/events/{integrationId}
 get:
   operationId: getEventV3
-  summary: Get Events
+  summary: Get advanced event
   description: |
-    Returns an Event by its identifier.
+    Retrieve an advanced event by its identifier.
   security:
     - api_key_v1: []
   tags:
@@ -11,7 +11,7 @@ get:
   parameters:
     - name: integrationId
       in: path
-      description: The identifier of the occurrence.
+      description: The unique ID of the advanced event.
       required: true
       example: pe_12345
       schema:
