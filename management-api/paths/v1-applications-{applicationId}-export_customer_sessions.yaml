@@ -97,6 +97,26 @@ get:
       schema:
         type: string
         format: date-time
+    - name: updatedBefore
+      in: query
+      description: >-
+        Filter results comparing the parameter value, expected to be an RFC3339
+        timestamp string.
+      required: false
+      example: '2024-05-29T15:04:05+07:00'
+      schema:
+        type: string
+        format: date-time
+    - name: updatedAfter
+      in: query
+      description: >-
+        Filter results comparing the parameter value, expected to be an RFC3339
+        timestamp string.
+      required: false
+      example: '2024-05-29T15:04:05+07:00'
+      schema:
+        type: string
+        format: date-time
     - name: profileIntegrationId
       in: query
       description: >-

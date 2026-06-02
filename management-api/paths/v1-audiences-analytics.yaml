@@ -31,7 +31,7 @@ get:
       required: true
       description: >-
         The IDs of one or more audiences, separated by commas, by which to
-        filter results.
+        filter results. Do not provide more than 1000 audience IDs.
       example: audience1
       schema:
         type: string

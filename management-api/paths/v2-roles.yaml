@@ -166,19 +166,6 @@ get:
                                           Name of the tools-related permission
                                           set.
                                         example: Tools permission set
-                                      thresholds:
-                                        type: object
-                                        description: >-
-                                          Support user limits for actions that
-                                          require admin approval within the given
-                                          application.
-                                        properties:
-                                          loyaltyPointsLimit:
-                                            type: integer
-                                            description: >-
-                                              Maximum number of loyalty points a
-                                              support user can award without approval.
-                                            example: 100
                                   example:
                                     '1':
                                       application: Application permission set
@@ -219,6 +206,28 @@ get:
                                 account:
                                   type: string
                                   description: Name of the account-level permission set
+                            thresholds:
+                              type: array
+                              description: >-
+                                Support user limits for actions that require
+                                admin approval within the given application.
+                              items:
+                                type: object
+                                properties:
+                                  loyaltyProgramId:
+                                    type: integer
+                                    description: >-
+                                      Identifier of the loyalty program. You can
+                                      get the ID with the [List loyalty
+                                      programs](https://docs.talon.one/management-api#tag/Loyalty/operation/getLoyaltyPrograms)
+                                      endpoint.
+                                    example: 8
+                                  loyaltyPointsLimit:
+                                    type: integer
+                                    description: >-
+                                      Maximum number of loyalty points a support
+                                      user can award without approval.
+                                    example: 100
                         members:
                           type: array
                           items:
