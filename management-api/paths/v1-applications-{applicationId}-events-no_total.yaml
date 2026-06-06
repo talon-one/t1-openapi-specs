@@ -382,6 +382,7 @@ get:
                                   props:
                                     oneOf:
                                       - type: object
+                                        title: acceptCoupon
                                         description: >-
                                           The properties specific to the
                                           "acceptCoupon" effect. This gets
@@ -395,6 +396,7 @@ get:
                                             type: string
                                             description: The coupon code that was accepted.
                                       - type: object
+                                        title: acceptReferral
                                         description: >-
                                           The properties specific to the
                                           "acceptReferral" effect. TThis gets
@@ -408,6 +410,7 @@ get:
                                             type: string
                                             description: The referral code that was accepted.
                                       - type: object
+                                        title: redeemReferral
                                         description: >
                                           This effect is **deprecated**. The
                                           properties specific to the
@@ -430,6 +433,7 @@ get:
                                             type: string
                                             description: The referral code that was redeemed.
                                       - type: object
+                                        title: rejectCoupon
                                         description: >-
                                           The properties specific to the
                                           "rejectCoupon" effect. This gets
@@ -466,6 +470,7 @@ get:
                                               The reason why the campaign was not
                                               applied.
                                       - type: object
+                                        title: rejectReferral
                                         description: >-
                                           The properties specific to the
                                           "rejectReferral" effect. This gets
@@ -504,6 +509,7 @@ get:
                                               The reason why the campaign was not
                                               applied.
                                       - type: object
+                                        title: couponCreated
                                         description: >-
                                           The properties specific to the
                                           "couponCreated" effect. This gets
@@ -526,6 +532,7 @@ get:
                                               customer for whom this coupon was
                                               created.
                                       - type: object
+                                        title: referralCreated
                                         description: >-
                                           The properties specific to the
                                           "referralCreated" effect. This gets
@@ -542,6 +549,7 @@ get:
                                             type: string
                                             description: The referral code that was created.
                                       - type: object
+                                        title: setDiscount
                                         description: >-
                                           The properties specific to the
                                           "setDiscount" effect. This gets
@@ -571,6 +579,7 @@ get:
                                             type: number
                                             description: The original value of the discount.
                                       - type: object
+                                        title: setDiscountPerItem
                                         description: >
                                           The properties specific to the
                                           `setDiscountPerItem` effect, triggered
@@ -672,6 +681,7 @@ get:
                                               is excluded from the item's price
                                               history.
                                       - type: object
+                                        title: setDiscountPerAdditionalCost
                                         description: >-
                                           The properties specific to the
                                           "setDiscountPerAdditionalCost" effect.
@@ -704,6 +714,7 @@ get:
                                             type: number
                                             description: The original value of the discount.
                                       - type: object
+                                        title: triggerWebhook
                                         description: >-
                                           The properties specific to the
                                           "triggerWebhook" effect. This gets
@@ -727,6 +738,7 @@ get:
                                               The name of the webhook that was
                                               triggered.
                                       - type: object
+                                        title: addLoyaltyPoints
                                         description: >
                                           The properties specific to the
                                           "addLoyaltyPoints" effect. This gets
@@ -837,6 +849,7 @@ get:
 
                                               and `expiryDate` is not set.
                                       - type: object
+                                        title: deductLoyaltyPoints
                                         description: >-
                                           The properties specific to the
                                           "deductLoyaltyPoints" effect. This gets
@@ -898,6 +911,7 @@ get:
                                             pattern: ^[A-Za-z0-9._%+@-]+$
                                             example: summer-loyalty-card-0543
                                       - type: object
+                                        title: changeLoyaltyTierLevel
                                         description: >
                                           The properties specific to the
                                           "changeLoyaltyTierLevel" effect.
@@ -943,6 +957,7 @@ get:
                                             format: date-time
                                             description: The expiration date of the new tier.
                                       - type: object
+                                        title: addFreeItem
                                         description: >-
                                           The properties specific to the
                                           "addFreeItem" effect. This gets
@@ -965,6 +980,7 @@ get:
                                               The original quantity in case a partial
                                               reward was applied.
                                       - type: object
+                                        title: showNotification
                                         description: >-
                                           The properties specific to the
                                           "showNotification" effect. This gets
@@ -987,6 +1003,7 @@ get:
                                             type: string
                                             description: Body of the notification.
                                       - type: object
+                                        title: updateAttribute
                                         description: >-
                                           The properties specific to the
                                           "updateAttribute" effect. This gets
@@ -1019,6 +1036,7 @@ get:
 
                                               - list of any of those types
                                       - type: object
+                                        title: rollbackCoupon
                                         description: >-
                                           The properties specific to the
                                           "rollbackCoupon" effect. This gets
@@ -1035,6 +1053,7 @@ get:
                                               The coupon code whose usage has been
                                               rolled back.
                                       - type: object
+                                        title: rollbackReferral
                                         description: >-
                                           The properties specific to the
                                           "rollbackReferral" effect. This gets
@@ -1051,6 +1070,7 @@ get:
                                               The referral code whose usage has been
                                               rolled back.
                                       - type: object
+                                        title: rollbackDiscount
                                         description: >-
                                           The properties specific to the
                                           "rollbackDiscount" effect. This gets
@@ -1107,6 +1127,7 @@ get:
                                               of `price`, `additionalCosts` or
                                               `itemTotal`
                                       - type: object
+                                        title: rollbackAddedLoyaltyPoints
                                         description: >-
                                           The properties specific to the
                                           "rollbackAddedLoyaltyPoints" effect.
@@ -1172,6 +1193,7 @@ get:
                                             pattern: ^[A-Za-z0-9._%+@-]+$
                                             example: summer-loyalty-card-0543
                                       - type: object
+                                        title: rollbackDeductedLoyaltyPoints
                                         description: >-
                                           The properties specific to the
                                           "rollbackDeductedLoyaltyPoints" effect.
@@ -1238,6 +1260,7 @@ get:
                                             pattern: ^[A-Za-z0-9._%+@-]+$
                                             example: summer-loyalty-card-0543
                                       - type: object
+                                        title: showBundleMetadata
                                         description: >
                                           This effect is **deprecated**.
 
@@ -1272,6 +1295,7 @@ get:
                                               The indices in the cart items array of
                                               the bundled items.
                                       - type: object
+                                        title: awardGiveaway
                                         description: >-
                                           The properties specific to the
                                           "awardGiveaway" effect. This effect
@@ -1315,15 +1339,16 @@ get:
                                             description: The giveaway code that was awarded.
                                             example: 57638t-67439hty
                                       - type: object
+                                        title: willAwardGiveaway
                                         description: >-
                                           The properties specific to the
-                                          "awardGiveaway" effect when the session
-                                          is not closed yet. This effect replaces
-                                          "awardGiveaway" only when updating a
-                                          session with any state other than
-                                          "closed". This is to ensure no giveaway
-                                          codes are leaked when they are still not
-                                          guaranteed to be awarded.
+                                          "willAwardGiveaway" effect when the
+                                          session is not closed yet. This effect
+                                          replaces "awardGiveaway" only when
+                                          updating a session with any state other
+                                          than "closed". This is to ensure no
+                                          giveaway codes are leaked when they are
+                                          still not guaranteed to be awarded.
                                         required:
                                           - poolId
                                           - poolName
@@ -1349,6 +1374,7 @@ get:
                                               will be awarded the giveaway.
                                             example: URNGV8294NV
                                       - type: object
+                                        title: error
                                         description: >-
                                           Whenever an error occurred during
                                           evaluation, we return an error effect.
@@ -1361,6 +1387,7 @@ get:
                                             type: string
                                             description: The error message.
                                       - type: object
+                                        title: customEffect
                                         description: Effect containing custom payload.
                                         required:
                                           - effectId
@@ -1407,6 +1434,7 @@ get:
                                             type: object
                                             x-arbitraryJSON: true
                                       - type: object
+                                        title: setDiscountPerAdditionalCostPerItem
                                         description: >-
                                           The properties specific to the
                                           "setDiscountPerAdditionalCostPerItem"
@@ -1460,6 +1488,7 @@ get:
                                               discount without considering budget
                                               limitations.
                                       - type: object
+                                        title: reserveCoupon
                                         description: >-
                                           The properties specific to the
                                           "reserveCoupon" effect. This gets
@@ -1488,6 +1517,7 @@ get:
                                               Indicates whether this is a new coupon
                                               reservation or not.
                                       - type: object
+                                        title: addToAudience
                                         description: >-
                                           The properties specific to the
                                           "addToAudience" effect. This gets
@@ -1513,6 +1543,7 @@ get:
                                             description: The internal ID of the customer profile.
                                             example: 150
                                       - type: object
+                                        title: removeFromAudience
                                         description: >-
                                           The properties specific to the
                                           "removeFromAudience" effect. This gets
@@ -1538,6 +1569,7 @@ get:
                                             description: The internal ID of the customer profile.
                                             example: 150
                                       - type: object
+                                        title: increaseAchievementProgress
                                         description: >-
                                           The properties specific to the
                                           "increaseAchievementProgress" effect.
@@ -1587,6 +1619,7 @@ get:
                                               Indicates if the customer has completed
                                               the achievement in the current session.
                                       - type: object
+                                        title: rollbackIncreasedAchievementProgress
                                         description: >-
                                           The properties specific to the
                                           "rollbackIncreasedAchievementProgress"
@@ -1634,6 +1667,7 @@ get:
                                               The target value to complete the
                                               achievement.
                                       - type: object
+                                        title: extendLoyaltyPointsExpiryDate
                                         description: >
                                           The properties specific to the
                                           "extendLoyaltyPointsExpiryDate" effect.

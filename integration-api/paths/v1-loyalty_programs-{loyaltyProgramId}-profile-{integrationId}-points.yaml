@@ -63,10 +63,24 @@ get:
     - name: subledgerId
       in: query
       required: false
-      description: The ID of the subledger by which we filter the data.
-      example: subledger1
+      description: >
+        Filter the results by a list of subledger IDs.
+
+
+        To include multiple IDs, repeat the parameter for each one, for example,
+
+        `?subledgerId=id1&subledgerId=id2`.
+
+
+        The response contains only data associated with the specified
+        subledgers.
+      example:
+        - subledger1
+        - subledger2
       schema:
-        type: string
+        type: array
+        items:
+          type: string
     - name: customerSessionIDs
       in: query
       required: false
